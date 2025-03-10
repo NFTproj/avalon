@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Estrutura de Projeto para Aplicação White Label
 
-## Getting Started
+A estrutura abaixo utiliza arquivos separados por cliente e idioma para organizar textos, configurações e assets:
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```javascript
+project-root/
+├── src/
+│   ├── app/                  
+│   │   ├── layout.jsx         // Layout global (pode carregar temas, cores, etc.)
+│   │   └── page.jsx           // Página principal ou rotas
+│   ├── components/            // Componentes reutilizáveis da UI
+│   ├── lib/                   // Funções auxiliares (ex.: carregamento de configurações i18n)
+│   └── data/                  
+│       ├── clientA/           // Configurações e textos para Cliente A
+│       │   ├── pt.json        // Textos em Português
+│       │   └── en.json        // Textos em Inglês
+│       └── clientB/           // Configurações e textos para Cliente B
+│           ├── pt.json        // Textos em Português
+│           └── en.json        // Textos em Inglês
+├── public/
+│   ├── assets/
+│   │   ├── clientA/           // Assets (imagens, fontes, etc.) para Cliente A
+│   │   └── clientB/           // Assets para Cliente B
+├── tailwind.config.js         // Configuração do Tailwind CSS (pode usar temas personalizados)
+├── next.config.js             // Configuração do Next.js (incluindo i18n se necessário)
+└── package.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Descrição dos Diretórios
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **src/data/**  
+  Cada cliente possui sua própria pasta (ex.: `clientA` e `clientB`) contendo arquivos JSON para cada idioma. Esses arquivos armazenam os textos e configurações específicas para cada parte da aplicação (como header, landing page, etc.).
 
-## Learn More
+- **src/lib/**  
+  Contém funções auxiliares, por exemplo, um helper que carrega o arquivo JSON correto com base no cliente (identificado via variável de ambiente ou outra lógica) e no idioma atual.
 
-To learn more about Next.js, take a look at the following resources:
+- **src/app/**  
+  Guarda o layout global e as páginas principais. No layout, você pode carregar as configurações (como temas do Tailwind) e passar os textos via Context API ou props para os componentes filhos.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **src/components/**  
+  Reúne componentes reutilizáveis da interface de usuário.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **public/assets/**  
+  Contém os assets (imagens, fontes, etc.) separados por cliente para garantir que cada white label utilize seus próprios recursos visuais.
 
-## Deploy on Vercel
+- **tailwind.config.js**  
+  Configuração do Tailwind CSS que pode incluir variações de cores ou estilos específicos para cada cliente.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **next.config.js**  
+  Configurações do Next.js, podendo incluir suporte à internacionalização (i18n) se necessário.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Esta estrutura modular facilita a manutenção, a escalabilidade e a personalização para cada cliente e idioma, permitindo que você atualize ou adicione novos conteúdos sem interferir nos demais white labels.
