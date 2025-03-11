@@ -1,11 +1,22 @@
 {
-  "header": {
-    "title": "Bem-vindo ao Cliente Default",
-    "subtitle": "Sua solução personalizada"
+  "images": {
+    "logos": {
+      "main-logo": "logos/bloxify-logo.png"
+    }
   },
-  "landingPage": {
-    "heroText": "Descubra o futuro com Cliente Default",
-    "bodyText": "Cliente Default é uma solução de software personalizada para atender às suas necessidades. Com uma interface amigável e intuitiva, você pode gerenciar seus dados com facilidade e segurança. Descubra o que o Cliente Default pode fazer por você!",
-    "image": "../../assets/20230423-seiya-ovicio-555x555.webp"
+  "landing-page": {
+    "header": {
+      "alts": {
+        "main-logo": "Logo da Bloxify"
+      },
+      "navigations": {
+        "navOne": "A Bloxify",
+        "navTwo": "Produtos",
+        "navThree": "Idioma"
+      },
+      "buttons": {
+        "button": "Cadastro ou Login"
+      }
+    }
   }
 }

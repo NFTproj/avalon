@@ -1,35 +1,64 @@
 'use client'
 
-import { ClientConfig, getClientConfig } from '@/app/lib/config'
-import React, { createContext, useState, useEffect, ReactNode } from 'react'
+import {
+  ClientConfig,
+  ColorsConfig,
+  getClientConfig,
+  TextsConfig,
+} from '@/app/lib/config'
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  ReactNode,
+  useMemo,
+} from 'react'
 
 interface ConfigContextProps {
   config: ClientConfig | null
+  texts: TextsConfig | null
+  colors: ColorsConfig | null
 }
 
 export const ConfigContext = createContext<ConfigContextProps>({
   config: null,
+  texts: null,
+  colors: null,
 })
 
 export const ConfigProvider = ({ children }: { children: ReactNode }) => {
   const [config, setConfig] = useState<ClientConfig | null>(null)
+  const [texts, setTexts] = useState<TextsConfig | null>(null)
+  const [colors, setColors] = useState<ColorsConfig | null>(null)
   // você pode definir o idioma dinamicamente, por exemplo;
-  let lang = 'pt-BR';
+  let lang = 'pt-BR'
   if (typeof window !== 'undefined') {
     lang = document.documentElement.lang
   }
 
   useEffect(() => {
     const loadConfig = async () => {
-      const data = await getClientConfig({locale: lang})
+      const data = await getClientConfig({ locale: lang })
       setConfig(data)
+      setTexts(data.texts)
+      setColors(data.colors)
     }
     loadConfig()
   }, [])
 
+  const value = useMemo(
+    () => ({
+      config,
+      setConfig,
+      texts,
+      setTexts,
+      colors,
+      setColors,
+    }),
+    [config, texts, colors],
+  )
+
   return (
-    <ConfigContext.Provider value={{ config }}>
-      {children}
-    </ConfigContext.Provider>
+    <ConfigContext.Provider value={value}>{children}</ConfigContext.Provider>
   )
 }

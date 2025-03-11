@@ -1,9 +1,11 @@
 import clientDefaultData from '../../data/clientDefault/locales/pt-BR.json'
 import themaDefaultData from '../../data/clientDefault/themes/light.json'
 
+export type TextsConfig = typeof clientDefaultData
+export type ColorsConfig = typeof themaDefaultData
 export interface ClientConfig {
-  texts: typeof clientDefaultData
-  colors: typeof themaDefaultData
+  texts: TextsConfig
+  colors: ColorsConfig
 }
 
 export type ThemeMode = 'light' | 'dark'

@@ -1,28 +1,45 @@
 'use client'
 
-import { ConfigContext } from "@/contexts/ConfigContext"
-import { useContext } from "react"
+import { ConfigContext } from '@/contexts/ConfigContext'
+import Image from 'next/image'
+import { useContext } from 'react'
+import ImageFromJSON from '../core/ImageFromJSON'
 
 function Header() {
-  const { config } = useContext(ConfigContext)
-  
-  // Use uma cor padrão caso config.colors não exista
-  const color = config?.colors?.["header-primary"] || '#002D3121'
+  const { colors, texts } = useContext(ConfigContext)
+  const textLandingPage = texts?.['landing-page']
+  const navigations = textLandingPage?.header.navigations
 
   return (
-    // Duas soluções possíveis:
+    <header
+      className="w-full flex justify-between py-6 px-16"
+      style={{ backgroundColor: colors?.['header-primary'] }}
+    >
+      <section className="flex gap-8 items-center justify-center">
+        <div className="w-40">
+          <ImageFromJSON
+            src={texts?.images.logos['main-logo']}
+            alt={textLandingPage?.header.alts['main-logo']}
+            width={500}
+            height={600}
+          />
+        </div>
+        <nav className="flex gap-2 mt-1.5">
+          <details>
+            <summary>{navigations?.navOne}</summary>
+          </details>
+          <details>
+            <summary>{navigations?.navTwo}</summary>
+          </details>
+          <details>
+            <summary>{navigations?.navThree}</summary>
+          </details>
+        </nav>
+      </section>
 
-    // 1. Usar style inline para cores dinâmicas
-    
-    // 2. Se preferir usar Tailwind, garanta que o valor seja completo na classe
-    <header className={`w-full p-4 ${color}`}>
-    
-      <div></div>
-      <div>
-        <details>
-          <summary>A Bloxify</summary>
-        </details>
-      </div>
+      <button type="button">
+        {texts?.['landing-page'].header.buttons.button}
+      </button>
     </header>
   )
 }
