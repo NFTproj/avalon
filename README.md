@@ -5,12 +5,12 @@ A estrutura abaixo utiliza arquivos separados por cliente e idioma para organiza
 ```javascript
 project-root/
 ├── src/
-│   ├── app/                  
+│   ├── app/
 │   │   ├── layout.jsx         // Layout global (pode carregar temas, cores, etc.)
 │   │   └── page.jsx           // Página principal ou rotas
 │   ├── components/            // Componentes reutilizáveis da UI
 │   ├── lib/                   // Funções auxiliares (ex.: carregamento de configurações i18n)
-│   └── data/                  
+│   └── data/
 │       ├── clientA/           // Configurações e textos para Cliente A
 │       │   ├── pt.json        // Textos em Português
 │       │   └── en.json        // Textos em Inglês
@@ -25,7 +25,6 @@ project-root/
 ├── next.config.js             // Configuração do Next.js (incluindo i18n se necessário)
 └── package.json
 ```
-
 
 ## Descrição dos Diretórios
 
