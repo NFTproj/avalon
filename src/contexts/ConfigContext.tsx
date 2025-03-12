@@ -6,6 +6,7 @@ import {
   getClientConfig,
   TextsConfig,
 } from '@/app/lib/config'
+
 import React, {
   createContext,
   useState,

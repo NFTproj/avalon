@@ -1,0 +1,19 @@
+{
+  "header": {
+    "header-primary": "#002D3121"
+  },
+  "buttons": {
+    "button-primary": "#A6A6A6C7",
+    "button-secondary": "#002D3126"
+  },
+  "border": {
+    "border-primary": "#08CEFF"
+  },
+  "colors": {
+    "color-primary": "#202020",
+    "color-secondary": "#707070"
+  },
+  "background": {
+    "background-primary": "#F2FCFF"
+  }
+}

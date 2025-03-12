@@ -1,12 +1,13 @@
-
 import Header from '@/components/landingPage/Header'
-import { getClientConfig } from './lib/config'
+import Hero from '@/components/landingPage/Hero'
 
-export default async function Home() {
-  const config = await getClientConfig()
+export default function Home() {
   return (
     <div>
       <Header />
+      <main>
+        <Hero />
+      </main>
     </div>
   )
 }

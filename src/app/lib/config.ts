@@ -1,5 +1,5 @@
-import clientDefaultData from '../../data/clientDefault/locales/pt-BR.json'
-import themaDefaultData from '../../data/clientDefault/themes/light.json'
+import clientDefaultData from '../../data/bloxify/locales/pt-BR.json'
+import themaDefaultData from '../../data/bloxify/themes/light.json'
 
 export type TextsConfig = typeof clientDefaultData
 export type ColorsConfig = typeof themaDefaultData
@@ -16,9 +16,8 @@ export async function getClientConfig({
 }: {
   locale?: string
   theme?: ThemeMode
-} = {}
-): Promise<ClientConfig> {
-  const client = process.env.CLIENT || 'clientDefault'
+} = {}): Promise<ClientConfig> {
+  const client = process.env.CLIENT || 'bloxify'
   const localesToTry = [
     'pt-BR',
     'en-US',

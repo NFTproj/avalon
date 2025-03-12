@@ -12,8 +12,11 @@ function Header() {
 
   return (
     <header
-      className="w-full flex justify-between py-6 px-16"
-      style={{ backgroundColor: colors?.['header-primary'] }}
+      className="w-full flex justify-between py-6 px-16 items-center border-b-3"
+      style={{
+        backgroundColor: colors?.header['header-primary'],
+        borderColor: colors?.border['border-primary'],
+      }}
     >
       <section className="flex gap-8 items-center justify-center">
         <div className="w-40">
@@ -37,7 +40,15 @@ function Header() {
         </nav>
       </section>
 
-      <button type="button">
+      <button
+        type="button"
+        className="border rounded-xl p-4 px-2 text-sm leading-1 font-medium"
+        style={{
+          backgroundColor: colors?.buttons['button-secondary'],
+          borderColor: colors?.border['border-primary'],
+          color: colors?.colors['color-primary'],
+        }}
+      >
         {texts?.['landing-page'].header.buttons.button}
       </button>
     </header>

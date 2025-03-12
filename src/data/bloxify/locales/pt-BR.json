@@ -1,0 +1,28 @@
+{
+  "images": {
+    "logos": {
+      "main-logo": "logos/bloxify/bloxify-logo.png"
+    }
+  },
+  "landing-page": {
+    "header": {
+      "alts": {
+        "main-logo": "Logo da Bloxify"
+      },
+      "navigations": {
+        "navOne": "A Bloxify",
+        "navTwo": "Produtos",
+        "navThree": "Idioma"
+      },
+      "buttons": {
+        "button": "Cadastro ou Login"
+      }
+    },
+    "hero": {
+      "title": "Tokenização de ativos físicos e digitais",
+      "subtitle": "Ofereça a tokenização de ativos através da tecnologia blockchain, do deploy à venda, usando sua própria marca.",
+      "image": "images/bloxify/hero-image.png",
+      "alt": "Imagem de um homem segurando um tablet."
+    }
+  }
+}

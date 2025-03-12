@@ -8,6 +8,7 @@ type ImageProps = {
   height: number
   loading?: 'lazy' | 'eager'
   placeholder?: 'empty' | 'blur'
+  className?: string
 }
 
 export default function ImageFromJSON({
@@ -17,13 +18,14 @@ export default function ImageFromJSON({
   height,
   placeholder = 'blur',
   loading = 'eager',
+  className = '',
 }: ImageProps) {
   const [loadedSrc, setLoadedSrc] = useState<string | null>(null)
 
   useEffect(() => {
     if (src) {
       // Tenta carregar dinamicamente a imagem a partir do caminho informado
-      import(`@/assets/logos/${src}`)
+      import(`@/assets/${src}`)
         .then((module) => {
           setLoadedSrc(module.default)
         })
@@ -46,6 +48,7 @@ export default function ImageFromJSON({
         height={height}
         placeholder={placeholder}
         loading={loading}
+        className={className}
       />
     </Suspense>
   )
