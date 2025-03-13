@@ -7,7 +7,6 @@ type ImageProps = {
   width: number
   height: number
   loading?: 'lazy' | 'eager'
-  placeholder?: 'empty' | 'blur'
   className?: string
 }
 
@@ -16,7 +15,6 @@ export default function ImageFromJSON({
   alt,
   width,
   height,
-  placeholder = 'blur',
   loading = 'eager',
   className = '',
 }: ImageProps) {
@@ -46,7 +44,6 @@ export default function ImageFromJSON({
         alt={alt as string}
         width={width}
         height={height}
-        placeholder={placeholder}
         loading={loading}
         className={className}
       />

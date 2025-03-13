@@ -12,7 +12,7 @@ function Hero() {
     <section className="flex justify-center mt-24 w-full px-16">
       <div className="flex flex-col gap-4 w-2/5 ">
         <div
-          className="w-2/4 h-2 rounded-2xl"
+          className="w-1/3 h-1 rounded-2xl"
           style={{
             backgroundColor: colors?.border['border-primary'],
           }}
@@ -26,7 +26,7 @@ function Hero() {
         <h3
           className="text-4xl w-[90%] font-normal"
           style={{
-            color: colors?.colors['color-secondary'],
+            color: colors?.colors['color-tertiary'],
             textShadow: '4px 4px 4px #00000040',
           }}
         >

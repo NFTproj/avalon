@@ -11,9 +11,11 @@
   },
   "colors": {
     "color-primary": "#202020",
-    "color-secondary": "#707070"
+    "color-secondary": "#707070",
+    "color-tertiary": "#555859"
   },
   "background": {
-    "background-primary": "#F2FCFF"
+    "background-primary": "#F2FCFF",
+    "background-secondary": "#D9D9D9"
   }
 }

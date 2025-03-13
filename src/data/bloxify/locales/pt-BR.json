@@ -21,8 +21,31 @@
     "hero": {
       "title": "Tokenização de ativos físicos e digitais",
       "subtitle": "Ofereça a tokenização de ativos através da tecnologia blockchain, do deploy à venda, usando sua própria marca.",
-      "image": "images/bloxify/hero-image.png",
+      "image": "images/bloxify/hero-image.svg",
       "alt": "Imagem de um homem segurando um tablet."
+    },
+    "tokenization-steps": {
+      "title": "Comece com apenas três passos",
+      "steps": [
+        {
+          "title": "Entre em contato",
+          "description": "Receba sua chave de API e escolha seu plano de tokenização.",
+          "step": "1° Passo",
+          "icon": "icons/bloxify/contact-with-border-blue.svg"
+        },
+        {
+          "title": "Escolha um template",
+          "description": "Escolha um template sob medida para seu projeto.",
+          "step": "2° Passo",
+          "icon": "icons/bloxify/template-blue.svg"
+        },
+        {
+          "title": "Tokenize ativos",
+          "description": "Comece a oferecer ativos em formato tokenizado.",
+          "step": "3° Passo",
+          "icon": "icons/bloxify/graph-bar-increase-blue.svg"
+        }
+      ]
     }
   }
 }
