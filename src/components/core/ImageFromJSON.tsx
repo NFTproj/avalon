@@ -2,19 +2,19 @@ import { Suspense, useEffect, useState } from 'react'
 import Image from 'next/image'
 
 type ImageProps = {
-  src?: string
-  alt?: string
-  width: number
-  height: number
+  src: string
+  alt: string
+  width?: number
+  height?: number
   loading?: 'lazy' | 'eager'
   className?: string
 }
 
 export default function ImageFromJSON({
-  src,
-  alt,
-  width,
-  height,
+  src = '',
+  alt = '',
+  width = 500,
+  height = 500,
   loading = 'eager',
   className = '',
 }: ImageProps) {

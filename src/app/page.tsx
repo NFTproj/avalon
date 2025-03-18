@@ -1,3 +1,4 @@
+import FeaturesShowcase from '@/components/landingPage/FeaturesShowcase'
 import Header from '@/components/landingPage/Header'
 import Hero from '@/components/landingPage/Hero'
 import TokenizationSteps from '@/components/landingPage/TokenizationSteps'
@@ -9,6 +10,7 @@ export default function Home() {
       <main>
         <Hero />
         <TokenizationSteps />
+        <FeaturesShowcase />
       </main>
     </div>
   )

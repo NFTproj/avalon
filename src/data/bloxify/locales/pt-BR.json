@@ -26,6 +26,7 @@
     },
     "tokenization-steps": {
       "title": "Comece com apenas três passos",
+      "background": "backgrounds/bloxify/flow-image.svg",
       "steps": [
         {
           "title": "Entre em contato",
@@ -44,6 +45,78 @@
           "description": "Comece a oferecer ativos em formato tokenizado.",
           "step": "3° Passo",
           "icon": "icons/bloxify/graph-bar-increase-blue.svg"
+        }
+      ]
+    },
+    "features-showcase": {
+      "title": "Todos os recursos Bloxify",
+      "features": [
+        {
+          "id": 1,
+          "title": "Usuários Web3 em uma interface web2",
+          "subtitle": "Sign in",
+          "description": "Ofereça recursos blockchain com login via e-mail e senha, redes sociais ou link mágico.",
+          "attributes": {
+            "image": "images/bloxify/social-media.svg",
+            "alt": "Ícones de rede socias. Google, Aplle, Twitter, Facebook",
+            "title": "Use your social login",
+            "span": "or e-mail",
+            "email": "hello@world.com.br",
+            "continue-email": "Continue with e-mail"
+          }
+        },
+        {
+          "id": 2,
+          "title": "Deploy de tokens e contratos",
+          "subtitle": "Admin painel",
+          "description": "Crie, gerencie e comercialize tokens vinculados a ativos físicos e digitais de forma simples.",
+          "attributes": {
+            "title": "Faça deploy nas seguintes redes:",
+            "cryptos": [
+              {
+                "id": 1,
+                "name": "POLYGON",
+                "icon": "icons/bloxify/crypto-polygon.svg",
+                "alt": "Ícone da polygon"
+              },
+              {
+                "id": 2,
+                "name": "BASE",
+                "icon": "icons/bloxify/crypto-base.svg",
+                "alt": "Ícone da Base"
+              },
+              {
+                "id": 3,
+                "name": "ETHEREUM",
+                "icon": "icons/bloxify/cryptor-ethereum.svg",
+                "alt": "Ícone da Ethereum"
+              }
+            ]
+          }
+        },
+        {
+          "id": 3,
+          "title": "Verificação de usuário (KYC)",
+          "subtitle": "Checkout",
+          "description": "Escolha entre KYC obrigatório ou acesso livre, conforme sua estratégia."
+        },
+        {
+          "id": 4,
+          "title": "Tokenização",
+          "subtitle": "KYC",
+          "description": "Tokenize ativos físicos e digitais em diversas redes, do deploy à venda."
+        },
+        {
+          "id": 4,
+          "title": "API as a service",
+          "subtitle": "API",
+          "description": "Integre a tokenização ao seu site com nossa API. Entre em contato para acessar a documentação."
+        },
+        {
+          "id": 5,
+          "title": "Template White-Label",
+          "subtitle": "Template",
+          "description": "Escolha um template e personalize com a sua marca."
         }
       ]
     }

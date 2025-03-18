@@ -18,13 +18,13 @@ function Hero() {
           }}
         ></div>
         <h1
-          className="text-7xl font-bold"
+          className="text-6xl font-extrabold"
           style={{ color: colors?.colors['color-secondary'] }}
         >
           {texts?.['landing-page'].hero.title}
         </h1>
         <h3
-          className="text-4xl w-[90%] font-normal"
+          className="text-2xl w-[90%] font-normal"
           style={{
             color: colors?.colors['color-tertiary'],
             textShadow: '4px 4px 4px #00000040',

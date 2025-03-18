@@ -20,18 +20,18 @@ export default function TokenizationSteps() {
           }}
         ></div>
         <h2 className="text-5xl font-bold m-20">{textSteps?.title}</h2>
-        <div className="flex justify-between gap-4 w-full">
+        <div className="flex justify-between gap-4 w-full mb-20">
           {steps.map((step) => (
             <section
               key={step.step}
-              className="px-4 py-8 rounded-lg shadow-lg w-[30%] flex items-center justify-center"
+              className="mx-4 px-4 py-8 rounded-lg shadow-lg w-[30%] flex items-center justify-center"
               style={{
                 backgroundColor: `rgba(${hexToRgb(colors?.background['background-secondary'])}, 0.05)`,
               }}
             >
-              <div className="flex flex-col items-center gap-4 w-full mt-10">
-                <div className="flex flex-col w-3/4 gap-8 items-center">
-                  <div className="w-5/6">
+              <div className="flex flex-col items-center gap-4 w-full mt-10 ">
+                <div className="flex flex-col w-full gap-8 items-center">
+                  <div className="w-3/5">
                     <ImageFromJSON
                       src={step.icon}
                       alt={step.title}
@@ -43,18 +43,18 @@ export default function TokenizationSteps() {
 
                   <div className="flex flex-col w-ful">
                     <span
-                      className="ml-4 text-left"
+                      className="ml-4 text-left text-sm font-bold"
                       style={{ color: colors?.border['border-primary'] }}
                     >
                       {step.step}
                     </span>
-                    <h3 className="text-3xl font-semibold w-full text-center">
+                    <h3 className="text-3xl font-bold w-full text-center">
                       {step.title}
                     </h3>
                   </div>
                 </div>
 
-                <p className="text-xl">{step.description}</p>
+                <p className="text-lg font-poppins">{step.description}</p>
               </div>
             </section>
           ))}
