@@ -13,7 +13,7 @@ function AdminPainel({ index }: AdminPainelProps) {
   const textSingInFeature =
     texts?.['landing-page']['features-showcase'].features[index]
   return (
-    <div className="flex flex-col items-center p-6 gap-12 mt-4">
+    <div className="flex flex-col items-center p-6 pt-12 gap-12 mt-4">
       <h4
         className="font-semibold text-xl text-center"
         style={{ color: colors?.colors['color-quaternary'] }}

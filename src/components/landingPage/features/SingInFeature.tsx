@@ -1,4 +1,4 @@
-'use clients'
+'use client'
 
 import ImageFromJSON from '@/components/core/ImageFromJSON'
 import { ConfigContext } from '@/contexts/ConfigContext'

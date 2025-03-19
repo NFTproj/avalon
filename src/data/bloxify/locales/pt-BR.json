@@ -96,27 +96,96 @@
         },
         {
           "id": 3,
-          "title": "Verificação de usuário (KYC)",
+          "title": "Comercialização simplificada de tokens",
           "subtitle": "Checkout",
-          "description": "Escolha entre KYC obrigatório ou acesso livre, conforme sua estratégia."
+          "description": "Venda tokens de forma fácil e segura, com pagamento via Pix no Brasil e cartão de crédito no mundo.",
+          "attributes": {
+            "title": "Escolha o método  de pagamento:",
+            "text-pix": "Pagamentos Via Pix (BR)",
+            "text-credit-card": "Pagamentos via cartão (Global)",
+            "image-pix": "icons/bloxify/pix.svg",
+            "alt-pix": "Ícone do Pix",
+            "image-credit-card": "icons/bloxify/credit-card.svg",
+            "alt-credit-card": "Ícone do cartão de crédito"
+          }
         },
         {
           "id": 4,
-          "title": "Tokenização",
+          "title": "Verificação de usuário (KYC)",
           "subtitle": "KYC",
-          "description": "Tokenize ativos físicos e digitais em diversas redes, do deploy à venda."
-        },
-        {
-          "id": 4,
-          "title": "API as a service",
-          "subtitle": "API",
-          "description": "Integre a tokenização ao seu site com nossa API. Entre em contato para acessar a documentação."
+          "description": "Escolha entre KYC obrigatório ou acesso livre, conforme sua estratégia.",
+          "attributes": {
+            "title": "Verificação de identiidentidade (KYC)",
+            "image": "icons/bloxify/kyc.svg",
+            "alt": "Ícone de KYC"
+          }
         },
         {
           "id": 5,
+          "title": "Tokenização",
+          "subtitle": "Tokenização",
+          "description": "Tokenize ativos físicos e digitais em diversas redes, do deploy à venda.",
+          "attributes": {
+            "title": "Tokenização simplificada",
+            "image": "icons/bloxify/tokenization.svg",
+            "alt": "Ícone para representar tokenização. Uma estrutura de dados ligada a um hardware",
+            "cryptos": [
+              {
+                "id": 1,
+                "name": "POLYGON",
+                "icon": "icons/bloxify/crypto-polygon.svg",
+                "alt": "Ícone da polygon"
+              },
+              {
+                "id": 2,
+                "name": "BASE",
+                "icon": "icons/bloxify/crypto-base.svg",
+                "alt": "Ícone da Base"
+              },
+              {
+                "id": 3,
+                "name": "ETHEREUM",
+                "icon": "icons/bloxify/cryptor-ethereum.svg",
+                "alt": "Ícone da Ethereum"
+              }
+            ]
+          }
+        },
+        {
+          "id": 6,
+          "title": "API as a service",
+          "subtitle": "API",
+          "description": "Integre a tokenização ao seu site com nossa API. Entre em contato para acessar a documentação.",
+          "attributes": {
+            "title": "API AS A SERVICE",
+            "image": "images/bloxify/code-image.png",
+            "alt": "Icone para representar uma código em programação.",
+            "languages": [
+              {
+                "image": "icons/bloxify/typescript.svg",
+                "alt": "Ícone do TypeScript"
+              },
+              {
+                "image": "icons/bloxify/react.svg",
+                "alt": "Ícone do React"
+              },
+              {
+                "image": "icons/bloxify/node.svg",
+                "alt": "Ícone do NodeJS"
+              }
+            ]
+          }
+        },
+        {
+          "id": 7,
           "title": "Template White-Label",
           "subtitle": "Template",
-          "description": "Escolha um template e personalize com a sua marca."
+          "description": "Escolha um template e personalize com a sua marca.",
+          "attributes": {
+            "title": "Template White-Label",
+            "image": "icons/bloxify/template-white-label.svg",
+            "alt": "Icone para representar white label"
+          }
         }
       ]
     }

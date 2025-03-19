@@ -6,6 +6,11 @@ import { Accordion } from '../core/Accordion/Accordion'
 import { cn } from '@/utils/cn'
 import SingInFeature from './features/SingInFeature'
 import AdminPainel from './features/AdminPainel'
+import CheckoutFeature from './features/CheckoutFeature'
+import KycFeature from './features/KycFeature'
+import TokenizationFeature from './features/TokenizationFeature'
+import WhiteLabelFeature from './features/WhiteLabelFeature'
+import ApiFeature from './features/ApiFeature'
 
 export default function FeaturesShowcase() {
   const { colors, texts } = useContext(ConfigContext)
@@ -18,6 +23,11 @@ export default function FeaturesShowcase() {
   const featureComponents = [
     <SingInFeature index={0} key="singin" />,
     <AdminPainel index={1} key="admin" />,
+    <CheckoutFeature index={2} key="checkout" />,
+    <KycFeature index={3} key="kyc" />,
+    <TokenizationFeature index={4} key="tokenization" />,
+    <ApiFeature index={5} key="api-feature" />,
+    <WhiteLabelFeature index={6} key="white-label" />,
   ]
 
   const handleToggle = (isOpen: boolean, index: number) => {
@@ -25,16 +35,16 @@ export default function FeaturesShowcase() {
   }
 
   return (
-    <section className="py-16 px-6 bg-gray-100 text-gray-800">
-      <div className="max-w-7xl mx-auto">
-        <h2 className={`text-3xl font-bold mb-10 text-center md:text-left`}>
+    <section className="text-gray-800">
+      <div className="mt-24 w-full px-16">
+        <h2 className={`text-3xl font-bold mb-20 text-center`}>
           {showcase?.title}
         </h2>
 
         <div className="flex justify-between">
           <div
             style={{ backgroundColor: colorBackgroundAccordion }}
-            className="text-white p-6 pb-24 rounded-md w-1/3"
+            className="text-white p-6 pb-24 rounded-md w-[40%]"
           >
             <h3
               className="text-center text-xl font-semibold"
@@ -52,7 +62,7 @@ export default function FeaturesShowcase() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-2 w-3/5">
+          <div className="flex flex-col gap-2 w-3/6">
             {features.map((feature, index) => (
               <Accordion
                 key={index}

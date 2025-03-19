@@ -2,8 +2,8 @@ import { Suspense, useEffect, useState } from 'react'
 import Image from 'next/image'
 
 type ImageProps = {
-  src: string
-  alt: string
+  src?: string
+  alt?: string
   width?: number
   height?: number
   loading?: 'lazy' | 'eager'
