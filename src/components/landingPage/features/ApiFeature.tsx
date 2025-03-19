@@ -25,7 +25,7 @@ function ApiFeature({ index }: ApiFeatureProps) {
       <div className="flex flex-col gap-8">
         <div className="flex gap-6">
           {textSingInFeature?.attributes.languages?.map((language) => (
-            <div className="w-16">
+            <div className="w-12">
               <ImageFromJSON src={language.image} alt={language.alt} />
             </div>
           ))}

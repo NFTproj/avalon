@@ -188,6 +188,36 @@
           }
         }
       ]
+    },
+    "forms-contact": {
+      "title": "Vem conhecer!",
+      "support": {
+        "title": "Central de Suporte",
+        "description": "Estamos aqui para ajudar! Nossa equipe de suporte ao cliente é altamente capacitada e está pronta para atender às suas necessidades.",
+        "email": "contato@blocklize.io",
+        "image": "images/bloxify/banner-contact.svg",
+        "alt": "Imagem de um banner de contato."
+      },
+      "form": {
+        "title": "Vem conhecer!",
+        "name": {
+          "label": "Nome completo (obrigatório)",
+          "placeholder": "Digite seu nome"
+        },
+        "email": {
+          "label": "E-mail (obrigatório)",
+          "placeholder": "Digite seu email"
+        },
+        "phone": {
+          "label": "Telefone/WhatsApp",
+          "placeholder": "Digite seu telefone"
+        },
+        "message": {
+          "label": "Conte um pouco sobre a sua empresa e como a Bloxify pode te ajudar:",
+          "placeholder": "Escreva sua mensagem"
+        },
+        "submit": "Enviar"
+      }
     }
   }
 }

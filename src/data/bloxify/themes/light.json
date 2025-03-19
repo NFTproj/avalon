@@ -21,6 +21,7 @@
     "background-secondary": "#D9D9D9",
     "background-tertiary": "#363636",
     "background-quaternary": "#141414",
-    "background-quintenary": "#A6A6A6"
+    "background-quintenary": "#A6A6A6",
+    "background-sixteen": "#050504"
   }
 }

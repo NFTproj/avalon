@@ -35,7 +35,7 @@ export default function FeaturesShowcase() {
   }
 
   return (
-    <section className="text-gray-800">
+    <section className="text-gray-800 pb-80">
       <div className="mt-24 w-full px-16">
         <h2 className={`text-3xl font-bold mb-20 text-center`}>
           {showcase?.title}
