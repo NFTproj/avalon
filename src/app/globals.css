@@ -18,6 +18,23 @@
   }
 }
 
+@media (min-width: 1920px) {
+  /* Força o container a ter 45% da largura e altura total */
+  .image-large-override {
+    width: 45vw !important;
+    height: calc(100vh - 96px) !important; /* gruda no topo e rodapé */
+    position: relative !important; /* caso precise garantir o contexto */
+  }
+
+  /* Faz a imagem preencher esse container, colando nos cantos */
+  .image-large-override img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important; /* preenche mesmo que corte um pouquinho */
+    display: block !important;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

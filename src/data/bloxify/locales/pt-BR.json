@@ -219,5 +219,112 @@
         "submit": "Enviar"
       }
     }
+  },
+    "register": {
+    "image": "images/login/creating-account.svg",
+    "alt": "Pessoa segurando chave de acesso",
+    "step-zero": {
+      "title": "Bem-vindo(a) à Slab!",
+      "description": "Crie a sua conta em 2 minutos e negocie tokens de forma rápida e confiável.",
+      "button-email": "Criar com E-mail",
+      "button-metamask": "Criar com Metamask",
+      "already-have-account": "Já possui uma conta?",
+      "login-link": "Login", 
+      "fase": "Etapa"
+    },
+    "step-one": {
+      "counter": {
+        "current": "01",
+        "total": "de 04"
+      },
+      "title": "Escolha um e-mail",
+      "description": "Se é a sua primeira vez aqui, comece o processo de registro inserindo seu e-mail.",
+      "labels": {
+        "emailLabel": "Seu e-mail:"
+      },
+      "placeholders": {
+        "email": "email@email.com"
+      },
+      "button-next": "Próximo",
+      "already-have-account": "Já possui uma conta?",
+      "login-link": "Login"
+    }, 
+    "step-two": {
+    "counter": {
+      "current": "02",
+      "total": "de 04"
+    },
+    "title": "Agora escolha uma senha",
+    "description": "Utilize letras, números e caracteres especiais.",
+    "labels": {
+      "password": "Digite uma senha",
+      "confirmPassword": "Repita sua senha"
+    },
+    "disclaimer": "Ao continuar você aceita os Termos de uso e a Política de Privacidade da Slab Assets e declara não ser uma pessoa dos Estados Unidos.",
+    "button-continue": "Continuar",
+    "button-back": "Voltar"
+  },
+  "step-three": {
+    "counter": {
+      "current": "03",
+      "total": "de 04"
+    },
+    "title": "Verifique seu e-mail!",
+    "description": "Insira o código que foi enviado para o seu e-mail.",
+    "labels": {
+      "code": "Insira o código"
+    },
+    "placeholders": {
+      "code": "123456"
+    },
+    "button-verify": "Verificar"
+  },
+  "step-four": {
+    "counter": {
+      "current": "04",
+      "total": "de 04"
+    },
+    "title": "Acesse a sua conta",
+    "paragraphEmail": "Seu e-mail",
+    "paragraphPassword": "Digite a sua senha",
+    "labels": {
+      "email": "",
+      "password": ""
+    },
+    "placeholders": {
+      "email": "email@email.com",
+      "password": "••••••••"
+    },
+    "button-back": "Voltar",
+    "button-login": "Entrar"
+  }
+
+  },
+"footer": {
+  "alt-logo": "Logo da Bloxify",
+  "columns": [
+    {
+      "title": "Sobre a Bloxify",
+      "items": ["Conheça a Bloxify", "Nossos Projetos"]
+    },
+    {
+      "title": "Produtos",
+      "items": ["Tokenização", "Marketplace de Tokens"]
+    },
+    {
+      "title": "Suporte",
+      "items": ["Central de Ajuda", "Fale Conosco"]
+    },
+    {
+      "title": "Legal",
+      "items": ["Política de Privacidade", "Termos de Uso"]
+    }
+  ]
+},
+
+"common": {
+    "loadingOverlay": {
+      "message": "Carregando.."
+    }
   }
 }

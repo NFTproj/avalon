@@ -3,10 +3,14 @@
 import { ConfigContext } from '@/contexts/ConfigContext'
 import Image from 'next/image'
 import { useContext } from 'react'
+import { useRouter } from 'next/navigation'
 import ImageFromJSON from '../core/ImageFromJSON'
 
 function Header() {
   const { colors, texts } = useContext(ConfigContext)
+
+  const router = useRouter()
+  
   const textLandingPage = texts?.['landing-page']
   const navigations = textLandingPage?.header.navigations
 
@@ -19,7 +23,9 @@ function Header() {
       }}
     >
       <section className="flex gap-8 items-center justify-center">
-        <div className="w-40">
+        <div className="w-40"
+        onClick={() => router.push('/')}
+        >
           <ImageFromJSON
             src={texts?.images.logos['main-logo']}
             alt={textLandingPage?.header.alts['main-logo']}
@@ -42,6 +48,7 @@ function Header() {
 
       <button
         type="button"
+        onClick={() => router.push('/register')}
         className="border rounded-xl p-4 px-2 text-sm leading-1 font-medium"
         style={{
           backgroundColor: colors?.buttons['button-secondary'],

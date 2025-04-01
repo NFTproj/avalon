@@ -1,10 +1,12 @@
 {
   "header": {
-    "header-primary": "#002D3121"
+    "header-primary": "#F2FCFF"
   },
   "buttons": {
-    "button-primary": "#A6A6A6C7",
-    "button-secondary": "#002D3126"
+    "button-primary": "#08CEFF",
+    "button-secondary": "#002D3126",
+    "button-third": "#C0FEFF"
+    
   },
   "border": {
     "border-primary": "#08CEFF"
