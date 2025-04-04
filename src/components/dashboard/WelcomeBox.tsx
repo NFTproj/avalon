@@ -12,7 +12,7 @@ export default function WelcomeBox() {
   const backgroundColor = colors?.dashboard?.background?.['welcome-box'] || '#353535';
   console.log('welcomeTexts:', welcomeTexts);
 
-  const testTitle = "Teste com<br/>quebra";
+  //const testTitle = "Teste com<br/>quebra";
 
   const descriptionWithBreaks = welcomeTexts?.description?.replace(/\n/g, '<br/>') || '';
 
@@ -38,15 +38,12 @@ export default function WelcomeBox() {
           className="text-2xl font-semibold mb-4"
           dangerouslySetInnerHTML={{ __html: welcomeTexts?.title || 'Bem-vindo(a)!' }}
         />
-        <h2
-        className="text-2xl font-semibold mb-4 text-white" // Adicionei text-black para garantir a cor do texto
-        dangerouslySetInnerHTML={{ __html: testTitle }}
-      />
         {/* Limita o parágrafo sem centralizá-lo */}
-        <div className="max-w-[240px]">
-        <p className="text-base max-w-xl mb-6 whitespace-pre-line text-left">
-            {welcomeTexts?.description || ''}
-          </p>
+        <div >
+        <p
+            className="text-base max-w-xl mb-6 whitespace-pre-line text-left"
+            dangerouslySetInnerHTML={{ __html: descriptionWithBreaks }}
+        />
         </div>
         <a
           href="#"

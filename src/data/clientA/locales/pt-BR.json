@@ -330,7 +330,7 @@
   "dashboard": {
   "welcome-box": {
     "name": "Antônio,",
-    "title": "Bem-vindo (a)\n à Slab!",
+    "title": "Bem-vindo (a) <br /> à Slab!",
     "description": "Conheça os projetos que foram <br /> tokenizados, invista com<br/>segurança e tenha o controle<br/>total do seu patrimônio na <br /> palma da sua mão.",
     "link": "Ver detalhes"
   }
