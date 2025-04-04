@@ -1,13 +1,15 @@
 'use client'
 
 import Header from '@/components/landingPage/Header'
-import Steps from '@/components/register/Steps'
 import { useContext } from 'react'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import ImageFromJSON from '@/components/core/ImageFromJSON'
 import Footer from '@/components/commom/footer'
+import LoginForm from '@/components/login/FormsLogin'
 
-export default function RegisterPage() {
+
+
+export default function LoginPage() {
   const { texts } = useContext(ConfigContext)
   const loginData = texts?.['register']
 
@@ -49,7 +51,7 @@ export default function RegisterPage() {
               max-w-md w-full
             "
           >
-            <Steps />
+            <LoginForm />
           </div>
         </div>
       </main>

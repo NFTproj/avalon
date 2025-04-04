@@ -11,6 +11,8 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-poppins: var(--font-poppins);
+
+  
 }
 
 @media (prefers-color-scheme: dark) {
@@ -39,4 +41,57 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  @media (max-width: 730px) {
+    .custom730\:flex-col {
+      flex-direction: column;
+    }
+
+    .custom730\:static {
+      position: static;
+    }
+
+    .custom730\:mt-6 {
+      margin-top: 1.5rem;
+    }
+
+    .custom730\:block {
+      display: block;
+    }
+
+    .custom730\:w-full {
+      width: 100%;
+    }
+
+    .custom730\:h-auto {
+      height: auto;
+    }
+
+    .custom730\:pr-0 {
+      padding-right: 0;
+    }
+
+    .custom730\:top-0 {
+      top: 0;
+    }
+
+    .custom730\:right-0 {
+      right: 0;
+    }
+
+    .custom730\:card-width {
+      width: clamp(280px, 90%, 500px);
+    }
+
+    .custom730\:card-height-welcome {
+      height: clamp(200px, 30vw, 492px);
+    }
+
+    .custom730\:card-height-chart {
+      height: clamp(200px, 37vw, 599px);
+    }
+  }
+  
 }

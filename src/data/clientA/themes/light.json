@@ -1,11 +1,11 @@
 {
   "header": {
-    "header-primary": "#F2FCFF"
+    "header-primary": "#ff0000"
   },
   "buttons": {
-    "button-primary": "#08CEFF",
-    "button-secondary": "#002D3126",
-    "button-third": "#C0FEFF"
+    "button-primary": "#ff0000",
+    "button-secondary": "#ff0000",
+    "button-third": "#ff0000"
     
   },
   "border": {
@@ -29,12 +29,8 @@
 
   "dashboard": {
   "background": {
-    "welcome-box": "#353535", 
+    "welcome-box": "#08CEFFCC", 
     "chart-box": "#FFFFF2"
-  },
-  "colors": {
-    "text": "#FFFFFF",
-    "link": "#08CEFF"
   }
 }
 }

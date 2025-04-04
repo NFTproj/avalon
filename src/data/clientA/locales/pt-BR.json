@@ -19,7 +19,7 @@
       }
     },
     "hero": {
-      "title": "Tokenização de ativos físicos e digitais",
+      "title": "Mário best dev ",
       "subtitle": "Ofereça a tokenização de ativos através da tecnologia blockchain, do deploy à venda, usando sua própria marca.",
       "image": "images/bloxify/hero-image.svg",
       "alt": "Imagem de um homem segurando um tablet."
@@ -330,8 +330,8 @@
   "dashboard": {
   "welcome-box": {
     "name": "Antônio,",
-    "title": "Bem-vindo (a) à Slab!",
-    "description": "Conheça os projetos que foram tokenizados, invista com segurança e tenha o controle total do seu patrimônio na palma da sua mão.",
+    "title": "Bem-vindo (a)\n à Slab!",
+    "description": "Conheça os projetos que foram <br /> tokenizados, invista com<br/>segurança e tenha o controle<br/>total do seu patrimônio na <br /> palma da sua mão.",
     "link": "Ver detalhes"
   }
 }

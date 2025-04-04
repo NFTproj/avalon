@@ -41,7 +41,8 @@ export const ConfigProvider = ({ children }: { children: ReactNode }) => {
     const loadConfig = async () => {
       const data = await getClientConfig({ locale: lang })
       setConfig(data)
-      setTexts(data.texts)
+      setTexts(data.texts);
+      console.log('Data recebida do getClientConfig:', data.texts); // <--- ADICIONE ESTE LOG
       setColors(data.colors)
     }
     loadConfig()
