@@ -1,3 +1,4 @@
+import Footer from '@/components/commom/footer'
 import FeaturesShowcase from '@/components/landingPage/FeaturesShowcase'
 import FormsContact from '@/components/landingPage/FormsContact'
 import Header from '@/components/landingPage/Header'
@@ -14,6 +15,7 @@ export default function Home() {
         <FeaturesShowcase />
         <FormsContact />
       </main>
+      <Footer />
     </div>
   )
 }

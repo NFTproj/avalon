@@ -35,19 +35,21 @@ export default function FeaturesShowcase() {
   }
 
   return (
-    <section className="text-gray-800 pb-80">
-      <div className="mt-24 w-full px-16">
-        <h2 className={`text-3xl font-bold mb-20 text-center`}>
+    <section className="text-gray-800 pb-20 md:pb-80">
+      <div className="mt-12 md:mt-24 w-full px-4 md:px-16">
+        <h2
+          className={`text-2xl md:text-3xl font-bold mb-10 md:mb-20 text-center`}
+        >
           {showcase?.title}
         </h2>
 
-        <div className="flex justify-between">
+        <div className="flex flex-col md:flex-row justify-between gap-8 md:gap-0">
           <div
             style={{ backgroundColor: colorBackgroundAccordion }}
-            className="text-white p-6 pb-24 rounded-md w-[40%]"
+            className="text-white p-4 md:p-6 pb-12 md:pb-24 rounded-md w-full md:w-[50%] order-2 md:order-1"
           >
             <h3
-              className="text-center text-xl font-semibold"
+              className="text-center text-lg md:text-xl font-semibold"
               style={{ color: colors?.colors['color-quaternary'] }}
             >
               {features[selectedFeature]?.subtitle}
@@ -62,21 +64,21 @@ export default function FeaturesShowcase() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-2 w-3/6">
+          <div className="flex flex-col gap-2 w-full md:w-[40%] order-1 md:order-2">
             {features.map((feature, index) => (
               <Accordion
-                key={index}
+                key={feature.id}
                 title={feature.title}
                 isOpen={selectedFeature === index}
                 onToggle={(isOpen: boolean) => handleToggle(isOpen, index)}
-                titleClassName="font-semibold text-lg"
+                titleClassName="font-semibold text-base md:text-lg"
                 accordionClassName="rounded-md p-2"
                 accordionStyle={{ backgroundColor: colorBackgroundAccordion }}
                 contentStyle={{
                   backgroundColor: colorBackgroundAccordion,
                   color: colors?.colors['color-quaternary'],
                 }}
-                contentClassName="rounded-md p-2 pb-4 font-semibold text-base"
+                contentClassName="rounded-md p-2 pb-4 font-semibold text-sm md:text-base"
                 emptyIcon={true}
               >
                 {feature.description}

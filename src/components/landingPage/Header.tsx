@@ -1,7 +1,6 @@
 'use client'
 
 import { ConfigContext } from '@/contexts/ConfigContext'
-import Image from 'next/image'
 import { useContext } from 'react'
 import { useRouter } from 'next/navigation'
 import ImageFromJSON from '../core/ImageFromJSON'
@@ -10,37 +9,42 @@ function Header() {
   const { colors, texts } = useContext(ConfigContext)
 
   const router = useRouter()
-  
+
   const textLandingPage = texts?.['landing-page']
   const navigations = textLandingPage?.header.navigations
 
   return (
     <header
-      className="w-full flex justify-between py-6 px-16 items-center border-b-3"
+      className="w-full flex  justify-between md:py-6 py-4 md:px-16 px-4 md:gap-0 items-center border-b-3"
       style={{
         backgroundColor: colors?.header['header-primary'],
         borderColor: colors?.border['border-primary'],
       }}
     >
       <section className="flex gap-8 items-center justify-center">
-        <div className="w-40"
-        onClick={() => router.push('/')}
-        >
+        <button className="w-30 md:w-60" onClick={() => router.push('/')}>
           <ImageFromJSON
             src={texts?.images.logos['main-logo']}
             alt={textLandingPage?.header.alts['main-logo']}
             width={500}
             height={600}
           />
-        </div>
-        <nav className="flex gap-2 mt-1.5">
-          <details>
+        </button>
+        <nav
+          className="flex gap-2 mt-1.5"
+          style={{
+            backgroundColor: colors?.background['background-primary'],
+            borderColor: colors?.border['border-primary'],
+            color: colors?.colors['color-primary'],
+          }}
+        >
+          <details className="hidden md:block">
             <summary>{navigations?.navOne}</summary>
           </details>
-          <details>
+          <details className="hidden md:block">
             <summary>{navigations?.navTwo}</summary>
           </details>
-          <details>
+          <details className="hidden md:block">
             <summary>{navigations?.navThree}</summary>
           </details>
         </nav>
