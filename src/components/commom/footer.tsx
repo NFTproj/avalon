@@ -14,9 +14,9 @@ export default function Footer() {
       className="w-full px-16 py-12"
       style={{ backgroundColor: colors?.header['header-primary'] }}
     >
-      <div className="max-w-[1455px] mx-auto grid grid-cols-1 md:grid-cols-5 gap-8">
+      <div className="max-w-[1455px] mx-auto grid grid-cols-1 md:grid-cols-5 xl:grid-cols-5 gap-8">
         {/* LOGO */}
-        <div className="col-span-1">
+        <div className="col-span-1 flex justify-center md:justify-start mb-4 md:mb-0">
           <div className="w-40">
             <ImageFromJSON
               src={texts?.images?.logos?.['main-logo']}
@@ -29,7 +29,10 @@ export default function Footer() {
 
         {/* COLUNAS DE TEXTO */}
         {columns.map((col, index) => (
-          <div key={index} className="flex flex-col gap-2">
+          <div
+            key={index}
+            className="flex flex-col gap-2 text-center md:text-left"
+          >
             <h4
               className="font-semibold text-lg"
               style={{ color: colors?.colors['color-secondary'] }}
