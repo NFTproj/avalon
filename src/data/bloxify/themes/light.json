@@ -6,7 +6,6 @@
     "button-primary": "#08CEFF",
     "button-secondary": "#002D3126",
     "button-third": "#C0FEFF"
-    
   },
   "border": {
     "border-primary": "#08CEFF"
@@ -28,13 +27,23 @@
   },
 
   "dashboard": {
-  "background": {
-    "welcome-box": "#353535", 
-    "chart-box": "#FFFFF2"
-  },
-  "colors": {
-    "text": "#FFFFFF",
-    "link": "#08CEFF"
+    "background": {
+      "page": "#e6f1ee",
+      "welcome-box": "#404040",
+      "header": "#404040",
+      "table-header": "#f8f7e9",
+      "table-body": "#fdfcf7"
+    },
+    "colors": {
+      "text": "#FFFFFF",
+      "highlight": "#00ffe1",
+      "table-text": "#404040",
+      "token-border": "#00ffe1"
+    },
+    "buttons": {
+      "action-border": "#00ffe1",
+      "table-button-text": "#4e4e4e",
+      "table-button-bg": "transparent"
+    }
   }
-}
 }

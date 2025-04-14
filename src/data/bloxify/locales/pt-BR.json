@@ -328,10 +328,52 @@
   },
   "dashboard": {
     "welcome-box": {
-      "name": "Antônio,",
-      "title": "Bem-vindo (a) <br /> à Slab!",
-      "description": "Conheça os projetos que foram <br /> tokenizados, invista com<br/>segurança e tenha o controle<br/>total do seu patrimônio na <br /> palma da sua mão.",
-      "link": "Ver detalhes"
+      "name": "Antônio",
+      "title": "Bem-vindo (a) à Slab!",
+      "description": "Conheça os projetos que foram tokenizados, investa com segurança e tenha o controle total do seu patrimônio na palma da sua mão.",
+      "link": "Ver detalhes",
+      "tokens-title": "Seus Tokens:",
+      "tokens": ["#TBIO", "#TBIO2"]
+    },
+    "action-buttons": [
+      {
+        "id": 1,
+        "name": "Comprar",
+        "icon": "🛒"
+      },
+      {
+        "id": 2,
+        "name": "Emitir Certificado",
+        "icon": "📜"
+      },
+      {
+        "id": 3,
+        "name": "Sacar",
+        "icon": "💵"
+      },
+      {
+        "id": 4,
+        "name": "Histórico",
+        "icon": "📊"
+      },
+      {
+        "id": 5,
+        "name": "Verificações KYC",
+        "icon": "🔍"
+      }
+    ],
+    "asset-list": {
+      "title": "Sua carteira",
+      "highlight": "Slab",
+      "columns": {
+        "project": "Projeto",
+        "unit-value": "Valor unitário",
+        "total-value": "Valor Total"
+      },
+      "buttons": {
+        "buy": "Comprar",
+        "sell": "Vender"
+      }
     }
   }
 }

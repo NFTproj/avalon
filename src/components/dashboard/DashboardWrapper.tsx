@@ -2,6 +2,7 @@
 
 import WelcomeBox from './WelcomeBox'
 import ChartBox from './ChartBox'
+import AssetList from './AssetList'
 
 export default function DashboardWrapper() {
   return (
@@ -21,6 +22,7 @@ export default function DashboardWrapper() {
       >
         <WelcomeBox />
         <ChartBox />
+        <AssetList />
       </div>
     </div>
   )

@@ -1,25 +1,33 @@
+import { useContext } from 'react'
+import { ConfigContext } from '@/contexts/ConfigContext'
+
 export default function ChartBox() {
-    return (
-      <div
-        className="
-          z-20 rounded-2xl shadow-lg
-          block
-          absolute top-[-40px] right-[65px] sm:right-[40px]
-  
-          custom730:static
-          custom730:mt-6
-          custom730:mx-auto
-          custom730:w-[clamp(280px,90%,500px)]
-          custom730:h-[clamp(200px,30vw,492px)]
-        "
-        style={{
-          width: 'clamp(300px, 40vw, 900px)',
-          height: 'clamp(200px, 37vw, 599px)',
-          backgroundColor: '#FFFFF2',
-        }}
-      >
-        {/* Futuro gráfico */}
+  const { texts, colors } = useContext(ConfigContext)
+
+  const actionButtons = texts?.dashboard?.['action-buttons'] || [
+    { id: 1, name: 'Comprar', icon: '🛒' },
+    { id: 2, name: 'Emitir Certificado', icon: '📜' },
+    { id: 3, name: 'Sacar', icon: '💵' },
+    { id: 4, name: 'Histórico', icon: '📊' },
+    { id: 5, name: 'Verificações KYC', icon: '🔍' },
+  ]
+
+  const borderColor = colors?.dashboard?.buttons?.['action-border'] || '#00ffe1'
+
+  return (
+    <div className="mt-6 w-full">
+      <div className="flex flex-wrap justify-center gap-4">
+        {actionButtons.map((button) => (
+          <div
+            key={button.id}
+            className="w-36 h-20 bg-white rounded-md flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors"
+            style={{ border: `2px solid ${borderColor}` }}
+          >
+            <div className="text-xl">{button.icon}</div>
+            <p className="text-[#404040] text-sm mt-1">{button.name}</p>
+          </div>
+        ))}
       </div>
-    )
-  }
-  
+    </div>
+  )
+}
