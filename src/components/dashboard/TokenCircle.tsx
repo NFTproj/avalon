@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
-import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
+import { ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
 interface TokenCircleProps {
-  tokens: string[];
-  show: boolean;
-  toggleShow: () => void;
+  tokens: { name: string; price: number; color: string }[];
+  show: boolean; 
+  toggleShow: () => void; 
 }
 
 const data = [
@@ -21,8 +21,6 @@ const proportionalData = data.map((item) => ({
   value: (item.price / totalPrice) * 100,
 }));
 
-const totalValue = proportionalData.reduce((sum, item) => sum + item.value, 0);
-
 export default function TokenCircle({ tokens, show, toggleShow }: TokenCircleProps) {
   return (
     <div className="flex flex-col items-center justify-center w-full h-full relative">
@@ -33,7 +31,7 @@ export default function TokenCircle({ tokens, show, toggleShow }: TokenCirclePro
             cx="50%"
             cy="50%"
             innerRadius={110}
-            outerRadius={138}
+            outerRadius={128}
             fill="#8884d8"
             dataKey="value"
             isAnimationActive
@@ -41,7 +39,7 @@ export default function TokenCircle({ tokens, show, toggleShow }: TokenCirclePro
             {proportionalData.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
-                fill={entry.color} 
+                fill={entry.color}
                 stroke="none"
               />
             ))}
@@ -49,7 +47,9 @@ export default function TokenCircle({ tokens, show, toggleShow }: TokenCirclePro
         </PieChart>
       </ResponsiveContainer>
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-        <p className="text-xl font-bold text-gray-800">R$ {totalPrice.toFixed(2)}</p>
+        <p className="text-xl font-bold text-gray-800">
+          {show ? `R$ ${totalPrice.toFixed(2)}` : 'R$ ******'}
+        </p>
         <p className="text-sm text-gray-600">Total Investido</p>
       </div>
     </div>
