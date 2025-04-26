@@ -15,7 +15,8 @@
         "navThree": "Idioma"
       },
       "buttons": {
-        "button": "Cadastro ou Login"
+        "button": "Criar conta",
+        "buttonLogin": "Entar"
       }
     },
     "hero": {
