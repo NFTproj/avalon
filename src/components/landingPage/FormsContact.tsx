@@ -22,8 +22,32 @@ function FormsContact() {
             alt={support?.alt}
             className="w-full relative"
           />
+          <div className="absolute ml-10 top-0 w-[30%] h-full flex flex-col justify-center gap-4 p-8">
+            <h2
+              className="text-2xl md:text-4xl font-bold"
+              style={{ color: colors?.colors['color-primary'] }}
+            >
+              {support?.title}
+            </h2>
+            <p
+              className="text-sm md:text-lg"
+              style={{ color: colors?.colors['color-secondary'] }}
+            >
+              {support?.description}
+            </p>
+            <a
+              href={`mailto:${support?.email}`}
+              className="inline-block text-center w-[50%] px-6 py-3 text-white font-bold rounded-md shadow "
+              style={{
+                backgroundColor: colors?.buttons['button-primary'],
+                color: colors?.colors['color-primary']
+              }}
+            >
+              {support?.email}
+            </a>
         </div>
 
+        </div>
         <div className="flex justify-center items-center flex-col gap-8 md:gap-16 px-4 md:px-16 py-6 md:py-12 w-full">
           <h2
             className="font-bold text-3xl md:text-5xl text-center"
