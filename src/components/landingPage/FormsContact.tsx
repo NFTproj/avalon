@@ -15,29 +15,35 @@ function FormsContact() {
       className="flex flex-col items-center relative w-full mt-12 md:mt-24 sm:mt-50 lg:mt-40 gap-2 md:gap-0"
     >
       <div className="flex flex-col gap-2 md:gap-2 w-full px-4 md:px-8 lg:px-20 py-6 md:py-12 relative">
-        <div className="relative w-full h-60 sm:h-[300px]  md:h-[400px] z-10 -translate-y-1/2 md:-translate-x-1/2 md:translate-x-0 roudonded rounded-lg overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-1/2 bg-white"></div>
-          <ImageFromJSON
-            src={support?.image}
-            alt={support?.alt}
-            className="w-full h-full object-cover relative"
-          />
-          <div className="absolute top-0 w-full md:w-[40%] h-full flex flex-col justify-center gap-4 p-6 md:p-8 mr-0 ">
+        <div
+          className="relative w-full h-60 sm:h-[300px] md:h-[400px] z-10 -translate-y-1/2 md:-translate-x-1/2 md:translate-x-0 rounded-lg overflow-hidden"
+          style={{
+            backgroundColor: colors?.background['background-primary'],
+          }}
+        >
+          <div className="hidden md:block w-full h-full">
+            <ImageFromJSON
+              src={support?.image}
+              alt={support?.alt}
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="absolute top-0 w-full md:w-[40%] h-full flex flex-col justify-center gap-4 p-6 md:p-8">
             <h2
-              className="text-lg sm:text-xl md:text-3xl lg:text-4xl font-bold bg-gray-100 bg-opacity-75 md:bg-transparent p-2 rounded"
+              className="text-lg sm:text-xl md:text-3xl lg:text-4xl font-bold"
               style={{ color: colors?.colors['color-primary'] }}
             >
               {support?.title}
             </h2>
             <p
-              className="text-sm md:text-base lg:text-lg p-2 rounded bg-gray-100 bg-opacity-75 md:bg-transparent"
+              className="text-sm md:text-base lg:text-lg p-2 rounded"
               style={{ color: colors?.colors['color-secondary'] }}
             >
               {support?.description}
             </p>
             <a
               href={`mailto:${support?.email}`}
-              className="inline-block text-center w-full lg:w-70 md:w-auto px-6 py-3 text-white font-bold rounded-md shadow hover:opacity-80"
+              className="inline-block text-center w-full md:w-auto px-6 py-3 text-white font-bold rounded-md shadow hover:opacity-90"
               style={{
                 backgroundColor: colors?.buttons['button-primary'],
                 color: colors?.colors['color-primary'],
@@ -54,7 +60,6 @@ function FormsContact() {
           >
             {formContact?.title}
           </h2>
-
           <form
             action=""
             className="flex flex-col items-center gap-12 md:gap-24 w-full md:w-3/4"
@@ -78,7 +83,6 @@ function FormsContact() {
                   }}
                 />
               </label>
-
               <label
                 htmlFor="email-input"
                 className="flex flex-col gap-1 w-full font-bold"
@@ -96,7 +100,6 @@ function FormsContact() {
                   }}
                 />
               </label>
-
               <label
                 htmlFor="phone-input"
                 className="flex flex-col gap-1 w-full font-bold"
@@ -114,7 +117,6 @@ function FormsContact() {
                   }}
                 />
               </label>
-
               <label
                 htmlFor="message-input"
                 className="flex flex-col gap-1 w-full font-bold"
