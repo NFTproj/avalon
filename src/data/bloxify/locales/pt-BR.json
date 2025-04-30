@@ -308,18 +308,22 @@
         "items": ["Conheça a Bloxify", "Nossos Projetos"]
       },
       {
-        "title": "Produtos",
-        "items": ["Tokenização", "Marketplace de Tokens"]
+        "title": "Jurídico",
+        "items": ["Termos de Uso", "Política de Privacidade"]
       },
       {
-        "title": "Suporte",
-        "items": ["Central de Ajuda", "Fale Conosco"]
+        "title": "Ajuda",
+        "items": ["Fale Conosco", "Aprenda Tokenização"]
       },
       {
-        "title": "Legal",
-        "items": ["Política de Privacidade", "Termos de Uso"]
+        "title": "Compliance",
+        "items": ["Ouvidoria"]
       }
-    ]
+    ],
+    "developedBy": {
+      "text": "Desenvolvido por:",
+      "logoAlt": "Logo da Bloxify"
+    }
   },
 
   "common": {
