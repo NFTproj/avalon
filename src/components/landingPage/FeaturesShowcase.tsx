@@ -35,7 +35,7 @@ export default function FeaturesShowcase() {
   }
 
   return (
-    <section className="text-gray-800 pb-20 md:pb-80">
+    <section className="text-gray-800 pb-20 sm:pb-2 md:pb-80">
       <div className="mt-12 md:mt-24 w-full px-4 md:px-16">
         <h2
           className={`text-2xl md:text-3xl font-bold mb-10 md:mb-20 text-center`}
@@ -43,10 +43,10 @@ export default function FeaturesShowcase() {
           {showcase?.title}
         </h2>
 
-        <div className="flex flex-col md:flex-row justify-between gap-8 md:gap-0">
+        <div className="flex flex-col md:flex-row justify-between gap-4 lg:justify-evenly md:gap-0">
           <div
             style={{ backgroundColor: colorBackgroundAccordion }}
-            className="text-white p-4 md:p-6 pb-12 md:pb-24 rounded-md w-full md:w-[50%] order-2 md:order-1"
+            className="text-white p-4 md:p-6 pb-12 md:pb-24 rounded-md w-full md:w-[45%] lg:w-[35%] order-2 md:order-1"
           >
             <h3
               className="text-center text-lg md:text-xl font-semibold"
@@ -64,7 +64,7 @@ export default function FeaturesShowcase() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-2 w-full md:w-[40%] order-1 md:order-2">
+          <div className="flex flex-col gap-4 w-full md:w-[50%] lg:w-[40%] order-1 md:order-2">
             {features.map((feature, index) => (
               <Accordion
                 key={feature.id}

@@ -9,7 +9,7 @@ function Hero() {
   const textHero = texts?.['landing-page'].hero
 
   return (
-    <section className="flex flex-col md:flex-row justify-center items-end lg:items-start mt-12 md:mt-24 w-full px-4 md:px-8 gap-8 md:gap-0">
+    <section className="flex flex-col md:flex-row justify-center items-end lg:items-start mt-12 md:mt-24 w-full px-4 md:px-8 gap-8 md:gap-0"   >
       <div className="flex flex-col gap-4 w-full md:w-2/5 text-center md:text-left">
         <div
           className="w-1/3 h-1 rounded-2xl mx-auto md:mx-0"
