@@ -4,7 +4,7 @@ import { ConfigContext } from '@/contexts/ConfigContext';
 import { useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import ImageFromJSON from '../core/ImageFromJSON';
-import { ChevronUp, Menu } from 'lucide-react';
+import { ChevronDown, ChevronUp, Menu } from 'lucide-react';
 
 function Header() {
   const { colors, texts } = useContext(ConfigContext);
@@ -74,27 +74,27 @@ function Header() {
           <details className="group">
             <summary className="flex items-center cursor-pointer">
               {navigations?.navOne}
-              <ChevronUp
+              <ChevronDown
                 className="w-4 h-4 ml-2 text-gray-600 transition-transform group-open:rotate-180"
-                fill="currentColor"
+                // fill="currentColor"
               />
             </summary>
           </details>
           <details className="group">
             <summary className="flex items-center cursor-pointer">
               {navigations?.navTwo}
-              <ChevronUp
+              <ChevronDown
                 className="w-4 h-4 ml-2 text-gray-600 transition-transform group-open:rotate-180"
-                fill="currentColor"
+                // fill="currentColor"
               />
             </summary>
           </details>
           <details className="group">
             <summary className="flex items-center cursor-pointer">
               {navigations?.navThree}
-              <ChevronUp
+              <ChevronDown
                 className="w-4 h-4 ml-2 text-gray-600 transition-transform group-open:rotate-180"
-                fill="currentColor"
+                // fill="currentColor"
               />
             </summary>
           </details>

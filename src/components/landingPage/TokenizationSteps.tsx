@@ -26,37 +26,33 @@ export default function TokenizationSteps() {
           {steps.map((step) => (
             <section
               key={step.step}
-              className="mx-0 md:mx-4 px-4 py-8 rounded-lg shadow-lg w-full md:w-[35%] lg:w-[25%] flex items-center justify-center"
+              className="mx-0 md:mx-4 px-4 py-4 rounded-lg shadow-lg w-full md:w-[35%] lg:w-[25%] flex flex-col items-start justify-start"
               style={{
                 backgroundColor: `rgba(${hexToRgb(colors?.background['background-secondary'])}, 0.05)`,
               }}
             >
-              <div className="flex flex-col items-center gap-4 w-full mt-6 md:mt-10">
-                <div className="flex flex-col w-full gap-4 md:gap-8 items-center">
-                  <div className="w-1/2 md:w-3/5">
-                    <ImageFromJSON
-                      src={step.icon}
-                      alt={step.title}
-                      width={100}
-                      height={100}
-                      className="w-full h-auto"
-                    />
-                  </div>
-
-                  <div className="flex flex-col w-full gap-2 items-center">
-                    <span
-                      className="text-center md:text-left text-sm font-bold"
-                      style={{ color: colors?.border['border-primary'] }}
-                    >
-                      {step.step}
-                    </span>
-                    <h3 className="text-2xl md:text-3xl font-bold w-full text-center">
-                      {step.title}
-                    </h3>
-                  </div>
+              <div className="flex flex-col items-start gap-4 w-full ">
+                <span
+                  className="text-sm font-bold self-start"
+                  style={{ color: colors?.border['border-primary'] }}
+                >
+                  {step.step}
+                </span>
+                <div className="w-1/2 md:w-3/5 self-center">
+                  <ImageFromJSON
+                    src={step.icon}
+                    alt={step.title}
+                    width={100}
+                    height={100}
+                    className="w-full h-auto"
+                  />
                 </div>
-
-                <p className="text-base md:text-lg font-poppins text-center">
+                <div className="flex flex-col w-full gap-2 items-start">
+                  <h3 className="text-2xl md:text-3xl font-bold w-full text-left">
+                    {step.title}
+                  </h3>
+                </div>
+                <p className="text-base md:text-lg font-poppins text-left">
                   {step.description}
                 </p>
               </div>

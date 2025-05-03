@@ -43,10 +43,10 @@ export default function FeaturesShowcase() {
           {showcase?.title}
         </h2>
 
-        <div className="flex flex-col md:flex-row justify-between gap-4 lg:justify-evenly md:gap-0">
+        <div className="flex flex-col md:flex-row justify-between gap-8 lg:justify-evenly sm:gap-4">
           <div
             style={{ backgroundColor: colorBackgroundAccordion }}
-            className="text-white p-4 md:p-6 pb-12 md:pb-24 rounded-md w-full md:w-[45%] lg:w-[35%] order-2 md:order-1"
+            className="hidden md:block text-white p-4  md:p-6 pb-12 md:pb-24 rounded-md w-full md:w-[45%] lg:w-[35%] order-2 md:order-1"
           >
             <h3
               className="text-center text-lg md:text-xl font-semibold"
