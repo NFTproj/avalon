@@ -4,7 +4,7 @@ import { ConfigContext } from '@/contexts/ConfigContext';
 import { useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import ImageFromJSON from '../core/ImageFromJSON';
-import { ChevronDown, ChevronUp, Menu } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 function Header() {
   const { colors, texts } = useContext(ConfigContext);
@@ -25,33 +25,86 @@ function Header() {
       {/* Menu hambúrguer no lado esquerdo para telas menores que lg */}
       <div className="lg:hidden flex items-center">
         <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          onClick={() => setIsMenuOpen(true)}
           className="text-gray-600 focus:outline-none"
         >
           <Menu className="w-6 h-6" />
         </button>
-        {isMenuOpen && (
-          <div
-            className="absolute top-16 left-0 w-64 bg-white shadow-lg z-50 p-4"
-            style={{
-              backgroundColor: colors?.background['background-primary'],
-              color: colors?.colors['color-primary'],
-            }}
-          >
-            <ul className="flex flex-col gap-4">
-              <li className="cursor-pointer" onClick={() => router.push('/navOne')}>
-                {navigations?.navOne}
-              </li>
-              <li className="cursor-pointer" onClick={() => router.push('/navTwo')}>
-                {navigations?.navTwo}
-              </li>
-              <li className="cursor-pointer" onClick={() => router.push('/navThree')}>
-                {navigations?.navThree}
-              </li>
-            </ul>
-          </div>
-        )}
       </div>
+
+      {/* Modal de menu toggle */}
+      {isMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-75 z-50 flex flex-col justify-between"
+          style={{
+            backgroundColor: colors?.background['background-primary'],
+            color: colors?.colors['color-primary'],
+          }}
+        >
+
+          {/* Logo centralizada */}
+          <div className="flex justify-center p-4">
+            <button onClick={() => router.push('/')}>
+              <ImageFromJSON
+                src={texts?.images.logos['main-logo']}
+                alt={textLandingPage?.header.alts['main-logo']}
+                width={120}
+                height={40}
+              />
+            </button>
+          </div>
+
+          {/* Botão de fechar */}
+          <button
+            onClick={() => setIsMenuOpen(false)}
+            className="absolute top-4 right-4 text-white"
+          > 
+            <X className="w-6 h-6 bg-gray-400" />
+          </button>
+          {/* Navegação no menu */}
+          <nav className="flex flex-col items-center gap-4 mt-16">
+            <details className="group">
+              <summary className="flex items-center cursor-pointer">
+                {navigations?.navOne}
+              </summary>
+            </details>
+            <details className="group">
+              <summary className="flex items-center cursor-pointer">
+                {navigations?.navTwo}
+              </summary>
+            </details>
+            <details className="group">
+              <summary className="flex items-center cursor-pointer">
+                {navigations?.navThree}
+              </summary>
+            </details>
+          </nav>
+
+          {/* Botões na parte inferior */}
+          <div className="flex flex-col items-center gap-4 p-4">
+            <button
+              type="button"
+              onClick={() => {
+                router.push('/register');
+                setIsMenuOpen(false);
+              }}
+              className="w-full bg-blue-500 text-white py-2 rounded-lg"
+            >
+              {texts?.['landing-page'].header.buttons.button}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                router.push('/login');
+                setIsMenuOpen(false);
+              }}
+              className="w-full text-blue-500 py-2 rounded-lg border border-blue-500"
+            >
+              {texts?.['landing-page'].header.buttons.buttonLogin}
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Logo e navegação ocupando colunas 1 e 2 */}
       <div className="col-span-2 flex items-center gap-8">
@@ -74,28 +127,16 @@ function Header() {
           <details className="group">
             <summary className="flex items-center cursor-pointer">
               {navigations?.navOne}
-              <ChevronDown
-                className="w-4 h-4 ml-2 text-gray-600 transition-transform group-open:rotate-180"
-                // fill="currentColor"
-              />
             </summary>
           </details>
           <details className="group">
             <summary className="flex items-center cursor-pointer">
               {navigations?.navTwo}
-              <ChevronDown
-                className="w-4 h-4 ml-2 text-gray-600 transition-transform group-open:rotate-180"
-                // fill="currentColor"
-              />
             </summary>
           </details>
           <details className="group">
             <summary className="flex items-center cursor-pointer">
               {navigations?.navThree}
-              <ChevronDown
-                className="w-4 h-4 ml-2 text-gray-600 transition-transform group-open:rotate-180"
-                // fill="currentColor"
-              />
             </summary>
           </details>
         </nav>
