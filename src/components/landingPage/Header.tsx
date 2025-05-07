@@ -4,7 +4,7 @@ import { ConfigContext } from '@/contexts/ConfigContext';
 import { useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import ImageFromJSON from '../core/ImageFromJSON';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react';
 
 function Header() {
   const { colors, texts } = useContext(ConfigContext);
@@ -62,21 +62,57 @@ function Header() {
             <X className="w-6 h-6 bg-gray-400" />
           </button>
           {/* Navegação no menu */}
-          <nav className="flex flex-col items-center gap-4 mt-16">
-            <details className="group">
-              <summary className="flex items-center cursor-pointer">
-                {navigations?.navOne}
+          <nav className="flex flex-col items-center gap-4 mt-16 w-full">
+            <details className="group w-full">
+              <summary className="flex items-center justify-center cursor-pointer px-4 py-2">
+                <span className="flex items-center">
+                  <ChevronRight className="w-4 h-4 mr-2 transition-transform duration-200 group-open:rotate-90" />
+                  {navigations?.navOne}
+                </span>
               </summary>
             </details>
-            <details className="group">
-              <summary className="flex items-center cursor-pointer">
-                {navigations?.navTwo}
+            <details className="group w-full">
+              <summary className="flex items-center justify-center cursor-pointer px-4 py-2">
+                <span className="flex items-center">
+                  <ChevronRight className="w-4 h-4 mr-2 transition-transform duration-200 group-open:rotate-90" />
+                  {navigations?.navTwo[0].title}
+                </span>
               </summary>
+              <ul className="flex flex-col p-2 space-y-2 w-full justify-center items-center ml-7">
+                <li className="flex items-center gap-2 hover:bg-gray-200 px-2 py-1 rounded">             
+                  {navigations?.navTwo[0].items[0].title}
+                </li>
+              </ul>
             </details>
-            <details className="group">
-              <summary className="flex items-center cursor-pointer">
-                {navigations?.navThree}
+            <details className="group w-full">
+              <summary className="flex items-center justify-center cursor-pointer px-4 py-2 mr-5">
+                <span className="flex items-center">
+                  <ChevronRight className="w-4 h-4 mr-2 transition-transform duration-200 group-open:rotate-90" />
+                  {navigations?.navThree[0].title}
+                </span>
               </summary>
+              <ul className="flex flex-col p-2 space-y-2 w-full justify-center items-center ml-6">
+                <li className="flex items-center gap-2 hover:bg-gray-200 px-2 py-1 rounded">  
+                  <ImageFromJSON
+                    src={navigations?.navThree[0].items[0].image}
+                    alt={navigations?.navThree[0].items[0].alt}
+                    width={20}
+                    height={20}
+                    className="w-4 h-4 rounded-full"
+                  />
+                  {navigations?.navThree[0].items[0].title}
+                </li>
+                <li className="flex items-start gap-2 mr-[32px] hover:bg-gray-200 px-2 py-1 rounded"> 
+                  <ImageFromJSON
+                    src={navigations?.navThree[0].items[1].image}
+                    alt={navigations?.navThree[0].items[1].alt}
+                    width={20}
+                    height={20}
+                    className="w-4 h-4 rounded-full"
+                  />
+                  {navigations?.navThree[0].items[1].title}
+                </li>
+              </ul>
             </details>
           </nav>
 
@@ -107,7 +143,7 @@ function Header() {
       )}
 
       {/* Logo e navegação ocupando colunas 1 e 2 */}
-      <div className="col-span-2 flex items-center gap-8">
+      <div className="col-span-2 flex items-center gap-10">
         <button onClick={() => router.push('/')}>
           <ImageFromJSON
             src={texts?.images.logos['main-logo']}
@@ -117,7 +153,7 @@ function Header() {
           />
         </button>
         <nav
-          className="hidden lg:flex gap-6"
+          className="hidden lg:flex gap-8"
           style={{
             backgroundColor: colors?.background['background-primary'],
             borderColor: colors?.border['border-primary'],
@@ -126,18 +162,52 @@ function Header() {
         >
           <details className="group">
             <summary className="flex items-center cursor-pointer">
-              {navigations?.navOne}
+              <a href="#hero">{navigations?.navOne}</a>
+              <ChevronDown className="w-4 h-4 ml-2 transition-transform duration-200 group-open:rotate-180" />
             </summary>
           </details>
           <details className="group">
             <summary className="flex items-center cursor-pointer">
-              {navigations?.navTwo}
+              {navigations?.navTwo[0].title}
+              <ChevronDown className="w-4 h-4 ml-2 transition-transform duration-200 group-open:rotate-180" />
             </summary>
+            <div className="absolute mt-8 w-30 bg-white-100 shadow-md z-50 rounded-b-lg">
+                <ul className="flex flex-col p-2 space-y-2">
+                  <li className="flex items-center gap-2 hover:bg-gray-200 px-2 py-1 rounded">             
+                    {navigations?.navTwo[0].items[0].title}
+                  </li>
+                </ul>
+              </div>
           </details>
           <details className="group">
             <summary className="flex items-center cursor-pointer">
-              {navigations?.navThree}
+              {navigations?.navThree[0].title}
+              <ChevronDown className="w-4 h-4 ml-2 transition-transform duration-200 group-open:rotate-180" />
             </summary>
+            <div className="absolute mt-8 w-30 bg-white-100 shadow-md z-50 rounded-b-lg">
+              <ul className="flex flex-col p-2 space-y-2">
+                <li className="flex items-center gap-2 hover:bg-gray-200 px-2 py-1 rounded">             
+                  <ImageFromJSON
+                    src={navigations?.navThree[0].items[0].image}
+                    alt={navigations?.navThree[0].items[0].alt}
+                    width={20}
+                    height={20}
+                    className="w-4 h-4 rounded-full"
+                  /> 
+                  {navigations?.navThree[0].items[0].title}
+                </li>
+                <li className="flex items-center gap-2 hover:bg-gray-200 px-2 py-1 rounded">
+                  <ImageFromJSON
+                    src={navigations?.navThree[0].items[1].image}
+                    alt={navigations?.navThree[0].items[1].alt}
+                    width={20}
+                    height={20}
+                    className="w-4 h-4 rounded-full"
+                  />
+                  {navigations?.navThree[0].items[1].title}
+                </li>
+              </ul>
+            </div>
           </details>
         </nav>
       </div>

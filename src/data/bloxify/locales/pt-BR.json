@@ -11,8 +11,35 @@
       },
       "navigations": {
         "navOne": "A Bloxify",
-        "navTwo": "Produtos",
-        "navThree": "Idioma"
+        "navTwo": [
+          {
+            "title": "Produtos",
+            "items": [
+              {
+                "title": "Token TBIO"
+              }
+            ]
+          }
+        ],
+     
+        "navThree": [
+          {
+            "title": "Idioma",
+            "items": [
+              {
+                "title": "Português",
+                "image": "icons/bloxify/br.png",
+                "alt": "Bandeira do Brasil"
+              },
+              {
+                "title": "Inglês",
+                "image": "icons/bloxify/us.png",
+                "alt": "Bandeira dos Estados Unidos"
+              }
+            ]
+          }
+        ] 
+
       },
       "buttons": {
         "button": "Criar conta",
