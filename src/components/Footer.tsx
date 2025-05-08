@@ -2,11 +2,17 @@ import { useContext } from 'react';
 import { ConfigContext } from '@/contexts/ConfigContext';
 
 function Footer() {
-  const { texts } = useContext(ConfigContext);
+  const { texts, colors } = useContext(ConfigContext);
   const footerTexts = texts?.footer;
 
   return (
-    <footer className="flex flex-col items-center justify-between w-full px-4 py-6 bg-gray-100 md:flex-row">
+    <footer
+      className="flex flex-col items-center justify-between w-full px-4 py-6 md:flex-row"
+      style={{
+        backgroundColor: colors?.background?.['background-primary'] || '#fff',
+        color: colors?.colors?.['color-primary'] || '#000',
+      }}
+    >
       <div className="flex flex-col items-start gap-2">
         <h3 className="font-bold">{footerTexts?.columns[3]?.title}</h3>
         <p>{footerTexts?.columns[3]?.items[0]}</p>
@@ -15,7 +21,7 @@ function Footer() {
         <span>{footerTexts?.developedBy?.text}</span>
         <img
           src="logos/bloxify/bloxify-logo.png"
-          alt={footerTexts?.developedBy?.logoAlt}
+          alt={footerTexts?.['alt-logo']}
           className="h-6"
         />
       </div>

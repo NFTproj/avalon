@@ -11,18 +11,45 @@
       },
       "navigations": {
         "navOne": "A Bloxify",
-        "navTwo": "Produtos",
-        "navThree": "Idioma"
+        "navTwo": [
+          {
+            "title": "Produtos",
+            "items": [
+              {
+                "title": "Token TBIO"
+              }
+            ]
+          }
+        ],
+     
+        "navThree": [
+          {
+            "title": "Idioma",
+            "items": [
+              {
+                "title": "Português",
+                "image": "icons/bloxify/br.png",
+                "alt": "Bandeira do Brasil"
+              },
+              {
+                "title": "Inglês",
+                "image": "icons/bloxify/us.png",
+                "alt": "Bandeira dos Estados Unidos"
+              }
+            ]
+          }
+        ] 
       },
       "buttons": {
-        "button": "Cadastro ou Login"
+        "button": "Criar conta",
+        "buttonLogin": "Entar"
       }
     },
     "hero": {
-      "title": "Mário best dev ",
+      "title": "Tokenização de ativos físicos e digitais",
       "subtitle": "Ofereça a tokenização de ativos através da tecnologia blockchain, do deploy à venda, usando sua própria marca.",
-      "image": "images/bloxify/hero-image.svg",
-      "alt": "Imagem de um homem segurando um tablet."
+      "image": "images/bloxify/homen-negro-tablet.png",
+      "alt": "Imagem de um homem negro segurando um tablet."
     },
     "tokenization-steps": {
       "title": "Comece com apenas três passos",
@@ -319,7 +346,10 @@
       "title": "Legal",
       "items": ["Política de Privacidade", "Termos de Uso"]
     }
-  ]
+  ],
+  "developedBy": {
+    "text": "Desenvolvido por:"
+  }
 },
 
 "common": {
