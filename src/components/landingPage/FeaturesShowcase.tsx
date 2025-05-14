@@ -17,7 +17,7 @@ export default function FeaturesShowcase() {
   const showcase = texts?.['landing-page']['features-showcase']
   const features = showcase?.features ?? []
   const [selectedFeature, setSelectedFeature] = useState<number>(0)
-  const colorBackgroundAccordion = colors?.background['background-tertiary']
+  const colorBackgroundAccordion = colors?.background['background-tertiary'] + 'bf'
 
   // Array de componentes: cada posição corresponde a um componente específico
   const featureComponents = [
@@ -35,18 +35,26 @@ export default function FeaturesShowcase() {
   }
 
   return (
-    <section className="text-gray-800 pb-20 sm:pb-2 md:pb-80">
-      <div className="mt-12 md:mt-24 w-full px-4 md:px-16">
+    <section className="w-full mb-60 justify-center items-center">
+      <div className=" justify-center items-center w-full relative">
         <h2
-          className={`text-2xl md:text-3xl font-bold mb-10 md:mb-20 text-center`}
+          className="text-center text-2xl md:text-3xl font-bold mb-10 md:mb-20 text-center"
+          style={{ color: colors?.colors['color-primary'] }}
         >
           {showcase?.title}
         </h2>
 
-        <div className="flex flex-col md:flex-row justify-between gap-8 lg:justify-evenly sm:gap-4">
+        <div className="w-full flex justify-center mx-auto items-center gap-20 rounded-xl sm:w-[90%]  md:w-[80%] lg:w-[70%] p-4"
+          style={{
+            background: `linear-gradient(to bottom, 
+              ${colors?.background['background-quintenary']} 30%,
+              ${colors?.background['background-tertiary']} 120%
+            )`,
+          }}
+        >
           <div
             style={{ backgroundColor: colorBackgroundAccordion }}
-            className="hidden md:block text-white p-4  md:p-6 pb-12 md:pb-24 rounded-md w-full md:w-[45%] lg:w-[35%] order-2 md:order-1"
+            className="hidden md:block text-white p-4 md:p-6 pb-12 md:pb-24 rounded-md w-full md:w-[45%] lg:w-[45%] order-2 md:order-1 my-[-40px] h-[120%] relative"
           >
             <h3
               className="text-center text-lg md:text-xl font-semibold"
@@ -55,16 +63,17 @@ export default function FeaturesShowcase() {
               {features[selectedFeature]?.subtitle}
             </h3>
             <div
-              className="w-full h-full rounded-md"
+              className="w-full h-full rounded-md overflow-y-auto"
               style={{
-                backgroundColor: colors?.background['background-quaternary'],
+                maxHeight: 'calc(100vh - 200px)',
+                minHeight: '500px'
               }}
             >
               {featureComponents[selectedFeature]}
             </div>
           </div>
 
-          <div className="flex flex-col gap-4 w-full md:w-[50%] lg:w-[40%] order-1 md:order-2">
+          <div className="flex flex-col gap-4 w-full md:w-[45%] lg:w-[45%] order-1 md:order-2">
             {features.map((feature, index) => (
               <Accordion
                 key={feature.id}
