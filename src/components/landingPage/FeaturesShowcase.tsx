@@ -17,7 +17,7 @@ export default function FeaturesShowcase() {
   const showcase = texts?.['landing-page']['features-showcase']
   const features = showcase?.features ?? []
   const [selectedFeature, setSelectedFeature] = useState<number>(0)
-  const colorBackgroundAccordion = colors?.background['background-tertiary'] + 'bf'
+  const colorBackgroundAccordion = colors?.background['background-tertiary']
 
   // Array de componentes: cada posição corresponde a um componente específico
   const featureComponents = [
@@ -36,7 +36,7 @@ export default function FeaturesShowcase() {
 
   return (
     <section className="w-full mb-60 justify-center items-center">
-      <div className=" justify-center items-center w-full relative">
+      <div className=" justify-center items-center w-full relative mt-10">
         <h2
           className="text-center text-2xl md:text-3xl font-bold mb-10 md:mb-20 text-center"
           style={{ color: colors?.colors['color-primary'] }}
@@ -66,10 +66,18 @@ export default function FeaturesShowcase() {
               className="w-full h-full rounded-md overflow-y-auto"
               style={{
                 maxHeight: 'calc(100vh - 200px)',
-                minHeight: '500px'
+                minHeight: '500px',
+                backgroundColor: colors?.background['background-quaternary']
+        
               }}
             >
-              {featureComponents[selectedFeature]}
+              {selectedFeature === 0 && <SingInFeature index={0} />}
+              {selectedFeature === 1 && <AdminPainel index={1} />}
+              {selectedFeature === 2 && <CheckoutFeature index={2} />}
+              {selectedFeature === 3 && <KycFeature index={3} />}
+              {selectedFeature === 4 && <TokenizationFeature index={4} />}
+              {selectedFeature === 5 && <ApiFeature index={5} />}
+              {selectedFeature === 6 && <WhiteLabelFeature index={6} />}
             </div>
           </div>
 
