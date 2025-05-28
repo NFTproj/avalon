@@ -5,7 +5,7 @@ import { useContext } from 'react'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import ImageFromJSON from '@/components/core/ImageFromJSON'
 import Footer from '@/components/commom/footer'
-import LoginForm from '@/components/login/FormsLogin'
+import LoginForm from '@/app/login/FormsLogin'
 
 
 

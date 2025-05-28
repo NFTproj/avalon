@@ -1,7 +1,7 @@
 'use client'
 
 import Header from '@/components/landingPage/Header'
-import Steps from '@/components/register/Steps'
+import Steps from '@/app/register/Steps'
 import { useContext } from 'react'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import ImageFromJSON from '@/components/core/ImageFromJSON'
