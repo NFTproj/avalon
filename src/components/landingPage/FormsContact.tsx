@@ -16,7 +16,7 @@ function FormsContact() {
     >
       <div className="flex flex-col gap-2 md:gap-2 w-full px-4 md:px-8 lg:px-20 py-6 md:py-12 relative">
         <div
-          className="relative w-full border-1 border-gray-300 md:border-0 h-60 sm:h-[300px] md:h-[400px] z-10 -translate-y-1/2 md:-translate-x-1/2 md:translate-x-0 rounded-lg overflow-hidden"
+          className="relative w-full border-1 border-gray-300 md:border-0 h-60 sm:h-[300px] md:h-[400px] I. md:border-0 z-10 -translate-y-1/2 md:-translate-x-1/2 md:translate-x-0 rounded-lg overflow-hidden"
           style={{
             backgroundColor: colors?.background['background-primary'],
           }}
