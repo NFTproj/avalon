@@ -1,0 +1,49 @@
+{
+  "header": {
+    "header-primary": "#F2FCFF"
+  },
+  "buttons": {
+    "button-primary": "#08CEFF",
+    "button-secondary": "#002D3126",
+    "button-third": "#C0FEFF"
+  },
+  "border": {
+    "border-primary": "#08CEFF"
+  },
+  "colors": {
+    "color-primary": "#202020",
+    "color-secondary": "#6b6f70",
+    "color-tertiary": "#555859",
+    "color-quaternary": "#b3b3b3",
+    "color-quintenary": "#e5e3e3"
+  },
+  "background": {
+    "background-primary": "#F2FCFF",
+    "background-secondary": "#D9D9D9",
+    "background-tertiary": "#363636",
+    "background-quaternary": "#141414",
+    "background-quintenary": "#A6A6A6",
+    "background-sixteen": "#050504"
+  },
+
+  "dashboard": {
+    "background": {
+      "page": "#e6f1ee",
+      "welcome-box": "#404040",
+      "header": "#404040",
+      "table-header": "#f8f7e9",
+      "table-body": "#fdfcf7"
+    },
+    "colors": {
+      "text": "#FFFFFF",
+      "highlight": "#00ffe1",
+      "table-text": "#404040",
+      "token-border": "#00ffe1"
+    },
+    "buttons": {
+      "action-border": "#00ffe1",
+      "table-button-text": "#4e4e4e",
+      "table-button-bg": "transparent"
+    }
+  }
+}

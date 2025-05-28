@@ -11,18 +11,45 @@
       },
       "navigations": {
         "navOne": "A Bloxify",
-        "navTwo": "Produtos",
-        "navThree": "Idioma"
+        "navTwo": [
+          {
+            "title": "Produtos",
+            "items": [
+              {
+                "title": "Token TBIO"
+              }
+            ]
+          }
+        ],
+     
+        "navThree": [
+          {
+            "title": "Idioma",
+            "items": [
+              {
+                "title": "Português",
+                "image": "icons/bloxify/br.png",
+                "alt": "Bandeira do Brasil"
+              },
+              {
+                "title": "Inglês",
+                "image": "icons/bloxify/us.png",
+                "alt": "Bandeira dos Estados Unidos"
+              }
+            ]
+          }
+        ] 
       },
       "buttons": {
-        "button": "Cadastro ou Login"
+        "button": "Criar conta",
+        "buttonLogin": "Entar"
       }
     },
     "hero": {
       "title": "Tokenização de ativos físicos e digitais",
       "subtitle": "Ofereça a tokenização de ativos através da tecnologia blockchain, do deploy à venda, usando sua própria marca.",
-      "image": "images/bloxify/hero-image.svg",
-      "alt": "Imagem de um homem segurando um tablet."
+      "image": "images/bloxify/homen-negro-tablet.png",
+      "alt": "Imagem de um homem negro segurando um tablet."
     },
     "tokenization-steps": {
       "title": "Comece com apenas três passos",
@@ -189,13 +216,13 @@
         }
       ]
     },
-    "forms-contact": {
+    "forms-contact": { 
       "title": "Vem conhecer!",
       "support": {
         "title": "Central de Suporte",
         "description": "Estamos aqui para ajudar! Nossa equipe de suporte ao cliente é altamente capacitada e está pronta para atender às suas necessidades.",
         "email": "contato@blocklize.io",
-        "image": "images/bloxify/banner-contact.svg",
+        "image": "images/bloxify/banner-support.svg",
         "alt": "Imagem de um banner de contato."
       },
       "form": {
@@ -217,6 +244,165 @@
           "placeholder": "Escreva sua mensagem"
         },
         "submit": "Enviar"
+      }
+    }
+  },
+  "register": {
+    "image": "images/login/creating-account.svg",
+    "alt": "Pessoa segurando chave de acesso",
+    "step-zero": {
+      "title": "Bem-vindo(a) à Slab!",
+      "description": "Crie a sua conta em 2 minutos e negocie tokens de forma rápida e confiável.",
+      "button-email": "Criar com E-mail",
+      "button-metamask": "Criar com Metamask",
+      "already-have-account": "Já possui uma conta?",
+      "login-link": "Login",
+      "fase": "Etapa"
+    },
+    "step-one": {
+      "counter": {
+        "current": "01",
+        "total": "de 04"
+      },
+      "title": "Escolha um e-mail",
+      "description": "Se é a sua primeira vez aqui, comece o processo de registro inserindo seu e-mail.",
+      "labels": {
+        "emailLabel": "Seu e-mail:"
+      },
+      "placeholders": {
+        "email": "email@email.com"
+      },
+      "button-next": "Próximo",
+      "already-have-account": "Já possui uma conta?",
+      "login-link": "Login"
+    },
+    "step-two": {
+      "counter": {
+        "current": "02",
+        "total": "de 04"
+      },
+      "title": "Agora escolha uma senha",
+      "description": "Utilize letras, números e caracteres especiais.",
+      "labels": {
+        "password": "Digite uma senha",
+        "confirmPassword": "Repita sua senha"
+      },
+      "disclaimer": "Ao continuar você aceita os Termos de uso e a Política de Privacidade da Slab Assets e declara não ser uma pessoa dos Estados Unidos.",
+      "button-continue": "Continuar",
+      "button-back": "Voltar"
+    },
+    "step-three": {
+      "counter": {
+        "current": "03",
+        "total": "de 04"
+      },
+      "title": "Verifique seu e-mail!",
+      "description": "Insira o código que foi enviado para o seu e-mail.",
+      "labels": {
+        "code": "Insira o código"
+      },
+      "placeholders": {
+        "code": "123456"
+      },
+      "button-verify": "Verificar"
+    },
+    "step-four": {
+      "counter": {
+        "current": "04",
+        "total": "de 04"
+      },
+      "title": "Acesse a sua conta",
+      "paragraphEmail": "Seu e-mail",
+      "paragraphPassword": "Digite a sua senha",
+      "labels": {
+        "email": "",
+        "password": ""
+      },
+      "placeholders": {
+        "email": "email@email.com",
+        "password": "••••••••"
+      },
+      "button-back": "Voltar",
+      "button-login": "Entrar"
+    }
+  },
+  "footer": {
+    "alt-logo": "Logo da Bloxify",
+    "columns": [
+      {
+        "title": "Sobre a Bloxify",
+        "items": ["Conheça a Bloxify", "Nossos Projetos"]
+      },
+      {
+        "title": "Jurídico",
+        "items": ["Termos de Uso", "Política de Privacidade"]
+      },
+      {
+        "title": "Ajuda",
+        "items": ["Fale Conosco", "Aprenda Tokenização"]
+      },
+      {
+        "title": "Compliance",
+        "items": ["Ouvidoria"]
+      }
+    ],
+    "developedBy": {
+      "text": "Desenvolvido por:"
+    }
+  },
+
+  "common": {
+    "loadingOverlay": {
+      "message": "Carregando.."
+    }
+  },
+  "dashboard": {
+    "welcome-box": {
+      "name": "Antônio",
+      "title": "Bem-vindo (a) à Slab!",
+      "description": "Conheça os projetos que foram tokenizados, investa com segurança e tenha o controle total do seu patrimônio na palma da sua mão.",
+      "link": "Ver detalhes",
+      "tokens-title": "Seus Tokens:",
+      "tokens": ["#TBIO", "#TBIO2"]
+    },
+    "action-buttons": [
+      {
+        "id": 1,
+        "name": "Comprar",
+        "icon": "🛒"
+      },
+      {
+        "id": 2,
+        "name": "Emitir Certificado",
+        "icon": "📜"
+      },
+      {
+        "id": 3,
+        "name": "Sacar",
+        "icon": "💵"
+      },
+      {
+        "id": 4,
+        "name": "Histórico",
+        "icon": "📊"
+      },
+      {
+        "id": 5,
+        "name": "Verificações KYC",
+        "icon": "🔍"
+      }
+    ],
+    "asset-list": {
+      "title": "Sua carteira",
+      "highlight": "Slab",
+      "columns": {
+        "project": "Projeto",
+        "unit-value": "Valor unitário",
+        "total-value": "Valor Total"
+      },
+      "buttons": {
+        "buy": "Comprar",
+        "sell": "Vender"
       }
     }
   }

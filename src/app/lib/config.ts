@@ -18,6 +18,8 @@ export async function getClientConfig({
   theme?: ThemeMode
 } = {}): Promise<ClientConfig> {
   const client = process.env.CLIENT || 'bloxify'
+  console.log( client);
+  console.log(process.env.CLIENT)
   const localesToTry = [
     'pt-BR',
     'en-US',
