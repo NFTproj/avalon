@@ -13,8 +13,8 @@ const CheckoutFeature = ({ index }: CheckoutFeatureProps) => {
     texts?.['landing-page']['features-showcase'].features[index]
 
   return (
-    <div className="flex flex-col items-center mt-4 p-6 gap-14">
-      <div className="flex flex-col gap-8 mt-4">
+    <div className="flex flex-col items-center p-6 pt-6 pb-4 gap-10">
+      <div className="flex flex-col gap-8">
         <h4
           className="font-semibold p-4 text-2xl"
           style={{ color: colors?.colors['color-quaternary'] }}

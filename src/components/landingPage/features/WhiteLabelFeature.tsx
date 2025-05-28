@@ -9,7 +9,7 @@ interface WhiteLabelFeatureProps {
   index: number
 }
 
-function WhiteLabelFeature({ index }: WhiteLabelFeatureProps) {
+function WhiteLabelFeature({ index }: Readonly<WhiteLabelFeatureProps>) {
   const { texts } = useContext(ConfigContext)
   const textSingInFeature =
     texts?.['landing-page']['features-showcase'].features[index]
@@ -21,7 +21,7 @@ function WhiteLabelFeature({ index }: WhiteLabelFeatureProps) {
         className="p-4 text-2xl"
       />
 
-      <div className="w-3/4">
+      <div className="w-[60%]">
         <ImageFromJSON
           src={textSingInFeature?.attributes?.image}
           alt={textSingInFeature?.attributes?.alt}

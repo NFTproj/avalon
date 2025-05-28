@@ -16,16 +16,19 @@ function FormsContact() {
     >
       <div className="flex flex-col gap-2 md:gap-2 w-full px-4 md:px-8 lg:px-20 py-6 md:py-12 relative">
         <div
-          className="relative w-full border-1 border-gray-300 md:border-0 h-60 sm:h-[300px] md:h-[400px] I. md:border-0 z-10 -translate-y-1/2 md:-translate-x-1/2 md:translate-x-0 rounded-lg overflow-hidden"
+          className="relative w-full border-1 border-gray-300 h-60 sm:h-[300px] md:h-[400px] I. md:border-0 z-10 -translate-y-1/2 md:translate-x-0 rounded-lg overflow-hidden"
           style={{
             backgroundColor: colors?.background['background-primary'],
           }}
         >
-          <div className="hidden md:block w-full h-full ">
+          <div className="hidden md:block w-full h-full">
             <ImageFromJSON
               src={support?.image}
               alt={support?.alt}
-              className="w-full h-full object-cover"
+              className="w-full h-full"
+              responsive
+              width={1200}
+              height={1000}
             />
           </div>
           <div className="absolute top-0 w-full md:w-[40%] h-full flex flex-col justify-center gap-4 p-6 md:p-8">
