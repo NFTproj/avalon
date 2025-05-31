@@ -38,7 +38,7 @@ export async function registerUser(payload: RegisterPayload) {
  * Verificação do código OTP via rota protegida do Next.js
  */
 export async function verifyCode(payload: VerifyCodePayload) {
-  const res = await fetch('/api/auth/verify', {
+  const res = await fetch('/api/auth/code', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
