@@ -8,13 +8,13 @@ interface SingInFeatureProps {
   index: number
 }
 
-function SingInFeature({ index }: SingInFeatureProps) {
+function SingInFeature({ index }: Readonly<SingInFeatureProps>) {
   const { colors, texts } = useContext(ConfigContext)
   const textSingInFeature =
     texts?.['landing-page']['features-showcase'].features[index]
 
   return (
-    <div className="flex flex-col items-center p-10 gap-16 mt-4">
+    <div className="flex flex-col items-center p-10 pt-12 gap-16">
       <div className="flex flex-col items-center gap-4">
         <h4
           className="font-semibold text-2xl"

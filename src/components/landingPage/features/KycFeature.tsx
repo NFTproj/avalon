@@ -9,7 +9,7 @@ interface KycFeatureProps {
   index: number
 }
 
-function KycFeature({ index }: KycFeatureProps) {
+function KycFeature({ index }: Readonly<KycFeatureProps>) {
   const { texts } = useContext(ConfigContext)
   const textSingInFeature =
     texts?.['landing-page']['features-showcase'].features[index]
@@ -21,7 +21,7 @@ function KycFeature({ index }: KycFeatureProps) {
         className="p-4 text-xl"
       />
 
-      <div className="w-3/4">
+      <div className="w-[70%]">
         <ImageFromJSON
           src={textSingInFeature?.attributes?.image}
           alt={textSingInFeature?.attributes?.alt}

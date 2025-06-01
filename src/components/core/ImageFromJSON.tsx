@@ -8,16 +8,19 @@ type ImageProps = {
   height?: number
   loading?: 'lazy' | 'eager'
   className?: string
+  quality?: number
+  responsive?: boolean
 }
 
 export default function ImageFromJSON({
   src = '',
   alt = '',
-  width = 500,
-  height = 500,
+  width = 256,
+  height = 256,
   loading = 'eager',
   className = '',
-}: ImageProps) {
+  quality = 75,
+}: Readonly<ImageProps>) {
   const [loadedSrc, setLoadedSrc] = useState<string | null>(null)
 
   useEffect(() => {
@@ -41,11 +44,12 @@ export default function ImageFromJSON({
     <Suspense fallback={null}>
       <Image
         src={loadedSrc}
-        alt={alt as string}
+        alt={alt}
         width={width}
         height={height}
         loading={loading}
         className={className}
+        quality={quality}
       />
     </Suspense>
   )

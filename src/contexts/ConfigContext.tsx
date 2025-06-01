@@ -1,65 +1,87 @@
+// src/contexts/ConfigContext.tsx
 'use client'
 
 import {
   ClientConfig,
-  ColorsConfig,
-  getClientConfig,
-  TextsConfig,
+  getClientConfig,          // já existente
 } from '@/app/lib/config'
 
 import React, {
   createContext,
   useState,
   useEffect,
-  ReactNode,
   useMemo,
+  ReactNode,
 } from 'react'
 
 interface ConfigContextProps {
-  config: ClientConfig | null
-  texts: TextsConfig | null
-  colors: ColorsConfig | null
+  config : ClientConfig | null          // permanece igual
+  texts  : ClientConfig['texts']  | null
+  colors : ClientConfig['colors'] | null
+  locale : string                       // ← idioma atual
+  setLocale: (loc: string) => void      // ← troca idioma
 }
 
 export const ConfigContext = createContext<ConfigContextProps>({
-  config: null,
-  texts: null,
-  colors: null,
+  config : null,
+  texts  : null,
+  colors : null,
+  locale : 'pt-BR',
+  setLocale: () => {},
 })
 
-export const ConfigProvider = ({ children }: { children: ReactNode }) => {
-  const [config, setConfig] = useState<ClientConfig | null>(null)
-  const [texts, setTexts] = useState<TextsConfig | null>(null)
-  const [colors, setColors] = useState<ColorsConfig | null>(null)
-  // você pode definir o idioma dinamicamente, por exemplo;
-  let lang = 'pt-BR'
-  if (typeof window !== 'undefined') {
-    lang = document.documentElement.lang
-  }
+export const ConfigProvider = ({
+  config,
+  children,
+}: {
+  config: ClientConfig | null
+  children: ReactNode
+}) => {
+  /* ---------- idioma salvo no localStorage ou default pt-BR ---------- */
+  const [locale, setLocale] = useState<string>('pt-BR')
+const [mounted, setMounted] = useState(false)
 
+useEffect(() => {
+  const stored = localStorage.getItem('locale')
+  setLocale(stored || 'pt-BR')
+  setMounted(true)
+}, [])
+
+  /* ---------- estados que você já tinha ---------- */
+  const [texts , setTexts ] = useState(config?.texts  ?? null)
+  const [colors, setColors] = useState(config?.colors ?? null)
+
+  /* ---------- carrega/recarga quando locale muda ---------- */
   useEffect(() => {
-    const loadConfig = async () => {
-      const data = await getClientConfig({ locale: lang })
-      setConfig(data)
+    ;(async () => {
+      const data = await getClientConfig({ locale })
       setTexts(data.texts)
       setColors(data.colors)
-    }
-    loadConfig()
-  }, [])
 
+      /* opcional: atualiza <html lang="…"> */
+      if (typeof document !== 'undefined') {
+        document.documentElement.lang = locale
+        localStorage.setItem('locale', locale)
+      }
+    })()
+  }, [locale])
+
+  /* ---------- memo ---------- */
   const value = useMemo(
     () => ({
       config,
-      setConfig,
       texts,
-      setTexts,
       colors,
-      setColors,
+      locale,
+      setLocale,               // expõe a função
     }),
-    [config, texts, colors],
+    [config, texts, colors, locale],
   )
+  if (!mounted) return null
 
   return (
-    <ConfigContext.Provider value={value}>{children}</ConfigContext.Provider>
+    <ConfigContext.Provider value={value}>
+      {children}
+    </ConfigContext.Provider>
   )
 }

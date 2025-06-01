@@ -3,7 +3,6 @@
 import { ConfigContext } from '@/contexts/ConfigContext'
 import React, { useContext, useState } from 'react'
 import { Accordion } from '../core/Accordion/Accordion'
-import { cn } from '@/utils/cn'
 import SingInFeature from './features/SingInFeature'
 import AdminPainel from './features/AdminPainel'
 import CheckoutFeature from './features/CheckoutFeature'
@@ -19,64 +18,72 @@ export default function FeaturesShowcase() {
   const [selectedFeature, setSelectedFeature] = useState<number>(0)
   const colorBackgroundAccordion = colors?.background['background-tertiary']
 
-  // Array de componentes: cada posição corresponde a um componente específico
-  const featureComponents = [
-    <SingInFeature index={0} key="singin" />,
-    <AdminPainel index={1} key="admin" />,
-    <CheckoutFeature index={2} key="checkout" />,
-    <KycFeature index={3} key="kyc" />,
-    <TokenizationFeature index={4} key="tokenization" />,
-    <ApiFeature index={5} key="api-feature" />,
-    <WhiteLabelFeature index={6} key="white-label" />,
-  ]
-
   const handleToggle = (isOpen: boolean, index: number) => {
     setSelectedFeature(isOpen ? index : 0)
   }
 
   return (
-    <section className="text-gray-800 pb-80">
-      <div className="mt-24 w-full px-16">
-        <h2 className={`text-3xl font-bold mb-20 text-center`}>
+    <section className="w-full mb-60 justify-center items-center">
+      <div className=" justify-center items-center w-full relative mt-10">
+        <h2
+          className="text-center text-2xl md:text-3xl font-bold mb-10 md:mb-20"
+          style={{ color: colors?.colors['color-primary'] }}
+        >
           {showcase?.title}
         </h2>
 
-        <div className="flex justify-between">
+        <div
+          className="w-[90%] sm:w-[90%] md:w-[80%] 2xl:w-[60%] h-auto md:h-[500px] xl:h-[550px]  flex justify-center mx-auto items-center gap-20 rounded-xl p-4"
+          style={{
+            background: `linear-gradient(to bottom, 
+              ${colors?.background['background-quintenary']} 30%,
+              ${colors?.background['background-tertiary']} 120%
+            )`,
+          }}
+        >
           <div
             style={{ backgroundColor: colorBackgroundAccordion }}
-            className="text-white p-6 pb-24 rounded-md w-[40%]"
+            className="hidden lg:block text-white p-4 md:p-6 pb-12 md:pb-24 rounded-md w-full md:w-[45%] lg:w-[45%] order-2 md:order-1 my-[-40px] h-[120%] 2xl:h-[120%] relative"
           >
             <h3
-              className="text-center text-xl font-semibold"
+              className="text-center text-lg md:text-xl font-semibold"
               style={{ color: colors?.colors['color-quaternary'] }}
             >
               {features[selectedFeature]?.subtitle}
             </h3>
             <div
-              className="w-full h-full rounded-md"
+              className="w-full h-full rounded-md overflow-y-auto"
               style={{
+                //maxHeight: 'calc(100vh - 200px)',
+                //minHeight: '500px',
                 backgroundColor: colors?.background['background-quaternary'],
               }}
             >
-              {featureComponents[selectedFeature]}
+              {selectedFeature === 0 && <SingInFeature index={0} />}
+              {selectedFeature === 1 && <AdminPainel index={1} />}
+              {selectedFeature === 2 && <CheckoutFeature index={2} />}
+              {selectedFeature === 3 && <KycFeature index={3} />}
+              {selectedFeature === 4 && <TokenizationFeature index={4} />}
+              {selectedFeature === 5 && <ApiFeature index={5} />}
+              {selectedFeature === 6 && <WhiteLabelFeature index={6} />}
             </div>
           </div>
 
-          <div className="flex flex-col gap-2 w-3/6">
+          <div className="flex flex-col gap-4 w-full lg:w-[45%] order-1 md:order-2">
             {features.map((feature, index) => (
               <Accordion
-                key={index}
+                key={feature.id + index}
                 title={feature.title}
                 isOpen={selectedFeature === index}
                 onToggle={(isOpen: boolean) => handleToggle(isOpen, index)}
-                titleClassName="font-semibold text-lg"
+                titleClassName="font-semibold text-base md:text-lg 2xl:text-lg"
                 accordionClassName="rounded-md p-2"
                 accordionStyle={{ backgroundColor: colorBackgroundAccordion }}
                 contentStyle={{
                   backgroundColor: colorBackgroundAccordion,
                   color: colors?.colors['color-quaternary'],
                 }}
-                contentClassName="rounded-md p-2 pb-4 font-semibold text-base"
+                contentClassName="rounded-md p-2 pb-4 font-semibold text-sm md:text-sm 2xl:text-base"
                 emptyIcon={true}
               >
                 {feature.description}

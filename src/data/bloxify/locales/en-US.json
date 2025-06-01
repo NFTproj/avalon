@@ -1,0 +1,414 @@
+{
+  "images": {
+    "logos": {
+      "main-logo": "logos/bloxify/bloxify-logo.png"
+    }
+  },
+  "landing-page": {
+    "header": {
+      "alts": {
+        "main-logo": "Bloxify Logo"
+      },
+        "navigations": {
+          "navOne": "About Bloxify",
+          "navTwo": [
+            {
+              "title": "Products",
+              "items": [
+                {
+                  "title": "TBIO Token"
+                }
+              ]
+            }
+          ],
+          "navThree": [
+            {
+              "title": "Language",
+              "items": [
+                {
+                  "title": "Portuguese",
+                  "image": "icons/bloxify/br.png",
+                  "alt": "Brazil Flag"
+                },
+                {
+                  "title": "English",
+                  "image": "icons/bloxify/us.png",
+                  "alt": "United States Flag"
+                }
+              ]
+            }
+          ]
+        },
+        "buttons": {
+          "button": "Create Account",
+          "buttonLogin": "Login",
+          "buttonLogout": "Logout"
+        }
+    },
+    "hero": {
+      "title": "Tokenization of physical and digital assets",
+      "subtitle": "Offer asset tokenization through blockchain technology, from deployment to sale, with your own branding.",
+      "image": "images/bloxify/homen-negro-tablet.png",
+      "alt": "Image of a Black man holding a tablet."
+    },
+    "tokenization-steps": {
+      "title": "Get started in just three steps",
+      "background": "backgrounds/bloxify/flow-image.svg",
+      "steps": [
+        {
+          "title": "Get in touch",
+          "description": "Receive your API key and choose your tokenization plan.",
+          "step": "Step 1",
+          "icon": "icons/bloxify/contact-with-border-blue.svg"
+        },
+        {
+          "title": "Choose a template",
+          "description": "Select a template tailored to your project.",
+          "step": "Step 2",
+          "icon": "icons/bloxify/template-blue.svg"
+        },
+        {
+          "title": "Tokenize assets",
+          "description": "Start offering assets in tokenized format.",
+          "step": "Step 3",
+          "icon": "icons/bloxify/graph-bar-increase-blue.svg"
+        }
+      ]
+    },
+    "features-showcase": {
+      "title": "All Bloxify Features",
+      "features": [
+        {
+          "id": 1,
+          "title": "Web3 users in a Web2 interface",
+          "subtitle": "Sign in",
+          "description": "Provide blockchain features with email/password login, social media, or magic link.",
+          "attributes": {
+            "image": "images/bloxify/social-media.svg",
+            "alt": "Social media icons: Google, Apple, Twitter, Facebook",
+            "title": "Use your social login",
+            "span": "or email",
+            "email": "hello@world.com.br",
+            "continue-email": "Continue with email"
+          }
+        },
+        {
+          "id": 2,
+          "title": "Token and contract deployment",
+          "subtitle": "Admin Panel",
+          "description": "Create, manage and trade tokens linked to physical and digital assets easily.",
+          "attributes": {
+            "title": "Deploy on the following networks:",
+            "cryptos": [
+              {
+                "id": 1,
+                "name": "POLYGON",
+                "icon": "icons/bloxify/crypto-polygon.svg",
+                "alt": "Polygon icon"
+              },
+              {
+                "id": 2,
+                "name": "BASE",
+                "icon": "icons/bloxify/crypto-base.svg",
+                "alt": "Base icon"
+              },
+              {
+                "id": 3,
+                "name": "ETHEREUM",
+                "icon": "icons/bloxify/cryptor-ethereum.svg",
+                "alt": "Ethereum icon"
+              }
+            ]
+          }
+        },
+        {
+          "id": 3,
+          "title": "Simplified token sales",
+          "subtitle": "Checkout",
+          "description": "Sell tokens easily and securely, with Pix in Brazil or credit card worldwide.",
+          "attributes": {
+            "title": "Choose the payment method:",
+            "text-pix": "Payments via Pix (BR)",
+            "text-credit-card": "Payments via credit card (Global)",
+            "image-pix": "icons/bloxify/pix.svg",
+            "alt-pix": "Pix icon",
+            "image-credit-card": "icons/bloxify/credit-card.svg",
+            "alt-credit-card": "Credit card icon"
+          }
+        },
+        {
+          "id": 4,
+          "title": "User verification (KYC)",
+          "subtitle": "KYC",
+          "description": "Choose mandatory KYC or free access, according to your strategy.",
+          "attributes": {
+            "title": "Identity verification (KYC)",
+            "image": "icons/bloxify/kyc.svg",
+            "alt": "KYC icon"
+          }
+        },
+        {
+          "id": 5,
+          "title": "Tokenization",
+          "subtitle": "Tokenization",
+          "description": "Tokenize physical and digital assets on multiple networks, from deployment to sale.",
+          "attributes": {
+            "title": "Simplified tokenization",
+            "image": "icons/bloxify/tokenization.svg",
+            "alt": "Icon representing tokenization. A data structure linked to hardware",
+            "cryptos": [
+              {
+                "id": 1,
+                "name": "POLYGON",
+                "icon": "icons/bloxify/crypto-polygon.svg",
+                "alt": "Polygon icon"
+              },
+              {
+                "id": 2,
+                "name": "BASE",
+                "icon": "icons/bloxify/crypto-base.svg",
+                "alt": "Base icon"
+              },
+              {
+                "id": 3,
+                "name": "ETHEREUM",
+                "icon": "icons/bloxify/cryptor-ethereum.svg",
+                "alt": "Ethereum icon"
+              }
+            ]
+          }
+        },
+        {
+          "id": 6,
+          "title": "API as a service",
+          "subtitle": "API",
+          "description": "Integrate tokenization into your site with our API. Contact us for documentation.",
+          "attributes": {
+            "title": "API AS A SERVICE",
+            "image": "images/bloxify/code-image.png",
+            "alt": "Icon representing a code snippet.",
+            "languages": [
+              {
+                "image": "icons/bloxify/typescript.svg",
+                "alt": "TypeScript icon"
+              },
+              {
+                "image": "icons/bloxify/react.svg",
+                "alt": "React icon"
+              },
+              {
+                "image": "icons/bloxify/node.svg",
+                "alt": "NodeJS icon"
+              }
+            ]
+          }
+        },
+        {
+          "id": 7,
+          "title": "White-Label Template",
+          "subtitle": "Template",
+          "description": "Choose a template and customize it with your brand.",
+          "attributes": {
+            "title": "White-Label Template",
+            "image": "icons/bloxify/template-white-label.svg",
+            "alt": "Icon representing white label"
+          }
+        }
+      ]
+    },
+    "forms-contact": {
+      "title": "Come check it out!",
+      "support": {
+        "title": "Support Center",
+        "description": "We’re here to help! Our support team is highly qualified and ready to meet your needs.",
+        "email": "contato@blocklize.io",
+        "image": "images/bloxify/banner-support.png",
+        "alt": "Image of a contact banner."
+      },
+      "form": {
+        "title": "Come check it out!",
+        "name": {
+          "label": "Full name (required)",
+          "placeholder": "Enter your name"
+        },
+        "email": {
+          "label": "Email (required)",
+          "placeholder": "Enter your email"
+        },
+        "phone": {
+          "label": "Phone/WhatsApp",
+          "placeholder": "Enter your phone"
+        },
+        "message": {
+          "label": "Tell us a bit about your company and how Bloxify can help:",
+          "placeholder": "Write your message"
+        },
+        "submit": "Send"
+      }
+    }
+  },
+  "register": {
+    "image": "images/login/creating-account.svg",
+    "alt": "Person holding an access key",
+    "step-zero": {
+      "title": "Welcome to Slab!",
+      "description": "Create your account in 2 minutes and trade tokens quickly and securely.",
+      "button-email": "Sign up with Email",
+      "button-metamask": "Sign up with Metamask",
+      "already-have-account": "Already have an account?",
+      "login-link": "Login",
+      "fase": "Step"
+    },
+    "step-one": {
+      "counter": {
+        "current": "01",
+        "total": "of 04"
+      },
+      "title": "Choose an email",
+      "description": "If this is your first time here, start the registration by entering your email.",
+      "labels": {
+        "emailLabel": "Your email:"
+      },
+      "placeholders": {
+        "email": "email@email.com"
+      },
+      "button-next": "Next",
+      "already-have-account": "Already have an account?",
+      "login-link": "Login"
+    },
+    "step-two": {
+      "counter": {
+        "current": "02",
+        "total": "of 04"
+      },
+      "title": "Now choose a password",
+      "description": "Use letters, numbers and special characters.",
+      "labels": {
+        "password": "Enter a password",
+        "confirmPassword": "Repeat your password"
+      },
+      "disclaimer": "By continuing you accept Slab Assets’ Terms of Use and Privacy Policy and declare you are not a U.S. person.",
+      "button-continue": "Continue",
+      "button-back": "Back"
+    },
+    "step-three": {
+      "counter": {
+        "current": "03",
+        "total": "of 04"
+      },
+      "title": "Verify your email!",
+      "description": "Enter the code that was sent to your email.",
+      "labels": {
+        "code": "Enter the code"
+      },
+      "placeholders": {
+        "code": "123456"
+      },
+      "button-verify": "Verify",
+      "resend": {
+        "button": "Resend code",
+        "success": "Code resent successfully!",
+        "error": "Error resending code.",
+        "cooldown": "Available again in {seconds}s"
+      }
+    },
+    "step-four": {
+      "counter": {
+        "current": "04",
+        "total": "of 04"
+      },
+      "title": "Access your account",
+      "paragraphEmail": "Your email",
+      "paragraphPassword": "Enter your password",
+      "labels": {
+        "email": "",
+        "password": ""
+      },
+      "placeholders": {
+        "email": "email@email.com",
+        "password": "••••••••"
+      },
+      "button-back": "Back",
+      "button-login": "Login"
+    }
+  },
+  "footer": {
+    "alt-logo": "Bloxify Logo",
+    "columns": [
+      {
+        "title": "About Bloxify",
+        "items": ["Get to Know Bloxify", "Our Projects"]
+      },
+      {
+        "title": "Legal",
+        "items": ["Terms of Use", "Privacy Policy"]
+      },
+      {
+        "title": "Help",
+        "items": ["Contact Us", "Learn Tokenization"]
+      },
+      {
+        "title": "Compliance",
+        "items": ["Ombudsman"]
+      }
+    ],
+    "developedBy": {
+      "text": "Developed by:"
+    }
+  },
+  "common": {
+    "loadingOverlay": {
+      "message": "Loading..."
+    }
+  },
+  "dashboard": {
+    "welcome-box": {
+      "name": "Antônio",
+      "title": "Welcome to Slab!",
+      "description": "Explore tokenized projects, invest securely, and keep full control of your assets in the palm of your hand.",
+      "link": "View details",
+      "tokens-title": "Your Tokens:",
+      "tokens": ["#TBIO", "#TBIO2"]
+    },
+    "action-buttons": [
+      {
+        "id": 1,
+        "name": "Buy",
+        "icon": "🛒"
+      },
+      {
+        "id": 2,
+        "name": "Issue Certificate",
+        "icon": "📜"
+      },
+      {
+        "id": 3,
+        "name": "Withdraw",
+        "icon": "💵"
+      },
+      {
+        "id": 4,
+        "name": "History",
+        "icon": "📊"
+      },
+      {
+        "id": 5,
+        "name": "KYC Verifications",
+        "icon": "🔍"
+      }
+    ],
+    "asset-list": {
+      "title": "Your Wallet",
+      "highlight": "Slab",
+      "columns": {
+        "project": "Project",
+        "unit-value": "Unit value",
+        "total-value": "Total value"
+      },
+      "buttons": {
+        "buy": "Buy",
+        "sell": "Sell"
+      }
+    }
+  }
+}
