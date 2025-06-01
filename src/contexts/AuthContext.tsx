@@ -1,62 +1,58 @@
+// src/contexts/AuthContext.tsx
 'use client'
 
-import React, { createContext, useContext, useCallback, useState, useEffect } from 'react'
+import { createContext, useContext } from 'react'
+import useSWR from 'swr'
+import { apiFetch } from '@/lib/api/fetcher'
 import { useRouter } from 'next/navigation'
-import api from '@/lib/api/client'   // seu axios pré-configurado
 
-interface AuthContextData {
-  accessToken : string | null
-  refreshToken: string | null
-  isAuthenticated: boolean
-  login  : (access: string, refresh: string) => void
-  logout : () => void
+type MeResponse = { user: any | null }   // 👈 tipagem da rota /api/auth/me
+
+type AuthValue = {
+  user: any | null
+  loading: boolean
+  logout: () => Promise<void>
+  mutate: () => void
 }
 
-const AuthContext = createContext<AuthContextData>({} as AuthContextData)
-export const useAuth = () => useContext(AuthContext)
+const AuthCtx = createContext<AuthValue>({} as AuthValue)
+export const useAuth = () => useContext(AuthCtx)
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+/* --------------- exporta mutate para refreshAccess ---------------- */
+export let mutateUser: () => void = () => {}
+
+export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter()
 
-  /* tokens ficam só para a sessão atual */
-  const [accessToken , setAccessToken ] = useState<string | null>(null)
-  const [refreshToken, setRefreshToken] = useState<string | null>(null)
+  /* ---------- agora usamos <MeResponse> ---------- */
+  const {
+    data,
+    isLoading,
+    mutate,
+  } = useSWR<MeResponse>(
+    '/api/auth/me',
+    (url) => apiFetch<MeResponse>(url),
+    { revalidateOnFocus: false },
+  )
 
-  /* -------- 1. carrega o que existe no sessionStorage ---------- */
-  useEffect(() => {
-    const storedAccess = sessionStorage.getItem('accessToken');
-    const storedRefresh = sessionStorage.getItem('refreshToken');
-    if (storedAccess) setAccessToken(storedAccess);
-    if (storedRefresh) setRefreshToken(storedRefresh);
-  }, []);
+  mutateUser = mutate            // permite refreshAccess → mutate()
 
-  /* -------- 2. salva sempre que mudar ---------- */
-  useEffect(() => {
-    if (accessToken) sessionStorage.setItem('accessToken', accessToken);
-    if (refreshToken) sessionStorage.setItem('refreshToken', refreshToken);
-  }, [accessToken, refreshToken]);
-
-  /* -------- 3. funções públicas ---------- */
-  const login = useCallback((access: string, refresh: string) => {
-    setAccessToken(access);
-    setRefreshToken(refresh);
-    router.replace('/dashboard');
-  }, [router]);
-
-  const logout = useCallback(() => {
-    setAccessToken(null)
-    setRefreshToken(null)
-    sessionStorage.clear()
+  const logout = async () => {
+    await apiFetch('/api/auth/logout', { method: 'POST' })
+    mutate()                      // zera user no contexto
     router.replace('/login')
-  }, [router])
-
-  const value: AuthContextData = {
-    accessToken,
-    refreshToken,
-    isAuthenticated: !!accessToken,
-    login,
-    logout,
   }
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+  return (
+    <AuthCtx.Provider
+      value={{
+        user   : data?.user ?? null,   // ← agora TS conhece a chave user
+        loading: isLoading,
+        logout,
+        mutate,
+      }}
+    >
+      {children}
+    </AuthCtx.Provider>
+  )
 }

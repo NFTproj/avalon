@@ -1,4 +1,8 @@
 // src/lib/api/auth.ts
+
+import { mutateUser } from "@/contexts/AuthContext";
+
+
 export interface RegisterPayload {
   email: string;
   password: string;
@@ -80,3 +84,17 @@ export async function resendCode(payload: ResendCodePayload) {
   if (!res.ok) throw new Error('Erro ao reenviar código')
   return res.json()
 }
+
+
+export async function refreshAccess() {
+  const res = await fetch('/api/auth/refresh', {
+    method: 'POST',
+    credentials: 'include',
+  })
+  if (!res.ok) throw new Error('Falha no refresh')
+
+  await res.json()
+  mutateUser()               // revalida /api/auth/me
+}
+
+

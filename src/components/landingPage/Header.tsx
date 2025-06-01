@@ -1,244 +1,264 @@
-'use client';
+'use client'
 
-import { ConfigContext } from '@/contexts/ConfigContext';
-import { useContext, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import ImageFromJSON from '../core/ImageFromJSON';
-import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react';
+import { useContext, useState } from 'react'
+import { useRouter }            from 'next/navigation'
+import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react'
+
+import ImageFromJSON            from '../core/ImageFromJSON'
+import { ConfigContext }        from '@/contexts/ConfigContext'
+import { useAuth }              from '@/contexts/AuthContext'
 
 function Header() {
-  const { colors, texts } = useContext(ConfigContext);
-  const router = useRouter();
+  /* ────── contextos ────── */
+  const { colors, texts, locale, setLocale } = useContext(ConfigContext)
+  const { user, loading, logout           } = useAuth()
+  const router = useRouter()
 
-  const textLandingPage = texts?.['landing-page'];
-  const navigations = textLandingPage?.header.navigations;
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  /* ────── atalhos de texto ────── */
+  // JSON-EN: landing-page.header
+  const lpHeader   = texts?.['landing-page']?.header
+  // JSON-EN: landing-page.header.navigations
+  const nav        = lpHeader?.navigations
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  /* ────── item de troca de idioma (usado em mobile & desktop) ────── */
+  const LangItem = ({
+    idx,
+    code,
+  }: { idx: 0 | 1; code: 'pt-BR' | 'en-US' }) => (
+    <li
+      onClick={() => setLocale(code)}
+      className={`flex items-center gap-2 px-2 py-1 rounded cursor-pointer
+                  ${locale === code ? 'bg-gray-200 font-semibold' : 'hover:bg-gray-200'}`}
+    >
+      {/* JSON-EN: landing-page.header.navigations.navThree[0].items[idx].image */}
+      <ImageFromJSON
+        src ={nav?.navThree[0].items[idx].image}
+        alt ={nav?.navThree[0].items[idx].alt}
+        width={20} height={20}
+        className="w-4 h-4 rounded-full"
+      />
+      {/* JSON-EN: landing-page.header.navigations.navThree[0].items[idx].title */}
+      {nav?.navThree[0].items[idx].title}
+    </li>
+  )
+
+  /* ──────────────── JSX ──────────────── */
   return (
     <header
       className="w-full grid grid-cols-3 items-center md:py-6 py-4 md:px-28 px-4 border-b-3"
       style={{
         backgroundColor: colors?.header['header-primary'],
-        borderColor: colors?.border['border-primary'],
+        borderColor    : colors?.border['border-primary'],
       }}
     >
-      {/* Menu hambúrguer no lado esquerdo para telas menores que lg */}
+      {/* ╭─────────────────────── HAMBURGUER (mobile) ───────────────────────╮ */}
       <div className="lg:hidden flex items-center">
-        <button
-          onClick={() => setIsMenuOpen(true)}
-          className="text-gray-600 focus:outline-none"
-        >
+        <button onClick={() => setIsMenuOpen(true)} className="text-gray-600">
           <Menu className="w-6 h-6" />
         </button>
       </div>
+      {/* ╰────────────────────────────────────────────────────────────────────╯ */}
 
-      {/* Modal de menu toggle */}
+      {/* ╭──────────────────────────── MENU MOBILE ───────────────────────────╮ */}
       {isMenuOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-75 z-50 flex flex-col justify-between"
+          className="fixed inset-0 z-50 flex flex-col justify-between"
           style={{
             backgroundColor: colors?.background['background-primary'],
-            color: colors?.colors['color-primary'],
+            color          : colors?.colors['color-primary'],
           }}
         >
-
-          {/* Logo centralizada */}
+          {/* logo central */}
           <div className="flex justify-center p-4">
             <button onClick={() => router.push('/')}>
+              {/* JSON-EN: images.logos.main-logo */}
               <ImageFromJSON
-                src={texts?.images.logos['main-logo']}
-                alt={textLandingPage?.header.alts['main-logo']}
-                width={120}
-                height={40}
+                src ={texts?.images.logos['main-logo']}
+                alt ={lpHeader?.alts['main-logo'] /* JSON-EN: landing-page.header.alts.main-logo */}
+                width={120} height={40}
               />
             </button>
           </div>
 
-          {/* Botão de fechar */}
-          <button
-            onClick={() => setIsMenuOpen(false)}
-            className="absolute top-4 right-4 text-white"
-          > 
+          {/* botão fechar */}
+          <button onClick={() => setIsMenuOpen(false)} className="absolute top-4 right-4 text-white">
             <X className="w-6 h-6 bg-gray-400" />
           </button>
-          {/* Navegação no menu */}
+
+          {/* navegação mobile */}
           <nav className="flex flex-col items-center gap-4 mt-16 w-full">
+            {/* About Bloxify */}
             <details className="group w-full">
               <summary className="flex items-center justify-center cursor-pointer px-4 py-2">
-                <span className="flex items-center">
-                  <ChevronRight className="w-4 h-4 mr-2 transition-transform duration-200 group-open:rotate-90" />
-                  {navigations?.navOne}
-                </span>
+                <ChevronRight className="w-4 h-4 mr-2 transition group-open:rotate-90" />
+                {/* JSON-EN: landing-page.header.navigations.navOne */}
+                {nav?.navOne}
               </summary>
             </details>
+
+            {/* Products > TBIO Token */}
             <details className="group w-full">
               <summary className="flex items-center justify-center cursor-pointer px-4 py-2">
-                <span className="flex items-center">
-                  <ChevronRight className="w-4 h-4 mr-2 transition-transform duration-200 group-open:rotate-90" />
-                  {navigations?.navTwo[0].title}
-                </span>
+                <ChevronRight className="w-4 h-4 mr-2 transition group-open:rotate-90" />
+                {/* JSON-EN: landing-page.header.navigations.navTwo[0].title */}
+                {nav?.navTwo[0].title}
               </summary>
-              <ul className="flex flex-col p-2 space-y-2 w-full justify-center items-center ml-7">
-                <li className="flex items-center gap-2 hover:bg-gray-200 px-2 py-1 rounded">             
-                  {navigations?.navTwo[0].items[0].title}
+              <ul className="flex flex-col p-2 space-y-2 w-full items-center ml-7">
+                <li className="flex items-center gap-2 hover:bg-gray-200 px-2 py-1 rounded">
+                  {/* JSON-EN: landing-page.header.navigations.navTwo[0].items[0].title */}
+                  {nav?.navTwo[0].items[0].title}
                 </li>
               </ul>
             </details>
+
+            {/* Language (lista) */}
             <details className="group w-full">
               <summary className="flex items-center justify-center cursor-pointer px-4 py-2 mr-5">
-                <span className="flex items-center">
-                  <ChevronRight className="w-4 h-4 mr-2 transition-transform duration-200 group-open:rotate-90" />
-                  {navigations?.navThree[0].title}
-                </span>
+                <ChevronRight className="w-4 h-4 mr-2 transition group-open:rotate-90" />
+                {/* JSON-EN: landing-page.header.navigations.navThree[0].title */}
+                {nav?.navThree[0].title}
               </summary>
-              <ul className="flex flex-col p-2 space-y-2 w-full justify-center items-center ml-6">
-                <li className="flex items-center gap-2 hover:bg-gray-200 px-2 py-1 rounded">  
-                  <ImageFromJSON
-                    src={navigations?.navThree[0].items[0].image}
-                    alt={navigations?.navThree[0].items[0].alt}
-                    width={20}
-                    height={20}
-                    className="w-4 h-4 rounded-full"
-                  />
-                  {navigations?.navThree[0].items[0].title}
-                </li>
-                <li className="flex items-start gap-2 mr-[32px] hover:bg-gray-200 px-2 py-1 rounded"> 
-                  <ImageFromJSON
-                    src={navigations?.navThree[0].items[1].image}
-                    alt={navigations?.navThree[0].items[1].alt}
-                    width={20}
-                    height={20}
-                    className="w-4 h-4 rounded-full"
-                  />
-                  {navigations?.navThree[0].items[1].title}
-                </li>
+              <ul className="flex flex-col p-2 space-y-2 w-full items-center ml-6">
+                <LangItem idx={0} code="pt-BR" />
+                <LangItem idx={1} code="en-US" />
               </ul>
             </details>
           </nav>
 
-          {/* Botões na parte inferior */}
+          {/* area login/signup mobile */}
           <div className="flex flex-col items-center gap-4 p-4">
-            <button
-              type="button"
-              onClick={() => {
-                router.push('/register');
-                setIsMenuOpen(false);
-              }}
-              className="w-full bg-blue-500 text-white py-2 rounded-lg"
-            >
-              {texts?.['landing-page'].header.buttons.button}
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                router.push('/login');
-                setIsMenuOpen(false);
-              }}
-              className="w-full text-blue-500 py-2 rounded-lg border border-blue-500"
-            >
-              {texts?.['landing-page'].header.buttons.buttonLogin}
-            </button>
+            {loading ? null : user ? (
+              <>
+                <span className="text-sm">{`Olá, ${user.email}`}</span>
+                <button
+                  onClick={() => { logout(); setIsMenuOpen(false) }}
+                  className="w-full text-blue-500 py-2 rounded-lg border border-blue-500"
+                >
+                  Sair
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => { router.push('/register'); setIsMenuOpen(false) }}
+                  className="w-full bg-blue-500 text-white py-2 rounded-lg"
+                >
+                  {/* JSON-EN: landing-page.header.buttons.button */}
+                  {lpHeader?.buttons.button}
+                </button>
+                <button
+                  onClick={() => { router.push('/login'); setIsMenuOpen(false) }}
+                  className="w-full text-blue-500 py-2 rounded-lg border border-blue-500"
+                >
+                  {/* JSON-EN: landing-page.header.buttons.buttonLogin */}
+                  {lpHeader?.buttons.buttonLogin}
+                </button>
+              </>
+            )}
           </div>
         </div>
       )}
+      {/* ╰────────────────────────────────────────────────────────────────────╯ */}
 
-      {/* Logo e navegação ocupando colunas 1 e 2 */}
+      {/* ╭────────────────────────── LOGO + NAV (desktop) ────────────────────╮ */}
       <div className="col-span-2 flex items-center gap-10">
         <button onClick={() => router.push('/')}>
           <ImageFromJSON
-            src={texts?.images.logos['main-logo']}
-            alt={textLandingPage?.header.alts['main-logo']}
-            width={120}
-            height={40}
+            src ={texts?.images.logos['main-logo']}
+            alt ={lpHeader?.alts['main-logo']}
+            width={120} height={40}
           />
         </button>
+
         <nav
           className="hidden lg:flex gap-8"
           style={{
             backgroundColor: colors?.background['background-primary'],
-            borderColor: colors?.border['border-primary'],
-            color: colors?.colors['color-primary'],
+            borderColor    : colors?.border['border-primary'],
+            color          : colors?.colors['color-primary'],
           }}
         >
+          {/* About Bloxify */}
           <details className="group">
             <summary className="flex items-center cursor-pointer">
-              <a href="#hero">{navigations?.navOne}</a>
-              <ChevronDown className="w-4 h-4 ml-2 transition-transform duration-200 group-open:rotate-180" />
+              {nav?.navOne}
+              <ChevronDown className="w-4 h-4 ml-2 transition group-open:rotate-180" />
             </summary>
           </details>
-          <details className="group">
+
+          {/* Products */}
+          <details className="group relative">
             <summary className="flex items-center cursor-pointer">
-              {navigations?.navTwo[0].title}
-              <ChevronDown className="w-4 h-4 ml-2 transition-transform duration-200 group-open:rotate-180" />
+              {nav?.navTwo[0].title}
+              <ChevronDown className="w-4 h-4 ml-2 transition group-open:rotate-180" />
             </summary>
-            <div className="absolute mt-8 w-30 bg-white-100 shadow-md z-50 rounded-b-lg">
-                <ul className="flex flex-col p-2 space-y-2">
-                  <li className="flex items-center gap-2 hover:bg-gray-200 px-2 py-1 rounded">             
-                    {navigations?.navTwo[0].items[0].title}
-                  </li>
-                </ul>
-              </div>
-          </details>
-          <details className="group">
-            <summary className="flex items-center cursor-pointer">
-              {navigations?.navThree[0].title}
-              <ChevronDown className="w-4 h-4 ml-2 transition-transform duration-200 group-open:rotate-180" />
-            </summary>
-            <div className="absolute mt-8 w-30 bg-white-100 shadow-md z-50 rounded-b-lg">
+            <div className="absolute left-0 mt-2 min-w-[8rem] bg-white shadow-lg rounded-b-lg z-40">
               <ul className="flex flex-col p-2 space-y-2">
-                <li className="flex items-center gap-2 hover:bg-gray-200 px-2 py-1 rounded">             
-                  <ImageFromJSON
-                    src={navigations?.navThree[0].items[0].image}
-                    alt={navigations?.navThree[0].items[0].alt}
-                    width={20}
-                    height={20}
-                    className="w-4 h-4 rounded-full"
-                  /> 
-                  {navigations?.navThree[0].items[0].title}
-                </li>
                 <li className="flex items-center gap-2 hover:bg-gray-200 px-2 py-1 rounded">
-                  <ImageFromJSON
-                    src={navigations?.navThree[0].items[1].image}
-                    alt={navigations?.navThree[0].items[1].alt}
-                    width={20}
-                    height={20}
-                    className="w-4 h-4 rounded-full"
-                  />
-                  {navigations?.navThree[0].items[1].title}
+                  {nav?.navTwo[0].items[0].title}
                 </li>
+              </ul>
+            </div>
+          </details>
+
+          {/* Language (desktop) */}
+          <details className="group relative">
+            <summary className="flex items-center cursor-pointer">
+              {nav?.navThree[0].title}
+              <ChevronDown className="w-4 h-4 ml-2 transition group-open:rotate-180" />
+            </summary>
+            <div className="absolute left-0 mt-2 min-w-[8rem] bg-white shadow-lg rounded-b-lg z-40">
+              <ul className="flex flex-col p-2 space-y-2">
+                <LangItem idx={0} code="pt-BR" />
+                <LangItem idx={1} code="en-US" />
               </ul>
             </div>
           </details>
         </nav>
       </div>
+      {/* ╰────────────────────────────────────────────────────────────────────╯ */}
 
-      {/* Botões ocupando a coluna 3 */}
+      {/* ╭──────────────────────── BOTÕES à direita ──────────────────────────╮ */}
       <div className="flex justify-end items-center gap-4">
-        <button
-          type="button"
-          onClick={() => router.push('/register')}
-          className="border rounded-xl px-4 py-2 text-sm font-medium hidden lg:block"
-          style={{
-            backgroundColor: colors?.buttons['button-secondary'],
-            borderColor: colors?.border['border-primary'],
-            color: colors?.colors['color-primary'],
-          }}
-        >
-          {texts?.['landing-page'].header.buttons.button}
-        </button>
-        <button
-          type="button"
-          onClick={() => router.push('/login')}
-          className="text-sm font-medium hidden lg:block"
-          style={{
-            color: colors?.colors['color-primary'],
-          }}
-        >
-          {texts?.['landing-page'].header.buttons.buttonLogin}
-        </button>
+        {loading ? null : user ? (
+          <>
+            <span className="hidden lg:block mr-2 text-black">{`Olá, ${user.email}`}</span>
+            <button
+              onClick={logout}
+              className="text-sm font-medium hidden lg:block"
+              style={{ color: colors?.colors['color-primary'] }}
+            >
+              Sair
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              onClick={() => router.push('/register')}
+              className="border rounded-xl px-4 py-2 text-sm font-medium hidden lg:block"
+              style={{
+                backgroundColor: colors?.buttons['button-secondary'],
+                borderColor    : colors?.border['border-primary'],
+                color          : colors?.colors['color-primary'],
+              }}
+            >
+              {lpHeader?.buttons.button}
+            </button>
+            <button
+              onClick={() => router.push('/login')}
+              className="text-sm font-medium hidden lg:block"
+              style={{ color: colors?.colors['color-primary'] }}
+            >
+              {lpHeader?.buttons.buttonLogin}
+            </button>
+          </>
+        )}
       </div>
+      {/* ╰────────────────────────────────────────────────────────────────────╯ */}
     </header>
-  );
+  )
 }
 
-export default Header;
+export default Header

@@ -7,6 +7,7 @@ import CustomInput   from '../../components/core/Inputs/CustomInput'
 import LoadingOverlay from '../../components/commom/LoadingOverlay'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { loginUser } from '@/lib/api/auth'
+import { mutateUser } from "@/contexts/AuthContext";
 import { useRouter } from 'next/navigation'
 
 export default function LoginForm() {
@@ -27,8 +28,9 @@ export default function LoginForm() {
     setLoad(true)
 
     try {
-      await loginUser({ email, password })   // 👈 só credenciais
-      router.push('/dashboard')
+      await loginUser({ email, password })   
+      await mutateUser()                     
+      router.push('/dashboard')              
     } catch (err) {
       console.error('[LOGIN ERROR]', err)
       setError('E-mail ou senha inválidos. Tente novamente.')

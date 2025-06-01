@@ -1,54 +1,50 @@
-import { cookies } from 'next/headers'
-import { NextResponse } from 'next/server'
+// app/api/auth/refresh/route.ts
+import { NextRequest, NextResponse } from 'next/server'
 
+export async function POST(req: NextRequest) {
+  /* ---------- env ---------- */
+  const apiUrl   = process.env.BLOXIFY_URL_BASE
+  const apiKey   = process.env.BLOXIFY_API_KEY
+  const clientId = process.env.CLIENT_ID
 
-export async function POST() {
-  try {
-    const cookieStore = await Promise.resolve(cookies())
-    const refreshToken = cookieStore.get('refreshToken')?.value
-
-    if (!refreshToken) {
-      return NextResponse.json({ error: 'Refresh token ausente' }, { status: 401 })
-    }
-
-    const apiKey = process.env.BLOXIFY_API_KEY
-    const apiUrl = process.env.BLOXIFY_URL_BASE
-
-    const response = await fetch(`${apiUrl}/auth/refresh`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey!,
-      },
-      body: JSON.stringify({ refreshToken }),
-    })
-
-    const data = await response.json()
-    if (!response.ok) {
-      return NextResponse.json(data, { status: response.status })
-    }
-
-    const res = new NextResponse(JSON.stringify({ success: true }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    })
-
-    res.cookies.set('accessToken', data.accessToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      path: '/',
-      maxAge: 60 * 15,
-    })
-
-    res.cookies.set('refreshToken', data.refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      path: '/',
-      maxAge: 60 * 60 * 24 * 7,
-    })
-
-    return res
-  } catch (err) {
-    return NextResponse.json({ error: 'Erro ao renovar token' }, { status: 500 })
+  if (!apiUrl || !apiKey || !clientId) {
+    return NextResponse.json(
+      { error: 'Variáveis de ambiente ausentes' },
+      { status: 500 },
+    )
   }
+
+  /* ---------- refreshToken HttpOnly ---------- */
+  const refreshToken = req.cookies.get('refreshToken')?.value
+  if (!refreshToken) {
+    return NextResponse.json({ error: 'Refresh ausente' }, { status: 401 })
+  }
+
+  /* ---------- payload que o backend exige ---------- */
+  const payload = { refreshToken, clientId }
+
+  const r = await fetch(`${apiUrl}/auth/refresh`, {
+    method : 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key'   : apiKey as string,      // <- assertion
+    },
+    body: JSON.stringify(payload),
+  })
+
+  const data = await r.json()
+  if (!r.ok) return NextResponse.json(data, { status: r.status })
+
+  /* ---------- grava novo access cookie ---------- */
+  const res = NextResponse.json({ success: true }, { status: 200 })
+  res.cookies.set({
+    name     : 'accessToken',
+    value    : data.accessToken,
+    httpOnly : true,
+    secure   : process.env.NODE_ENV === 'production',
+    sameSite : 'lax',
+    path     : '/',
+    maxAge   : 60 * 15,   // 15 min
+  })
+  return res
 }

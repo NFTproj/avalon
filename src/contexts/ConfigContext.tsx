@@ -1,61 +1,84 @@
+// src/contexts/ConfigContext.tsx
 'use client'
 
 import {
   ClientConfig,
-  ColorsConfig,
-  getClientConfig,
-  TextsConfig,
+  getClientConfig,          // já existente
 } from '@/app/lib/config'
 
 import React, {
   createContext,
   useState,
   useEffect,
-  ReactNode,
   useMemo,
+  ReactNode,
 } from 'react'
 
 interface ConfigContextProps {
-  config: ClientConfig | null
-  texts: TextsConfig | null
-  colors: ColorsConfig | null
+  config : ClientConfig | null          // permanece igual
+  texts  : ClientConfig['texts']  | null
+  colors : ClientConfig['colors'] | null
+  locale : string                       // ← idioma atual
+  setLocale: (loc: string) => void      // ← troca idioma
 }
 
 export const ConfigContext = createContext<ConfigContextProps>({
-  config: null,
-  texts: null,
-  colors: null,
+  config : null,
+  texts  : null,
+  colors : null,
+  locale : 'pt-BR',
+  setLocale: () => {},
 })
 
-export const ConfigProvider = ({ config, children }: { config: ClientConfig | null, children: ReactNode }) => {
-  const [texts, setTexts] = useState<TextsConfig | null>(config?.texts || null)
-  const [colors, setColors] = useState<ColorsConfig | null>(config?.colors || null)
-  let lang = 'pt-BR'
-  if (typeof window !== 'undefined') {
-    lang = document.documentElement.lang
-  }
-
-  useEffect(() => {
-    if (!config?.texts || !config?.colors) {
-      const loadConfig = async () => {
-        const data = await getClientConfig({ locale: lang })
-        setTexts(data.texts)
-        setColors(data.colors)
-      }
-      loadConfig()
+export const ConfigProvider = ({
+  config,
+  children,
+}: {
+  config: ClientConfig | null
+  children: ReactNode
+}) => {
+  /* ---------- idioma salvo no localStorage ou default pt-BR ---------- */
+  const [locale, setLocale] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('locale') || 'pt-BR'
     }
-  }, [config, lang])
+    return 'pt-BR'
+  })
 
+  /* ---------- estados que você já tinha ---------- */
+  const [texts , setTexts ] = useState(config?.texts  ?? null)
+  const [colors, setColors] = useState(config?.colors ?? null)
+
+  /* ---------- carrega/recarga quando locale muda ---------- */
+  useEffect(() => {
+    ;(async () => {
+      const data = await getClientConfig({ locale })
+      setTexts(data.texts)
+      setColors(data.colors)
+
+      /* opcional: atualiza <html lang="…"> */
+      if (typeof document !== 'undefined') {
+        document.documentElement.lang = locale
+        localStorage.setItem('locale', locale)
+      }
+    })()
+  }, [locale])
+
+  /* ---------- memo ---------- */
   const value = useMemo(
     () => ({
       config,
       texts,
       colors,
+      locale,
+      setLocale,               // expõe a função
     }),
-    [config, texts, colors],
+    [config, texts, colors, locale],
   )
 
   return (
-    <ConfigContext.Provider value={value}>{children}</ConfigContext.Provider>
+    <ConfigContext.Provider value={value}>
+      {children}
+    </ConfigContext.Provider>
   )
 }
