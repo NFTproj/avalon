@@ -38,12 +38,14 @@ export const ConfigProvider = ({
   children: ReactNode
 }) => {
   /* ---------- idioma salvo no localStorage ou default pt-BR ---------- */
-  const [locale, setLocale] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('locale') || 'pt-BR'
-    }
-    return 'pt-BR'
-  })
+  const [locale, setLocale] = useState<string>('pt-BR')
+const [mounted, setMounted] = useState(false)
+
+useEffect(() => {
+  const stored = localStorage.getItem('locale')
+  setLocale(stored || 'pt-BR')
+  setMounted(true)
+}, [])
 
   /* ---------- estados que você já tinha ---------- */
   const [texts , setTexts ] = useState(config?.texts  ?? null)
@@ -75,6 +77,7 @@ export const ConfigProvider = ({
     }),
     [config, texts, colors, locale],
   )
+  if (!mounted) return null
 
   return (
     <ConfigContext.Provider value={value}>
