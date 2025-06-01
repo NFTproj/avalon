@@ -5,6 +5,7 @@ import { useContext } from 'react'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import CustomButton from '@/components/core/Buttons/CustomButton'
 import { RegisterPayload } from '@/lib/api/auth'
+import { useRouter }            from 'next/navigation'
 
 interface StepZeroProps {
   nextStep: () => void
@@ -14,6 +15,7 @@ interface StepZeroProps {
 export default function StepZero({ nextStep, updateField }: StepZeroProps) {
   const { colors, texts } = useContext(ConfigContext)
   const stepOneTexts = texts?.['register']?.['step-zero']
+  const router = useRouter()
 
 
  
@@ -43,9 +45,10 @@ export default function StepZero({ nextStep, updateField }: StepZeroProps) {
           textColor={colors?.colors['color-primary']}
           borderColor={colors?.border['border-primary']}
           className="shrink-0 w-[210px] h-[52px] font-bold"
-        />
+          onClick={() => router.push('/register-metamask')} 
+        /> 
       </div>
-
+       {/* Já possui uma conta? Login*/}
       <p className="text-sm text-left" style={{ color: colors?.colors['color-secondary'] }}>
         {stepOneTexts?.['already-have-account']}{' '}
         <a href="/login" className="underline">

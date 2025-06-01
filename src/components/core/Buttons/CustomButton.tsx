@@ -37,13 +37,14 @@ export default function CustomButton({
 
   return (
     <button
-      {...props}
-      className={`
-        rounded-xl border transition-all hover:opacity-90
-        ${sizeClasses} 
-        ${fullWidth ? 'w-full' : ''}
-        ${className}
-      `}
+    {...props}
+    className={`
+      rounded-xl border transition-all duration-200 ease-in-out
+      hover:opacity-90 hover:scale-105 hover:brightness-110 hover:shadow-md cursor-pointer
+      ${sizeClasses} 
+      ${fullWidth ? 'w-full' : ''}
+      ${className}
+    `}
       style={{
         backgroundColor,
         color: finalTextColor,
