@@ -31,7 +31,7 @@ export default function useRegister() {
 
         setRegistrationError(msg)
 
-        // 🔁 volta para StepTwo (step 3) se for erro de usuário existente
+        //volta para StepTwo (step 3) se for erro de usuário existente
         if (msg.toLowerCase().includes('user already exists')) {
           setStep(3)
         }

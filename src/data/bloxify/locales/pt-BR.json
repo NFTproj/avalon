@@ -42,7 +42,8 @@
       },
       "buttons": {
         "button": "Criar conta",
-        "buttonLogin": "Entar"
+        "buttonLogin": "Entar",
+        "buttonLogout": "sair"
       }
     },
     "hero": {

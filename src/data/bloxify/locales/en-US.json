@@ -41,7 +41,8 @@
         },
         "buttons": {
           "button": "Create Account",
-          "buttonLogin": "Login"
+          "buttonLogin": "Login",
+          "buttonLogout": "Logout"
         }
     },
     "hero": {

@@ -1,12 +1,13 @@
 'use client'
 
-import { useContext, useState } from 'react'
+import { useContext, useState, useRef } from 'react'
 import { useRouter }            from 'next/navigation'
 import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react'
 
 import ImageFromJSON            from '../core/ImageFromJSON'
 import { ConfigContext }        from '@/contexts/ConfigContext'
 import { useAuth }              from '@/contexts/AuthContext'
+import { useOutsideClick } from '@/utils/useOutsideClick'
 
 function Header() {
   /* ────── contextos ────── */
@@ -19,8 +20,17 @@ function Header() {
   const lpHeader   = texts?.['landing-page']?.header
   // JSON-EN: landing-page.header.navigations
   const nav        = lpHeader?.navigations
-
+  const [hovered, setHovered] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const aboutRef = useRef<HTMLDetailsElement>(null)
+  const productsRef = useRef<HTMLDetailsElement>(null)
+  const langRef = useRef<HTMLDetailsElement>(null)
+  const outRef = useRef<HTMLDetailsElement>(null)
+  useOutsideClick(aboutRef, () => aboutRef.current?.removeAttribute('open'))
+  useOutsideClick(productsRef, () => productsRef.current?.removeAttribute('open'))
+  useOutsideClick(langRef, () => langRef.current?.removeAttribute('open'))
+  useOutsideClick(outRef, () => outRef.current?.removeAttribute('open'))
 
   /* ────── item de troca de idioma (usado em mobile & desktop) ────── */
   const LangItem = ({
@@ -71,7 +81,7 @@ function Header() {
           }}
         >
           {/* logo central */}
-          <div className="flex justify-center p-4">
+          <div className="flex justify-center p-4 ">
             <button onClick={() => router.push('/')}>
               {/* JSON-EN: images.logos.main-logo */}
               <ImageFromJSON
@@ -90,7 +100,7 @@ function Header() {
           {/* navegação mobile */}
           <nav className="flex flex-col items-center gap-4 mt-16 w-full">
             {/* About Bloxify */}
-            <details className="group w-full">
+            <details ref={aboutRef} className="group">
               <summary className="flex items-center justify-center cursor-pointer px-4 py-2">
                 <ChevronRight className="w-4 h-4 mr-2 transition group-open:rotate-90" />
                 {/* JSON-EN: landing-page.header.navigations.navOne */}
@@ -136,7 +146,7 @@ function Header() {
                   onClick={() => { logout(); setIsMenuOpen(false) }}
                   className="w-full text-blue-500 py-2 rounded-lg border border-blue-500"
                 >
-                  Sair
+                  {lpHeader?.buttons.buttonLogout}
                 </button>
               </>
             ) : (
@@ -164,7 +174,7 @@ function Header() {
 
       {/* ╭────────────────────────── LOGO + NAV (desktop) ────────────────────╮ */}
       <div className="col-span-2 flex items-center gap-10">
-        <button onClick={() => router.push('/')}>
+        <button onClick={() => router.push('/')} className='cursor-pointer'>
           <ImageFromJSON
             src ={texts?.images.logos['main-logo']}
             alt ={lpHeader?.alts['main-logo']}
@@ -181,7 +191,7 @@ function Header() {
           }}
         >
           {/* About Bloxify */}
-          <details className="group">
+          <details ref={aboutRef} className="group">
             <summary className="flex items-center cursor-pointer">
               {nav?.navOne}
               <ChevronDown className="w-4 h-4 ml-2 transition group-open:rotate-180" />
@@ -189,7 +199,7 @@ function Header() {
           </details>
 
           {/* Products */}
-          <details className="group relative">
+          <details ref={productsRef} className="group relative">
             <summary className="flex items-center cursor-pointer">
               {nav?.navTwo[0].title}
               <ChevronDown className="w-4 h-4 ml-2 transition group-open:rotate-180" />
@@ -204,7 +214,7 @@ function Header() {
           </details>
 
           {/* Language (desktop) */}
-          <details className="group relative">
+          <details ref={langRef} className="group relative">
             <summary className="flex items-center cursor-pointer">
               {nav?.navThree[0].title}
               <ChevronDown className="w-4 h-4 ml-2 transition group-open:rotate-180" />
@@ -224,35 +234,55 @@ function Header() {
       <div className="flex justify-end items-center gap-4">
         {loading ? null : user ? (
           <>
-            <span className="hidden lg:block mr-2 text-black">{`Olá, ${user.email}`}</span>
-            <button
-              onClick={logout}
-              className="text-sm font-medium hidden lg:block"
-              style={{ color: colors?.colors['color-primary'] }}
-            >
-              Sair
-            </button>
+            <details ref={outRef} className="relative group hidden lg:block">
+              <summary className="flex items-center gap-2 cursor-pointer text-sm font-medium text-black list-none">
+                {`Olá, ${user.email}`}
+                <ChevronDown className="w-4 h-4 transition group-open:rotate-180" />
+              </summary>
+
+              <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-lg z-50 min-w-[8rem]">
+                <ul className="flex flex-col p-2 space-y-1 text-left">
+                  <li
+                    onClick={logout}
+                    className="cursor-pointer text-sm text-red-600 px-4 py-2 rounded hover:bg-gray-100"
+                  >
+                    {lpHeader?.buttons.buttonLogout}
+                  </li>
+                </ul>
+              </div>
+          </details>
           </>
         ) : (
           <>
             <button
-              onClick={() => router.push('/register')}
-              className="border rounded-xl px-4 py-2 text-sm font-medium hidden lg:block"
-              style={{
-                backgroundColor: colors?.buttons['button-secondary'],
-                borderColor    : colors?.border['border-primary'],
-                color          : colors?.colors['color-primary'],
-              }}
-            >
-              {lpHeader?.buttons.button}
+                onClick={() => router.push('/register')}
+                className="border rounded-xl px-4 py-2 text-sm font-medium hidden lg:block
+                          transition-all duration-200 ease-in-out 
+                          hover:scale-[1.03] hover:shadow-md active:scale-95 
+                          cursor-pointer"
+                style={{
+                  backgroundColor: colors?.buttons['button-secondary'],
+                  borderColor    : colors?.border['border-primary'],
+                  color          : colors?.colors['color-primary'],
+                }}
+              >
+                {lpHeader?.buttons.button}
             </button>
             <button
               onClick={() => router.push('/login')}
-              className="text-sm font-medium hidden lg:block"
-              style={{ color: colors?.colors['color-primary'] }}
+              onMouseEnter={() => setHovered(true)}
+              onMouseLeave={() => setHovered(false)}
+              className="hidden lg:block px-4 py-2 text-sm font-medium rounded-xl
+                        transition-all duration-200 ease-in-out
+                        active:scale-95 cursor-pointer"
+              style={{
+                backgroundColor: hovered ? '#e0e7ff' : 'transparent', // cor de fundo ao hover
+                color: hovered ? '#1d4ed8' : colors?.colors['color-primary'], // cor do texto ao hover
+                border: '1px solid transparent',
+              }}
             >
               {lpHeader?.buttons.buttonLogin}
-            </button>
+          </button>
           </>
         )}
       </div>
