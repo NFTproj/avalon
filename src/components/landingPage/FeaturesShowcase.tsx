@@ -23,7 +23,7 @@ export default function FeaturesShowcase() {
   }
 
   return (
-    <section className="w-full mb-60 justify-center items-center">
+    <section className="w-full mb-60 lg:mb-96 mt-24 lg:mt-32 justify-center items-center py-6">
       <div className=" justify-center items-center w-full relative mt-10">
         <h2
           className="text-center text-2xl md:text-3xl font-bold mb-10 md:mb-20"
@@ -54,8 +54,6 @@ export default function FeaturesShowcase() {
             <div
               className="w-full h-full rounded-md overflow-y-auto"
               style={{
-                //maxHeight: 'calc(100vh - 200px)',
-                //minHeight: '500px',
                 backgroundColor: colors?.background['background-quaternary'],
               }}
             >
