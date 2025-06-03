@@ -330,7 +330,17 @@
       },
       "button-back": "Back",
       "button-login": "Login"
-    }
+    },
+    "metamask-register-login": {
+    "counter": {
+      "current": "01",
+      "total": "of 2"
+    },
+    "fase": "Step",
+    "title": "Connect your wallet",
+    "paragraph-Wallet": "Select the digital wallet you want to use.",
+    "button-Wallet-choose": "Choose wallet"
+  }
   },
   "footer": {
     "alt-logo": "Bloxify Logo",

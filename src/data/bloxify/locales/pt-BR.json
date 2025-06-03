@@ -325,7 +325,18 @@
       },
       "button-back": "Voltar",
       "button-login": "Entrar"
+    },
+    "metamask-register-login": {
+      "counter": { 
+      "current": "01",
+      "total": "de 2"
+    },
+    "fase": "Etapa",
+    "title": "Conecte sua carteira",
+    "paragraph-Wallet": "Selecione a carteira digital que você deseja usar.",
+    "button-Wallet-choose": "Escolher carteira"
     }
+
   },
   "footer": {
     "alt-logo": "Logo da Bloxify",
