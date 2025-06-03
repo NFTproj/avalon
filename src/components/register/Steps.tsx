@@ -4,7 +4,7 @@ import { useState } from 'react'
 import StepZero from './StepZero'
 import StepOne from './StepOne'
 import StepTwo from './StepTwo'
-import LoadingOverlay from '../commom/LoadingOverlay'
+import LoadingOverlay from '../common/LoadingOverlay'
 import StepThree from './StepThree'
 import StepFour from './StepFour'
 
@@ -15,14 +15,14 @@ export default function Steps() {
   // Avançar step (com loading simulado de 1s)
   const nextStep = async () => {
     setLoading(true)
-    await new Promise(resolve => setTimeout(resolve, 1000))
+    await new Promise((resolve) => setTimeout(resolve, 1000))
     setLoading(false)
-    setStep(prev => prev + 1)
+    setStep((prev) => prev + 1)
   }
 
   // Retroceder step (para o botão "Voltar")
   const prevStep = () => {
-    setStep(prev => prev - 1)
+    setStep((prev) => prev - 1)
   }
 
   return (

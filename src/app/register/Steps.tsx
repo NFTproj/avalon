@@ -1,6 +1,6 @@
 'use client'
 
-import LoadingOverlay from '../../components/commom/LoadingOverlay'
+import LoadingOverlay from '../../components/common/LoadingOverlay'
 import StepZero from './StepZero'
 import StepOne from './StepOne'
 import StepTwo from './StepTwo'
@@ -25,7 +25,13 @@ export default function Steps() {
       {loading && <LoadingOverlay />}
 
       {step === 1 && <StepZero nextStep={next} updateField={updateField} />}
-      {step === 2 && <StepOne nextStep={next} updateField={updateField} formData={formData} />}
+      {step === 2 && (
+        <StepOne
+          nextStep={next}
+          updateField={updateField}
+          formData={formData}
+        />
+      )}
       {step === 3 && (
         <StepTwo
           nextStep={next}
@@ -35,7 +41,14 @@ export default function Steps() {
           registrationError={registrationError} // 👈 passa o erro aqui
         />
       )}
-      {step === 4 && <StepThree nextStep={next} updateField={updateField} formData={formData} resend={resend}/>}
+      {step === 4 && (
+        <StepThree
+          nextStep={next}
+          updateField={updateField}
+          formData={formData}
+          resend={resend}
+        />
+      )}
       {step === 5 && <StepFour nextStep={next} prevStep={back} />}
     </div>
   )

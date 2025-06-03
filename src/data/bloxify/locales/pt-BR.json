@@ -21,7 +21,7 @@
             ]
           }
         ],
-     
+
         "navThree": [
           {
             "title": "Idioma",
@@ -38,7 +38,7 @@
               }
             ]
           }
-        ] 
+        ]
       },
       "buttons": {
         "button": "Criar conta",
@@ -217,7 +217,7 @@
         }
       ]
     },
-    "forms-contact": { 
+    "forms-contact": {
       "title": "Vem conhecer!",
       "support": {
         "title": "Central de Suporte",
@@ -246,7 +246,81 @@
         },
         "submit": "Enviar"
       }
-    }
+    },
+    "tokens": [
+      {
+        "id": 1,
+        "name": "TOKEN TBIO",
+        "subtitle": "Fazenda Eliane Mato Grosso",
+        "price": "15",
+        "launchDate": "July 31, 2024",
+        "tokensAvailable": "1019820.10",
+        "code": "TBIO",
+        "identifierCode": "TBIO",
+        "image": "icons/bloxify/man-similing.png",
+        "sold": 516820,
+        "total": 1000000,
+        "labels": [
+          {
+            "name": "CPR"
+          },
+          {
+            "name": "CARBONO"
+          },
+          {
+            "name": "VERDE"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "TOKEN TBIO",
+        "subtitle": "Fazenda Eliane Mato Grosso",
+        "price": "15",
+        "launchDate": "July 31, 2024",
+        "tokensAvailable": "1019820.00",
+        "code": "TBIO",
+        "identifierCode": "TBIO",
+        "image": "icons/bloxify/man-similing.png",
+        "sold": 516820,
+        "total": 1000000,
+        "labels": [
+          {
+            "name": "CPR"
+          },
+          {
+            "name": "CARBONO"
+          },
+          {
+            "name": "VERDE"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "name": "TOKEN TBIO",
+        "subtitle": "Fazenda Eliane Mato Grosso",
+        "price": "15",
+        "launchDate": "July 31, 2024",
+        "tokensAvailable": "1019820.00",
+        "code": "TBIO",
+        "identifierCode": "TBIO",
+        "image": "icons/bloxify/man-similing.png",
+        "sold": 1000000,
+        "total": 1000000,
+        "labels": [
+          {
+            "name": "CPR"
+          },
+          {
+            "name": "CARBONO"
+          },
+          {
+            "name": "VERDE"
+          }
+        ]
+      }
+    ]
   },
   "register": {
     "image": "images/login/creating-account.svg",
@@ -405,6 +479,16 @@
         "buy": "Comprar",
         "sell": "Vender"
       }
+    }
+  },
+  "token": {
+    "token-price": "Preço do Token",
+    "launch-date": "Data de lançamento",
+    "sold": "Tokens disponíveis",
+    "available": "Código identificador",
+    "progress-bar": {
+      "sold": "Vendidos",
+      "available": "Disponíveis"
     }
   }
 }
