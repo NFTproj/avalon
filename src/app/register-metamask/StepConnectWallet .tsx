@@ -19,7 +19,7 @@ export default function StepConnectWallet() {
       <p className="mb-2 text-sm" style={{ color: colors?.colors['color-secondary'] }}>
         {metamaskTexts?.fase}{' '}
         <span style={{ color: colors?.colors['color-primary'], fontWeight: 'bold' }}>
-          {metamaskTexts?.counter?.current}
+          {metamaskTexts?.counter?.first}
         </span>{' '}
         {metamaskTexts?.counter?.total}
       </p>

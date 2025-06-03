@@ -9,12 +9,13 @@ import LoadingOverlay from '@/components/commom/LoadingOverlay'
 import { registerWithMetamask } from '@/lib/api/auth'
 
 export default function StepSignMessage() {
-  const { colors } = useContext(ConfigContext)
+  const { colors, texts } = useContext(ConfigContext)
   const { address } = useAccount()
   const { push } = useRouter()
 
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const metamaskTexts = texts?.register?.['metamask-register-login'] as any;
 
   const { signMessageAsync } = useSignMessage()
 
@@ -39,18 +40,27 @@ export default function StepSignMessage() {
   return (
     <div className="w-full max-w-md relative">
       {isLoading && <LoadingOverlay overrideMessage="Conectando..." />}
+      <p className="mb-2 text-sm" style={{ color: colors?.colors['color-secondary'] }}>
+        {metamaskTexts?.fase}{' '}
+        <span style={{ color: colors?.colors['color-primary'], fontWeight: 'bold' }}>
+          {metamaskTexts?.counter?.second}
+        </span>{' '}
+        {metamaskTexts?.counter?.total}
+      </p>
 
       <h1 className="text-3xl font-bold mb-6" style={{ color: colors?.colors['color-primary'] }}>
-        Criar sua conta
+        {/*Criar sua conta*/}
+        {metamaskTexts?.signature?.title}
       </h1>
 
       <p className="mb-4 text-gray-600">
-        Agora só falta um passo! Clique abaixo para assinar e confirmar a criação da sua conta com essa carteira.
+        {/*Agora só falta um passo! Clique abaixo para assinar e confirmar a criação da sua conta com essa carteira.*/}
+        {metamaskTexts?.signature?.['paragraph-register'] }
       </p>
 
       <CustomButton
         onClick={handleSign}
-        text="Criar conta"
+        text={(metamaskTexts?.signature?.['button-register-wallet']  || 'Create account')}
         fullWidth
         disabled={isLoading}
       />

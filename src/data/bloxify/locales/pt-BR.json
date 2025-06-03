@@ -328,14 +328,22 @@
     },
     "metamask-register-login": {
       "counter": { 
-      "current": "01",
+      "first": "01",
+      "second": "2",
       "total": "de 2"
     },
     "fase": "Etapa",
     "title": "Conecte sua carteira",
     "paragraph-Wallet": "Selecione a carteira digital que você deseja usar.",
-    "button-Wallet-choose": "Escolher carteira"
+    "button-Wallet-choose": "Escolher carteira",
+
+    "signature": {
+      "title": "Criar sua conta",
+      "paragraph-register": "Agora só falta um passo! Clique abaixo para assinar e confirmar a criação da sua conta com essa carteira.",
+      "button-register-wallet": "Criar conta"
     }
+    }
+     
 
   },
   "footer": {
