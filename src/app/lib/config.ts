@@ -19,7 +19,8 @@ export async function getClientConfig({
   locale?: string
   theme?: ThemeMode
 } = {}): Promise<ClientConfig> {
-  const client = process.env.CLIENT ?? 'bloxify'
+  const client =
+    process.env.CLIENT ?? process.env.NEXT_PUBLIC_CLIENT ?? 'bloxify'
   const isBloxify = client === 'bloxify'
 
   const localesToTry = [

@@ -17,6 +17,12 @@
     "color-quaternary": "#b3b3b3",
     "color-quintenary": "#e5e3e3"
   },
+  "colors-base": {
+    "color-primary": "#48F0DB",
+    "color-secondary": "#F2FCFF",
+    "color-tertiary": "#08CEFF",
+    "color-quaternary": "#5BF3E6"
+  },
   "background": {
     "background-primary": "#F2FCFF",
     "background-secondary": "#D9D9D9",

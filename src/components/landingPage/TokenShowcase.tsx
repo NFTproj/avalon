@@ -6,7 +6,7 @@ import Token from '@/components/common/Token'
 
 export default function TokenShowcase() {
   const { colors, texts } = useContext(ConfigContext)
-  const tokens = texts?.['landing-page'].tokens ?? []
+  const tokens = texts?.['landing-page'].tokens
 
   return (
     <section
@@ -25,26 +25,18 @@ export default function TokenShowcase() {
             }}
           />
           <h2
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
+            className="text-4xl md:text-5xl lg:text-4xl font-bold mb-6 leading-tight"
             style={{
               color: colors?.colors?.['color-primary'] ?? '#202020',
             }}
           >
-            As melhores oportunidades de tokens para você
+            {tokens?.title}
           </h2>
-          <p
-            className="text-xl md:text-2xl max-w-4xl mx-auto leading-relaxed"
-            style={{ color: colors?.colors?.['color-secondary'] ?? '#6b6f70' }}
-          >
-            Explore nossa seleção cuidadosamente curada de tokens de alta
-            qualidade, oferecendo oportunidades únicas de investimento em ativos
-            tokenizados.
-          </p>
         </div>
 
         {/* Grid de Cards com Flexbox */}
         <div className="flex flex-wrap justify-center gap-8 lg:gap-10 mb-16">
-          {tokens.map((token) => (
+          {tokens?.list.map((token) => (
             <div
               key={token.id}
               className="w-full sm:w-[calc(50%-16px)] lg:w-[calc(33.333%-27px)] max-w-sm"

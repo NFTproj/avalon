@@ -2,6 +2,7 @@
 
 import Footer from '@/components/common/footer'
 import FeaturesShowcase from '@/components/landingPage/FeaturesShowcase'
+import FaqTabs from '@/components/landingPage/FaqTabs'
 import FormsContact from '@/components/landingPage/FormsContact'
 import Header from '@/components/landingPage/Header'
 import Hero from '@/components/landingPage/Hero'
@@ -11,7 +12,7 @@ import { useContext } from 'react'
 import { ConfigContext } from '@/contexts/ConfigContext'
 
 export default function Home() {
-  const { colors, isBloxify } = useContext(ConfigContext)
+  const { colors, isBloxify, texts } = useContext(ConfigContext)
 
   return (
     <div
@@ -23,7 +24,15 @@ export default function Home() {
       <main>
         <Hero />
         <TokenizationSteps />
-        {!isBloxify && <TokenShowcase />}
+        {!isBloxify && (
+          <>
+            <TokenShowcase />
+            <FaqTabs
+              title={texts?.['landing-page']?.faq?.title}
+              questions={texts?.['landing-page']?.faq?.questions || []}
+            />
+          </>
+        )}
         {isBloxify && (
           <>
             <FeaturesShowcase />

@@ -76,147 +76,6 @@
         }
       ]
     },
-    "features-showcase": {
-      "title": "Todos os recursos Bloxify",
-      "features": [
-        {
-          "id": 1,
-          "title": "Usuários Web3 em uma interface web2",
-          "subtitle": "Sign in",
-          "description": "Ofereça recursos blockchain com login via e-mail e senha, redes sociais ou link mágico.",
-          "attributes": {
-            "image": "images/bloxify/social-media.svg",
-            "alt": "Ícones de rede socias. Google, Aplle, Twitter, Facebook",
-            "title": "Use your social login",
-            "span": "or e-mail",
-            "email": "hello@world.com.br",
-            "continue-email": "Continue with e-mail"
-          }
-        },
-        {
-          "id": 2,
-          "title": "Deploy de tokens e contratos",
-          "subtitle": "Admin painel",
-          "description": "Crie, gerencie e comercialize tokens vinculados a ativos físicos e digitais de forma simples.",
-          "attributes": {
-            "title": "Faça deploy nas seguintes redes:",
-            "cryptos": [
-              {
-                "id": 1,
-                "name": "POLYGON",
-                "icon": "icons/bloxify/crypto-polygon.svg",
-                "alt": "Ícone da polygon"
-              },
-              {
-                "id": 2,
-                "name": "BASE",
-                "icon": "icons/bloxify/crypto-base.svg",
-                "alt": "Ícone da Base"
-              },
-              {
-                "id": 3,
-                "name": "ETHEREUM",
-                "icon": "icons/bloxify/cryptor-ethereum.svg",
-                "alt": "Ícone da Ethereum"
-              }
-            ]
-          }
-        },
-        {
-          "id": 3,
-          "title": "Comercialização simplificada de tokens",
-          "subtitle": "Checkout",
-          "description": "Venda tokens de forma fácil e segura, com pagamento via Pix no Brasil e cartão de crédito no mundo.",
-          "attributes": {
-            "title": "Escolha o método  de pagamento:",
-            "text-pix": "Pagamentos Via Pix (BR)",
-            "text-credit-card": "Pagamentos via cartão (Global)",
-            "image-pix": "icons/bloxify/pix.svg",
-            "alt-pix": "Ícone do Pix",
-            "image-credit-card": "icons/bloxify/credit-card.svg",
-            "alt-credit-card": "Ícone do cartão de crédito"
-          }
-        },
-        {
-          "id": 4,
-          "title": "Verificação de usuário (KYC)",
-          "subtitle": "KYC",
-          "description": "Escolha entre KYC obrigatório ou acesso livre, conforme sua estratégia.",
-          "attributes": {
-            "title": "Verificação de identiidentidade (KYC)",
-            "image": "icons/bloxify/kyc.svg",
-            "alt": "Ícone de KYC"
-          }
-        },
-        {
-          "id": 5,
-          "title": "Tokenização",
-          "subtitle": "Tokenização",
-          "description": "Tokenize ativos físicos e digitais em diversas redes, do deploy à venda.",
-          "attributes": {
-            "title": "Tokenização simplificada",
-            "image": "icons/bloxify/tokenization.svg",
-            "alt": "Ícone para representar tokenização. Uma estrutura de dados ligada a um hardware",
-            "cryptos": [
-              {
-                "id": 1,
-                "name": "POLYGON",
-                "icon": "icons/bloxify/crypto-polygon.svg",
-                "alt": "Ícone da polygon"
-              },
-              {
-                "id": 2,
-                "name": "BASE",
-                "icon": "icons/bloxify/crypto-base.svg",
-                "alt": "Ícone da Base"
-              },
-              {
-                "id": 3,
-                "name": "ETHEREUM",
-                "icon": "icons/bloxify/cryptor-ethereum.svg",
-                "alt": "Ícone da Ethereum"
-              }
-            ]
-          }
-        },
-        {
-          "id": 6,
-          "title": "API as a service",
-          "subtitle": "API",
-          "description": "Integre a tokenização ao seu site com nossa API. Entre em contato para acessar a documentação.",
-          "attributes": {
-            "title": "API AS A SERVICE",
-            "image": "images/bloxify/code-image.png",
-            "alt": "Icone para representar uma código em programação.",
-            "languages": [
-              {
-                "image": "icons/bloxify/typescript.svg",
-                "alt": "Ícone do TypeScript"
-              },
-              {
-                "image": "icons/bloxify/react.svg",
-                "alt": "Ícone do React"
-              },
-              {
-                "image": "icons/bloxify/node.svg",
-                "alt": "Ícone do NodeJS"
-              }
-            ]
-          }
-        },
-        {
-          "id": 7,
-          "title": "Template White-Label",
-          "subtitle": "Template",
-          "description": "Escolha um template e personalize com a sua marca.",
-          "attributes": {
-            "title": "Template White-Label",
-            "image": "icons/bloxify/template-white-label.svg",
-            "alt": "Icone para representar white label"
-          }
-        }
-      ]
-    },
     "forms-contact": {
       "title": "Vem conhecer!",
       "support": {
@@ -252,28 +111,28 @@
       "questions": [
         {
           "id": 1,
-          "question": "O que é a Bloxify?",
-          "answer": "A Bloxify é uma plataforma pioneira na tokenização de ativos físicos e digitais, promovendo a democratização de investimentos. Nossos serviços incluem o deploy de tokens, comercialização simplificada e gestão completa de ativos tokenizados, tudo isso facilitado por uma interface intuitiva e segura."
+          "question": "O que a Slab faz?",
+          "answer": "A SlaB Assets é pioneira na tokenização de ativos de biodiversidade, promovendo a conservação ambiental . Os ativos de biodiversidade, tem como unidade métrica o CO2, o tCO2eq. (tonelada de dióxido de carbono equivalente),dentre outros gases do efeito estufa presentes em toda biomassa, além de outros fatores determinantes de um ecossistema, do subsolo a atmosfera. Oferecemos uma plataforma em Web3 segura e transparente para aqueles que desejam investir no futuro do planeta, preservando nossos ecossistemas e gerando impacto positivo."
         },
         {
           "id": 2,
-          "question": "O que é tokenização?",
-          "answer": "Tokenização é o processo de conversão de ativos físicos ou digitais em tokens blockchain. Esses tokens representam digitalmente a propriedade ou direitos sobre o ativo, permitindo divisibilidade, transferibilidade e liquidez aprimoradas no ambiente digital."
+          "question": "O que é o TBIO?",
+          "answer": "Utilizamos tecnologia de ponta para tokenizar ativos de biodiversidade, garantindo negociação segura e rastreável no blockchain. Essa inovação permite criar unidades digitais fracionadas, facilitando sua comercialização global com total transparência, segurança e rastreamento do impacto positivo de cada investimento."
         },
         {
           "id": 3,
-          "question": "Como funciona a plataforma?",
-          "answer": "Nossa plataforma funciona em três etapas simples: 1) Entre em contato e receba sua chave de API, 2) Escolha um template personalizado para seu projeto, 3) Comece a tokenizar e comercializar seus ativos. Oferecemos suporte completo durante todo o processo."
+          "question": "Como fazemos?",
+          "answer": "A geração de ativos de biodiversidade é realizada com máxima segurança e transparência. Todo processo, do inventário até a certificação, é conduzido por especialistas e auditado por Terceira parte, garantindo rastreabilidade e imutabilidade no blockchain. Os ativos lastreados em CPR-Verde, valorizam 27 serviços ecossistêmicos, incluindo captura de carbono, garantindo segurança jurídica e financeira."
         },
         {
           "id": 4,
-          "question": "Qual é o processo de tokenização?",
-          "answer": "O processo envolve a análise do ativo, estruturação jurídica, criação do smart contract personalizado, deploy na blockchain escolhida, e configuração da plataforma de comercialização. Tudo é feito com acompanhamento técnico especializado."
+          "question": "Por que fazemos?",
+          "answer": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
         },
         {
           "id": 5,
-          "question": "Quem pode usar a Bloxify?",
-          "answer": "A Bloxify atende empresas de todos os portes que desejam tokenizar seus ativos, desde startups até grandes corporações. Nossos clientes incluem empresas do agronegócio, imobiliário, arte, música e diversos outros setores que buscam inovação e democratização de investimentos."
+          "question": "Quem somos? ",
+          "answer": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
         }
       ]
     },

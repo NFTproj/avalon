@@ -10,3 +10,12 @@ const hexToRgb = (hex?: string) => {
 }
 
 export default hexToRgb
+
+export const hexToRgba = (hex?: string, opacity?: number) => {
+  if (!hex) {
+    return ''
+  }
+
+  const rgb = hexToRgb(hex)
+  return `rgba(${rgb}, ${opacity})`
+}
