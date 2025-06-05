@@ -58,7 +58,7 @@ export default function FaqTabs({ title, questions }: Readonly<FaqTabsProps>) {
                 <button
                   key={item.id}
                   onClick={() => toggleItem(item.id)}
-                  className={`w-full text-center p-4 rounded-lg transition-all duration-300 hover:shadow-md ${
+                  className={`cursor-pointer w-full text-center p-4 rounded-lg transition-all duration-300 hover:shadow-md ${
                     isActive ? 'shadow-md' : 'hover:opacity-80'
                   }`}
                   style={{
