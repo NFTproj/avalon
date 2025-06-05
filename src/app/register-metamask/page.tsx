@@ -5,7 +5,7 @@ import MetamaskSteps from './MetamaskSteps'
 import { useContext } from 'react'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import ImageFromJSON from '@/components/core/ImageFromJSON'
-import Footer from '@/components/commom/footer'
+import Footer from '@/components/common/footer'
 
 export default function RegisteMetamask() {
   const { texts } = useContext(ConfigContext)

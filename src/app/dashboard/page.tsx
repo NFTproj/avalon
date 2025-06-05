@@ -2,7 +2,7 @@
 
 import { useContext } from 'react'
 import Header from '@/components/landingPage/Header'
-import Footer from '@/components/commom/footer'
+import Footer from '@/components/common/footer'
 import DashboardWrapper from '@/components/dashboard/DashboardWrapper'
 import { ConfigContext } from '@/contexts/ConfigContext'
 

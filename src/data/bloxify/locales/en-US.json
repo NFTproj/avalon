@@ -9,41 +9,41 @@
       "alts": {
         "main-logo": "Bloxify Logo"
       },
-        "navigations": {
-          "navOne": "About Bloxify",
-          "navTwo": [
-            {
-              "title": "Products",
-              "items": [
-                {
-                  "title": "TBIO Token"
-                }
-              ]
-            }
-          ],
-          "navThree": [
-            {
-              "title": "Language",
-              "items": [
-                {
-                  "title": "Portuguese",
-                  "image": "icons/bloxify/br.png",
-                  "alt": "Brazil Flag"
-                },
-                {
-                  "title": "English",
-                  "image": "icons/bloxify/us.png",
-                  "alt": "United States Flag"
-                }
-              ]
-            }
-          ]
-        },
-        "buttons": {
-          "button": "Create Account",
-          "buttonLogin": "Login",
-          "buttonLogout": "Logout"
-        }
+      "navigations": {
+        "navOne": "About Bloxify",
+        "navTwo": [
+          {
+            "title": "Products",
+            "items": [
+              {
+                "title": "TBIO Token"
+              }
+            ]
+          }
+        ],
+        "navThree": [
+          {
+            "title": "Language",
+            "items": [
+              {
+                "title": "Portuguese",
+                "image": "icons/bloxify/br.png",
+                "alt": "Brazil Flag"
+              },
+              {
+                "title": "English",
+                "image": "icons/bloxify/us.png",
+                "alt": "United States Flag"
+              }
+            ]
+          }
+        ]
+      },
+      "buttons": {
+        "button": "Create Account",
+        "buttonLogin": "Login",
+        "buttonLogout": "Logout"
+      }
     },
     "hero": {
       "title": "Tokenization of physical and digital assets",
@@ -220,7 +220,7 @@
       "title": "Come check it out!",
       "support": {
         "title": "Support Center",
-        "description": "We’re here to help! Our support team is highly qualified and ready to meet your needs.",
+        "description": "We're here to help! Our support team is highly qualified and ready to meet your needs.",
         "email": "contato@blocklize.io",
         "image": "images/bloxify/banner-support.png",
         "alt": "Image of a contact banner."
@@ -245,6 +245,37 @@
         },
         "submit": "Send"
       }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Get answers to your main questions about Bloxify",
+      "questions": [
+        {
+          "id": 1,
+          "question": "What is Bloxify?",
+          "answer": "Bloxify is a pioneering platform for tokenizing physical and digital assets, promoting investment democratization. Our services include token deployment, simplified commercialization, and complete management of tokenized assets, all facilitated by an intuitive and secure interface."
+        },
+        {
+          "id": 2,
+          "question": "What is tokenization?",
+          "answer": "Tokenization is the process of converting physical or digital assets into blockchain tokens. These tokens digitally represent ownership or rights over the asset, allowing for enhanced divisibility, transferability, and liquidity in the digital environment."
+        },
+        {
+          "id": 3,
+          "question": "How does the platform work?",
+          "answer": "Our platform works in three simple steps: 1) Contact us and receive your API key, 2) Choose a customized template for your project, 3) Start tokenizing and commercializing your assets. We offer complete support throughout the entire process."
+        },
+        {
+          "id": 4,
+          "question": "What is the tokenization process?",
+          "answer": "The process involves asset analysis, legal structuring, creation of customized smart contracts, deployment on the chosen blockchain, and configuration of the commercialization platform. Everything is done with specialized technical support."
+        },
+        {
+          "id": 5,
+          "question": "Who can use Bloxify?",
+          "answer": "Bloxify serves companies of all sizes that want to tokenize their assets, from startups to large corporations. Our clients include companies from agribusiness, real estate, art, music, and various other sectors seeking innovation and investment democratization."
+        }
+      ]
     }
   },
   "register": {
@@ -287,7 +318,7 @@
         "password": "Enter a password",
         "confirmPassword": "Repeat your password"
       },
-      "disclaimer": "By continuing you accept Slab Assets’ Terms of Use and Privacy Policy and declare you are not a U.S. person.",
+      "disclaimer": "By continuing you accept Slab Assets' Terms of Use and Privacy Policy and declare you are not a U.S. person.",
       "button-continue": "Continue",
       "button-back": "Back"
     },

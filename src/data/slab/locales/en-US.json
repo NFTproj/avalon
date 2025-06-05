@@ -1,0 +1,323 @@
+{
+  "images": {
+    "logos": {
+      "main-logo": "logos/slab/slab-logo.svg"
+    }
+  },
+  "landing-page": {
+    "header": {
+      "alts": {
+        "main-logo": "Slab Logo"
+      },
+      "navigations": {
+        "navOne": "About Slab",
+        "navTwo": [
+          {
+            "title": "Products",
+            "items": [
+              {
+                "title": "TBIO Token"
+              }
+            ]
+          }
+        ],
+        "navThree": [
+          {
+            "title": "Language",
+            "items": [
+              {
+                "title": "Portuguese",
+                "image": "icons/bloxify/br.png",
+                "alt": "Brazilian Flag"
+              },
+              {
+                "title": "English",
+                "image": "icons/bloxify/us.png",
+                "alt": "United States Flag"
+              }
+            ]
+          }
+        ]
+      },
+      "buttons": {
+        "button": "Create Account",
+        "buttonLogin": "Login",
+        "buttonLogout": "Logout"
+      }
+    },
+    "hero": {
+      "title": "Sustainability, Biodiversity and Security",
+      "subtitle": "SlaB Assets tokenizes biodiversity assets, transforming CO2 into digital investments with security and transparency.",
+      "image": "images/bloxify/homen-negro-tablet.png",
+      "alt": "Image of a black man holding a tablet."
+    },
+    "tokenization-steps": {
+      "title": "Start in just three steps",
+      "background": "backgrounds/bloxify/flow-image.svg",
+      "steps": [
+        {
+          "title": "Create an account",
+          "description": "Create your account with email or Metamask.",
+          "step": "Step 1",
+          "icon": "icons/common/create-account.svg"
+        },
+        {
+          "title": "Complete KYC verification",
+          "description": "Complete KYC verification for purchases above R$ 10.",
+          "step": "Step 2",
+          "icon": "icons/common/verify-kyc.svg"
+        },
+        {
+          "title": "Make your first purchase",
+          "description": "Acquire your first Biodiversity Token with Pix or card.",
+          "step": "Step 3",
+          "icon": "icons/common/buy-token.svg"
+        }
+      ]
+    },
+    "forms-contact": {
+      "title": "Come find out!",
+      "support": {
+        "title": "Support Center",
+        "description": "We're here to help! Our customer support team is highly trained and ready to assist you.",
+        "email": "contato@blocklize.io",
+        "image": "images/bloxify/banner-support.png",
+        "alt": "Contact banner image."
+      },
+      "form": {
+        "title": "Come find out!",
+        "name": {
+          "label": "Full name (required)",
+          "placeholder": "Enter your name"
+        },
+        "email": {
+          "label": "Email (required)",
+          "placeholder": "Enter your email"
+        },
+        "phone": {
+          "label": "Phone/WhatsApp",
+          "placeholder": "Enter your phone number"
+        },
+        "message": {
+          "label": "Tell us about your company and how Slab can help you:",
+          "placeholder": "Write your message"
+        },
+        "submit": "Submit"
+      }
+    },
+    "faq": {
+      "title": "Still have questions?",
+      "questions": [
+        {
+          "id": 1,
+          "question": "What does Slab do?",
+          "answer": "SlaB Assets pioneers biodiversity asset tokenization, promoting environmental conservation. Biodiversity assets use CO2 as a metric unit, the tCO2eq. (ton of carbon dioxide equivalent), among other greenhouse gases present in all biomass, plus other ecosystem determinants from subsoil to atmosphere. We offer a secure and transparent Web3 platform for those who want to invest in the planet's future, preserving our ecosystems and generating positive impact."
+        },
+        {
+          "id": 2,
+          "question": "What is TBIO?",
+          "answer": "We use cutting-edge technology to tokenize biodiversity assets, ensuring secure and traceable trading on the blockchain. This innovation creates fractionalized digital units, facilitating global trading with full transparency, security, and tracking of each investment's positive impact."
+        },
+        {
+          "id": 3,
+          "question": "How do we do it?",
+          "answer": "Biodiversity asset generation is conducted with maximum security and transparency. The entire process, from inventory to certification, is handled by specialists and audited by third parties, ensuring traceability and immutability on the blockchain. Assets backed by CPR-Verde value 27 ecosystem services, including carbon capture, ensuring legal and financial security."
+        },
+        {
+          "id": 4,
+          "question": "Why do we do it?",
+          "answer": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+        },
+        {
+          "id": 5,
+          "question": "Who are we?",
+          "answer": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+        }
+      ]
+    },
+    "tokens": {
+      "title": "Track available tokens",
+      "list": [
+        {
+          "id": 1,
+          "name": "TOKEN TBIO",
+          "subtitle": "Fazenda Eliane Mato Grosso",
+          "price": "15",
+          "launchDate": "July 31, 2024",
+          "tokensAvailable": "1019820.10",
+          "code": "TBIO",
+          "identifierCode": "TBIO",
+          "image": "icons/bloxify/man-similing.png",
+          "sold": 516820,
+          "total": 1000000,
+          "labels": [
+            { "name": "CPR" },
+            { "name": "CARBON" },
+            { "name": "GREEN" }
+          ]
+        },
+        {
+          "id": 2,
+          "name": "TOKEN TBIO",
+          "subtitle": "Fazenda Eliane Mato Grosso",
+          "price": "15",
+          "launchDate": "July 31, 2024",
+          "tokensAvailable": "1019820.00",
+          "code": "TBIO",
+          "identifierCode": "TBIO",
+          "image": "icons/bloxify/man-similing.png",
+          "sold": 516820,
+          "total": 1000000,
+          "labels": [
+            { "name": "CPR" },
+            { "name": "CARBON" },
+            { "name": "GREEN" }
+          ]
+        },
+        {
+          "id": 3,
+          "name": "TOKEN TBIO",
+          "subtitle": "Fazenda Eliane Mato Grosso",
+          "price": "15",
+          "launchDate": "July 31, 2024",
+          "tokensAvailable": "1019820.00",
+          "code": "TBIO",
+          "identifierCode": "TBIO",
+          "image": "icons/bloxify/man-similing.png",
+          "sold": 1000000,
+          "total": 1000000,
+          "labels": [
+            { "name": "CPR" },
+            { "name": "CARBON" },
+            { "name": "GREEN" }
+          ]
+        }
+      ]
+    }
+  },
+  "register": {
+    "image": "images/login/creating-account.svg",
+    "alt": "Person holding access key",
+    "step-zero": {
+      "title": "Welcome to Slab!",
+      "description": "Create your account in 2 minutes and trade tokens quickly and reliably.",
+      "button-email": "Create with Email",
+      "button-metamask": "Create with Metamask",
+      "already-have-account": "Already have an account?",
+      "login-link": "Login",
+      "fase": "Step"
+    },
+    "step-one": {
+      "counter": { "current": "01", "total": "of 04" },
+      "title": "Choose an email",
+      "description": "If this is your first time here, start the registration process by entering your email.",
+      "labels": { "emailLabel": "Your email:" },
+      "placeholders": { "email": "email@email.com" },
+      "button-next": "Next",
+      "already-have-account": "Already have an account?",
+      "login-link": "Login"
+    },
+    "step-two": {
+      "counter": { "current": "02", "total": "of 04" },
+      "title": "Now choose a password",
+      "description": "Use letters, numbers and special characters.",
+      "labels": {
+        "password": "Enter a password",
+        "confirmPassword": "Repeat your password"
+      },
+      "disclaimer": "By continuing you accept Slab Assets' Terms of Use and Privacy Policy and declare you are not a US person.",
+      "button-continue": "Continue",
+      "button-back": "Back"
+    },
+    "step-three": {
+      "counter": { "current": "03", "total": "of 04" },
+      "title": "Verify your email!",
+      "description": "Enter the code that was sent to your email.",
+      "labels": { "code": "Enter the code" },
+      "placeholders": { "code": "123456" },
+      "button-verify": "Verify"
+    },
+    "step-four": {
+      "counter": { "current": "04", "total": "of 04" },
+      "title": "Access your account",
+      "paragraphEmail": "Your email",
+      "paragraphPassword": "Enter your password",
+      "labels": { "email": "", "password": "" },
+      "placeholders": {
+        "email": "email@email.com",
+        "password": "••••••••"
+      },
+      "button-back": "Back",
+      "button-login": "Login"
+    }
+  },
+  "footer": {
+    "alt-logo": "Slab Logo",
+    "columns": [
+      {
+        "title": "About Slab",
+        "items": ["About Slab", "Our Projects"]
+      },
+      {
+        "title": "Legal",
+        "items": ["Terms of Use", "Privacy Policy"]
+      },
+      {
+        "title": "Help",
+        "items": ["Contact Us", "Learn Tokenization"]
+      },
+      {
+        "title": "Compliance",
+        "items": ["Ombudsman"]
+      }
+    ],
+    "developedBy": {
+      "text": "Developed by:"
+    }
+  },
+  "common": {
+    "loadingOverlay": {
+      "message": "Loading.."
+    }
+  },
+  "dashboard": {
+    "welcome-box": {
+      "name": "Antônio",
+      "title": "Welcome to Slab!",
+      "description": "Discover tokenized projects, invest securely, and have full control of your assets in the palm of your hand.",
+      "link": "View details",
+      "tokens-title": "Your Tokens:",
+      "tokens": ["#TBIO", "#TBIO2"]
+    },
+    "action-buttons": [
+      { "id": 1, "name": "Buy", "icon": "🛒" },
+      { "id": 2, "name": "Issue Certificate", "icon": "📜" },
+      { "id": 3, "name": "Withdraw", "icon": "💵" },
+      { "id": 4, "name": "History", "icon": "📊" },
+      { "id": 5, "name": "KYC Verifications", "icon": "🔍" }
+    ],
+    "asset-list": {
+      "title": "Your Wallet",
+      "highlight": "Slab",
+      "columns": {
+        "project": "Project",
+        "unit-value": "Unit Value",
+        "total-value": "Total Value"
+      },
+      "buttons": {
+        "buy": "Buy",
+        "sell": "Sell"
+      }
+    }
+  },
+  "token": {
+    "token-price": "Token Price",
+    "launch-date": "Launch Date",
+    "sold": "Tokens available",
+    "available": "Identifier Code",
+    "progress-bar": {
+      "sold": "Sold",
+      "available": "Available"
+    }
+  }
+}

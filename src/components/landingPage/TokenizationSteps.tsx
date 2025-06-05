@@ -26,12 +26,12 @@ export default function TokenizationSteps() {
           {steps.map((step) => (
             <section
               key={step.step}
-              className="mx-0 md:mx-4 px-4 py-4 pt-12 rounded-lg shadow-lg w-[80%] md:w-[35%] lg:w-[25%] flex flex-col items-start justify-start"
+              className="h-auto lg:h-[530px] mx-0 md:mx-4 px-4 py-4 pt-12 rounded-lg shadow-lg w-[80%] md:w-[35%] lg:w-[25%] flex flex-col items-start justify-start"
               style={{
                 backgroundColor: `rgba(${hexToRgb(colors?.background['background-secondary'])}, 0.05)`,
               }}
             >
-              <div className="flex flex-col items-start gap-6 w-full p-4 sm:p-8">
+              <div className="flex flex-col items-start gap-6 w-full p-4 sm:p-6 h-full">
                 <div className="w-1/2 md:w-2/3 self-center">
                   <ImageFromJSON
                     src={step.icon}
@@ -39,6 +39,7 @@ export default function TokenizationSteps() {
                     width={100}
                     height={100}
                     className="w-full h-auto"
+                    fillColor={colors?.['colors-base']['color-primary']}
                   />
                 </div>
                 <div className="flex flex-col w-full gap-2 items-center">

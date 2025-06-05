@@ -5,7 +5,7 @@ import Steps from '@/app/register/Steps'
 import { useContext } from 'react'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import ImageFromJSON from '@/components/core/ImageFromJSON'
-import Footer from '@/components/commom/footer'
+import Footer from '@/components/common/footer'
 
 export default function RegisterPage() {
   const { texts } = useContext(ConfigContext)

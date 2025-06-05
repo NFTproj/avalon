@@ -1,25 +1,25 @@
 'use client'
 
 import { useContext, useState, useRef } from 'react'
-import { useRouter }            from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react'
 
-import ImageFromJSON            from '../core/ImageFromJSON'
-import { ConfigContext }        from '@/contexts/ConfigContext'
-import { useAuth }              from '@/contexts/AuthContext'
+import ImageFromJSON from '../core/ImageFromJSON'
+import { ConfigContext } from '@/contexts/ConfigContext'
+import { useAuth } from '@/contexts/AuthContext'
 import { useOutsideClick } from '@/utils/useOutsideClick'
 
 function Header() {
   /* ────── contextos ────── */
   const { colors, texts, locale, setLocale } = useContext(ConfigContext)
-  const { user, loading, logout           } = useAuth()
+  const { user, loading, logout } = useAuth()
   const router = useRouter()
 
   /* ────── atalhos de texto ────── */
   // JSON-EN: landing-page.header
-  const lpHeader   = texts?.['landing-page']?.header
+  const lpHeader = texts?.['landing-page']?.header
   // JSON-EN: landing-page.header.navigations
-  const nav        = lpHeader?.navigations
+  const nav = lpHeader?.navigations
   const [hovered, setHovered] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -28,15 +28,14 @@ function Header() {
   const langRef = useRef<HTMLDetailsElement>(null)
   const outRef = useRef<HTMLDetailsElement>(null)
   useOutsideClick(aboutRef, () => aboutRef.current?.removeAttribute('open'))
-  useOutsideClick(productsRef, () => productsRef.current?.removeAttribute('open'))
+  useOutsideClick(productsRef, () =>
+    productsRef.current?.removeAttribute('open'),
+  )
   useOutsideClick(langRef, () => langRef.current?.removeAttribute('open'))
   useOutsideClick(outRef, () => outRef.current?.removeAttribute('open'))
 
   /* ────── item de troca de idioma (usado em mobile & desktop) ────── */
-  const LangItem = ({
-    idx,
-    code,
-  }: { idx: 0 | 1; code: 'pt-BR' | 'en-US' }) => (
+  const LangItem = ({ idx, code }: { idx: 0 | 1; code: 'pt-BR' | 'en-US' }) => (
     <li
       onClick={() => setLocale(code)}
       className={`flex items-center gap-2 px-2 py-1 rounded cursor-pointer
@@ -44,9 +43,10 @@ function Header() {
     >
       {/* JSON-EN: landing-page.header.navigations.navThree[0].items[idx].image */}
       <ImageFromJSON
-        src ={nav?.navThree[0].items[idx].image}
-        alt ={nav?.navThree[0].items[idx].alt}
-        width={20} height={20}
+        src={nav?.navThree[0].items[idx].image}
+        alt={nav?.navThree[0].items[idx].alt}
+        width={20}
+        height={20}
         className="w-4 h-4 rounded-full"
       />
       {/* JSON-EN: landing-page.header.navigations.navThree[0].items[idx].title */}
@@ -60,7 +60,7 @@ function Header() {
       className="w-full grid grid-cols-3 items-center md:py-6 py-4 md:px-28 px-4 border-b-3"
       style={{
         backgroundColor: colors?.header['header-primary'],
-        borderColor    : colors?.border['border-primary'],
+        borderColor: colors?.border['border-primary'],
       }}
     >
       {/* ╭─────────────────────── HAMBURGUER (mobile) ───────────────────────╮ */}
@@ -77,7 +77,7 @@ function Header() {
           className="fixed inset-0 z-50 flex flex-col justify-between"
           style={{
             backgroundColor: colors?.background['background-primary'],
-            color          : colors?.colors['color-primary'],
+            color: colors?.colors['color-primary'],
           }}
         >
           {/* logo central */}
@@ -85,15 +85,23 @@ function Header() {
             <button onClick={() => router.push('/')}>
               {/* JSON-EN: images.logos.main-logo */}
               <ImageFromJSON
-                src ={texts?.images.logos['main-logo']}
-                alt ={lpHeader?.alts['main-logo'] /* JSON-EN: landing-page.header.alts.main-logo */}
-                width={120} height={40}
+                src={texts?.images.logos['main-logo']}
+                alt={
+                  lpHeader?.alts[
+                    'main-logo'
+                  ] /* JSON-EN: landing-page.header.alts.main-logo */
+                }
+                width={120}
+                height={40}
               />
             </button>
           </div>
 
           {/* botão fechar */}
-          <button onClick={() => setIsMenuOpen(false)} className="absolute top-4 right-4 text-white">
+          <button
+            onClick={() => setIsMenuOpen(false)}
+            className="absolute top-4 right-4 text-white"
+          >
             <X className="w-6 h-6 bg-gray-400" />
           </button>
 
@@ -143,7 +151,10 @@ function Header() {
               <>
                 <span className="text-sm">{`Olá, ${user.email}`}</span>
                 <button
-                  onClick={() => { logout(); setIsMenuOpen(false) }}
+                  onClick={() => {
+                    logout()
+                    setIsMenuOpen(false)
+                  }}
                   className="w-full text-blue-500 py-2 rounded-lg border border-blue-500"
                 >
                   {lpHeader?.buttons.buttonLogout}
@@ -152,14 +163,20 @@ function Header() {
             ) : (
               <>
                 <button
-                  onClick={() => { router.push('/register'); setIsMenuOpen(false) }}
+                  onClick={() => {
+                    router.push('/register')
+                    setIsMenuOpen(false)
+                  }}
                   className="w-full bg-blue-500 text-white py-2 rounded-lg"
                 >
                   {/* JSON-EN: landing-page.header.buttons.button */}
                   {lpHeader?.buttons.button}
                 </button>
                 <button
-                  onClick={() => { router.push('/login'); setIsMenuOpen(false) }}
+                  onClick={() => {
+                    router.push('/login')
+                    setIsMenuOpen(false)
+                  }}
                   className="w-full text-blue-500 py-2 rounded-lg border border-blue-500"
                 >
                   {/* JSON-EN: landing-page.header.buttons.buttonLogin */}
@@ -174,20 +191,20 @@ function Header() {
 
       {/* ╭────────────────────────── LOGO + NAV (desktop) ────────────────────╮ */}
       <div className="col-span-2 flex items-center gap-10">
-        <button onClick={() => router.push('/')} className='cursor-pointer'>
+        <button onClick={() => router.push('/')} className="cursor-pointer">
           <ImageFromJSON
-            src ={texts?.images.logos['main-logo']}
-            alt ={lpHeader?.alts['main-logo']}
-            width={120} height={40}
+            src={texts?.images.logos['main-logo']}
+            alt={lpHeader?.alts['main-logo']}
+            width={120}
+            height={40}
           />
         </button>
 
         <nav
           className="hidden lg:flex gap-8"
           style={{
-            backgroundColor: colors?.background['background-primary'],
-            borderColor    : colors?.border['border-primary'],
-            color          : colors?.colors['color-primary'],
+            borderColor: colors?.border['border-primary'],
+            color: colors?.colors['color-primary'],
           }}
         >
           {/* About Bloxify */}
@@ -250,23 +267,23 @@ function Header() {
                   </li>
                 </ul>
               </div>
-          </details>
+            </details>
           </>
         ) : (
           <>
             <button
-                onClick={() => router.push('/register')}
-                className="border rounded-xl px-4 py-2 text-sm font-medium hidden lg:block
+              onClick={() => router.push('/register')}
+              className="border rounded-xl px-4 py-2 text-sm font-medium hidden lg:block
                           transition-all duration-200 ease-in-out 
                           hover:scale-[1.03] hover:shadow-md active:scale-95 
                           cursor-pointer"
-                style={{
-                  backgroundColor: colors?.buttons['button-secondary'],
-                  borderColor    : colors?.border['border-primary'],
-                  color          : colors?.colors['color-primary'],
-                }}
-              >
-                {lpHeader?.buttons.button}
+              style={{
+                backgroundColor: colors?.buttons['button-secondary'],
+                borderColor: colors?.border['border-primary'],
+                color: colors?.colors['color-primary'],
+              }}
+            >
+              {lpHeader?.buttons.button}
             </button>
             <button
               onClick={() => router.push('/login')}
@@ -282,7 +299,7 @@ function Header() {
               }}
             >
               {lpHeader?.buttons.buttonLogin}
-          </button>
+            </button>
           </>
         )}
       </div>

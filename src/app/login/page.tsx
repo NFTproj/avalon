@@ -4,10 +4,8 @@ import Header from '@/components/landingPage/Header'
 import { useContext } from 'react'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import ImageFromJSON from '@/components/core/ImageFromJSON'
-import Footer from '@/components/commom/footer'
+import Footer from '@/components/common/footer'
 import LoginForm from '@/app/login/FormsLogin'
-
-
 
 export default function LoginPage() {
   const { texts } = useContext(ConfigContext)

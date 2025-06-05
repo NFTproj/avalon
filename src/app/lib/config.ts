@@ -6,6 +6,8 @@ export type ColorsConfig = typeof themaDefaultData
 export interface ClientConfig {
   texts: TextsConfig
   colors: ColorsConfig
+  client: string
+  isBloxify: boolean
 }
 
 export type ThemeMode = 'light' | 'dark'
@@ -17,9 +19,10 @@ export async function getClientConfig({
   locale?: string
   theme?: ThemeMode
 } = {}): Promise<ClientConfig> {
-  const client = process.env.CLIENT || 'bloxify'
-  console.log( client);
-  console.log(process.env.CLIENT)
+  const client =
+    process.env.CLIENT ?? process.env.NEXT_PUBLIC_CLIENT ?? 'bloxify'
+  const isBloxify = client === 'bloxify'
+
   const localesToTry = [
     'pt-BR',
     'en-US',
@@ -41,8 +44,10 @@ export async function getClientConfig({
       )
       // Return the imported module directly (assuming JSON is the default export)
       return {
-        texts: configModule.default || configModule,
-        colors: themeModule.default || themeModule,
+        texts: configModule.default ?? configModule,
+        colors: themeModule.default ?? themeModule,
+        client: client,
+        isBloxify: isBloxify,
       }
     } catch (error) {
       console.warn(`Config not found for ${client}/${locale}`)
@@ -53,5 +58,7 @@ export async function getClientConfig({
   return {
     texts: clientDefaultData,
     colors: themaDefaultData,
+    client: client,
+    isBloxify: isBloxify,
   }
 }
