@@ -1,7 +1,6 @@
 'use client'
 
 import Header from '@/components/landingPage/Header'
-import Steps from '@/app/register/Steps'
 import MetamaskSteps from './MetamaskSteps'
 import { useContext } from 'react'
 import { ConfigContext } from '@/contexts/ConfigContext'

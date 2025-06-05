@@ -10,6 +10,11 @@
   },
   "dependencies": {
     "@next/env": "^15.2.1",
+    "@reown/appkit": "^1.7.8",
+    "@reown/appkit-adapter-wagmi": "^1.7.8",
+    "@tanstack/react-query": "^5.79.2",
+    "@web3modal/ethereum": "^2.7.1",
+    "@web3modal/wagmi": "^5.1.11",
     "axios": "^1.9.0",
     "clsx": "^2.1.1",
     "cookies": "^0.9.1",
@@ -23,6 +28,9 @@
     "swiper": "^11.2.6",
     "swr": "^2.3.3",
     "tailwind-merge": "^3.0.2",
+    "viem": "^2.30.6",
+    "wagmi": "^2.15.4",
+    "web3modal": "^1.9.12",
     "zod": "^3.24.2"
   },
   "devDependencies": {

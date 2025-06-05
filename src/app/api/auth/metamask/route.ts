@@ -1,37 +1,35 @@
-// app/api/auth/register/route.ts
+// app/api/auth/metamask/route.ts
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(req: NextRequest) {
   try {
-    
-
     const apiKey = process.env.BLOXIFY_API_KEY
     const apiUrl = process.env.BLOXIFY_URL_BASE
-    const clientId     = process.env.CLIENT_ID                 
-    const permissions  = process.env.CLIENT_PERMISSIONS    
+    const clientId = process.env.CLIENT_ID
 
-    if (!apiKey || !apiUrl) {
+    if (!apiKey || !apiUrl || !clientId) {
       return NextResponse.json(
         { error: 'Chaves de API não configuradas corretamente.' },
         { status: 500 }
       )
     }
 
-    /* ---------- payload recebido do navegador ---------- */
-    const { email, password } = await req.json()               // LIDO UMA ÚNICA VEZ
-    if (!email || !password) {
+    const { walletAddress, signature } = await req.json()
+    if (!walletAddress || !signature) {
       return NextResponse.json(
-        { error: 'E-mail e senha são obrigatórios' },
-        { status: 400 },
+        { error: 'walletAddress e signature são obrigatórios.' },
+        { status: 400 }
       )
     }
-    /* ---------- monta payload completo ---------- */
-    const payload: Record<string, any> = { email, password, clientId }
-    if (permissions) payload.permissions = permissions.split(',')
-      console.log(payload)
-  
 
-    const res = await fetch(`${apiUrl}/user/mpc`, {
+    // ⚠️ clientId precisa estar aqui!
+    const payload = {
+      walletAddress,
+      signature,
+      clientId
+    }
+
+    const res = await fetch(`${apiUrl}/auth/metamask`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -43,12 +41,10 @@ export async function POST(req: NextRequest) {
     const data = await res.json()
     return NextResponse.json(data, { status: res.status })
   } catch (error) {
-    console.error('[API ERROR] /auth/register:', error)
+    console.error('[API ERROR] /auth/metamask:', error)
     return NextResponse.json(
       { error: 'Erro ao processar requisição no servidor.' },
       { status: 500 }
     )
   }
-
-  
 }

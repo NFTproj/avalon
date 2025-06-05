@@ -97,4 +97,20 @@ export async function refreshAccess() {
   mutateUser()               // revalida /api/auth/me
 }
 
+export interface MetamaskRegisterPayload {
+  walletAddress: string
+  signature: string
+}
+
+export async function registerWithMetamask(payload: MetamaskRegisterPayload) {
+  const res = await fetch('/api/auth/metamask', {
+    method : 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include', // Para cookie de sessão
+    body   : JSON.stringify(payload),
+  })
+
+  if (!res.ok) throw new Error('Erro ao registrar com Metamask')
+  return await res.json()
+}
 
