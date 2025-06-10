@@ -34,6 +34,19 @@ function Header() {
   useOutsideClick(langRef, () => langRef.current?.removeAttribute('open'))
   useOutsideClick(outRef, () => outRef.current?.removeAttribute('open'))
 
+  function formatUserDisplay(user: any) {
+    if (!user) return ''
+    const address = user.walletAddress
+    const name = user.name
+  
+    // Se não houver email e o nome for o mesmo que o endereço
+    if (!user.email && name?.toLowerCase() === address?.toLowerCase()) {
+      return `${address.slice(0, 6)}...${address.slice(-4)}`
+    }
+  
+    return user.email || name
+  }
+
   /* ────── item de troca de idioma (usado em mobile & desktop) ────── */
   const LangItem = ({ idx, code }: { idx: 0 | 1; code: 'pt-BR' | 'en-US' }) => (
     <li
@@ -149,7 +162,9 @@ function Header() {
           <div className="flex flex-col items-center gap-4 p-4">
             {loading ? null : user ? (
               <>
-                <span className="text-sm">{`Olá, ${user.email}`}</span>
+               <span className="text-sm">
+               {`Olá, ${formatUserDisplay(user)}`}
+              </span>
                 <button
                   onClick={() => {
                     logout()
@@ -252,10 +267,10 @@ function Header() {
         {loading ? null : user ? (
           <>
             <details ref={outRef} className="relative group hidden lg:block">
-              <summary className="flex items-center gap-2 cursor-pointer text-sm font-medium text-black list-none">
-                {`Olá, ${user.email}`}
-                <ChevronDown className="w-4 h-4 transition group-open:rotate-180" />
-              </summary>
+            <summary className="flex items-center gap-2 cursor-pointer text-sm font-medium text-black list-none">
+            {`Olá, ${formatUserDisplay(user)}`}
+              <ChevronDown className="w-4 h-4 transition group-open:rotate-180" />
+            </summary>
 
               <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-lg z-50 min-w-[8rem]">
                 <ul className="flex flex-col p-2 space-y-1 text-left">

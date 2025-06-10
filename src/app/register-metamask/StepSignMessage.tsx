@@ -4,18 +4,20 @@ import { useContext, useState } from 'react'
 import { useAccount, useSignMessage } from 'wagmi'
 import { useRouter } from 'next/navigation'
 import { ConfigContext } from '@/contexts/ConfigContext'
+import { useAuth } from '@/contexts/AuthContext'
 import CustomButton from '@/components/core/Buttons/CustomButton'
-import LoadingOverlay from '@/components/commom/LoadingOverlay'
+import LoadingOverlay from '@/components/common/LoadingOverlay'
 import { registerWithMetamask } from '@/lib/api/auth'
 
 export default function StepSignMessage() {
   const { colors, texts } = useContext(ConfigContext)
   const { address } = useAccount()
   const { push } = useRouter()
+  const { mutate } = useAuth() 
 
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
-  const metamaskTexts = texts?.register?.['metamask-register-login'] as any;
+  const metamaskTexts = texts?.register?.['metamask-register-login'] as any
 
   const { signMessageAsync } = useSignMessage()
 
@@ -29,7 +31,8 @@ export default function StepSignMessage() {
 
       await registerWithMetamask({ walletAddress: address!, signature })
 
-      // Redireciona para o dashboard
+      await mutate() // 👈 atualiza o contexto Auth (chama /api/auth/me novamente)
+
       push('/dashboard')
     } catch (err: any) {
       setError(err.message ?? 'Erro inesperado')
@@ -49,18 +52,16 @@ export default function StepSignMessage() {
       </p>
 
       <h1 className="text-3xl font-bold mb-6" style={{ color: colors?.colors['color-primary'] }}>
-        {/*Criar sua conta*/}
         {metamaskTexts?.signature?.title}
       </h1>
 
       <p className="mb-4 text-gray-600">
-        {/*Agora só falta um passo! Clique abaixo para assinar e confirmar a criação da sua conta com essa carteira.*/}
-        {metamaskTexts?.signature?.['paragraph-register'] }
+        {metamaskTexts?.signature?.['paragraph-register']}
       </p>
 
       <CustomButton
         onClick={handleSign}
-        text={(metamaskTexts?.signature?.['button-register-wallet']  || 'Create account')}
+        text={metamaskTexts?.signature?.['button-register-wallet'] || 'Create account'}
         fullWidth
         disabled={isLoading}
       />

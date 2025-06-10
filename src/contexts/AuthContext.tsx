@@ -1,12 +1,13 @@
-// src/contexts/AuthContext.tsx
 'use client'
 
 import { createContext, useContext } from 'react'
 import useSWR from 'swr'
 import { apiFetch } from '@/lib/api/fetcher'
 import { useRouter } from 'next/navigation'
+import { useDisconnect } from 'wagmi'
+import { useAppKit } from '@reown/appkit/react' // ✅ substitui o useWeb3Modal
 
-type MeResponse = { user: any | null }   // 👈 tipagem da rota /api/auth/me
+type MeResponse = { user: any | null }
 
 type AuthValue = {
   user: any | null
@@ -18,13 +19,13 @@ type AuthValue = {
 const AuthCtx = createContext<AuthValue>({} as AuthValue)
 export const useAuth = () => useContext(AuthCtx)
 
-/* --------------- exporta mutate para refreshAccess ---------------- */
 export let mutateUser: () => void = () => {}
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter()
+  const { disconnect } = useDisconnect()
+  const { close } = useAppKit() // ✅ substituto seguro do useWeb3Modal
 
-  /* ---------- agora usamos <MeResponse> ---------- */
   const {
     data,
     isLoading,
@@ -32,21 +33,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   } = useSWR<MeResponse>(
     '/api/auth/me',
     (url) => apiFetch<MeResponse>(url),
-    { revalidateOnFocus: false },
+    { revalidateOnFocus: false }
   )
 
-  mutateUser = mutate            // permite refreshAccess → mutate()
+  mutateUser = mutate
 
   const logout = async () => {
-    await apiFetch('/api/auth/logout', { method: 'POST' })
-    mutate()                      // zera user no contexto
-    router.replace('/login')
+    try {
+      disconnect()        // Desconecta carteira
+      close()             // Fecha modal da carteira
+      sessionStorage.removeItem('accessToken')
+      sessionStorage.removeItem('refreshToken')
+
+      await apiFetch('/api/auth/logout', { method: 'POST' })
+
+      mutate()
+      router.replace('/login')
+    } catch (err) {
+      console.error('[Logout error]', err)
+    }
   }
 
   return (
     <AuthCtx.Provider
       value={{
-        user   : data?.user ?? null,   // ← agora TS conhece a chave user
+        user: data?.user ?? null,
         loading: isLoading,
         logout,
         mutate,
