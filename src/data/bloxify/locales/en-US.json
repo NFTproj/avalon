@@ -363,22 +363,22 @@
       "button-login": "Login"
     },
     "metamask-register-login": {
-    "counter": {
-      "first": "01",
-      "second": "2",
-      "total": "of 2"
-    },
-    "fase": "Step",
-    "title": "Connect your wallet",
-    "paragraph-Wallet": "Select the digital wallet you want to use.",
-    "button-Wallet-choose": "Choose wallet",
+      "counter": {
+        "first": "01",
+        "second": "2",
+        "total": "of 2"
+      },
+      "fase": "Step",
+      "title": "Connect your wallet",
+      "paragraph-Wallet": "Select the digital wallet you want to use.",
+      "button-Wallet-choose": "Choose wallet",
 
-    "signature": {
-  "title": "Create your account",
-  "paragraph-register": "Just one more step! Click below to sign and confirm the creation of your account with this wallet.",
-  "button-register-wallet": "Create account"
-}
-  }
+      "signature": {
+        "title": "Create your account",
+        "paragraph-register": "Just one more step! Click below to sign and confirm the creation of your account with this wallet.",
+        "button-register-wallet": "Create account"
+      }
+    }
   },
   "footer": {
     "alt-logo": "Bloxify Logo",
@@ -458,5 +458,14 @@
         "sell": "Sell"
       }
     }
+  },
+  "tokensPage": {
+    "title": "Discover the best digital token opportunities today",
+    "subtitle": "The tokens you already know, the best opportunities, at your fingertips!",
+    "filters": {
+      "all": "All",
+      "available": "Available"
+    },
+    "viewDetails": "View details"
   }
 }

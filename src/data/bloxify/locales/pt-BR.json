@@ -434,24 +434,22 @@
       "button-login": "Entrar"
     },
     "metamask-register-login": {
-      "counter": { 
-      "first": "01",
-      "second": "2",
-      "total": "de 2"
-    },
-    "fase": "Etapa",
-    "title": "Conecte sua carteira",
-    "paragraph-Wallet": "Selecione a carteira digital que você deseja usar.",
-    "button-Wallet-choose": "Escolher carteira",
+      "counter": {
+        "first": "01",
+        "second": "2",
+        "total": "de 2"
+      },
+      "fase": "Etapa",
+      "title": "Conecte sua carteira",
+      "paragraph-Wallet": "Selecione a carteira digital que você deseja usar.",
+      "button-Wallet-choose": "Escolher carteira",
 
-    "signature": {
-      "title": "Criar sua conta",
-      "paragraph-register": "Agora só falta um passo! Clique abaixo para assinar e confirmar a criação da sua conta com essa carteira.",
-      "button-register-wallet": "Criar conta"
+      "signature": {
+        "title": "Criar sua conta",
+        "paragraph-register": "Agora só falta um passo! Clique abaixo para assinar e confirmar a criação da sua conta com essa carteira.",
+        "button-register-wallet": "Criar conta"
+      }
     }
-    }
-     
-
   },
   "footer": {
     "alt-logo": "Logo da Bloxify",
@@ -542,5 +540,14 @@
       "sold": "Vendidos",
       "available": "Disponíveis"
     }
+  },
+  "tokensPage": {
+    "title": "Descubra hoje as melhores oportunidades de tokens digitais",
+    "subtitle": "Os tokens que você já conhece, as melhores oportunidades, na palma da sua mão!",
+    "filters": {
+      "all": "Todos",
+      "available": "Disponíveis"
+    },
+    "viewDetails": "Ver detalhes"
   }
 }

@@ -6,7 +6,7 @@ import AssetList from './AssetList'
 
 export default function DashboardWrapper() {
   return (
-    <div className="relative flex justify-center items-start pt-24 pb-16 px-6">
+    <div className="relative flex justify-center items-start pt-24">
       <div
         className="
           relative
