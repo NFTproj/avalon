@@ -535,11 +535,14 @@
     "token-price": "Preço do Token",
     "launch-date": "Data de lançamento",
     "sold": "Tokens disponíveis",
+    "buy": "Comprar",
     "available": "Código identificador",
+    "minimum-investment": "Investimento mínimo",
     "progress-bar": {
       "sold": "Vendidos",
       "available": "Disponíveis"
-    }
+    },
+    "disclaimer": "Não invista antes de saber todas as informações essenciais sobre a oferta"
   },
   "tokensPage": {
     "title": "Descubra hoje as melhores oportunidades de tokens digitais",
@@ -548,6 +551,37 @@
       "all": "Todos",
       "available": "Disponíveis"
     },
-    "viewDetails": "Ver detalhes"
+    "viewDetails": "Ver detalhes",
+    "newTokens": "Novos tokens em breve"
+  },
+  "token-details": {
+    "highlights": {
+      "title": "Destaques",
+      "view-docs": "Ver docs da oferta",
+      "more-info": "Mais informações"
+    },
+    "tabs": {
+      "infos": {
+        "title": "Informações",
+        "identifier-code": "Código ISIN",
+        "offer-opening": "Abertura da oferta",
+        "tons-offered": "Toneladas em oferta",
+        "token-address": "Endereço do Token",
+        "unit-value": "Valor unitário",
+        "minimum-investment": "Investimento mínimo",
+        "blockchain-link": "Link Blockchain"
+      },
+      "token-info": {
+        "title": "Token Info"
+      },
+      "docs": {
+        "title": "Documentos"
+      },
+      "benefits": {
+        "title": "Benefícios",
+        "rights": "Direitos",
+        "risks": "Riscos"
+      }
+    }
   }
 }

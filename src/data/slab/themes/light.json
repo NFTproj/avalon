@@ -28,6 +28,7 @@
     "background-tertiary": "#363636",
     "background-quaternary": "#141414",
     "background-quintenary": "#A6A6A6",
+    "background-highlight": "#E4E4E4",
     "background-sixteen": "#050504"
   },
   "dashboard": {

@@ -6,8 +6,9 @@ import MainLayout from '@/components/layout/MainLayout'
 import Token from '@/components/common/Token'
 
 export default function TokensPage() {
-  const { colors } = useContext(ConfigContext)
+  const { colors, texts } = useContext(ConfigContext)
   const [filter, setFilter] = useState<'all' | 'available'>('all')
+  const tokensPage = texts?.['tokensPage']
 
   // Mock inline de lista de tokens
   const tokensList = [
@@ -52,15 +53,6 @@ export default function TokensPage() {
     },
   ]
 
-  // Mock inline de textos da página
-  const pageTexts = {
-    title: 'Descubra hoje as melhores oportunidades de tokens digitais',
-    subtitle:
-      'Os tokens que você já conhece, as melhores oportunidades, na palma da sua mão!',
-    filters: { all: 'Todos', available: 'Disponíveis' },
-    viewDetails: 'Ver detalhes',
-  }
-
   const filteredTokens =
     filter === 'available'
       ? tokensList.filter((token: any) => token.total - token.sold > 0)
@@ -82,13 +74,13 @@ export default function TokensPage() {
             className="text-6xl font-bold mb-4"
             style={{ color: colors?.colors['color-primary'] }}
           >
-            {pageTexts.title}
+            {tokensPage?.title}
           </h1>
           <p
             className="text-3xl px-24"
             style={{ color: colors?.colors['color-secondary'] }}
           >
-            {pageTexts.subtitle}
+            {tokensPage?.subtitle}
           </p>
         </div>
 
@@ -103,7 +95,7 @@ export default function TokensPage() {
                 filter === 'all' ? '#FFFFFF' : colors?.colors['color-primary'],
             }}
           >
-            {pageTexts.filters.all}
+            {tokensPage?.filters?.all}
           </button>
           <button
             onClick={() => setFilter('available')}
@@ -119,7 +111,7 @@ export default function TokensPage() {
                   : colors?.colors['color-primary'],
             }}
           >
-            {pageTexts.filters.available}
+            {tokensPage?.filters?.available}
           </button>
         </div>
 
@@ -152,7 +144,7 @@ export default function TokensPage() {
                   }}
                 >
                   <p className="text-lg font-medium text-gray-500 text-center">
-                    Novos tokens em breve
+                    {tokensPage?.newTokens}
                   </p>
                 </div>
               </div>
