@@ -1,11 +1,12 @@
 'use client'
 
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useState } from 'react'
 import useSWR from 'swr'
 import { apiFetch } from '@/lib/api/fetcher'
 import { useRouter } from 'next/navigation'
 import { useDisconnect } from 'wagmi'
-import { useAppKit } from '@reown/appkit/react' // ✅ substitui o useWeb3Modal
+import { useAppKit } from '@reown/appkit/react'
+import LoadingOverlay from '@/components/common/LoadingOverlay'// ajuste o caminho conforme necessário
 
 type MeResponse = { user: any | null }
 
@@ -18,13 +19,15 @@ type AuthValue = {
 
 const AuthCtx = createContext<AuthValue>({} as AuthValue)
 export const useAuth = () => useContext(AuthCtx)
-
+export let logoutUser: () => Promise<void> = async () => {}
 export let mutateUser: () => void = () => {}
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const { disconnect } = useDisconnect()
-  const { close } = useAppKit() // ✅ substituto seguro do useWeb3Modal
+  const { close } = useAppKit()
+
+  const [showLoading, setShowLoading] = useState(false)
 
   const {
     data,
@@ -40,19 +43,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = async () => {
     try {
-      disconnect()        // Desconecta carteira
-      close()             // Fecha modal da carteira
+      setShowLoading(true) // 👈 ativa o loading
+      disconnect()
+      close()
       sessionStorage.removeItem('accessToken')
       sessionStorage.removeItem('refreshToken')
 
       await apiFetch('/api/auth/logout', { method: 'POST' })
 
       mutate()
-      router.replace('/login')
+
+      setTimeout(() => {
+        window.location.href = '/login'
+      }, 800) // dá um tempo para o loading aparecer suavemente
     } catch (err) {
       console.error('[Logout error]', err)
+      setShowLoading(false)
     }
   }
+
+  logoutUser = logout
 
   return (
     <AuthCtx.Provider
@@ -63,6 +73,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         mutate,
       }}
     >
+      {showLoading && <LoadingOverlay overrideMessage="Saindo..." />}
       {children}
     </AuthCtx.Provider>
   )

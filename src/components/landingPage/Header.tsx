@@ -10,7 +10,7 @@ import { useAuth } from '@/contexts/AuthContext'
 import { useOutsideClick } from '@/utils/useOutsideClick'
 
 function Header() {
-  /* ────── contextos ────── */
+  /* ────── contextos ────── -*/
   const { colors, texts, locale, setLocale } = useContext(ConfigContext)
   const { user, loading, logout } = useAuth()
   const router = useRouter()
