@@ -6,6 +6,7 @@ import Link from 'next/link'
 import MainLayout from '@/components/layout/MainLayout'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import ProgressBar from '@/components/common/ProgressBar'
+import { AlertCircle } from 'lucide-react'
 
 interface TokenType {
   id: number
@@ -76,7 +77,7 @@ export default function TokenDetailsPage() {
         className="min-h-screen py-16 flex justify-between"
         style={{ backgroundColor: colors?.background['background-primary'] }}
       >
-        <div className="max-w-5xl mx-auto space-y-12">
+        <div className="max-w-3xl mx-auto space-y-12">
           {/* Seção superior */}
           <div className="flex flex-col lg:flex-row gap-8">
             <div className="flex-1">
@@ -84,7 +85,7 @@ export default function TokenDetailsPage() {
                 {token.labels.map((label, idx) => (
                   <span
                     key={label.name}
-                    className="text-[10px] font-bold px-3 py-1 rounded-full text-black"
+                    className="text-[10px] font-bold px-3 py-1 rounded-full border-2 border-black text-black"
                     style={{
                       backgroundColor: labelColors[idx % labelColors.length],
                     }}
@@ -92,6 +93,20 @@ export default function TokenDetailsPage() {
                     {label.name}
                   </span>
                 ))}
+              </div>
+              <div className="mb-4">
+                <h1
+                  className="text-2xl font-bold"
+                  style={{ color: colors?.colors['color-primary'] }}
+                >
+                  {token.name}
+                </h1>
+                <p
+                  className="text-sm"
+                  style={{ color: colors?.colors['color-secondary'] }}
+                >
+                  {token.subtitle}
+                </p>
               </div>
               <div className="w-full h-64 bg-gray-100 rounded-xl flex items-center justify-center">
                 <span className="text-gray-500 font-medium">Sem imagem</span>
@@ -103,8 +118,9 @@ export default function TokenDetailsPage() {
           <div
             className="rounded-lg border-2 p-6"
             style={{
-              backgroundColor: colors?.background['background-highlight'],
-              borderColor: colors?.border['border-primary'],
+              backgroundColor: colors?.token['background'],
+              borderColor: colors?.token['border'],
+              borderWidth: '1px',
             }}
           >
             <h2
@@ -128,7 +144,7 @@ export default function TokenDetailsPage() {
                   platform for investors, gamers, and meme enthusiasts alike.
                 </p>
                 <button
-                  className="mt-4 px-4 py-2 rounded-full"
+                  className="mt-4 px-4 py-2 rounded-full cursor-pointer"
                   style={{
                     backgroundColor: colors?.background['background-highlight'],
                     color: colors?.colors['color-primary'],
@@ -150,7 +166,7 @@ export default function TokenDetailsPage() {
                   rewards.
                 </p>
                 <button
-                  className="mt-4 px-4 py-2 rounded-full"
+                  className="mt-4 px-4 py-2 rounded-full cursor-pointer"
                   style={{
                     backgroundColor: colors?.background['background-highlight'],
                     color: colors?.colors['color-primary'],
@@ -446,13 +462,13 @@ export default function TokenDetailsPage() {
             </div>
           </div>
         </div>
-        <div className="w-full lg:w-1/3">
+        <div className="w-full lg:w-[25%]">
           <div
-            className="rounded-xl shadow-lg border p-6"
+            className="rounded-xl shadow-lg p-6 flex flex-col gap-3"
             style={{
               backgroundColor: colors?.token['background'],
-              borderColor: colors?.token['border'],
-              borderWidth: '1px',
+              border: '2px solid transparent',
+              borderImage: `linear-gradient(90deg, ${colors?.border['border-primary']}, ${colors?.dashboard?.colors.highlight}) 1`,
             }}
           >
             <h3
@@ -500,9 +516,12 @@ export default function TokenDetailsPage() {
               {tokenInfo?.['buy']}
             </button>
           </div>
-          <p className="text-xs text-gray-500 mt-2">
-            {tokenInfo?.['disclaimer']}
-          </p>
+          <div className="flex justify-center gap-2 text-xs text-gray-500 mt-2">
+            <div className="flex items-start gap-2 w-4/5">
+              <AlertCircle className="w-6 h-6 flex-shrink-0 mt-1" />
+              <span className="text-sm">{tokenInfo?.['disclaimer']}</span>
+            </div>
+          </div>
         </div>
       </main>
     </MainLayout>
