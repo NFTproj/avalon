@@ -10,7 +10,7 @@ export async function apiFetch<T = any>(
     headers: { 'Content-Type': 'application/json', ...(init?.headers || {}) },
   })
 
-  if (res.status === 401 && !init?._isRetry) {
+  if ((res.status === 401 || res.status === 403) && !init?._isRetry) {
     // tenta refresh
     try {
       await refreshAccess()
