@@ -35,14 +35,14 @@ export async function POST(req: NextRequest) {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       path: '/',
-      maxAge: 60 * 15, 
+      
     })
 
     res.cookies.set('refreshToken', data.refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       path: '/',
-      maxAge: 60 * 60 * 24 * 7, 
+     
     })
 
     return res
