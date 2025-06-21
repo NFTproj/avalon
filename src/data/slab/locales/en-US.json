@@ -336,5 +336,26 @@
       "sold": "Sold",
       "available": "Available"
     }
+  },
+ "kyc":{
+    "kyc-step-one-title": "Complete your KYC verification!",
+    "kyc-step-one-paragraph": "Your account is not verified yet. Complete your data verification to ensure secure transactions.",
+    "kyc-step-one-button": "Start verification",
+
+    "kyc-step-two-title": "Enter your details",
+    "label-name": "Full name",
+    "label-cpf": "Id",
+    "label-cnpj": "Company Id",
+    "label-is-legal-person": "Do you represent a legal entity?",
+    "placeholder-name": "Enter your full name",
+    "placeholder-cpf": "Ex: 000.000.000-00",
+    "placeholder-cnpj": "Ex: 00.000.000/0001-00",
+    "checkbox-is-legal-person": "Yes",
+
+    "button-back": "Back",
+    "button-next": "Continue",
+
+    "error-name-required": "Name is required.",
+    "error-cpf-required": "CPF is required."
   }
 }

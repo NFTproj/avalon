@@ -1,4 +1,7 @@
+'use client'
+
 import { useContext } from 'react'
+import { useRouter } from 'next/navigation'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import { MdShoppingCart } from 'react-icons/md'
 import {
@@ -12,6 +15,7 @@ export default function ChartBox() {
   const { texts, colors } = useContext(ConfigContext)
   const borderColor = colors?.dashboard?.buttons?.['action-border'] || '#00ffe1'
   const iconColor = '#00838F'
+  const router = useRouter()
 
   const actionButtons = [
     { id: 1, name: 'Comprar', icon: <MdShoppingCart size={22} color={iconColor} /> },
@@ -21,13 +25,19 @@ export default function ChartBox() {
     { id: 5, name: 'Verificações KYC', icon: <AiFillCheckCircle size={22} color={iconColor} /> },
   ]
 
+  const handleClick = (id: number) => {
+    if (id === 5) {
+      router.push('/kyc')
+    }
+  }
+
   return (
     <div className="mt-6 w-full">
-      {/* Carrossel no mobile e tablet */}
       <div className="flex lg:hidden overflow-x-auto gap-3 px-2 scrollbar-hide">
         {actionButtons.map((button) => (
           <div
             key={button.id}
+            onClick={() => handleClick(button.id)}
             className="shrink-0 w-[7rem] sm:w-[8rem] md:w-[8.5rem] h-20 bg-white rounded-md cursor-pointer hover:bg-gray-50 transition-colors px-2 py-2"
             style={{ border: `2px solid ${borderColor}` }}
           >
@@ -39,17 +49,16 @@ export default function ChartBox() {
         ))}
       </div>
 
-      {/* Grid no desktop */}
       <div className="hidden lg:flex lg:justify-center lg:gap-4">
         {actionButtons.map((button) => (
           <div
             key={button.id}
+            onClick={() => handleClick(button.id)}
             className="w-48 h-24 bg-white rounded-md cursor-pointer hover:bg-gray-50 transition-colors px-4 py-3"
             style={{ border: `2px solid ${borderColor}` }}
           >
             <div className="flex flex-col items-start justify-center h-full">
               <div className="mb-1">
-                {/* Ícones maiores no desktop */}
                 {(() => {
                   switch (button.id) {
                     case 1: return <MdShoppingCart size={30} color={iconColor} />
