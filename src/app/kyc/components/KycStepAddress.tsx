@@ -9,12 +9,14 @@ import UploadCard from './UploadCard'
 import { updateUserDetails } from '@/lib/api/user'
 
 interface KycStepAddressProps {
-  cnpj: string
-  onNext: (data: any) => void
-  onBack: () => void
-}
+    name: string
+    cpf: string
+    cnpj: string
+    onNext: (data: any) => void
+    onBack: () => void
+  }
 
-export default function KycStepAddress({ cnpj, onNext, onBack }: KycStepAddressProps) {
+export default function KycStepAddress({ name, cpf, cnpj, onNext, onBack }: KycStepAddressProps) {
   const { colors, texts } = useContext(ConfigContext)
   const kycTexts = (texts as any)?.kyc
   const getText = (key: string, fallback: string) => kycTexts?.[key] || fallback
@@ -30,35 +32,44 @@ export default function KycStepAddress({ cnpj, onNext, onBack }: KycStepAddressP
 
   const handleSubmit = async () => {
     const address = `${street}, ${number} - ${city} - ${state}, ${cep}, ${country}`
-
+  
+    const isBusiness = !!cnpj
+  
     try {
       await updateUserDetails({
-        clientId: process.env.NEXT_PUBLIC_CLIENT_ID || '',
-        type: 'business',
-        name: '', // insira o nome se tiver, ou pegue de contexto
-        cnpj,
+        type: isBusiness ? 'business' : 'individual',
+        name,
         address,
         city,
         state,
-        zipCode: cep,
         country,
-        contractFile: contractFile || undefined,
-        proofOfAddressFile: proofFile || undefined,
+        zipCode: cep,
+        ...(isBusiness
+          ? {
+              cnpj,
+              contractFile: contractFile || undefined,
+              proofOfAddressFile: proofFile || undefined,
+            }
+          : {
+              cpf, // obrigatório se for individual
+            }),
       })
-
+  
       onNext({
+        type: isBusiness ? 'business' : 'individual',
+        name,
+        cpf,
+        cnpj,
         address,
         city,
         state,
         zipCode: cep,
         country,
-        cnpj,
         contractFile,
         proofOfAddressFile: proofFile,
       })
     } catch (err) {
       console.error('Erro ao enviar dados de KYC:', err)
-      // Você pode exibir uma notificação aqui se desejar
     }
   }
 

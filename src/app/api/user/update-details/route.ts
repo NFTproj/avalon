@@ -13,16 +13,14 @@ export async function POST(req: NextRequest) {
 
     const formData = await req.formData()
 
-    if (!formData.has('clientId')) {
-      formData.append('clientId', clientId)
-    }
+    // Sempre garante que o clientId estará presente
+    formData.set('clientId', clientId)
 
     const response = await fetch(`${apiUrl}/user/update-details`, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'x-api-key': apiKey,
         'Authorization': `Bearer ${accessToken}`,
-        // Não colocar Content-Type manualmente com FormData
       },
       body: formData,
     })
