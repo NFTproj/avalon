@@ -420,6 +420,24 @@
     "button-next": "Continuar",
 
     "error-name-required": "O nome é obrigatório.",
-    "error-cpf-required": "O CPF é obrigatório."
+    "error-cpf-required": "O CPF é obrigatório.",
+
+    "kyc-step-three-title": "Informe seu endereço",
+    "label-country": "Selecione seu país",
+    "placeholder-country": "Informe seu país de origem",
+    "label-cep": "Digite seu CEP",
+    "placeholder-cep": "Ex: 12345-678",
+    "label-street": "Rua",
+    "placeholder-street": "Nome da rua",
+    "label-number": "Número",
+    "label-city": "Cidade",
+    "placeholder-city": "Informe a cidade",
+    "label-state": "Estado",
+    "placeholder-state": "UF",
+    "upload-instructions": "Faça o upload dos documentos abaixo:",
+    "label-contract-file": "Contrato Social (PDF)",
+    "label-proof-file": "Comprovante de Endereço (PDF)",
+    "upload-file": "Fazer upload PDF",
+    "upload-complete": "Upload completo"
   }
 }

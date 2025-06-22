@@ -1,21 +1,25 @@
 'use client'
 import { KycContainer } from "@/components/common/FormsBackground"
 
+interface KycStepStartVerificationProps {
+  name: string
+  cpf: string
+  address: string
+  onVerify: () => void
+}
+
 export default function KycStepStartVerification({
   name,
   cpf,
   address,
   onVerify,
-}: {
-  name: string
-  cpf: string
-  address: string
-  onVerify: () => void
-}) {
+}: KycStepStartVerificationProps) {
   return (
     <KycContainer>
       <h2 className="text-lg font-semibold mb-4">Verificação com documento</h2>
-      <p className="text-gray-700 mb-6">Você será redirecionado para concluir a verificação de identidade.</p>
+      <p className="text-gray-700 mb-6">
+        Você será redirecionado para concluir a verificação de identidade.
+      </p>
 
       <ul className="text-sm text-gray-600 mb-6 list-disc list-inside">
         <li><strong>Nome:</strong> {name}</li>
