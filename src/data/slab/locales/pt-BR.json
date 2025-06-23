@@ -291,7 +291,25 @@
       },
       "button-back": "Voltar",
       "button-login": "Entrar"
+    },
+    "metamask-register-login": { 
+      "counter": { 
+      "first": "01",
+      "second": "2",
+      "total": "de 2"
+    },
+    "fase": "Etapa",
+    "title": "Conecte sua carteira",
+    "paragraph-Wallet": "Selecione a carteira digital que você deseja usar.",
+    "button-Wallet-choose": "Escolher carteira",
+
+    "signature": {
+      "title": "Criar sua conta",
+      "paragraph-register": "Agora só falta um passo! Clique abaixo para assinar e confirmar a criação da sua conta com essa carteira.",
+      "button-register-wallet": "Criar conta"
     }
+    }
+
   },
   "footer": {
     "alt-logo": "Logo da Slab",
@@ -425,5 +443,44 @@
         "risks": "Riscos"
       }
     }
+  },
+  "kyc":{
+    "kyc-step-one-title": "Realize sua Verificação KYC!",
+    "kyc-step-one-paragraph": "Sua conta ainda não foi verificada. Realize a verificação dos seus dados para garantir que as transações ocorram com segurança.",
+    "kyc-step-one-button": "Começar verificação",
+
+    "kyc-step-two-title": "Informe seus dados",
+    "label-name": "Nome completo",
+    "label-cpf": "CPF",
+    "label-cnpj": "CNPJ",
+    "label-is-legal-person": "Você representa uma pessoa jurídica?",
+    "placeholder-name": "Informe seu nome completo",
+    "placeholder-cpf": "Ex: 000.000.000-00",
+    "placeholder-cnpj": "Ex: 00.000.000/0001-00",
+    "checkbox-is-legal-person": "Sim",
+
+    "button-back": "Voltar",
+    "button-next": "Continuar",
+
+    "error-name-required": "O nome é obrigatório.",
+    "error-cpf-required": "O CPF é obrigatório.",
+
+    "kyc-step-three-title": "Informe seu endereço",
+    "label-country": "Selecione seu país",
+    "placeholder-country": "Informe seu país de origem",
+    "label-cep": "Digite seu CEP",
+    "placeholder-cep": "Ex: 12345-678",
+    "label-street": "Rua",
+    "placeholder-street": "Nome da rua",
+    "label-number": "Número",
+    "label-city": "Cidade",
+    "placeholder-city": "Informe a cidade",
+    "label-state": "Estado",
+    "placeholder-state": "UF",
+    "upload-instructions": "Faça o upload dos documentos abaixo:",
+    "label-contract-file": "Contrato Social (PDF)",
+    "label-proof-file": "Comprovante de Endereço (PDF)",
+    "upload-file": "Fazer upload PDF",
+    "upload-complete": "Upload completo"
   }
 }
