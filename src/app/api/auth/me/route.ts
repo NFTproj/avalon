@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {          // ‹– receba o req
   /* 1 — lê o accessToken do cookie */
   const accessToken = req.cookies.get('accessToken')?.value
   if (!accessToken) {
-    return NextResponse.json({ user: null }, { status: 200 })
+    return NextResponse.json({ error: 'Access token ausente' }, { status: 401 })
   }
 
   /* 2 — chama o backend /user/me */
@@ -21,7 +21,13 @@ export async function GET(req: NextRequest) {          // ‹– receba o req
     },
   })
 
-  if (!r.ok) return NextResponse.json({ user: null }, { status: r.status })
+  if (!r.ok) {
+    const isUnauthorized = r.status === 401
+    return NextResponse.json(
+      isUnauthorized ? { error: 'Unauthorized' } : { user: null },
+      { status: r.status }
+    )
+  }
 
   const data = await r.json()            // backend → dados do usuário
   return NextResponse.json({ user: data }, { status: 200 })  // <- devolve

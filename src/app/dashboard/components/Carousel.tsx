@@ -7,7 +7,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import TokenCircle from './TokenCircle';
 import { Eye, EyeOff } from 'lucide-react'; 
-import CustomButton from '../core/Buttons/CustomButton';
+import CustomButton from '../../../components/core/Buttons/CustomButton';
 
 export default function Carousel() {
   const [showTotal, setShowTotal] = useState(true); 

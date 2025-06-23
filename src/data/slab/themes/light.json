@@ -3,9 +3,9 @@
     "header-primary": "#DEEFE3"
   },
   "buttons": {
-    "button-primary": "#08CEFF",
-    "button-secondary": "#002D3126",
-    "button-third": "#86c486"
+    "button-primary": "#A8F6A7",
+    "button-secondary": "#E2FDE2",
+    "button-third": "#E2FDE2"
   },
   "border": {
     "border-primary": "#86c486"

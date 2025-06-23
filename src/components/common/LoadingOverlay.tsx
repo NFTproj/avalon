@@ -26,8 +26,10 @@ const LoadingOverlay: FC<LoadingOverlayProps> = ({ overrideMessage }) => {
       <div
         className="w-12 h-12 border-4 rounded-full animate-spin mb-4"
         style={{
-          borderColor: spinnerColor,      // cor da borda em geral
-          borderTopColor: 'transparent',  // deixa o topo transparente
+          borderTopColor: 'transparent',
+          borderRightColor: spinnerColor,
+          borderBottomColor: spinnerColor,
+          borderLeftColor: spinnerColor,
         }}
       />
       {/* Texto com cor do JSON (ex.: color-primary) */}

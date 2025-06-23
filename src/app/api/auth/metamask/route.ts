@@ -22,14 +22,9 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // ⚠️ clientId precisa estar aqui!
-    const payload = {
-      walletAddress,
-      signature,
-      clientId
-    }
+    const payload = { walletAddress, signature, clientId }
 
-    const res = await fetch(`${apiUrl}/auth/metamask`, {
+    const response = await fetch(`${apiUrl}/auth/metamask`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -38,8 +33,29 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify(payload),
     })
 
-    const data = await res.json()
-    return NextResponse.json(data, { status: res.status })
+    const data = await response.json()
+    if (!response.ok) {
+      return NextResponse.json(data, { status: response.status })
+    }
+
+    // ✅ Agora setamos os cookies HttpOnly como no login tradicional
+    const res = NextResponse.json({ success: true }, { status: 200 })
+
+    res.cookies.set('accessToken', data.accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      path: '/',
+      maxAge: 60 * 15, // 15 minutos
+    })
+
+    res.cookies.set('refreshToken', data.refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7, // 7 dias
+    })
+
+    return res
   } catch (error) {
     console.error('[API ERROR] /auth/metamask:', error)
     return NextResponse.json(
