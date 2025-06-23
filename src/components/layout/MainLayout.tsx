@@ -4,12 +4,17 @@ import React, { useContext } from 'react'
 import Header from '../landingPage/Header'
 import Footer from '../common/footer'
 import { ConfigContext } from '@/contexts/ConfigContext'
+import { cn } from '@/utils/cn'
 
 interface MainLayoutProps {
   children: React.ReactNode
+  disablePadding?: boolean
 }
 
-export default function MainLayout({ children }: Readonly<MainLayoutProps>) {
+export default function MainLayout({
+  children,
+  disablePadding = false,
+}: Readonly<MainLayoutProps>) {
   const { colors } = useContext(ConfigContext)
 
   const pageBgColor = colors?.background['background-primary']
@@ -18,7 +23,9 @@ export default function MainLayout({ children }: Readonly<MainLayoutProps>) {
     <>
       <Header />
       <div
-        className="px-4 md:px-28 py-6"
+        className={cn('', {
+          'px-4 md:px-28 py-6': !disablePadding,
+        })}
         style={{
           backgroundColor: pageBgColor,
         }}

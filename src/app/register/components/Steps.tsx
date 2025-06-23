@@ -1,6 +1,6 @@
 'use client'
 
-import LoadingOverlay from '../../components/common/LoadingOverlay'
+import LoadingOverlay from '@/components/common/LoadingOverlay'
 import StepZero from './StepZero'
 import StepOne from './StepOne'
 import StepTwo from './StepTwo'

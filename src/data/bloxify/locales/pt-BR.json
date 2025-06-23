@@ -42,7 +42,7 @@
       },
       "buttons": {
         "button": "Criar conta",
-        "buttonLogin": "Entar",
+        "buttonLogin": "Entrar",
         "buttonLogout": "sair"
       }
     },

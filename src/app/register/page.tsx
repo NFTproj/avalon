@@ -1,7 +1,7 @@
 'use client'
 
 import MainLayout from '@/components/layout/MainLayout'
-import Steps from '@/app/register/Steps'
+import Steps from '@/app/register/components/Steps'
 import { useContext } from 'react'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import ImageFromJSON from '@/components/core/ImageFromJSON'
@@ -11,7 +11,7 @@ export default function RegisterPage() {
   const loginData = texts?.['register']
 
   return (
-    <MainLayout>
+    <MainLayout disablePadding>
       <div className="flex flex-col min-h-screen">
         <main className="flex flex-1">
           {/* Lado da imagem */}

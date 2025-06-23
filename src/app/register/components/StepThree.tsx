@@ -2,11 +2,10 @@
 
 import { FormEvent, useContext, useEffect, useState } from 'react'
 import { ConfigContext } from '@/contexts/ConfigContext'
-import CustomButton from '../../components/core/Buttons/CustomButton'
-import CustomInput from '../../components/core/Inputs/CustomInput'
-import LoadingOverlay from '../../components/common/LoadingOverlay'
-import { verifyCode } from '@/lib/api/auth'
-import { RegisterPayload } from '@/lib/api/auth'
+import CustomButton from '@/components/core/Buttons/CustomButton'
+import CustomInput from '@/components/core/Inputs/CustomInput'
+import LoadingOverlay from '@/components/common/LoadingOverlay'
+import { verifyCode, RegisterPayload } from '@/lib/api/auth'
 
 interface StepThreeProps {
   nextStep: () => void
@@ -23,7 +22,7 @@ export default function StepThree({
   updateField,
   formData,
   resend,
-}: StepThreeProps) {
+}: Readonly<StepThreeProps>) {
   const { colors, texts } = useContext(ConfigContext)
   const stepZeroTexts = texts?.register?.['step-zero']
   const stepThreeTexts = texts?.register?.['step-three']

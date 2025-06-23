@@ -42,7 +42,7 @@
       },
       "buttons": {
         "button": "Criar conta",
-        "buttonLogin": "Entar",
+        "buttonLogin": "Entrar",
         "buttonLogout": "sair"
       }
     },
@@ -292,24 +292,23 @@
       "button-back": "Voltar",
       "button-login": "Entrar"
     },
-    "metamask-register-login": { 
-      "counter": { 
-      "first": "01",
-      "second": "2",
-      "total": "de 2"
-    },
-    "fase": "Etapa",
-    "title": "Conecte sua carteira",
-    "paragraph-Wallet": "Selecione a carteira digital que você deseja usar.",
-    "button-Wallet-choose": "Escolher carteira",
+    "metamask-register-login": {
+      "counter": {
+        "first": "01",
+        "second": "2",
+        "total": "de 2"
+      },
+      "fase": "Etapa",
+      "title": "Conecte sua carteira",
+      "paragraph-Wallet": "Selecione a carteira digital que você deseja usar.",
+      "button-Wallet-choose": "Escolher carteira",
 
-    "signature": {
-      "title": "Criar sua conta",
-      "paragraph-register": "Agora só falta um passo! Clique abaixo para assinar e confirmar a criação da sua conta com essa carteira.",
-      "button-register-wallet": "Criar conta"
+      "signature": {
+        "title": "Criar sua conta",
+        "paragraph-register": "Agora só falta um passo! Clique abaixo para assinar e confirmar a criação da sua conta com essa carteira.",
+        "button-register-wallet": "Criar conta"
+      }
     }
-    }
-
   },
   "footer": {
     "alt-logo": "Logo da Slab",
@@ -444,7 +443,7 @@
       }
     }
   },
-  "kyc":{
+  "kyc": {
     "kyc-step-one-title": "Realize sua Verificação KYC!",
     "kyc-step-one-paragraph": "Sua conta ainda não foi verificada. Realize a verificação dos seus dados para garantir que as transações ocorram com segurança.",
     "kyc-step-one-button": "Começar verificação",
