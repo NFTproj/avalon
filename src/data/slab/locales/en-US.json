@@ -331,10 +331,53 @@
     "token-price": "Token Price",
     "launch-date": "Launch Date",
     "sold": "Tokens available",
+    "buy": "Buy",
     "available": "Identifier Code",
+    "minimum-investment": "Minimum Investment",
     "progress-bar": {
       "sold": "Sold",
       "available": "Available"
+    },
+    "disclaimer": "Do not invest before knowing all essential information about the offering"
+  },
+  "tokensPage": {
+    "title": "Discover the best digital token opportunities today",
+    "subtitle": "The tokens you already know, the best opportunities, at your fingertips!",
+    "filters": {
+      "all": "All",
+      "available": "Available"
+    },
+    "viewDetails": "View details",
+    "newTokens": "New tokens soon"
+  },
+  "token-details": {
+    "highlights": {
+      "title": "Highlights",
+      "view-docs": "View offer docs",
+      "more-info": "More information"
+    },
+    "tabs": {
+      "infos": {
+        "title": "Information",
+        "identifier-code": "ISIN Code",
+        "offer-opening": "Offer Opening",
+        "tons-offered": "Tons Offered",
+        "token-address": "Token Address",
+        "unit-value": "Unit Value",
+        "minimum-investment": "Minimum Investment",
+        "blockchain-link": "Blockchain Link"
+      },
+      "token-info": {
+        "title": "Token Info"
+      },
+      "docs": {
+        "title": "Documents"
+      },
+      "benefits": {
+        "title": "Benefits",
+        "rights": "Rights",
+        "risks": "Risks"
+      }
     }
   },
  "kyc":{

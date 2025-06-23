@@ -39,7 +39,7 @@ function Token({
 
   return (
     <div
-      className={`rounded-xl shadow-lg border transition-all duration-300 hover:shadow-xl hover:scale-[1.02]`}
+      className={`rounded-xl shadow-lg border transition-all duration-300 hover:shadow-xl hover:scale-[1.02] h-full`}
       style={{
         backgroundColor: colors?.token['background'] ?? '#FFFFFF',
         borderColor: colors?.token['border'] ?? '#E5E5E5',
@@ -48,7 +48,7 @@ function Token({
     >
       {/* Header do Card */}
       <div
-        className="flex items-start justify-between w-full border-b border-gray-200 p-6 rounded-xl"
+        className="flex items-start justify-between w-full border-b border-gray-200 p-6 rounded-t-xl"
         style={{
           backgroundColor: colors?.token['header'] ?? '#FBFBFB',
         }}
