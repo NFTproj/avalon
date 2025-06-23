@@ -22,7 +22,7 @@ export default function LandingCliente({
 
 function Content() {
   const { colors } = useContext(ConfigContext)
-  console.log('colors do contexto:', colors)
+
   return (
     <div
       className="min-h-screen w-full"

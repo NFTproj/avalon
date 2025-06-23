@@ -10,10 +10,15 @@ export default function useRegister() {
   const [step, setStep] = useState(1)
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState<Partial<FullRegisterPayload>>({})
-  const [registrationError, setRegistrationError] = useState<string | null>(null)
+  const [registrationError, setRegistrationError] = useState<string | null>(
+    null,
+  )
 
-  function updateField<K extends keyof FullRegisterPayload>(field: K, value: FullRegisterPayload[K]) {
-    setFormData(prev => ({ ...prev, [field]: value }))
+  function updateField<K extends keyof FullRegisterPayload>(
+    field: K,
+    value: FullRegisterPayload[K],
+  ) {
+    setFormData((prev) => ({ ...prev, [field]: value }))
   }
 
   async function next() {
@@ -24,9 +29,9 @@ export default function useRegister() {
       try {
         const result = await registerUser(formData as RegisterPayload)
         console.log('[useRegister] Registro OK:', result)
-        setStep(prev => prev + 1)
+        setStep((prev) => prev + 1)
       } catch (err: any) {
-        const msg = err?.response?.data?.message || 'Erro ao registrar usuário'
+        const msg = err?.response?.data?.message ?? 'Erro ao registrar usuário'
         console.error('[useRegister] Erro ao registrar:', msg)
 
         setRegistrationError(msg)
@@ -40,12 +45,12 @@ export default function useRegister() {
       }
     } else {
       setRegistrationError(null)
-      setStep(prev => prev + 1)
+      setStep((prev) => prev + 1)
     }
   }
 
   function back() {
-    setStep(prev => prev - 1)
+    setStep((prev) => prev - 1)
   }
 
   async function resend() {
@@ -56,7 +61,7 @@ export default function useRegister() {
       })
       return { success: true }
     } catch (err: any) {
-      const msg = err?.response?.data?.message || 'Erro ao reenviar código'
+      const msg = err?.response?.data?.message ?? 'Erro ao reenviar código'
       console.error('[useRegister] Erro ao reenviar código:', msg)
       return { success: false, message: msg }
     }

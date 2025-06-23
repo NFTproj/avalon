@@ -11,15 +11,17 @@ export default function useLogin() {
     password: '',
   })
 
-  function updateField<K extends keyof LoginPayload>(field: K, value: LoginPayload[K]) {
-    setFormData(prev => ({ ...prev, [field]: value }))
+  function updateField<K extends keyof LoginPayload>(
+    field: K,
+    value: LoginPayload[K],
+  ) {
+    setFormData((prev) => ({ ...prev, [field]: value }))
   }
 
   async function submit() {
     setLoading(true)
     try {
-      console.log('[useLogin] Enviando:', formData)
-      await loginUser(formData)          // cookies HTTP-only são setados aqui
+      await loginUser(formData) // cookies HTTP-only são setados aqui
       console.log('[useLogin] Login OK')
       // redirecione ou faça get /api/me se precisar de dados do usuário
     } catch (err) {
