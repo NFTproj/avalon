@@ -412,7 +412,13 @@
       "placeholders": {
         "code": "123456"
       },
-      "button-verify": "Verificar"
+      "button-verify": "Verificar",
+      "resend": {
+        "button": "Reenviar código",
+        "success": "Código reenviado com sucesso!",
+        "error": "Erro ao reenviar código.",
+        "cooldown": "Disponível novamente em {seconds}s"
+      }
     },
     "step-four": {
       "counter": {
