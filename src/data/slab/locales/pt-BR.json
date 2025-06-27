@@ -42,7 +42,7 @@
       },
       "buttons": {
         "button": "Criar conta",
-        "buttonLogin": "Entar",
+        "buttonLogin": "Entrar",
         "buttonLogout": "sair"
       }
     },
@@ -292,24 +292,23 @@
       "button-back": "Voltar",
       "button-login": "Entrar"
     },
-    "metamask-register-login": { 
-      "counter": { 
-      "first": "01",
-      "second": "2",
-      "total": "de 2"
-    },
-    "fase": "Etapa",
-    "title": "Conecte sua carteira",
-    "paragraph-Wallet": "Selecione a carteira digital que você deseja usar.",
-    "button-Wallet-choose": "Escolher carteira",
+    "metamask-register-login": {
+      "counter": {
+        "first": "01",
+        "second": "2",
+        "total": "de 2"
+      },
+      "fase": "Etapa",
+      "title": "Conecte sua carteira",
+      "paragraph-Wallet": "Selecione a carteira digital que você deseja usar.",
+      "button-Wallet-choose": "Escolher carteira",
 
-    "signature": {
-      "title": "Criar sua conta",
-      "paragraph-register": "Agora só falta um passo! Clique abaixo para assinar e confirmar a criação da sua conta com essa carteira.",
-      "button-register-wallet": "Criar conta"
+      "signature": {
+        "title": "Criar sua conta",
+        "paragraph-register": "Agora só falta um passo! Clique abaixo para assinar e confirmar a criação da sua conta com essa carteira.",
+        "button-register-wallet": "Criar conta"
+      }
     }
-    }
-
   },
   "footer": {
     "alt-logo": "Logo da Slab",
@@ -395,13 +394,56 @@
     "token-price": "Preço do Token",
     "launch-date": "Data de lançamento",
     "sold": "Tokens disponíveis",
+    "buy": "Comprar",
     "available": "Código identificador",
+    "minimum-investment": "Investimento mínimo",
     "progress-bar": {
       "sold": "Vendidos",
       "available": "Disponíveis"
+    },
+    "disclaimer": "Não invista antes de saber todas as informações essenciais sobre a oferta"
+  },
+  "tokensPage": {
+    "title": "Descubra hoje as melhores oportunidades de tokens digitais",
+    "subtitle": "Os tokens que você já conhece, as melhores oportunidades, na palma da sua mão!",
+    "filters": {
+      "all": "Todos",
+      "available": "Disponíveis"
+    },
+    "viewDetails": "Ver detalhes",
+    "newTokens": "Novos tokens em breve"
+  },
+  "token-details": {
+    "highlights": {
+      "title": "Destaques",
+      "view-docs": "Ver docs da oferta",
+      "more-info": "Mais informações"
+    },
+    "tabs": {
+      "infos": {
+        "title": "Informações",
+        "identifier-code": "Código ISIN",
+        "offer-opening": "Abertura da oferta",
+        "tons-offered": "Toneladas em oferta",
+        "token-address": "Endereço do Token",
+        "unit-value": "Valor unitário",
+        "minimum-investment": "Investimento mínimo",
+        "blockchain-link": "Link Blockchain"
+      },
+      "token-info": {
+        "title": "Token Info"
+      },
+      "docs": {
+        "title": "Documentos"
+      },
+      "benefits": {
+        "title": "Benefícios",
+        "rights": "Direitos",
+        "risks": "Riscos"
+      }
     }
   },
-  "kyc":{
+  "kyc": {
     "kyc-step-one-title": "Realize sua Verificação KYC!",
     "kyc-step-one-paragraph": "Sua conta ainda não foi verificada. Realize a verificação dos seus dados para garantir que as transações ocorram com segurança.",
     "kyc-step-one-button": "Começar verificação",

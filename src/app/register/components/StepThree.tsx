@@ -1,12 +1,11 @@
 'use client'
 
 import { FormEvent, useContext, useEffect, useState } from 'react'
-import { ConfigContext } from '@/contexts/ConfigContext'
-import CustomButton from '../../components/core/Buttons/CustomButton'
-import CustomInput from '../../components/core/Inputs/CustomInput'
-import LoadingOverlay from '../../components/common/LoadingOverlay'
-import { verifyCode } from '@/lib/api/auth'
-import { RegisterPayload } from '@/lib/api/auth'
+import { RegisterPayload, verifyCode } from '../../../lib/api/auth'
+import { ConfigContext } from '../../../contexts/ConfigContext'
+import LoadingOverlay from '@/components/common/LoadingOverlay'
+import CustomInput from '@/components/core/Inputs/CustomInput'
+import CustomButton from '@/components/core/Buttons/CustomButton'
 
 interface StepThreeProps {
   nextStep: () => void
@@ -23,7 +22,7 @@ export default function StepThree({
   updateField,
   formData,
   resend,
-}: StepThreeProps) {
+}: Readonly<StepThreeProps>) {
   const { colors, texts } = useContext(ConfigContext)
   const stepZeroTexts = texts?.register?.['step-zero']
   const stepThreeTexts = texts?.register?.['step-three']
@@ -33,7 +32,7 @@ export default function StepThree({
       success?: string
       error?: string
       cooldown?: string
-    }) || {}
+    }) ?? {}
 
   const [code, setCode] = useState('')
   const [loading, setLoading] = useState(false)
@@ -89,13 +88,13 @@ export default function StepThree({
   const handleResend = async () => {
     const result = await resend()
     if (result?.success) {
-      setResendMessage(resendTexts.success || 'Código reenviado com sucesso!')
+      setResendMessage(resendTexts.success ?? 'Código reenviado com sucesso!')
       setError(null)
       setTimer(30)
       setCanResend(false)
     } else {
       setError(
-        result?.message || resendTexts.error || 'Erro ao reenviar código.',
+        result?.message ?? resendTexts.error ?? 'Erro ao reenviar código.',
       )
       setResendMessage(null)
     }
@@ -122,19 +121,19 @@ export default function StepThree({
         className="text-3xl font-bold mb-4"
         style={{ color: colors?.colors['color-primary'] }}
       >
-        {stepThreeTexts?.title || 'Verifique seu e-mail!'}
+        {stepThreeTexts?.title ?? 'Verifique seu e-mail!'}
       </h1>
 
       <p className="mb-6 text-gray-600">
-        {stepThreeTexts?.description || 'Insira o código enviado por e-mail.'}
+        {stepThreeTexts?.description ?? 'Insira o código enviado por e-mail.'}
       </p>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 mb-4">
         <CustomInput
           id="code"
           type="text"
-          label={stepThreeTexts?.labels?.code || 'Insira o código'}
-          placeholder={stepThreeTexts?.placeholders?.code || 'Código'}
+          label={stepThreeTexts?.labels?.code ?? 'Insira o código'}
+          placeholder={stepThreeTexts?.placeholders?.code ?? 'Código'}
           value={code}
           onChange={(e) => setCode(e.target.value)}
           className={error ? 'border-red-500' : ''}
@@ -150,7 +149,7 @@ export default function StepThree({
           text={
             loading
               ? 'Verificando...'
-              : stepThreeTexts?.['button-verify'] || 'Verificar'
+              : (stepThreeTexts?.['button-verify'] ?? 'Verificar')
           }
           className="shrink-0 w-full sm:w-[210px] h-[52px] font-bold"
           textColor={colors?.colors['color-primary']}
@@ -166,11 +165,11 @@ export default function StepThree({
           disabled={!canResend}
           className={`text-sm font-medium ${canResend ? 'text-blue-600 underline' : 'text-gray-400 cursor-not-allowed'}`}
         >
-          {resendTexts.button || 'Reenviar código'}
+          {resendTexts.button ?? 'Reenviar código'}
         </button>
         {!canResend && (
           <span className="text-sm text-gray-500">
-            {(resendTexts.cooldown || 'Available again in {seconds}s').replace(
+            {(resendTexts.cooldown ?? 'Available again in {seconds}s').replace(
               '{seconds}',
               timer.toString(),
             )}
