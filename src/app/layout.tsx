@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin']
 const poppins   = Poppins({ variable: '--font-poppins', subsets: ['latin'], weight: '400' })
 
 export const metadata: Metadata = {
-  title      : 'Seu Projeto',
+  title      : 'Bloxify',
   description: 'Powered by Reown / Web3Modal + Next.js',
 }
 
