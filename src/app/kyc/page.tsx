@@ -1,34 +1,27 @@
-'use client'
+'use client';
 
-import { useContext } from 'react'
-import { useRouter } from 'next/navigation'
-import { useAuth } from '@/contexts/AuthContext'
-import { ConfigContext } from '@/contexts/ConfigContext'
-import Header from '@/components/landingPage/Header'
-import Footer from '@/components/common/footer'
-import LoadingOverlay from '@/components/common/LoadingOverlay'
-import KycSteps from './components/KycSteps'
+import { useRouter } from 'next/navigation';
+import Header from '@/components/landingPage/Header';
+import Footer from '@/components/common/footer';
+import KycSteps from './components/KycSteps';
+import KycStepStartVerification from './components/KycStepStartVerification';
 
 export default function Kyc() {
-  const router = useRouter()
-  const { user, loading } = useAuth()
-  const { colors } = useContext(ConfigContext)
-
-  /*
-  useEffect(() => {
-    if (!loading && !user) {
-      router.replace('/login')
-    }
-  }, [loading, user, router])
-
-  if (loading || !user) return <LoadingOverlay />
-  */
+  const router = useRouter();
 
   return (
-    <div className="bg-[#f0fcff] min-h-screen">
+    <div className="bg-[#f0fcff] min-h-screen flex flex-col">
       <Header />
-      <KycSteps onFinish={() => router.push('/verificacao-didit')} />
+
+      {/* tela inicial de verificação */}
+      <KycStepStartVerification
+       
+      />
+
+      {/* se ainda quiser o wizard completo, mantenha abaixo */}
+      {/* <KycSteps onFinish={() => router.push('/verificacao-didit')} /> */}
+
       <Footer />
     </div>
-  )
+  );
 }

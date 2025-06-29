@@ -17,7 +17,7 @@ export async function updateUserDetails(payload: UpdateDetailsPayload) {
   
 
   // Campos string normais
-  formData.append('clientId', '9cbcbd1e-4d51-4b98-9d57-6d9ed7672def')
+  formData.append('clientId', process.env.NEXT_PUBLIC_CLIENT_ID as string);
   formData.append('type', payload.type)
   formData.append('name', payload.name)
   formData.append('address', payload.address)

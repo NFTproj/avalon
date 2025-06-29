@@ -418,6 +418,21 @@
     "label-contract-file": "Company Registration Document (PDF)",
     "label-proof-file": "Proof of Address (PDF)",
     "upload-file": "Upload PDF",
-    "upload-complete": "Upload complete"
+    "upload-complete": "Upload complete",
+    "start-verification": {
+      "title": "Verificação Didit",
+      "description": "Você será redirecionado para um site externo para concluir sua verificação de identidade (KYC).",
+      "button-continue": "Continuar",
+
+      "logo": {
+        "src": "images/login/diditi-logo.svg",
+        "alt": "Logo Didit"
+      },
+      "demo": {
+        "src": "images/login/kyc-video-placeholder.png",
+        "alt": "Demonstração do fluxo Didit"
+      }
+
+    }
   }
 }

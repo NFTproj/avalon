@@ -480,6 +480,22 @@
     "label-contract-file": "Contrato Social (PDF)",
     "label-proof-file": "Comprovante de Endereço (PDF)",
     "upload-file": "Fazer upload PDF",
-    "upload-complete": "Upload completo"
+    "upload-complete": "Upload completo",
+
+    "start-verification": {
+      "title": "Verificação Didit",
+      "description": "Você será redirecionado para um site externo para concluir sua verificação de identidade (KYC).",
+      "button-continue": "Continuar",
+
+      "logo": {
+        "src": "images/login/diditi-logo.svg",
+        "alt": "Logo Didit"
+      },
+      "demo": {
+        "src": "images/login/kyc-video-placeholder.png",
+        "alt": "Demonstração do fluxo Didit"
+      }
+
+    }
   }
 }
