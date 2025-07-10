@@ -1,36 +1,40 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server'
+import { getClientToken }            from './getDiditToken'
+import { VERIFICATION_BASE_URL }     from '@/lib/didit/Auth-didt'
 
-export const runtime = 'nodejs'; // executa no Node (precisa do cookie)
-
-export async function POST(req: NextRequest) {
+export async function POST (req: NextRequest) {
   try {
-    /* ───── variáveis de ambiente ───── */
-    const apiBase = process.env.BLOXIFY_URL_BASE!;
-    const apiKey  = process.env.BLOXIFY_API_KEY!;
-    const access  = req.cookies.get('accessToken')?.value;
+    const { vendor_data, callback, features } = await req.json()
 
-    if (!access) {
+    if (!vendor_data || !callback) {
       return NextResponse.json(
-        { error: 'Access token ausente' },
-        { status: 401 },
-      );
+        { error: 'callback e vendor_data são obrigatórios' },
+        { status: 400 },
+      )
     }
 
-    /* ───── forward → backend ───── */
-    const backendRes = await fetch(`${apiBase}/kyc/session`, {
-  method : 'POST',
-  headers: {
-    authorization : `Bearer ${access}`,
-    'x-api-key'   : apiKey,
-    'content-type': 'application/json',
-  },
-  body: JSON.stringify({}),                // ou { clientId: process.env.CLIENT_ID }
-});
+    const diditToken = await getClientToken()
 
-    const data = await backendRes.json();
-    return NextResponse.json(data, { status: backendRes.status });
-  } catch (err) {
-    console.error('[KYC SESSION ERROR]', err);
-    return NextResponse.json({ error: 'Erro interno' }, { status: 500 });
+    const diditRes = await fetch(`${VERIFICATION_BASE_URL}/v1/session/`, {
+      method : 'POST',
+      headers: {
+        Authorization : `Bearer ${diditToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ vendor_data, callback, features }),
+    })
+
+    if (!diditRes.ok) {
+      const txt = await diditRes.text()
+      console.error('[Didit] erro ▶︎', txt)
+      return NextResponse.json({ error: txt }, { status: diditRes.status })
+    }
+
+    const data = await diditRes.json()            // { session_id, url, … }
+    return NextResponse.json(data)
+
+  } catch (e) {
+    console.error('[KYC SESSION ERROR]', e)
+    return NextResponse.json({ error: 'Erro interno' }, { status: 500 })
   }
 }
