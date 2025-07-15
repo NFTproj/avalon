@@ -44,10 +44,13 @@ export default function UploadCard({ label, onFileChange, uploadedFile }: Upload
   }
 
   const handleRemove = () => {
-    setFilename(null)
-    setProgress(null)
-    onFileChange(null)
+  setFilename(null)
+  setProgress(null)
+  if (inputRef.current) {
+    inputRef.current.value = '' 
   }
+  onFileChange(null)
+}
 
   return (
     <div className="flex flex-col items-center w-full sm:w-[calc(50%-0.5rem)]">
