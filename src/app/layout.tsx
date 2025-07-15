@@ -20,7 +20,8 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: 'Seu Projeto',
+  title      : 'Bloxify',
+
   description: 'Powered by Reown / Web3Modal + Next.js',
 }
 
