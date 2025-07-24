@@ -1,0 +1,501 @@
+{
+  "images": {
+    "logos": {
+      "main-logo": "logos/powerassetx/powerassetx-logo.png"
+    }
+  },
+  "landing-page": {
+    "header": {
+      "alts": {
+        "main-logo": "Logo da Slab"
+      },
+      "navigations": {
+        "navOne": "A Slab",
+        "navTwo": [
+          {
+            "title": "Produtos",
+            "items": [
+              {
+                "title": "Token TBIO"
+              }
+            ]
+          }
+        ],
+
+        "navThree": [
+          {
+            "title": "Idioma",
+            "items": [
+              {
+                "title": "Português",
+                "image": "icons/bloxify/br.png",
+                "alt": "Bandeira do Brasil"
+              },
+              {
+                "title": "Inglês",
+                "image": "icons/bloxify/us.png",
+                "alt": "Bandeira dos Estados Unidos"
+              }
+            ]
+          }
+        ]
+      },
+      "buttons": {
+        "button": "Criar conta",
+        "buttonLogin": "Entrar",
+        "buttonLogout": "sair"
+      }
+    },
+    "hero": {
+      "title": "Sustentabilidade, Biodiversidade e Blindagem",
+      "subtitle": "A SlaB Assets tokeniza ativos de biodiversidade, transformando CO2 em investimentos digitais com segurança e transparência.",
+      "image": "images/bloxify/homen-negro-tablet.png",
+      "alt": "Imagem de um homem negro segurando um tablet."
+    },
+    "tokenization-steps": {
+      "title": "Comece com apenas três passos",
+      "background": "backgrounds/bloxify/flow-image.svg",
+      "steps": [
+        {
+          "title": "Entre em contato",
+          "description": "Receba sua chave de API e escolha seu plano de tokenização.",
+          "step": "1° Passo",
+          "icon": "icons/bloxify/contact-with-border-blue.svg"
+        },
+        {
+          "title": "Escolha um template",
+          "description": "Escolha um template sob medida para seu projeto.",
+          "step": "2° Passo",
+          "icon": "icons/bloxify/template-blue.svg"
+        },
+        {
+          "title": "Tokenize ativos",
+          "description": "Comece a oferecer ativos em formato tokenizado.",
+          "step": "3° Passo",
+          "icon": "icons/bloxify/graph-bar-increase-blue.svg"
+        }
+      ]
+    },
+    "forms-contact": {
+      "title": "Vem conhecer!",
+      "support": {
+        "title": "Central de Suporte",
+        "description": "Estamos aqui para ajudar! Nossa equipe de suporte ao cliente é altamente capacitada e está pronta para atender às suas necessidades.",
+        "email": "contato@blocklize.io",
+        "image": "images/bloxify/banner-support.png",
+        "alt": "Imagem de um banner de contato."
+      },
+      "form": {
+        "title": "Vem conhecer!",
+        "name": {
+          "label": "Nome completo (obrigatório)",
+          "placeholder": "Digite seu nome"
+        },
+        "email": {
+          "label": "E-mail (obrigatório)",
+          "placeholder": "Digite seu email"
+        },
+        "phone": {
+          "label": "Telefone/WhatsApp",
+          "placeholder": "Digite seu telefone"
+        },
+        "message": {
+          "label": "Conte um pouco sobre a sua empresa e como a Slab pode te ajudar:",
+          "placeholder": "Escreva sua mensagem"
+        },
+        "submit": "Enviar"
+      }
+    },
+    "faq": {
+      "title": "Ficou alguma dúvida?",
+      "questions": [
+        {
+          "id": 1,
+          "question": "O que a Slab faz?",
+          "answer": "A SlaB Assets é pioneira na tokenização de ativos de biodiversidade, promovendo a conservação ambiental . Os ativos de biodiversidade, tem como unidade métrica o CO2, o tCO2eq. (tonelada de dióxido de carbono equivalente),dentre outros gases do efeito estufa presentes em toda biomassa, além de outros fatores determinantes de um ecossistema, do subsolo a atmosfera. Oferecemos uma plataforma em Web3 segura e transparente para aqueles que desejam investir no futuro do planeta, preservando nossos ecossistemas e gerando impacto positivo."
+        },
+        {
+          "id": 2,
+          "question": "O que é o TBIO?",
+          "answer": "Utilizamos tecnologia de ponta para tokenizar ativos de biodiversidade, garantindo negociação segura e rastreável no blockchain. Essa inovação permite criar unidades digitais fracionadas, facilitando sua comercialização global com total transparência, segurança e rastreamento do impacto positivo de cada investimento."
+        },
+        {
+          "id": 3,
+          "question": "Como fazemos?",
+          "answer": "A geração de ativos de biodiversidade é realizada com máxima segurança e transparência. Todo processo, do inventário até a certificação, é conduzido por especialistas e auditado por Terceira parte, garantindo rastreabilidade e imutabilidade no blockchain. Os ativos lastreados em CPR-Verde, valorizam 27 serviços ecossistêmicos, incluindo captura de carbono, garantindo segurança jurídica e financeira."
+        },
+        {
+          "id": 4,
+          "question": "Por que fazemos?",
+          "answer": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+        },
+        {
+          "id": 5,
+          "question": "Quem somos? ",
+          "answer": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+        }
+      ]
+    },
+    "tokens": {
+      "title": "Acompanhe os tokens disponíveis",
+      "list": [
+        {
+          "id": 1,
+          "name": "TOKEN TBIO",
+          "subtitle": "Fazenda Eliane Mato Grosso",
+          "price": "15",
+          "launchDate": "July 31, 2024",
+          "tokensAvailable": "1019820.10",
+          "code": "TBIO",
+          "identifierCode": "TBIO",
+          "image": "icons/bloxify/man-similing.png",
+          "sold": 516820,
+          "total": 1000000,
+          "labels": [
+            {
+              "name": "CPR"
+            },
+            {
+              "name": "CARBONO"
+            },
+            {
+              "name": "VERDE"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "name": "TOKEN TBIO",
+          "subtitle": "Fazenda Eliane Mato Grosso",
+          "price": "15",
+          "launchDate": "July 31, 2024",
+          "tokensAvailable": "1019820.00",
+          "code": "TBIO",
+          "identifierCode": "TBIO",
+          "image": "icons/bloxify/man-similing.png",
+          "sold": 516820,
+          "total": 1000000,
+          "labels": [
+            {
+              "name": "CPR"
+            },
+            {
+              "name": "CARBONO"
+            },
+            {
+              "name": "VERDE"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "name": "TOKEN TBIO",
+          "subtitle": "Fazenda Eliane Mato Grosso",
+          "price": "15",
+          "launchDate": "July 31, 2024",
+          "tokensAvailable": "1019820.00",
+          "code": "TBIO",
+          "identifierCode": "TBIO",
+          "image": "icons/bloxify/man-similing.png",
+          "sold": 1000000,
+          "total": 1000000,
+          "labels": [
+            {
+              "name": "CPR"
+            },
+            {
+              "name": "CARBONO"
+            },
+            {
+              "name": "VERDE"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "register": {
+    "image": "images/login/creating-account.svg",
+    "alt": "Pessoa segurando chave de acesso",
+    "step-zero": {
+      "title": "Bem-vindo(a) à Slab!",
+      "description": "Crie a sua conta em 2 minutos e negocie tokens de forma rápida e confiável.",
+      "button-email": "Criar com E-mail",
+      "button-metamask": "Criar com Metamask",
+      "already-have-account": "Já possui uma conta?",
+      "login-link": "Login",
+      "fase": "Etapa"
+    },
+    "step-one": {
+      "counter": {
+        "current": "01",
+        "total": "de 04"
+      },
+      "title": "Escolha um e-mail",
+      "description": "Se é a sua primeira vez aqui, comece o processo de registro inserindo seu e-mail.",
+      "labels": {
+        "emailLabel": "Seu e-mail:"
+      },
+      "placeholders": {
+        "email": "email@email.com"
+      },
+      "button-next": "Próximo",
+      "already-have-account": "Já possui uma conta?",
+      "login-link": "Login"
+    },
+    "step-two": {
+      "counter": {
+        "current": "02",
+        "total": "de 04"
+      },
+      "title": "Agora escolha uma senha",
+      "description": "Utilize letras, números e caracteres especiais.",
+      "labels": {
+        "password": "Digite uma senha",
+        "confirmPassword": "Repita sua senha"
+      },
+      "disclaimer": "Ao continuar você aceita os Termos de uso e a Política de Privacidade da Slab Assets e declara não ser uma pessoa dos Estados Unidos.",
+      "button-continue": "Continuar",
+      "button-back": "Voltar"
+    },
+    "step-three": {
+      "counter": {
+        "current": "03",
+        "total": "de 04"
+      },
+      "title": "Verifique seu e-mail!",
+      "description": "Insira o código que foi enviado para o seu e-mail.",
+      "labels": {
+        "code": "Insira o código"
+      },
+      "placeholders": {
+        "code": "123456"
+      },
+      "button-verify": "Verificar"
+    },
+    "step-four": {
+      "counter": {
+        "current": "04",
+        "total": "de 04"
+      },
+      "title": "Acesse a sua conta",
+      "paragraphEmail": "Seu e-mail",
+      "paragraphPassword": "Digite a sua senha",
+      "labels": {
+        "email": "",
+        "password": ""
+      },
+      "placeholders": {
+        "email": "email@email.com",
+        "password": "••••••••"
+      },
+      "button-back": "Voltar",
+      "button-login": "Entrar"
+    },
+    "metamask-register-login": {
+      "counter": {
+        "first": "01",
+        "second": "2",
+        "total": "de 2"
+      },
+      "fase": "Etapa",
+      "title": "Conecte sua carteira",
+      "paragraph-Wallet": "Selecione a carteira digital que você deseja usar.",
+      "button-Wallet-choose": "Escolher carteira",
+
+      "signature": {
+        "title": "Criar sua conta",
+        "paragraph-register": "Agora só falta um passo! Clique abaixo para assinar e confirmar a criação da sua conta com essa carteira.",
+        "button-register-wallet": "Criar conta"
+      }
+    }
+  },
+  "footer": {
+    "alt-logo": "Logo da Slab",
+    "columns": [
+      {
+        "title": "Sobre a Slab",
+        "items": ["Conheça a Slab", "Nossos Projetos"]
+      },
+      {
+        "title": "Jurídico",
+        "items": ["Termos de Uso", "Política de Privacidade"]
+      },
+      {
+        "title": "Ajuda",
+        "items": ["Fale Conosco", "Aprenda Tokenização"]
+      },
+      {
+        "title": "Compliance",
+        "items": ["Ouvidoria"]
+      }
+    ],
+    "developedBy": {
+      "text": "Desenvolvido por:"
+    }
+  },
+
+  "common": {
+    "loadingOverlay": {
+      "message": "Carregando.."
+    }
+  },
+  "dashboard": {
+    "welcome-box": {
+      "name": "Antônio",
+      "title": "Bem-vindo (a) à Slab!",
+      "description": "Conheça os projetos que foram tokenizados, investa com segurança e tenha o controle total do seu patrimônio na palma da sua mão.",
+      "link": "Ver detalhes",
+      "tokens-title": "Seus Tokens:",
+      "tokens": ["#TBIO", "#TBIO2"]
+    },
+    "action-buttons": [
+      {
+        "id": 1,
+        "name": "Comprar",
+        "icon": "🛒"
+      },
+      {
+        "id": 2,
+        "name": "Emitir Certificado",
+        "icon": "📜"
+      },
+      {
+        "id": 3,
+        "name": "Sacar",
+        "icon": "💵"
+      },
+      {
+        "id": 4,
+        "name": "Histórico",
+        "icon": "📊"
+      },
+      {
+        "id": 5,
+        "name": "Verificações KYC",
+        "icon": "🔍"
+      }
+    ],
+    "asset-list": {
+      "title": "Sua carteira",
+      "highlight": "Slab",
+      "columns": {
+        "project": "Projeto",
+        "unit-value": "Valor unitário",
+        "total-value": "Valor Total"
+      },
+      "buttons": {
+        "buy": "Comprar",
+        "sell": "Vender"
+      }
+    }
+  },
+  "token": {
+    "token-price": "Preço do Token",
+    "launch-date": "Data de lançamento",
+    "sold": "Tokens disponíveis",
+    "buy": "Comprar",
+    "available": "Código identificador",
+    "minimum-investment": "Investimento mínimo",
+    "progress-bar": {
+      "sold": "Vendidos",
+      "available": "Disponíveis"
+    },
+    "disclaimer": "Não invista antes de saber todas as informações essenciais sobre a oferta"
+  },
+  "tokensPage": {
+    "title": "Descubra hoje as melhores oportunidades de tokens digitais",
+    "subtitle": "Os tokens que você já conhece, as melhores oportunidades, na palma da sua mão!",
+    "filters": {
+      "all": "Todos",
+      "available": "Disponíveis"
+    },
+    "viewDetails": "Ver detalhes",
+    "newTokens": "Novos tokens em breve"
+  },
+  "token-details": {
+    "highlights": {
+      "title": "Destaques",
+      "view-docs": "Ver docs da oferta",
+      "more-info": "Mais informações"
+    },
+    "tabs": {
+      "infos": {
+        "title": "Informações",
+        "identifier-code": "Código ISIN",
+        "offer-opening": "Abertura da oferta",
+        "tons-offered": "Toneladas em oferta",
+        "token-address": "Endereço do Token",
+        "unit-value": "Valor unitário",
+        "minimum-investment": "Investimento mínimo",
+        "blockchain-link": "Link Blockchain"
+      },
+      "token-info": {
+        "title": "Token Info"
+      },
+      "docs": {
+        "title": "Documentos"
+      },
+      "benefits": {
+        "title": "Benefícios",
+        "rights": "Direitos",
+        "risks": "Riscos"
+      }
+    }
+  },
+  "kyc": {
+    "kyc-step-one-title": "Realize sua Verificação KYC!",
+    "kyc-step-one-paragraph": "Sua conta ainda não foi verificada. Realize a verificação dos seus dados para garantir que as transações ocorram com segurança.",
+    "kyc-step-one-button": "Começar verificação",
+
+    "kyc-step-two-title": "Informe seus dados",
+    "label-name": "Nome completo",
+    "label-cpf": "CPF",
+    "label-cnpj": "CNPJ",
+    "label-is-legal-person": "Você representa uma pessoa jurídica?",
+    "placeholder-name": "Informe seu nome completo",
+    "placeholder-cpf": "Ex: 000.000.000-00",
+    "placeholder-cnpj": "Ex: 00.000.000/0001-00",
+    "checkbox-is-legal-person": "Sim",
+
+    "button-back": "Voltar",
+    "button-next": "Continuar",
+
+    "error-name-required": "O nome é obrigatório.",
+    "error-cpf-required": "O CPF é obrigatório.",
+
+    "kyc-step-three-title": "Informe seu endereço",
+    "label-country": "Selecione seu país",
+    "placeholder-country": "Informe seu país de origem",
+    "label-cep": "Digite seu CEP",
+    "placeholder-cep": "Ex: 12345-678",
+    "label-street": "Rua",
+    "placeholder-street": "Nome da rua",
+    "label-number": "Número",
+    "label-city": "Cidade",
+    "placeholder-city": "Informe a cidade",
+    "label-state": "Estado",
+    "placeholder-state": "UF",
+    "upload-instructions": "Faça o upload dos documentos abaixo:",
+    "label-contract-file": "Contrato Social (PDF)",
+    "label-proof-file": "Comprovante de Endereço (PDF)",
+    "upload-file": "Fazer upload PDF",
+    "upload-complete": "Upload completo",
+
+    "start-verification": {
+      "title": "Verificação Didit",
+      "description": "Você será redirecionado para um site externo para concluir sua verificação de identidade (KYC).",
+      "button-continue": "Continuar",
+
+      "logo": {
+        "src": "images/login/diditi-logo.svg",
+        "alt": "Logo Didit"
+      },
+      "demo": {
+        "src": "images/login/kyc-video-placeholder.png",
+        "alt": "Demonstração do fluxo Didit"
+      }
+
+    }
+  }
+}
