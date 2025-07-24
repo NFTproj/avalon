@@ -13,6 +13,7 @@ interface Props {
   name?: string
   cpf?:  string
   address?: string
+  onVerify: () => void
 }
 
 export default function KycStepStartVerification (props: Props) {

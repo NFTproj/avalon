@@ -18,6 +18,7 @@ import LoadingOverlay from '@/components/common/LoadingOverlay';
 
 export interface AuthUser {
   id: string;
+  userId?: string;
   name: string;
   email: string;
   walletAddress: `0x${string}`;        
