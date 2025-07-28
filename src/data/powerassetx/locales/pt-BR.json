@@ -4,7 +4,7 @@
       "main-logo": "logos/powerassetx/powerassetx-logo.png"
     }
   },
- "landing-page": {
+  "landing-page": {
     "header": {
       "alts": {
         "main-logo": "Logo da Slab"
@@ -57,22 +57,22 @@
       "background": "backgrounds/bloxify/flow-image.svg",
       "steps": [
         {
-          "title": "Crie uma conta",
-          "description": "Crie sua conta com e-mail ou Metamask.",
+          "title": "Entre em contato",
+          "description": "Receba sua chave de API e escolha seu plano de tokenização.",
           "step": "1° Passo",
-          "icon": "icons/common/create-account.svg"
+          "icon": "icons/bloxify/contact-with-border-blue.svg"
         },
         {
-          "title": "Realize a verficação KYC",
-          "description": "Complete a verificação KYC para compras acima de R$ 10.",
+          "title": "Escolha um template",
+          "description": "Escolha um template sob medida para seu projeto.",
           "step": "2° Passo",
-          "icon": "icons/common/verify-kyc.svg"
+          "icon": "icons/bloxify/template-blue.svg"
         },
         {
-          "title": "Faça a primeira compra",
-          "description": "Adquira seu primeiro Token de Biodiversidade com Pix ou cartão.",
+          "title": "Tokenize ativos",
+          "description": "Comece a oferecer ativos em formato tokenizado.",
           "step": "3° Passo",
-          "icon": "icons/common/buy-token.svg"
+          "icon": "icons/bloxify/graph-bar-increase-blue.svg"
         }
       ]
     },
