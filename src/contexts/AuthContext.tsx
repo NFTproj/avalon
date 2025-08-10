@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from 'react';
 import useSWR from 'swr';
+
 import { apiFetch } from '@/lib/api/fetcher';
 import { useRouter } from 'next/navigation';
 import { useDisconnect } from 'wagmi';
