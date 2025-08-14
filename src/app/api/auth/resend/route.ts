@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json()
     const apiKey = process.env.BLOXIFY_API_KEY
     const apiUrl = process.env.BLOXIFY_URL_BASE
     const clientId    = process.env.CLIENT_ID  
