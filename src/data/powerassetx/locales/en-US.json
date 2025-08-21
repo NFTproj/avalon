@@ -1,0 +1,436 @@
+{
+  "images": {
+    "logos": {
+      "main-logo": "logos/powerassetx/powerassetx-logo.png"
+    }
+  },
+  "landing-page": {
+    "header": {
+      "alts": {
+        "main-logo": "PowerAssetX Logo"
+      },
+      "navigations": {
+        "navOne": "About PowerAssetX",
+        "navTwo": [
+          {
+            "title": "Products",
+            "items": [
+              {
+                "title": "Tokenized Commodities"
+              }
+            ]
+          }
+        ],
+        "navThree": [
+          {
+            "title": "Language",
+            "items": [
+              {
+                "title": "Portuguese",
+                "image": "icons/bloxify/br.png",
+                "alt": "Brazilian Flag"
+              },
+              {
+                "title": "English",
+                "image": "icons/bloxify/us.png",
+                "alt": "United States Flag"
+              }
+            ]
+          }
+        ]
+      },
+      "buttons": {
+        "button": "Create Account",
+        "buttonLogin": "Login",
+        "buttonLogout": "Logout"
+      }
+    },
+    "hero": {
+      "title": "Security and Liquidity for Agricultural Commodities",
+      "subtitle": "PowerAssetX tokenizes commodity assets like sugarcane, corn, and soybeans, transforming them into digital investment opportunities on a secure and transparent platform.",
+      "image": "images/bloxify/homen-negro-tablet.png",
+      "alt": "Image of a black man holding a tablet."
+    },
+    "tokenization-steps": {
+      "title": "Invest in just three steps",
+      "background": "backgrounds/bloxify/flow-image.svg",
+      "steps": [
+        {
+          "title": "Get in touch",
+          "description": "Receive access to our platform and explore available tokenized commodities.",
+          "step": "Step 1",
+          "icon": "icons/bloxify/contact-with-border-blue.svg"
+        },
+        {
+          "title": "Choose your asset",
+          "description": "Select from tokenized commodity assets such as sugarcane or corn.",
+          "step": "Step 2",
+          "icon": "icons/bloxify/template-blue.svg"
+        },
+        {
+          "title": "Invest and track",
+          "description": "Invest directly in tokenized commodities and follow performance through your dashboard.",
+          "step": "Step 3",
+          "icon": "icons/bloxify/graph-bar-increase-blue.svg"
+        }
+      ]
+    },
+    "forms-contact": {
+      "title": "Learn more",
+      "support": {
+        "title": "Support Center",
+        "description": "We’re here to assist you with your investment journey in tokenized commodities.",
+        "email": "contato@blocklize.io",
+        "image": "images/bloxify/banner-support.png",
+        "alt": "Contact banner image."
+      },
+      "form": {
+        "title": "Talk to us",
+        "name": {
+          "label": "Full name (required)",
+          "placeholder": "Enter your name"
+        },
+        "email": {
+          "label": "Email (required)",
+          "placeholder": "Enter your email"
+        },
+        "phone": {
+          "label": "Phone/WhatsApp",
+          "placeholder": "Enter your phone number"
+        },
+        "message": {
+          "label": "Tell us how we can help you invest in tokenized commodities:",
+          "placeholder": "Write your message"
+        },
+        "submit": "Submit"
+      }
+    },
+    "faq": {
+      "title": "Still have questions?",
+      "questions": [
+        {
+          "id": 1,
+          "question": "What does PowerAssetX do?",
+          "answer": "PowerAssetX enables investment in agricultural commodities through tokenization. We convert real-world assets like sugarcane and corn into digital tokens, offering secure, transparent, and fractional ownership."
+        },
+        {
+          "id": 2,
+          "question": "What are tokenized commodities?",
+          "answer": "They are blockchain-based representations of real commodity assets. Each token corresponds to a verified unit of a real agricultural product, available for investment and trade."
+        },
+        {
+          "id": 3,
+          "question": "How does it work?",
+          "answer": "Producers partner with PowerAssetX to tokenize their crops. These tokens are then made available on our platform for individuals and institutions to purchase, providing liquidity to producers and investment access to buyers."
+        },
+        {
+          "id": 4,
+          "question": "Why invest in tokenized commodities?",
+          "answer": "It combines the security of blockchain with the tangible value of agricultural production. Investors gain access to a market that was previously difficult to enter without intermediaries."
+        },
+        {
+          "id": 5,
+          "question": "Who can invest?",
+          "answer": "Anyone with an account on PowerAssetX can invest in tokenized commodities, whether they are individuals, cooperatives, or institutional players."
+        }
+      ]
+    },
+    "tokens": {
+  "title": "Track available tokens",
+  "list": [
+    {
+    "id": 1,
+    "name": "TOKEN TEXAGRO",
+    "subtitle": "Hill Country Farm - Texas",
+    "price": "15",
+    "launchDate": "July 31, 2024",
+    "tokensAvailable": "1019820.10",
+    "code": "TXAG",
+    "identifierCode": "TXAG-001",
+    "image": "icons/bloxify/man-similing.png",
+    "sold": 516820,
+    "total": 1000000,
+    "labels": [
+      { "name": "AGRO" },
+      { "name": "CARBON" },
+      { "name": "SUSTAINABLE" }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "TOKEN WESTCORN",
+    "subtitle": "Travis Plains - Texas",
+    "price": "15",
+    "launchDate": "July 31, 2024",
+    "tokensAvailable": "1019820.00",
+    "code": "WSCN",
+    "identifierCode": "WSCN-002",
+    "image": "icons/bloxify/man-similing.png",
+    "sold": 516820,
+    "total": 1000000,
+    "labels": [
+      { "name": "CORN" },
+      { "name": "BIOFUEL" },
+      { "name": "CARBON" }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "TOKEN LONESTATE",
+    "subtitle": "Lonestar Cotton Farm - Texas",
+    "price": "15",
+    "launchDate": "July 31, 2024",
+    "tokensAvailable": "1019820.00",
+    "code": "LSTC",
+    "identifierCode": "LSTC-003",
+    "image": "icons/bloxify/man-similing.png",
+    "sold": 1000000,
+    "total": 1000000,
+    "labels": [
+      { "name": "COTTON" },
+      { "name": "CPR" },
+      { "name": "GREEN" }
+    ]
+  }
+  ]
+},
+"register": {
+  "image": "images/login/creating-account.svg",
+  "alt": "Person holding access key",
+  "step-zero": {
+    "title": "Welcome to PowerAssetX!",
+    "description": "Create your account in 2 minutes and trade real-world assets quickly and securely.",
+    "button-email": "Create with Email",
+    "button-metamask": "Create with Metamask",
+    "already-have-account": "Already have an account?",
+    "login-link": "Login",
+    "fase": "Step"
+  },
+  "step-one": {
+    "counter": { "current": "01", "total": "of 04" },
+    "title": "Choose an email",
+    "description": "If this is your first time here, start the registration process by entering your email.",
+    "labels": { "emailLabel": "Your email:" },
+    "placeholders": { "email": "email@email.com" },
+    "button-next": "Next",
+    "already-have-account": "Already have an account?",
+    "login-link": "Login"
+  },
+  "step-two": {
+    "counter": { "current": "02", "total": "of 04" },
+    "title": "Now choose a password",
+    "description": "Use letters, numbers and special characters.",
+    "labels": {
+      "password": "Enter a password",
+      "confirmPassword": "Repeat your password"
+    },
+    "disclaimer": "By continuing you accept PowerAssetX's Terms of Use and Privacy Policy and declare you are not a US person.",
+    "button-continue": "Continue",
+    "button-back": "Back"
+  },
+  "step-three": {
+    "counter": { "current": "03", "total": "of 04" },
+    "title": "Verify your email!",
+    "description": "Enter the code that was sent to your email.",
+    "labels": { "code": "Enter the code" },
+    "placeholders": { "code": "123456" },
+    "button-verify": "Verify"
+  },
+  "step-four": {
+    "counter": { "current": "04", "total": "of 04" },
+    "title": "Access your account",
+    "paragraphEmail": "Your email",
+    "paragraphPassword": "Enter your password",
+    "labels": { "email": "", "password": "" },
+    "placeholders": {
+      "email": "email@email.com",
+      "password": "••••••••"
+    },
+    "button-back": "Back",
+    "button-login": "Login"
+  },
+  "metamask-register-login": {
+    "counter": {
+      "first": "01",
+      "second": "2",
+      "total": "of 2"
+    },
+    "fase": "Step",
+    "title": "Connect your wallet",
+    "paragraph-Wallet": "Select the digital wallet you want to use.",
+    "button-Wallet-choose": "Choose wallet",
+    "signature": {
+      "title": "Create your account",
+      "paragraph-register": "Just one more step! Click below to sign and confirm the creation of your account with this wallet.",
+      "button-register-wallet": "Create account"
+    }
+  }
+  }
+  },
+  "footer": {
+  "alt-logo": "PowerAssetX Logo",
+  "columns": [
+    {
+      "title": "About PowerAssetX",
+      "items": ["About PowerAssetX", "Our Projects"]
+    },
+    {
+      "title": "Legal",
+      "items": ["Terms of Use", "Privacy Policy"]
+    },
+    {
+      "title": "Help",
+      "items": ["Contact Us", "Learn Tokenization"]
+    },
+    {
+      "title": "Compliance",
+      "items": ["Ombudsman"]
+    }
+  ],
+  "developedBy": {
+    "text": "Developed by:"
+  }
+},
+"common": {
+  "loadingOverlay": {
+    "message": "Loading..."
+  }
+},
+"dashboard": {
+  "welcome-box": {
+    "name": "Antônio",
+    "title": "Welcome to PowerAssetX!",
+    "description": "Discover tokenized projects, invest securely, and have full control of your assets in the palm of your hand.",
+    "link": "View details",
+    "tokens-title": "Your Tokens:",
+    "tokens": ["#TBIO", "#TBIO2"]
+  },
+  "action-buttons": [
+    { "id": 1, "name": "Buy", "icon": "🛒" },
+    { "id": 2, "name": "Issue Certificate", "icon": "📜" },
+    { "id": 3, "name": "Withdraw", "icon": "💵" },
+    { "id": 4, "name": "History", "icon": "📊" },
+    { "id": 5, "name": "KYC Verifications", "icon": "🔍" }
+  ],
+  "asset-list": {
+    "title": "Your Wallet",
+    "highlight": "PowerAssetX",
+    "columns": {
+      "project": "Project",
+      "unit-value": "Unit Value",
+      "total-value": "Total Value"
+    },
+    "buttons": {
+      "buy": "Buy",
+      "sell": "Sell"
+    }
+  }
+},
+"token": {
+  "token-price": "Token Price",
+  "launch-date": "Launch Date",
+  "sold": "Tokens available",
+  "buy": "Buy",
+  "available": "Identifier Code",
+  "minimum-investment": "Minimum Investment",
+  "progress-bar": {
+    "sold": "Sold",
+    "available": "Available"
+  },
+  "disclaimer": "Do not invest before knowing all essential information about the offering"
+},
+"tokensPage": {
+  "title": "Discover the best digital token opportunities today",
+  "subtitle": "The tokens you already know, the best opportunities, at your fingertips!",
+  "filters": {
+    "all": "All",
+    "available": "Available"
+  },
+  "viewDetails": "View details",
+  "newTokens": "New tokens soon"
+},
+"token-details": {
+  "highlights": {
+    "title": "Highlights",
+    "view-docs": "View offer docs",
+    "more-info": "More information"
+  },
+  "tabs": {
+    "infos": {
+      "title": "Information",
+      "identifier-code": "ISIN Code",
+      "offer-opening": "Offer Opening",
+      "tons-offered": "Tons Offered",
+      "token-address": "Token Address",
+      "unit-value": "Unit Value",
+      "minimum-investment": "Minimum Investment",
+      "blockchain-link": "Blockchain Link"
+    },
+    "token-info": {
+      "title": "Token Info"
+    },
+    "docs": {
+      "title": "Documents"
+    },
+    "benefits": {
+      "title": "Benefits",
+      "rights": "Rights",
+      "risks": "Risks"
+    }
+  }
+},
+ "kyc": {
+  "kyc-step-one-title": "Complete your identity verification",
+  "kyc-step-one-paragraph": "Your account is not verified. Verify your information to enable transactions securely.",
+  "kyc-step-one-button": "Start verification",
+
+  "kyc-step-two-title": "Fill in your personal or business details",
+  "label-name": "Full name",
+  "label-cpf": "Personal ID",
+  "label-cnpj": "Business ID",
+  "label-is-legal-person": "Are you representing a company?",
+  "placeholder-name": "Enter your full name",
+  "placeholder-cpf": "e.g., 000.000.000-00",
+  "placeholder-cnpj": "e.g., 00.000.000/0001-00",
+  "checkbox-is-legal-person": "Yes",
+
+  "button-back": "Back",
+  "button-next": "Continue",
+
+  "error-name-required": "Name is required.",
+  "error-cpf-required": "Personal ID is required.",
+
+  "kyc-step-three-title": "Enter your address",
+  "label-country": "Country",
+  "placeholder-country": "Select your country",
+  "label-cep": "ZIP code",
+  "placeholder-cep": "e.g., 12345-678",
+  "label-street": "Street",
+  "placeholder-street": "Street name",
+  "label-number": "Number",
+  "placeholder-number": "123",
+  "label-city": "City",
+  "placeholder-city": "Enter your city",
+  "label-state": "State",
+  "placeholder-state": "e.g., NY",
+  "upload-instructions": "Upload the required documents below:",
+  "label-contract-file": "Business Registration Document (PDF)",
+  "label-proof-file": "Proof of Address (PDF)",
+  "upload-file": "Upload PDF",
+  "upload-complete": "Upload complete",
+
+  "start-verification": {
+    "title": "Didit Verification",
+    "description": "You will be redirected to a secure external site to complete your identity verification.",
+    "button-continue": "Continue",
+    "logo": {
+      "src": "images/login/diditi-logo.svg",
+      "alt": "Didit Logo"
+    },
+    "demo": {
+      "src": "images/login/kyc-video-placeholder.png",
+      "alt": "Didit verification demo"
+    }
+  }
+}
+}

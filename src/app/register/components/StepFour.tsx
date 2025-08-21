@@ -8,6 +8,7 @@ import CustomInput from '@/components/core/Inputs/CustomInput'
 import LoadingOverlay from '@/components/common/LoadingOverlay'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { loginUser } from '@/lib/api/auth'
+import { mutateUser } from '@/contexts/AuthContext'
 
 interface StepFourProps {
   nextStep: () => void
@@ -36,8 +37,8 @@ export default function StepFour({ nextStep, prevStep }: StepFourProps) {
       const result = await loginUser({ email, password })
       console.log('[LOGIN OK]', result)
 
-      localStorage.setItem('accessToken', result.accessToken)
-      sessionStorage.setItem('refreshToken', result.refreshToken)
+      // Atualiza o contexto de autenticação para refletir o login
+      mutateUser()
 
       await new Promise((resolve) => setTimeout(resolve, 800)) // delay para UX suave
       router.push('/dashboard')

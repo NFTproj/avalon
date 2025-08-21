@@ -24,7 +24,13 @@
     ],
     "paths": {
       "@/*": [
-        "./src/*"
+        "./src/*",
+        "./components/*",
+        "./contexts/*",
+        "./utils/*",
+        "./hooks/*",
+        "./services/*",
+        "./types/*"
       ],
       "@assets/*": [
         "./src/assets/*"

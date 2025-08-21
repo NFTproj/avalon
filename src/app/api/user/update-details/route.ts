@@ -89,6 +89,7 @@ export async function POST(req: NextRequest) {
       { error: 'Resposta do backend não é JSON', status },
       { status }
     )
+    
   } catch (err) {
     console.error('[UPDATE DETAILS ERROR]', err)
     return NextResponse.json({ error: 'Erro interno' }, { status: 500 })

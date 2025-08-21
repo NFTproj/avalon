@@ -13,8 +13,10 @@ interface KycStepStartVerificationProps {
   name?: string
   cpf?: string
   address?: string
+
   onVerify?: () => void
   onBack?: () => void            // <-- NOVO
+
 }
 
 export default function KycStepStartVerification({

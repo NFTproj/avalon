@@ -18,16 +18,22 @@ export default function ChartBox() {
   const router = useRouter()
 
   const actionButtons = [
-    { id: 1, name: 'Comprar', icon: <MdShoppingCart size={22} color={iconColor} /> },
-    { id: 2, name: 'Emitir Certificado', icon: <AiFillFileText size={22} color={iconColor} /> },
-    { id: 3, name: 'Sacar', icon: <AiFillWallet size={22} color={iconColor} /> },
-    { id: 4, name: 'Histórico', icon: <AiFillProfile size={22} color={iconColor} /> },
-    { id: 5, name: 'Verificações KYC', icon: <AiFillCheckCircle size={22} color={iconColor} /> },
+    { id: 1, name: 'Buy', icon: <MdShoppingCart size={22} color={iconColor} /> },
+    { id: 2, name: 'Earnings', icon: <AiFillFileText size={22} color={iconColor} /> },
+    { id: 3, name: 'Withdraw', icon: <AiFillWallet size={22} color={iconColor} /> },
+    { id: 4, name: 'Statements', icon: <AiFillProfile size={22} color={iconColor} /> },
+    { id: 5, name: 'Verify Identity', icon: <AiFillCheckCircle size={22} color={iconColor} /> },
   ]
 
   const handleClick = (id: number) => {
-    if (id === 5) {
-      router.push('/kyc')
+    switch (id) {
+      case 1:
+        router.push('/tokens')
+        break
+      case 5:
+        router.push('/kyc')
+        break
+      // você pode adicionar outras rotas conforme necessário
     }
   }
 
