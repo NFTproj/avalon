@@ -8,6 +8,7 @@ import Header from '@/components/landingPage/Header'
 import Footer from '@/components/common/footer'
 import LoadingOverlay from '@/components/common/LoadingOverlay'
 import KycSteps from './components/KycSteps'
+import KycStepStartVerification from './components/KycStepStartVerification'
 
 export default function Kyc() {
   const router = useRouter()
@@ -29,6 +30,7 @@ export default function Kyc() {
       <Header />
       <KycSteps onFinish={() => router.push('/verificacao-didit')} />
       <Footer />
+      {/*<KycStepStartVerification/>*/}
     </div>
   )
 }

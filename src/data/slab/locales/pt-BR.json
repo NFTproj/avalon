@@ -494,9 +494,11 @@
         "src": "images/login/kyc-video-placeholder.png",
         "alt": "Demonstração do fluxo Didit"
       }
+
+
     },
-    "didit-logo-src": "images/kyc/didit-logo.svg",
-    "didit-logo-alt": "Logo da Didit",
+    "didit-logo-src":  "images/kyc/didit-logo.svg",
+    "didit-logo-alt":  "Logo da Didit",
     "didit-video-src": "images/kyc/verification-demo.png",
     "didit-video-alt": "Demonstração do processo KYC",
     "title-didit-verification": "Verificação Didit",

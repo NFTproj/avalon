@@ -1,12 +1,17 @@
 'use client'
 
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { KycContainer } from '@/components/common/FormsBackground'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import CustomInput from '@/components/core/Inputs/CustomInput'
 import CustomButton from '@/components/core/Buttons/CustomButton'
+import LoadingOverlay from '@/components/common/LoadingOverlay'
 
-interface KycStepPersonalInfoProps {
+export interface KycStepPersonalInfoProps {
+  /** valores para reidratar quando o usuário volta */
+  defaultName?: string
+  defaultCpf?: string
+  defaultCnpj?: string
   onNext: (data: { name: string; cpf: string; cnpj?: string }) => void
   onBack: () => void
 }
@@ -30,39 +35,63 @@ function formatCNPJ(value: string) {
     .slice(0, 18)
 }
 
-export default function KycStepPersonalInfo({ onNext, onBack }: KycStepPersonalInfoProps) {
-  const [name, setName] = useState('')
-  const [cpf, setCpf] = useState('')
-  const [cnpj, setCnpj] = useState('')
-  const [isLegalPerson, setIsLegalPerson] = useState(false)
+export default function KycStepPersonalInfo({
+  defaultName,
+  defaultCpf,
+  defaultCnpj,
+  onNext,
+  onBack,
+}: KycStepPersonalInfoProps) {
+  // estados
+  const [name, setName] = useState(defaultName ?? '')
+  const [cpf, setCpf] = useState(defaultCpf ?? '')
+  const [cnpj, setCnpj] = useState(defaultCnpj ?? '')
+  const [isLegalPerson, setIsLegalPerson] = useState(!!defaultCnpj)
   const [errors, setErrors] = useState<{ name?: string; cpf?: string }>({})
+  const [loading, setLoading] = useState(false) // ⬅️ controla overlay e botão
+
+  // sincroniza defaults ao remontar/voltar
+  useEffect(() => { if (defaultName !== undefined) setName(defaultName) }, [defaultName])
+  useEffect(() => { if (defaultCpf  !== undefined) setCpf(defaultCpf)   }, [defaultCpf])
+  useEffect(() => {
+    if (defaultCnpj !== undefined) {
+      setCnpj(defaultCnpj)
+      setIsLegalPerson(!!defaultCnpj)
+    }
+  }, [defaultCnpj])
 
   const { colors, texts } = useContext(ConfigContext)
   const kycTexts = (texts as any)?.kyc
   const getKycText = (key: string, fallback: string) => kycTexts?.[key] || fallback
 
+  // mensagem de “Aguarde…” vinda do JSON (fallback se não existir)
+  const loadingMsg =
+    (texts as any)?.common?.loadingOverlay?.message ||
+    kycTexts?.['button-loading'] ||
+    'Aguarde…'
+
   const handleContinue = () => {
     const newErrors: typeof errors = {}
     if (!name.trim()) newErrors.name = getKycText('error-name-required', 'O nome é obrigatório.')
-    if (!cpf.trim()) newErrors.cpf = getKycText('error-cpf-required', 'O CPF é obrigatório.')
-
+    if (!cpf.trim())  newErrors.cpf  = getKycText('error-cpf-required',  'O CPF é obrigatório.')
     setErrors(newErrors)
 
     if (Object.keys(newErrors).length === 0) {
+      setLoading(true) // ⬅️ ativa overlay + muda texto do botão
       onNext({ name, cpf, cnpj: isLegalPerson ? cnpj : undefined })
+      // o pai troca o step; não precisamos setLoading(false) aqui
     }
   }
 
   return (
-    <KycContainer>
-      <h1
-        className="text-2xl font-bold mb-4"
-        style={{ color: colors?.colors['color-primary'] }}
-      >
+    <KycContainer className="relative"> {/* relative para posicionar o overlay */}
+      {loading && <LoadingOverlay />}    {/* ⬅️ overlay por cima */}
+
+      <h1 className="text-2xl font-bold mb-4" style={{ color: colors?.colors['color-primary'] }}>
         {getKycText('kyc-step-two-title', 'Informe seus dados')}
       </h1>
 
-      <div className="flex flex-col gap-4 mb-6">
+      <div className={`flex flex-col gap-4 mb-6 ${loading ? 'opacity-60 select-none pointer-events-none' : ''}`}>
         <div>
           <p className="text-sm mb-1 text-gray-700">{getKycText('label-name', 'Digite seu nome:')}</p>
           <CustomInput
@@ -90,12 +119,18 @@ export default function KycStepPersonalInfo({ onNext, onBack }: KycStepPersonalI
         </div>
 
         <div className="mt-2">
-          <p className="text-sm text-gray-700 mb-2">{getKycText('label-is-legal-person', 'Você representa uma pessoa jurídica?')}</p>
+          <p className="text-sm text-gray-700 mb-2">
+            {getKycText('label-is-legal-person', 'Você representa uma pessoa jurídica?')}
+          </p>
           <label className="flex items-center gap-2 text-sm text-gray-700">
             <input
               type="checkbox"
               checked={isLegalPerson}
-              onChange={() => setIsLegalPerson(!isLegalPerson)}
+              onChange={() => {
+                const next = !isLegalPerson
+                setIsLegalPerson(next)
+                if (!next) setCnpj('')
+              }}
               className="accent-blue-500 w-4 h-4"
             />
             {getKycText('checkbox-is-legal-person', 'Sim')}
@@ -104,7 +139,9 @@ export default function KycStepPersonalInfo({ onNext, onBack }: KycStepPersonalI
 
         {isLegalPerson && (
           <div className="mt-2">
-            <p className="text-sm mb-1 text-gray-700">{getKycText('label-cnpj', 'Digite o CNPJ da empresa:')}</p>
+            <p className="text-sm mb-1 text-gray-700">
+              {getKycText('label-cnpj', 'Digite o CNPJ da empresa:')}
+            </p>
             <CustomInput
               id="cnpj"
               type="text"
@@ -124,16 +161,17 @@ export default function KycStepPersonalInfo({ onNext, onBack }: KycStepPersonalI
           onClick={onBack}
           className="w-full font-semibold py-2 px-6 h-[48px]"
           textColor={colors?.colors['color-primary']}
+          disabled={loading}
         />
-
         <CustomButton
           type="button"
           color={colors?.buttons['button-third']}
-          text={getKycText('button-next', 'Continuar')}
+          text={loading ? loadingMsg : getKycText('button-next', 'Continuar')}
           className="w-full font-semibold py-2 px-6 h-[48px]"
           textColor={colors?.colors['color-primary']}
           borderColor={colors?.border['border-primary']}
           onClick={handleContinue}
+          disabled={loading}
         />
       </div>
     </KycContainer>

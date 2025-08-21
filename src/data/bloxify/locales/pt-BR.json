@@ -589,5 +589,68 @@
         "risks": "Riscos"
       }
     }
+  },
+  "kyc": {
+    "kyc-step-one-title": "Realize sua Verificação KYC!",
+    "kyc-step-one-paragraph": "Sua conta ainda não foi verificada. Realize a verificação dos seus dados para garantir que as transações ocorram com segurança.",
+    "kyc-step-one-button": "Começar verificação",
+
+    "kyc-step-two-title": "Informe seus dados",
+    "label-name": "Nome completo",
+    "label-cpf": "CPF",
+    "label-cnpj": "CNPJ",
+    "label-is-legal-person": "Você representa uma pessoa jurídica?",
+    "placeholder-name": "Informe seu nome completo",
+    "placeholder-cpf": "Ex: 000.000.000-00",
+    "placeholder-cnpj": "Ex: 00.000.000/0001-00",
+    "checkbox-is-legal-person": "Sim",
+
+    "button-back": "Voltar",
+    "button-next": "Continuar",
+
+    "error-name-required": "O nome é obrigatório.",
+    "error-cpf-required": "O CPF é obrigatório.",
+
+    "kyc-step-three-title": "Informe seu endereço",
+    "label-country": "Selecione seu país",
+    "placeholder-country": "Informe seu país de origem",
+    "label-cep": "Digite seu CEP",
+    "placeholder-cep": "Ex: 12345-678",
+    "label-street": "Rua",
+    "placeholder-street": "Nome da rua",
+    "label-number": "Número",
+    "label-city": "Cidade",
+    "placeholder-city": "Informe a cidade",
+    "label-state": "Estado",
+    "placeholder-state": "UF",
+    "upload-instructions": "Faça o upload dos documentos abaixo:",
+    "label-contract-file": "Contrato Social (PDF)",
+    "label-proof-file": "Comprovante de Endereço (PDF)",
+    "upload-file": "Fazer upload PDF",
+    "upload-complete": "Upload completo",
+    "start-verification": {
+      "title": "Verificação Didit",
+      "description": "Você será redirecionado para um site externo para concluir sua verificação de identidade (KYC).",
+      "button-continue": "Continuar",
+
+      "logo": {
+        "src": "images/login/diditi-logo.svg",
+        "alt": "Logo Didit"
+      },
+      "demo": {
+        "src": "images/login/kyc-video-placeholder.png",
+        "alt": "Demonstração do fluxo Didit"
+      }
+
+    },
+    "didit-logo-src":  "images/kyc/didit-logo.svg",
+    "didit-logo-alt":  "Logo da Didit",
+    "didit-video-src": "images/kyc/verification-demo.png",
+    "didit-video-alt": "Demonstração do processo KYC",
+    "title-didit-verification": "Verificação Didit",
+    "didit-description":
+      "Você será redirecionado para um site externo para concluir sua verificação de identidade (KYC).",
+    "button-continue": "Continuar"
   }
+  
 }
