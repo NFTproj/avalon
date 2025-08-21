@@ -51,7 +51,7 @@ export default function KycStepStartVerification({
   return (
     <KycContainer className="max-w-[640px] pt-6 pb-10 sm:pb-8">
       <div className="flex items-center justify-between mb-6 sm:mb-4">
-        <p className="text-sm text-gray-500">{stepLabel}</p>
+        <p className="text-sm text-gray-500"></p>
         {logoSrc && <ImageFromJSON src={logoSrc} alt={logoAlt} width={70} height={20} />}
       </div>
 
