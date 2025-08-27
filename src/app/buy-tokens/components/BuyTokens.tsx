@@ -1,0 +1,188 @@
+// app/buy-tokens/components/BuyTokens.tsx
+'use client'
+
+import { useContext, useMemo, useEffect, useState } from 'react'
+import Header from '@/components/landingPage/Header'
+import Footer from '@/components/common/footer'
+import { ConfigContext } from '@/contexts/ConfigContext'
+import { useAuth } from '@/contexts/AuthContext'
+import LoadingOverlay from '@/components/common/LoadingOverlay'
+import TokenList, { TokenItem } from './TokenList'
+import BuyPanel from './BuyPanel'
+import { useCards } from '@/lib/hooks/useCards'
+import TabsBar, { TabKey } from './TabsBar'
+import ProgressBar from './ProgressBar'
+
+/* ————————————————— helpers ————————————————— */
+const toNum = (v: any): number => {
+  if (v === null || v === undefined) return 0
+  if (typeof v === 'number') return Number.isFinite(v) ? v : 0
+  const s = String(v).replace(/[.,](?=\d{3}\b)/g, '').replace(',', '.')
+  const n = Number(s)
+  return Number.isFinite(n) ? n : 0
+}
+
+/* ————————————————— component ————————————————— */
+export default function BuyTokens() {
+  const { colors, texts } = useContext(ConfigContext)
+  const { loading: authLoading } = useAuth()
+  const { cards, isLoading, error } = useCards()
+
+  const T: any = (texts as any)?.buyTokens ?? {}
+  const t = (k: string, fb: string) => T?.[k] ?? fb
+
+  // identidade visual (com fallbacks seguros de tipo)
+  const accent =
+    (colors?.border as Record<string, string> | undefined)?.['border-primary'] ??
+    colors?.colors?.['color-primary'] ??
+    '#19C3F0'
+
+  const neutralItemBorder =
+    (colors?.border as Record<string, string> | undefined)?.['border-secondary'] ??
+    (colors?.border as Record<string, string> | undefined)?.['border-primary'] ??
+    '#E5E7EB'
+
+  type TokenWithSupply = TokenItem & {
+    initialSupply?: number
+    purchasedQuantity?: number
+    titleFromCard?: string
+  }
+
+  // map: cards -> tokens para UI
+  const tokens: TokenWithSupply[] = useMemo(() => {
+    if (!cards) return []
+    return cards.map((c: any) => {
+      const priceMicros = toNum(c?.CardBlockchainData?.tokenPrice)
+      const initialSupply = toNum(c?.CardBlockchainData?.initialSupply ?? c?.initialSupply)
+      const purchasedQuantity = toNum(c?.CardBlockchainData?.purchasedQuantity ?? c?.purchasedQuantity)
+      const name = c?.name ?? 'TOKEN'
+      const ticker = c?.ticker ?? ''
+      return {
+        id: c.id,
+        name,
+        project: c.description ?? c.longDescription ?? '',
+        logoUrl: c.logoUrl ?? '/images/tokens/tbio.png',
+        tags: c.tags ?? [],
+        price: priceMicros ? priceMicros / 1_000_000 : 1,
+        ticker,
+        initialSupply,
+        purchasedQuantity,
+        titleFromCard: `${name}${ticker ? ` (#${String(ticker).toUpperCase()})` : ''}`,
+      }
+    })
+  }, [cards])
+
+  // seleção
+  const [selectedId, setSelectedId] = useState<string | null>(null)
+  useEffect(() => {
+    if (tokens.length === 0) { setSelectedId(null); return }
+    if (!selectedId || !tokens.find(t => t.id === selectedId)) setSelectedId(tokens[0].id)
+  }, [tokens, selectedId])
+
+  const selected = useMemo(
+    () => tokens.find(t => t.id === selectedId) ?? null,
+    [tokens, selectedId]
+  )
+
+  // abas
+  const [tab, setTab] = useState<TabKey>('buy')
+
+  // header
+  const headerTitle = selected?.titleFromCard ?? t('page-title-fallback', 'Comprar Tokens')
+
+  // progresso (só mostra se houver dados)
+  const progressValue = useMemo(() => {
+    const total = toNum(selected?.initialSupply)
+    const sold  = toNum(selected?.purchasedQuantity)
+    if (total <= 0 || sold <= 0) return null
+    return Math.max(0, Math.min(100, (sold / total) * 100))
+  }, [selected?.initialSupply, selected?.purchasedQuantity])
+
+  return (
+    // wrapper em coluna —> empurra o Footer para o rodapé
+    <div className="min-h-dvh flex flex-col bg-[#f0fcff]">
+      <Header />
+
+      {/* área que cresce */}
+      <main className="flex-1">
+        <div className="relative">
+          {(authLoading || isLoading) && <LoadingOverlay />}
+
+          <div className="mx-auto max-w-6xl px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+            {/* título + tabs */}
+            <div className="lg:col-span-12">
+              <h1
+                className="text-2xl sm:text-[28px] font-bold"
+                style={{ color: colors?.colors?.['color-primary'] }}
+              >
+                {headerTitle}
+              </h1>
+
+              {progressValue !== null && (
+                <div className="mt-3">
+                  <ProgressBar
+                    value={progressValue}
+                    zeroLabel={t('progress-zero', '0% vendido')}
+                    emptyLabel={t('progress-empty', '')}
+                  />
+                </div>
+              )}
+
+              <TabsBar
+                active={tab}
+                onChange={setTab}
+                accentColor={accent}
+                labels={{
+                  buy: t('tab-buy', 'Comprar'),
+                  benefits: t('tab-benefits', 'Benefícios'),
+                  orders: t('tab-orders', 'Ordens'),
+                }}
+              />
+            </div>
+
+            {/* esquerda: lista */}
+            <section className="lg:col-span-6" id="panel-buy" role="tabpanel" aria-labelledby="tab-buy">
+              <h2 className="text-lg font-semibold mb-4">
+                {t('available-tokens', 'Tokens disponíveis')}
+              </h2>
+
+              <div className="rounded-2xl border-2 bg-white p-4" style={{ borderColor: accent }}>
+                {error ? (
+                  <p className="text-sm text-red-600">
+                    {t('load-error', 'Falha ao carregar tokens.')}
+                  </p>
+                ) : (
+                  <TokenList
+                    items={tokens}
+                    selectedId={selectedId}
+                    onSelect={(it) => setSelectedId(it.id)}
+                    accentColor={accent}
+                    neutralBorderColor={neutralItemBorder}
+                    visibleRows={2}     // mostra 2 itens e ativa scroll interno
+                    showProject={false} // esconde subtítulo/descrição
+                    showPrice={false}
+                  />
+                )}
+              </div>
+            </section>
+
+            {/* direita: painel de compra */}
+            <section className="lg:col-span-6">
+              {selected && tab === 'buy' && (
+                <BuyPanel
+                  token={selected}
+                  min={100}
+                  max={99_999}
+                  defaultFiat="BRL"
+                  onSuccessNavigateTo="/dashboard"
+                />
+              )}
+            </section>
+          </div>
+        </div>
+      </main>
+
+      <Footer />
+    </div>
+  )
+}

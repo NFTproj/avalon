@@ -4,36 +4,21 @@ import { Geist, Geist_Mono, Poppins } from 'next/font/google'
 import './globals.css'
 import { headers } from 'next/headers'
 
-import ContextProvider from '@/contexts/WagmiContext' //  ← o que criámos p/ Web3Modal
+import ContextProvider from '@/contexts/WagmiContext'
 import { ConfigProvider } from '@/contexts/ConfigContext'
 import { AuthProvider } from '@/contexts/AuthContext'
+import ClientSWRProvider from './ClientSWRProvider'   // ⬅️ novo
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-})
-const poppins = Poppins({
-  variable: '--font-poppins',
-  subsets: ['latin'],
-  weight: '400',
-})
+const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'] })
+const poppins   = Poppins({ variable: '--font-poppins', subsets: ['latin'], weight: '400' })
 
 export const metadata: Metadata = {
-  title      : 'Bloxify',
-
-  description: 'Powered by Reown / Web3Modal + Next.js',
+  title: 'Bloxify',
+  description: 'Powered by Blocklize',
 }
 
-interface RootLayoutProps {
-  children: React.ReactNode
-}
-
-// ⚠️  NÃO use "use client" aqui.
-//     Como RootLayout é Server Component, podemos chamar headers()
-export default async function RootLayout({
-  children,
-}: Readonly<RootLayoutProps>) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const hdr = await headers()
   const cookies = hdr.get('cookie') ?? null
 
@@ -43,11 +28,13 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable}`}
     >
       <body className="antialiased">
-        {/* ⇩  Contexto do Web3Modal/Wagmi */}
         <ContextProvider cookies={cookies}>
-          {/* ⇩  seus contextos anteriores continuam funcionando normalmente */}
           <ConfigProvider config={null}>
-            <AuthProvider>{children}</AuthProvider>
+            <AuthProvider>
+              <ClientSWRProvider>
+                {children}
+              </ClientSWRProvider>
+            </AuthProvider>
           </ConfigProvider>
         </ContextProvider>
       </body>
