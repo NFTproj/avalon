@@ -167,17 +167,19 @@ export default function BuyTokens() {
             </section>
 
             {/* direita: painel de compra */}
-            <section className="lg:col-span-6">
-              {selected && tab === 'buy' && (
-                <BuyPanel
-                  token={selected}
-                  min={100}
-                  max={99_999}
-                  defaultFiat="BRL"
-                  onSuccessNavigateTo="/dashboard"
-                />
-              )}
-            </section>
+<section className="lg:col-span-6">
+  {selected && (tab === 'buy' || tab === 'benefits') && (
+    <BuyPanel
+      token={selected}
+      min={100}
+      max={99_999}
+      fiat="USD" // ou "BRL" se preferir
+      activeTab={tab as 'buy' | 'benefits'}
+      onTabChange={(next) => setTab(next)} // painel controla a aba da página (buy/benefits)
+      onSuccessNavigateTo="/dashboard"
+    />
+  )}
+</section>
           </div>
         </div>
       </main>
