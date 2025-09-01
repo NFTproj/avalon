@@ -663,32 +663,39 @@
     "status-error-cta": "Tentar novamente"
   },
   "buyTokens": {
-      "page-title-fallback": "Comprar Tokens",
-      "tab-buy": "Comprar",
-      "tab-benefits": "Benefícios",
-      "tab-orders": "Ordens",
-      "available-tokens": "Tokens disponíveis",
-      "load-error": "Falha ao carregar tokens.",
-      "progress-zero": "0% vendido",
-      "progress-empty": ""
-    },
-    "buyPanel": {
-      "title": "Comprar {token}",
-      "unit-price-label": "Preço unitário",
-      "invest-label": "Quanto deseja investir ({currency})",
-      "invest-placeholder": "Ex.: {min}",
-      "estimated-qty": "Quantidade estimada",
-      "total": "Total",
-      "button-continue": "Continuar",
-      "button-processing": "Processando…",
-      "limits": "Mín.: {min} · Máx.: {max}",
-      "error-min": "Valor mínimo é {min}",
-      "error-max": "Valor máximo é {max}",
-      "unit-suffix": "und"
-    },
-    "tokenList": {
-      "empty": "Nenhum token disponível no momento.",
-      "unit-suffix": "und"
-    }
+    "page-title-fallback": "Comprar Tokens",
+    "tab-buy": "Comprar",
+    "tab-benefits": "Benefícios",
+    "tab-orders": "Ordens",
+    "available-tokens": "Tokens disponíveis",
+    "load-error": "Falha ao carregar tokens.",
+    "progress-zero": "0% vendido",
+    "progress-empty": ""
+  },
+  "buyPanel": {
+    "title": "Comprar {token}",
+    "unit-price-label": "Preço unitário",
+    "invest-label": "Quanto deseja investir ({currency})",
+    "invest-placeholder": "Ex.: {min}",
+    "estimated-qty": "Quantidade estimada",
+    "total": "Total",
+    "button-continue": "Continuar",
+    "button-processing": "Processando…",
+    "limits": "Mín.: {min} · Máx.: {max}",
+    "error-min": "Valor mínimo é {min}",
+    "error-max": "Valor máximo é {max}",
+    "unit-suffix": "und",
+
+    "pay-with-pix": "Comprar com PIX",
+    "pay-with-usdc": "Comprar com USDC",
+    "quote-prefix-pix": "Você pagará (PIX):",
+    "quote-prefix-usdc": "Você pagará (USDC):",
+    "cta-pix": "Comprar com PIX",
+    "cta-usdc": "Comprar com USDC"
+  },
+  "tokenList": {
+    "empty": "Nenhum token disponível no momento.",
+    "unit-suffix": "und"
+  }
   
 }

@@ -587,31 +587,38 @@
   "status-error-cta": "Try again"
 },
 "buyTokens": {
-      "page-title-fallback": "Buy Tokens",
-      "tab-buy": "Buy",
-      "tab-benefits": "Benefits",
-      "tab-orders": "Orders",
-      "available-tokens": "Available tokens",
-      "load-error": "Failed to load tokens.",
-      "progress-zero": "0% sold",
-      "progress-empty": ""
-    },
-    "buyPanel": {
-      "title": "Buy {token}",
-      "unit-price-label": "Unit price",
-      "invest-label": "How much do you want to invest ({currency})",
-      "invest-placeholder": "E.g.: {min}",
-      "estimated-qty": "Estimated quantity",
-      "total": "Total",
-      "button-continue": "Continue",
-      "button-processing": "Processing…",
-      "limits": "Min: {min} · Max: {max}",
-      "error-min": "Minimum amount is {min}",
-      "error-max": "Maximum amount is {max}",
-      "unit-suffix": "unit"
-    },
-    "tokenList": {
-      "empty": "No tokens available at the moment.",
-      "unit-suffix": "unit"
-    }
+    "page-title-fallback": "Buy Tokens",
+    "tab-buy": "Buy",
+    "tab-benefits": "Benefits",
+    "tab-orders": "Orders",
+    "available-tokens": "Available tokens",
+    "load-error": "Failed to load tokens.",
+    "progress-zero": "0% sold",
+    "progress-empty": ""
+  },
+  "buyPanel": {
+    "title": "Buy {token}",
+    "unit-price-label": "Unit price",
+    "invest-label": "How much do you want to invest ({currency})",
+    "invest-placeholder": "E.g., {min}",
+    "estimated-qty": "Estimated quantity",
+    "total": "Total",
+    "button-continue": "Continue",
+    "button-processing": "Processing…",
+    "limits": "Min: {min} · Max: {max}",
+    "error-min": "Minimum amount is {min}",
+    "error-max": "Maximum amount is {max}",
+    "unit-suffix": "units",
+
+    "pay-with-pix": "Buy with PIX",
+    "pay-with-usdc": "Buy with USDC",
+    "quote-prefix-pix": "You will pay (PIX):",
+    "quote-prefix-usdc": "You will pay (USDC):",
+    "cta-pix": "Buy with PIX",
+    "cta-usdc": "Buy with USDC"
+  },
+  "tokenList": {
+    "empty": "No tokens available at the moment.",
+    "unit-suffix": "units"
+  }
 }
