@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import { ArrowLeft, Clipboard } from 'lucide-react'
-import PixPaymentStatement from '../comp/PixPaymentStatement'
+import PixPaymentStatement from './PixPaymentStatement'
 
 export type PixPaymentData = {
   paymentLink?: string

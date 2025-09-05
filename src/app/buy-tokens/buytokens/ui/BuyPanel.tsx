@@ -9,7 +9,7 @@ import { QrCode, Wallet, CircleDollarSign } from 'lucide-react'
 import { TokenItem } from './TokenList'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import FloatingField from '@/components/core/Inputs/FloatingField'
-import PixPaymentSheet, { PixPaymentData } from './PixPaymentSheet'
+import PixPaymentSheet, { PixPaymentData } from './pix/PixPaymentSheet'
 // mantém como você está usando
 import { buyWithPix } from '@/lib/api/buytokens'
 
