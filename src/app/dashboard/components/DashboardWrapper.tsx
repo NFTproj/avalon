@@ -3,26 +3,40 @@
 import WelcomeBox from './WelcomeBox'
 import ChartBox from './ChartBox'
 import AssetList from './AssetList'
+import WalletInfo from './WalletInfo'
+import TokenMetrics from './TokenMetrics'
 
 export default function DashboardWrapper() {
   return (
-    <div className="relative flex justify-center items-start pt-24">
+    <div className="relative flex justify-center items-start pt-16 sm:pt-20 lg:pt-24 px-4 sm:px-6 lg:px-8">
       <div
         className="
           relative
           w-full
-          max-w-[1610px]
-          custom730:flex
-          custom730:flex-col
-          custom730:items-center
+          max-w-7xl
+          mx-auto
+          flex
+          flex-col
+          items-center
+          space-y-6
         "
-        style={{
-          minHeight: 'clamp(280px, 37vw, 599px)', // para o pai acomodar os dois
-        }}
       >
         <WelcomeBox />
         <ChartBox />
-        <AssetList />
+        
+        {/* Grid de informações da carteira e tokens */}
+        <div className="w-full space-y-6">
+          {/* Primeira linha - Wallet e Métricas */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+            <WalletInfo showDetails={true} />
+            <TokenMetrics />
+          </div>
+          
+          {/* Segunda linha - Lista de Assets */}
+          <div className="w-full">
+            <AssetList />
+          </div>
+        </div>
       </div>
     </div>
   )
