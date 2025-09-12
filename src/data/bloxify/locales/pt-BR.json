@@ -500,27 +500,27 @@
       {
         "id": 1,
         "name": "Comprar",
-        "icon": "🛒"
+        "icon": ""
       },
       {
         "id": 2,
         "name": "Emitir Certificado",
-        "icon": "📜"
+        "icon": ""
       },
       {
         "id": 3,
         "name": "Sacar",
-        "icon": "💵"
+        "icon": ""
       },
       {
         "id": 4,
         "name": "Histórico",
-        "icon": "📊"
+        "icon": ""
       },
       {
         "id": 5,
         "name": "Verificações KYC",
-        "icon": "🔍"
+        "icon": ""
       }
     ],
     "asset-list": {
@@ -535,6 +535,36 @@
         "buy": "Comprar",
         "sell": "Vender"
       }
+    },
+    "wallet-info": {
+      "title": "Informações da Carteira",
+      "connected": "Carteira Conectada",
+      "not-connected": "Carteira Não Conectada",
+      "status-connected": "Conectado",
+      "address-label": "Endereço:",
+      "network-label": "Rede:",
+      "balance-label": "Saldo nativo:",
+      "connect-message": "Conecte sua carteira para visualizar seu saldo e transações",
+      "copy-address": "Copiar endereço",
+      "view-explorer": "Ver no Etherscan",
+      "wallet-mismatch": "Atenção: A carteira conectada é diferente da cadastrada no seu perfil.",
+      "registered-wallet": "Cadastrada:"
+    },
+    "token-metrics": {
+      "title": "Métricas de Tokens (24h)",
+      "refresh": "Atualizar métricas",
+      "loading": "Carregando métricas...",
+      "error": "Erro ao Carregar Métricas",
+      "try-again": "Tentar Novamente",
+      "no-data": "Métricas de Tokens",
+      "no-data-message": "Nenhum dado de métricas disponível ainda. As métricas começarão a ser coletadas após você adquirir tokens.",
+      "total-tokens": "Total de Tokens",
+      "total-value": "Valor Total",
+      "growth-rate": "Crescimento Médio por Hora",
+      "best-performance": "Melhor Performance:",
+      "worst-performance": "Menor Performance:",
+      "last-update": "Última atualização:",
+      "native-values": "* Valores em tokens nativos, sem conversão fiduciária"
     }
   },
   "token": {

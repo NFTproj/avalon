@@ -353,27 +353,27 @@
       {
         "id": 1,
         "name": "Comprar",
-        "icon": "🛒"
+        "icon": ""
       },
       {
         "id": 2,
         "name": "Emitir Certificado",
-        "icon": "📜"
+        "icon": ""
       },
       {
         "id": 3,
         "name": "Sacar",
-        "icon": "💵"
+        "icon": ""
       },
       {
         "id": 4,
         "name": "Histórico",
-        "icon": "📊"
+        "icon": ""
       },
       {
         "id": 5,
         "name": "Verificações KYC",
-        "icon": "🔍"
+        "icon": ""
       }
     ],
     "asset-list": {

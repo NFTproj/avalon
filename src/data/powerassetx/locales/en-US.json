@@ -306,11 +306,11 @@
     "tokens": ["#TBIO", "#TBIO2"]
   },
   "action-buttons": [
-    { "id": 1, "name": "Buy", "icon": "🛒" },
-    { "id": 2, "name": "Issue Certificate", "icon": "📜" },
-    { "id": 3, "name": "Withdraw", "icon": "💵" },
-    { "id": 4, "name": "History", "icon": "📊" },
-    { "id": 5, "name": "KYC Verifications", "icon": "🔍" }
+    { "id": 1, "name": "Buy", "icon": "" },
+    { "id": 2, "name": "Issue Certificate", "icon": "" },
+    { "id": 3, "name": "Withdraw", "icon": "" },
+    { "id": 4, "name": "History", "icon": "" },
+    { "id": 5, "name": "KYC Verifications", "icon": "" }
   ],
   "asset-list": {
     "title": "Your Wallet",

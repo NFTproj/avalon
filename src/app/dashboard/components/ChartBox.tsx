@@ -4,6 +4,8 @@ import { useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import { useAuth } from '@/contexts/AuthContext'
+import { useAccount, useBalance } from 'wagmi'
+import { formatEther } from 'viem'
 import { TransactionService } from '@/lib/services/TransactionService'
 import { MdShoppingCart } from 'react-icons/md'
 import {
@@ -17,33 +19,52 @@ export default function ChartBox() {
   const { texts, colors } = useContext(ConfigContext)
   const { user } = useAuth()
   const router = useRouter()
-  const [totalBalance, setTotalBalance] = useState(0)
+  const { address, isConnected } = useAccount()
+  const { data: balance } = useBalance({ address })
   const [recentTransactions, setRecentTransactions] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [ethPriceUSD, setEthPriceUSD] = useState(0)
 
   const borderColor = colors?.dashboard?.buttons?.['action-border'] || '#00ffe1'
   const iconColor = '#00838F'
 
-  // Buscar dados reais da carteira - executar apenas quando walletAddress mudar
+  // Buscar preço do ETH para conversão USD
+  useEffect(() => {
+    const fetchEthPrice = async () => {
+      try {
+        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd')
+        const data = await response.json()
+        setEthPriceUSD(data.ethereum?.usd || 0)
+      } catch (error) {
+        console.error('Erro ao buscar preço do ETH:', error)
+        setEthPriceUSD(0)
+      }
+    }
+
+    if (balance) {
+      fetchEthPrice()
+    }
+  }, [balance])
+
+  // Buscar histórico de transações
   useEffect(() => {
     if (!user?.walletAddress) {
       setLoading(false)
-      setTotalBalance(0)
       setRecentTransactions([])
       return
     }
 
     let cancelled = false
 
-    const fetchWalletData = async () => {
+    const fetchTransactions = async () => {
       try {
         setLoading(true)
         setError(null)
         
         const transactionService = new TransactionService()
         
-        // Buscar histórico de transações
+        // Buscar histórico de transações apenas para exibição
         const txHistory = await transactionService.getTransactionHistory(
           user.walletAddress,
           10, // últimas 10 transações
@@ -53,29 +74,14 @@ export default function ChartBox() {
         if (!cancelled) {
           if (txHistory.success && txHistory.data?.transactions) {
             setRecentTransactions(txHistory.data.transactions)
-            
-            // Calcular saldo total baseado nas transações
-            let balance = 0
-            txHistory.data.transactions.forEach(tx => {
-              if (tx.type === 'receive') {
-                balance += parseFloat(tx.value || '0')
-              } else if (tx.type === 'send') {
-                balance -= parseFloat(tx.value || '0')
-              }
-            })
-            setTotalBalance(balance)
           } else {
-            console.warn('Nenhuma transação encontrada ou erro na resposta:', txHistory)
             setRecentTransactions([])
-            setTotalBalance(0)
           }
         }
       } catch (error) {
-        console.error('Erro ao buscar dados da carteira:', error)
         if (!cancelled) {
-          setError('Erro ao carregar dados da carteira')
+          setError('Erro ao carregar transações')
           setRecentTransactions([])
-          setTotalBalance(0)
         }
       } finally {
         if (!cancelled) {
@@ -84,7 +90,7 @@ export default function ChartBox() {
       }
     }
 
-    fetchWalletData()
+    fetchTransactions()
 
     return () => {
       cancelled = true
@@ -114,14 +120,17 @@ export default function ChartBox() {
   return (
     <div className="mt-6 w-full">
       {/* Card de saldo real */}
-      {!loading && !error && (
+      {!loading && !error && isConnected && balance && (
         <div className="mb-6 p-4 bg-white rounded-lg shadow-sm border-2 border-blue-200">
           <div className="text-center">
             <h3 className="text-lg font-semibold text-gray-800 mb-2">
               Saldo da Carteira
             </h3>
             <div className="text-3xl font-bold text-blue-600">
-              R$ {totalBalance.toFixed(2)}
+              $ {(parseFloat(formatEther(balance.value)) * ethPriceUSD).toFixed(2)}
+            </div>
+            <div className="text-sm text-gray-600 mt-1">
+              {parseFloat(formatEther(balance.value)).toFixed(4)} {balance.symbol}
             </div>
             {recentTransactions.length > 0 && (
               <p className="text-sm text-gray-600 mt-1">
@@ -136,7 +145,7 @@ export default function ChartBox() {
       {error && (
         <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
           <div className="text-center">
-            <div className="text-red-600 mb-2">⚠️ {error}</div>
+            <div className="text-red-600 mb-2">{error}</div>
             <button 
               onClick={() => window.location.reload()} 
               className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 text-sm"
