@@ -17,6 +17,8 @@ import { useUsdcBuy } from '@/lib/services/payments/useUsdcBuy'
 import { fmtMoney, toNumber, formatQty, fmt2 } from '@/utils/format'
 import type { PixPaymentData } from '@/lib/services/payments/types'
 import { useWallet } from '@/contexts/WalletContext'
+import LoadingOverlay from '@/components/common/LoadingOverlay'
+import { useBanner } from '@/components/common/GlobalBanner' // ⬅️ usar banner global
 
 import {
   BuyForm,
@@ -35,8 +37,6 @@ type Props = {
   activeTab?: 'buy' | 'benefits'
   onTabChange?: (tab: 'buy' | 'benefits') => void
   onSuccessNavigateTo?: string
-
-  /** 🔽 Novas props vindas do pai (BuyTokens) */
   forcedChainId?: number
   forcedSaleAddress?: `0x${string}`
 }
@@ -65,6 +65,7 @@ export default function BuyPanel({
 }: Props) {
   const router = useRouter()
   const { colors, texts } = useContext(ConfigContext)
+  const { showBanner } = useBanner() // ⬅️ hook do banner global
 
   // Wallet
   const {
@@ -158,7 +159,6 @@ export default function BuyPanel({
   const [view, setView] = React.useState<'form' | 'pix'>('form')
 
   // ---------- On-chain data ----------
-  // 🔹 PRIORIDADE: props forçadas > dados do token > fallback
   const inferredChainId =
     typeof (token as any)?.CardBlockchainData?.tokenChainId === 'number'
       ? (token as any).CardBlockchainData.tokenChainId
@@ -166,14 +166,12 @@ export default function BuyPanel({
           ? 137
           : undefined)
 
-  const targetChainId: number | undefined = typeof forcedChainId === 'number'
-    ? forcedChainId
-    : inferredChainId
+  const targetChainId: number | undefined =
+    typeof forcedChainId === 'number' ? forcedChainId : inferredChainId
 
   const saleAddressResolved: `0x${string}` | undefined =
     forcedSaleAddress ?? resolveSaleAddress(token)
 
-  // DEBUG
   if (process.env.NODE_ENV !== 'production') {
     console.debug('[BuyPanel] props/onchain', {
       tokenId: (token as any)?.id,
@@ -186,6 +184,9 @@ export default function BuyPanel({
     })
   }
 
+  // ======== overlay ========
+  const [busyMsg, setBusyMsg] = React.useState<string | null>(null)
+
   // ========== USDC flow (approve -> buyTokens) ==========
   const [usdcLocalError, setUsdcLocalError] = React.useState<string | null>(null)
 
@@ -195,54 +196,43 @@ export default function BuyPanel({
     const usdAmount = Number(amount)
     if (!Number.isFinite(usdAmount) || usdAmount <= 0) return
 
-    // 1) Conexão
-    if (!address) {
-      try {
+    try {
+      // 1) Conexão
+      if (!address) {
+        setBusyMsg('Conectando carteira…')
         await ensureConnected()
-      } catch {
-        setUsdcLocalError('Conexão de carteira cancelada.')
-        return
       }
-    }
 
-    // 2) Validar chain/endereço
-    if (typeof targetChainId !== 'number') {
-      setUsdcLocalError('Configuração on-chain ausente (chainId).')
-      return
-    }
-    if (!saleAddressResolved) {
-      if (process.env.NODE_ENV !== 'production') {
-        console.debug('[BuyPanel][handleUsdcBuy] sale ausente', {
-          tokenId: (token as any)?.id,
-          tokenKeys: Object.keys(token || {}),
-          card: (token as any)?.CardBlockchainData,
-          forcedSaleAddress,
-        })
-      }
-      setUsdcLocalError('Endereço do contrato de venda ausente.')
-      return
-    }
+      // 2) Validar chain/endereço
+      if (typeof targetChainId !== 'number') throw new Error('Configuração on-chain ausente (chainId).')
+      if (!saleAddressResolved) throw new Error('Endereço do contrato de venda ausente.')
 
-    // 3) Trocar de rede se necessário
-    try {
+      // 3) Trocar de rede se necessário
+      setBusyMsg('Trocando de rede…')
       await ensureChain(targetChainId)
-    } catch (e: any) {
-      setUsdcLocalError(e?.shortMessage ?? e?.message ?? 'Não foi possível trocar de rede.')
-      return
-    }
 
-    // 4) Address do comprador
-    const buyer = (address || user?.walletAddress)?.trim() as `0x${string}` | undefined
-    if (!buyer) {
-      setUsdcLocalError('Endereço da carteira não encontrado.')
-      return
-    }
+      // 4) Address do comprador
+      const buyer = (address || user?.walletAddress)?.trim() as `0x${string}` | undefined
+      if (!buyer) throw new Error('Endereço da carteira não encontrado.')
 
-    // 5) Execução
-    try {
-      await buyWithUsdc({ buyer, chainId: targetChainId, usdAmount, saleAddress: saleAddressResolved })
+      // 5) Execução (approve + buyTokens dentro do hook)
+      setBusyMsg('Aprovando USDC e executando compra…')
+      await buyWithUsdc({
+        buyer,
+        chainId: targetChainId,
+        usdAmount,
+        saleAddress: saleAddressResolved,
+        // usdcAddress: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359' as `0x${string}`, // se quiser forçar
+      })
+
+      setBusyMsg(null)
+      showBanner({ type: 'success', text: 'Transação confirmada! 🎉' }, { timeout: 7000 }) // ⬅️ 7s
+      // router.push(onSuccessNavigateTo) // opcional
     } catch (e: any) {
-      setUsdcLocalError(e?.shortMessage ?? e?.message ?? 'Falha ao comprar com USDC.')
+      setBusyMsg(null)
+      const msg = e?.shortMessage ?? e?.message ?? 'Falha ao comprar com USDC.'
+      setUsdcLocalError(msg)
+      showBanner({ type: 'error', text: msg }, { timeout: 7000 }) // ⬅️ 7s
     }
   }
 
@@ -264,9 +254,18 @@ export default function BuyPanel({
 
     if (qty <= 0) return
 
-    await createPix({ cardId: (token as any).id, tokenQuantity: qty, buyerAddress: buyer })
-      .then(() => setView('pix'))
-      .catch(() => {/* erro já no pixError */})
+    setBusyMsg('Gerando cobrança PIX…')
+    try {
+      await createPix({ cardId: (token as any).id, tokenQuantity: qty, buyerAddress: buyer })
+      setView('pix')
+      // se quiser banner também ao gerar o PIX:
+      // showBanner({ type: 'success', text: 'PIX gerado com sucesso.' }, { timeout: 7000 })
+    } catch (e: any) {
+      const msg = e?.shortMessage ?? e?.message ?? 'Falha ao gerar PIX.'
+      showBanner({ type: 'error', text: msg }, { timeout: 7000 })
+    } finally {
+      setBusyMsg(null)
+    }
   }
 
   // ========== View PIX ==========
@@ -287,10 +286,14 @@ export default function BuyPanel({
     : t('cta-pix',  'Comprar com PIX')
 
   const ctaLabel   = (pixLoading || meLoading || usdcLoading) ? 'Carregando…' : ctaBase
-  const disableCTA = pixLoading || meLoading || usdcLoading || hasInvalidAmount
+  const disableCTA = pixLoading || meLoading || usdcLoading || hasInvalidAmount || !!busyMsg
 
   return (
-    <div className="rounded-2xl bg-white p-5 border-2" style={{ borderColor }}>
+    <div className="relative rounded-2xl bg-white p-5 border-2" style={{ borderColor }}>
+      {(busyMsg || usdcLoading || pixLoading) && (
+        <LoadingOverlay overrideMessage={busyMsg ?? (method === 'usdc' ? 'Processando compra…' : 'Gerando cobrança PIX…')} />
+      )}
+
       <PanelTabs
         active={tab}
         onChange={(v) => { setTab(v); onTabChange?.(v) }}
@@ -302,7 +305,6 @@ export default function BuyPanel({
         <BenefitsPanel />
       ) : (
         <>
-          {/* Inputs */}
           <BuyForm
             amount={amount}
             qty={qtyStr}
@@ -315,7 +317,6 @@ export default function BuyPanel({
             placeholderAmount={t('placeholder-amount', '0.00')}
           />
 
-          {/* Cotações */}
           <QuoteSummary
             show={canCalc}
             pixPrefix={t('quote-prefix-pix', 'Você pagará (PIX):')}
@@ -324,7 +325,6 @@ export default function BuyPanel({
             usdcText={`${fmt2(amountNum)} USDC`}
           />
 
-          {/* Métodos */}
           <div className="mt-8">
             <p className="mb-3 text-sm font-medium text-gray-700">{t('payment-method', 'Método de pagamento')}</p>
             <PaymentMethods
@@ -336,7 +336,6 @@ export default function BuyPanel({
             />
           </div>
 
-          {/* Erros */}
           {(pixError || meError) && (
             <p className="mt-3 text-xs text-red-600" role="alert">
               {pixError || meError}
@@ -353,7 +352,6 @@ export default function BuyPanel({
             </p>
           )}
 
-          {/* CTA */}
           <button
             type="button"
             onClick={handleCTA}

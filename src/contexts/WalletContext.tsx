@@ -5,6 +5,7 @@ import React, { createContext, useContext, useMemo, useCallback } from 'react'
 import { useAccount, useDisconnect, useSwitchChain, useSignMessage } from 'wagmi'
 import { createAppKit, useAppKit } from '@reown/appkit/react'
 import { wagmiAdapter, projectId, networks } from '@/config/web3modal'
+import { getAccount, watchAccount } from '@wagmi/core' // ⬅️ actions do wagmi
 
 type WalletCtx = {
   address?: `0x${string}`
@@ -15,12 +16,13 @@ type WalletCtx = {
   disconnect: () => Promise<void>
   ensureConnected: () => Promise<`0x${string}`>
   ensureChain: (target: number) => Promise<void>
+  ensureConnectedOnChain: (target: number) => Promise<`0x${string}`>  // ⬅️ novo helper
   signAndGetSig: (message: string) => Promise<string>
 }
 
 const Ctx = createContext<WalletCtx | null>(null)
 
-// ========== AppKit init no escopo do módulo (client-only) ==========
+/* ——— AppKit init (client-only, uma vez) ——— */
 const metadata = {
   name: 'Bloxify',
   description: 'Tokenização',
@@ -28,9 +30,7 @@ const metadata = {
   icons: ['https://avatars.githubusercontent.com/u/179229932'],
 }
 
-declare global {
-  interface Window { __APPKIT_INIT__?: boolean }
-}
+declare global { interface Window { __APPKIT_INIT__?: boolean } }
 
 if (typeof window !== 'undefined' && !window.__APPKIT_INIT__) {
   createAppKit({
@@ -39,11 +39,9 @@ if (typeof window !== 'undefined' && !window.__APPKIT_INIT__) {
     networks: networks as unknown as [any, ...any[]],
     metadata,
     features: { connectMethodsOrder: ['wallet'] },
-    // não defina defaultChain; usa a rede da carteira do usuário
   })
   window.__APPKIT_INIT__ = true
 }
-// ================================================================
 
 export function WalletProvider({ children }: { children: React.ReactNode }) {
   const { address, isConnected, chainId, connector } = useAccount()
@@ -52,50 +50,59 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
   const { open } = useAppKit()
   const { signMessageAsync } = useSignMessage()
 
-  const openModal = useCallback(async () => {
-    await open?.()
-  }, [open])
+  const openModal = useCallback(async () => { await open?.() }, [open])
 
-  const disconnect = useCallback(async () => {
-    await disconnectAsync()
-  }, [disconnectAsync])
+  const disconnect = useCallback(async () => { await disconnectAsync() }, [disconnectAsync])
 
+  // ✅ Conecta usando actions do wagmi, funciona com MetaMask e WalletConnect
   const ensureConnected = useCallback(async () => {
-    if (isConnected && address) return address as `0x${string}`
+    const cfg = wagmiAdapter.wagmiConfig
+    const acc = getAccount(cfg)
+    if (acc.isConnected && acc.address) return acc.address as `0x${string}`
+
     await openModal()
-    // aguarda o Wagmi refletir a conexão
+
     return await new Promise<`0x${string}`>((resolve, reject) => {
-      let tries = 0
-      const id = setInterval(() => {
-        tries++
-        const a = (window as any)?.ethereum?.selectedAddress || undefined
-        if (typeof a === 'string' && a.startsWith('0x')) {
-          clearInterval(id)
-          resolve(a as `0x${string}`)
-        } else if (tries > 60) {
-          clearInterval(id)
-          reject(new Error('Conexão de carteira não confirmada.'))
-        }
-      }, 100)
+      const timeout = setTimeout(() => {
+        unwatch(); reject(new Error('Conexão de carteira não confirmada.'))
+      }, 30_000) // 30s
+
+      const unwatch = watchAccount(cfg, {
+        onChange(a) {
+          if (a.status === 'connected' && a.address) {
+            clearTimeout(timeout)
+            unwatch()
+            resolve(a.address as `0x${string}`)
+          }
+        },
+      })
     })
-  }, [isConnected, address, openModal])
+  }, [openModal])
 
-  const ensureChain = useCallback(
-    async (target: number) => {
-      if (!target) throw new Error('chainId alvo inválido')
-      if (chainId === target) return
+  // ✅ Troca de rede (só depois de conectado)
+  const ensureChain = useCallback(async (target: number) => {
+    if (!target) throw new Error('chainId alvo inválido')
+    // se ainda não estiver conectado, o switch pode falhar em alguns conectores
+    const cfg = wagmiAdapter.wagmiConfig
+    const acc = getAccount(cfg)
+    if (!acc.isConnected) await ensureConnected()
+
+    if (chainId !== target) {
       await switchChainAsync({ chainId: target })
-    },
-    [chainId, switchChainAsync]
-  )
+    }
+  }, [chainId, ensureConnected, switchChainAsync])
 
-  const signAndGetSig = useCallback(
-    async (message: string) => {
-      if (!message) throw new Error('Mensagem vazia para assinatura')
-      return await signMessageAsync({ message })
-    },
-    [signMessageAsync]
-  )
+  // ✅ Helper que faz os dois passos em sequência
+  const ensureConnectedOnChain = useCallback(async (target: number) => {
+    const addr = await ensureConnected()
+    await ensureChain(target)
+    return addr
+  }, [ensureConnected, ensureChain])
+
+  const signAndGetSig = useCallback(async (message: string) => {
+    if (!message) throw new Error('Mensagem vazia para assinatura')
+    return await signMessageAsync({ message })
+  }, [signMessageAsync])
 
   const value = useMemo<WalletCtx>(() => ({
     address: address as `0x${string}` | undefined,
@@ -106,8 +113,9 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
     disconnect,
     ensureConnected,
     ensureChain,
+    ensureConnectedOnChain, // ⬅️ exposto
     signAndGetSig,
-  }), [address, isConnected, chainId, connector, openModal, disconnect, ensureConnected, ensureChain, signAndGetSig])
+  }), [address, isConnected, chainId, connector, openModal, disconnect, ensureConnected, ensureChain, ensureConnectedOnChain, signAndGetSig])
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>
 }
