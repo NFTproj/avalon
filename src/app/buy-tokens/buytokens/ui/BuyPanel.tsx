@@ -1,17 +1,31 @@
+// app/buy-tokens/components/ui/BuyPanel.tsx
 'use client'
 
 import * as React from 'react'
 import { useRouter } from 'next/navigation'
 import { useContext } from 'react'
-import { useAccount } from 'wagmi'
-import { QrCode, Wallet, CircleDollarSign } from 'lucide-react'
+import { QrCode, Wallet } from 'lucide-react'
 
 import { TokenItem } from './TokenList'
 import { ConfigContext } from '@/contexts/ConfigContext'
-import FloatingField from '@/components/core/Inputs/FloatingField'
-import PixPaymentSheet, { PixPaymentData } from './pix/PixPaymentSheet'
-// mantém como você está usando
-import { buyWithPix } from '@/lib/api/buytokens'
+import PixPaymentSheet from './pix/PixPaymentSheet'
+
+import { useMe } from '@/lib/hooks/useMe'
+import { useUsdBrl } from '@/lib/hooks/useUsdBrl'
+import { usePixFlow } from '@/lib/services/payments/usePixFlow'
+import { useUsdcBuy } from '@/lib/services/payments/useUsdcBuy'
+import { fmtMoney, toNumber, formatQty, fmt2 } from '@/utils/format'
+import type { PixPaymentData } from '@/lib/services/payments/types'
+import { useWallet } from '@/contexts/WalletContext'
+
+import {
+  BuyForm,
+  PaymentMethods,
+  QuoteSummary,
+  PanelTabs,
+  BenefitsPanel,
+  type PanelTabKey,
+} from './components'
 
 type Props = {
   token: TokenItem
@@ -21,179 +35,101 @@ type Props = {
   activeTab?: 'buy' | 'benefits'
   onTabChange?: (tab: 'buy' | 'benefits') => void
   onSuccessNavigateTo?: string
+
+  /** 🔽 Novas props vindas do pai (BuyTokens) */
+  forcedChainId?: number
+  forcedSaleAddress?: `0x${string}`
 }
 
-type PanelTabKey = 'buy' | 'benefits'
-type WithRingVar = React.CSSProperties & { ['--tw-ring-color']?: string }
+function resolveSaleAddress(t: any): `0x${string}` | undefined {
+  const addr =
+    t?.CardBlockchainData?.intermediaryContractAddress ??
+    t?.cardBlockchainData?.intermediaryContractAddress ??
+    t?.intermediaryContractAddress ??
+    t?.saleContractAddress
 
-/* ===== helpers ===== */
-const currencyLocale: Record<string, string> = { USD: 'en-US', BRL: 'pt-BR', EUR: 'de-DE' }
-const fmtMoney = (v: number, currency: string) => {
-  const loc = currencyLocale[currency] ?? 'en-US'
-  try { return new Intl.NumberFormat(loc, { style: 'currency', currency }).format(v || 0) }
-  catch { return (v || 0).toLocaleString(loc, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }
-}
-const fmtRange = (min: number, max: number, currency: string) => {
-  const loc = currencyLocale[currency] ?? 'en-US'
-  const nf = new Intl.NumberFormat(loc); return `${nf.format(min)}–${nf.format(max)}`
-}
-const toNumber = (v: string) => {
-  if (!v) return NaN
-  let s = v.trim().replace(/\s/g, '')
-  if (s.includes(',') && s.includes('.')) s = s.replace(/\./g, '').replace(',', '.')
-  else if (s.includes(',')) s = s.replace(',', '.')
-  const n = Number(s)
-  return Number.isFinite(n) ? n : NaN
-}
-const formatQty = (q: number) => (!Number.isFinite(q) || q <= 0 ? '0' : (Math.floor(q * 1e6) / 1e6).toString())
-const fmt2 = (n: number) => new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n || 0)
-
-async function fetchUsdToBrlRate(): Promise<number> {
-  try {
-    const res = await fetch('https://economia.awesomeapi.com.br/json/last/USD-BRL', { cache: 'no-store' })
-    const data = await res.json()
-    const bid = parseFloat(data?.USDBRL?.bid)
-    return Number.isFinite(bid) ? bid : NaN
-  } catch { return NaN }
+  const a = typeof addr === 'string' ? addr.trim() : ''
+  return /^0x[a-fA-F0-9]{40}$/.test(a) ? (a as `0x${string}`) : undefined
 }
 
-function CurrencyPill({ label }: { label: string }) {
-  return (
-    <span className="shrink-0 inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs font-semibold text-gray-800 bg-white/90">
-      <span className="inline-block h-2 w-2 rounded-full bg-emerald-400" />
-      {label}
-      <svg width="12" height="12" viewBox="0 0 20 20" className="ml-1 opacity-60" aria-hidden>
-        <path d="M7 6l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="2" />
-      </svg>
-    </span>
-  )
-}
-
-function BenefitsPanel() {
-  return (
-    <div className="space-y-3 text-sm text-gray-700">
-      <p>• Acesso a relatórios do projeto</p>
-      <p>• Atualizações de impacto ambiental</p>
-      <p>• Comunidade e provas de rastreabilidade</p>
-    </div>
-  )
-}
-
-function PanelTabs({
-  active, onChange, labels = { buy: 'Comprar', benefits: 'Benefícios' }, accentColor = '#19C3F0',
-}: {
-  active: PanelTabKey; onChange: (t: PanelTabKey) => void; labels?: { buy?: string; benefits?: string }; accentColor?: string
-}) {
-  const tabs: Array<{ key: PanelTabKey; label: string }> = [
-    { key: 'buy', label: labels.buy ?? 'Comprar' },
-    { key: 'benefits', label: labels.benefits ?? 'Benefícios' },
-  ]
-  return (
-    <div role="tablist" aria-label="Painel de compra" className="mb-7 flex w-full justify-center">
-      <div className="grid w-full max-w-[520px] grid-cols-2 gap-6">
-        {tabs.map(({ key, label }) => {
-          const isActive = active === key
-          return (
-            <button
-              key={key}
-              role="tab"
-              aria-selected={isActive}
-              aria-controls={`panel-${key}`}
-              type="button"
-              onClick={() => onChange(key)}
-              className={[
-                'relative h-10 w-full rounded-md px-2 text-center font-semibold',
-                isActive ? 'text-gray-900 cursor-default' : 'text-gray-400 hover:text-gray-600',
-              ].join(' ')}
-            >
-              {label}
-              {isActive && (
-                <span aria-hidden className="absolute left-0 right-0 -bottom-1 mx-auto block h-1 w-11/12 rounded-full" style={{ backgroundColor: accentColor }} />
-              )}
-            </button>
-          )
-        })}
-      </div>
-    </div>
-  )
-}
-
-/* ===== componente principal ===== */
 export default function BuyPanel({
   token,
-  min = 5,
-  max = 99_999,
+  min = 0,
+  max = Number.POSITIVE_INFINITY,
   fiat = 'BRL',
   activeTab,
   onTabChange,
   onSuccessNavigateTo = '/dashboard',
+  forcedChainId,
+  forcedSaleAddress,
 }: Props) {
   const router = useRouter()
   const { colors, texts } = useContext(ConfigContext)
-  const { address, connector, isConnected } = useAccount()
 
-  // pega a wallet do /auth/me e usa no payload
-  const [meWallet, setMeWallet] = React.useState<string>('')
+  // Wallet
+  const {
+    connector,
+    isConnected,
+    address,
+    chainId: walletChainId,
+    ensureChain,
+    ensureConnected,
+  } = useWallet()
 
-  React.useEffect(() => {
-    let alive = true
-    ;(async () => {
-      try {
-        const r = await fetch('/api/auth/me', { credentials: 'include', cache: 'no-store' })
-        const j = await r.json().catch(() => ({}))
-        const w = j?.user?.walletAddress || j?.walletAddress || ''
-        if (alive) setMeWallet(w || '')
-      } catch {
-        if (alive) setMeWallet('')
-      }
-    })()
-    return () => { alive = false }
-  }, [])
+  // Me / preços
+  const { user, loading: meLoading, error: meError } = useMe()
+  const usdBrl = useUsdBrl()
 
+  // PIX / USDC
+  const {
+    loading: pixLoading,
+    error: pixError,
+    data: pixData,
+    setData: setPixData,
+    createPix,
+  } = usePixFlow()
+  const { buyWithUsdc, loading: usdcLoading, error: usdcError } = useUsdcBuy()
+
+  // Textos
   const TX = (texts as any) ?? {}
   const TT = TX.buyTokens ?? {}
-  const TP = TX.buyPanel  ?? {}
+  const TP = TX.buyPanel ?? {}
   const t = (key: string, fb: string) => (TP?.[key] ?? TT?.[key] ?? fb)
-  const tpl = (s: string, vars: Record<string, string | number>) =>
-    String(s ?? '').replace(/\{(\w+)\}/g, (_, k) => String(vars[k] ?? ''))
 
+  // Cores
   const accent      = colors?.colors?.['color-primary'] || '#19C3F0'
   const borderColor = colors?.border?.['border-primary'] || accent
   const ctaBg       = colors?.buttons?.['button-primary'] || accent
   const ctaText     = '#0b1a2b'
 
+  // Tabs
   const [tab, setTab] = React.useState<PanelTabKey>(activeTab ?? 'buy')
   React.useEffect(() => { if (activeTab) setTab(activeTab) }, [activeTab])
-  const changeTab = (v: PanelTabKey) => { setTab(v); onTabChange?.(v) }
 
+  // Detector metamask (informativo)
   const [isMetaMask, setIsMetaMask] = React.useState(false)
   React.useEffect(() => {
     let alive = true
     ;(async () => {
       if (!isConnected || !connector) { if (alive) setIsMetaMask(false); return }
-      if (connector.id === 'metaMask' || connector.name?.toLowerCase().includes('metamask')) {
+      if ((connector as any).id === 'metaMask' || (connector as any).name?.toLowerCase?.().includes('metamask')) {
         if (alive) setIsMetaMask(true); return
       }
       try {
-        const provider: any = await connector.getProvider?.()
+        const provider: any = await (connector as any)?.getProvider?.()
         if (alive) setIsMetaMask(!!provider?.isMetaMask)
       } catch { if (alive) setIsMetaMask(false) }
     })()
     return () => { alive = false }
   }, [connector, isConnected])
-  const canShowUSDC = isConnected && isMetaMask
 
-  const [amount, setAmount] = React.useState<string>('')
-  const [qtyStr, setQtyStr] = React.useState<string>('')
+  // Amount (USD) ↔ qty
   const unitPrice = token.price || 0
+  const [amount, setAmount] = React.useState<string>('') // USD a pagar
+  const [qtyStr, setQtyStr] = React.useState<string>('') // quantidade de tokens
 
-  const [usdBrl, setUsdBrl] = React.useState<number | null>(null)
+  // estimativa BRL local
   const [brlEstimate, setBrlEstimate] = React.useState<number>(0)
-  React.useEffect(() => {
-    let mounted = true
-    fetchUsdToBrlRate().then((rate) => { if (mounted) setUsdBrl(Number.isFinite(rate) ? rate : null) })
-    return () => { mounted = false }
-  }, [])
   React.useEffect(() => {
     const a = toNumber(amount)
     if (unitPrice <= 0 || !Number.isFinite(a) || a <= 0) return setBrlEstimate(0)
@@ -216,96 +152,148 @@ export default function BuyPanel({
 
   const amountNum = toNumber(amount)
   const canCalc   = unitPrice > 0 && Number.isFinite(amountNum) && amountNum > 0
-
-  const error =
-    amount !== '' && Number.isFinite(amountNum)
-      ? amountNum < min ? t('error-min', `Valor mínimo é ${fmtMoney(min, 'USD')}`)
-      : amountNum > max ? t('error-max', `Valor máximo é ${fmtMoney(max, 'USD')}`)
-      : undefined
-      : undefined
+  const hasInvalidAmount = !(Number.isFinite(amountNum) && amountNum > 0)
 
   const [method, setMethod] = React.useState<'pix' | 'usdc'>('pix')
-
   const [view, setView] = React.useState<'form' | 'pix'>('form')
-  const [submitting, setSubmitting] = React.useState(false)
-  const [pixData, setPixData] = React.useState<PixPaymentData | null>(null)
-  const [pixErr, setPixErr] = React.useState<string | null>(null)
 
-  async function handleCTA() {
-    if (method === 'usdc') {
-      router.push(onSuccessNavigateTo ?? '/dashboard')
+  // ---------- On-chain data ----------
+  // 🔹 PRIORIDADE: props forçadas > dados do token > fallback
+  const inferredChainId =
+    typeof (token as any)?.CardBlockchainData?.tokenChainId === 'number'
+      ? (token as any).CardBlockchainData.tokenChainId
+      : (String((token as any)?.blockchainPlatform || '').toLowerCase() === 'polygon'
+          ? 137
+          : undefined)
+
+  const targetChainId: number | undefined = typeof forcedChainId === 'number'
+    ? forcedChainId
+    : inferredChainId
+
+  const saleAddressResolved: `0x${string}` | undefined =
+    forcedSaleAddress ?? resolveSaleAddress(token)
+
+  // DEBUG
+  if (process.env.NODE_ENV !== 'production') {
+    console.debug('[BuyPanel] props/onchain', {
+      tokenId: (token as any)?.id,
+      forcedChainId,
+      inferredChainId,
+      targetChainId,
+      forcedSaleAddress,
+      saleAddressResolved,
+      walletChainId,
+    })
+  }
+
+  // ========== USDC flow (approve -> buyTokens) ==========
+  const [usdcLocalError, setUsdcLocalError] = React.useState<string | null>(null)
+
+  async function handleUsdcBuy() {
+    setUsdcLocalError(null)
+
+    const usdAmount = Number(amount)
+    if (!Number.isFinite(usdAmount) || usdAmount <= 0) return
+
+    // 1) Conexão
+    if (!address) {
+      try {
+        await ensureConnected()
+      } catch {
+        setUsdcLocalError('Conexão de carteira cancelada.')
+        return
+      }
+    }
+
+    // 2) Validar chain/endereço
+    if (typeof targetChainId !== 'number') {
+      setUsdcLocalError('Configuração on-chain ausente (chainId).')
+      return
+    }
+    if (!saleAddressResolved) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.debug('[BuyPanel][handleUsdcBuy] sale ausente', {
+          tokenId: (token as any)?.id,
+          tokenKeys: Object.keys(token || {}),
+          card: (token as any)?.CardBlockchainData,
+          forcedSaleAddress,
+        })
+      }
+      setUsdcLocalError('Endereço do contrato de venda ausente.')
       return
     }
 
-    // usa a carteira do /auth/me
-    const buyer = meWallet?.trim()
-    if (!buyer) {
-      setPixErr('Não encontramos sua carteira. Faça login novamente.')
-      return
-    }
-
-    const qty = Math.max(
-      1,
-      Math.floor(
-        Number.isFinite(amountNum) && amountNum > 0 && unitPrice > 0
-          ? amountNum / unitPrice
-          : 1
-      )
-    )
-
+    // 3) Trocar de rede se necessário
     try {
-      setSubmitting(true)
-      setPixErr(null)
-
-      const resp = await buyWithPix({
-        cardId: token.id,
-        tokenQuantity: qty,
-        buyerAddress: buyer,
-        // network opcional
-      })
-
-      setPixData({
-        paymentLink: resp.paymentLink,
-        qrCodeImage: resp.qrCodeImage,
-        brCode: resp.brCode,
-        amountInBRL: resp.amountInBRL,
-        tokenQuantity: resp.tokenQuantity,
-        //intermediaryContractAddress: resp.intermediaryContractAddress,
-        buyerAddress: resp.buyerAddress,
-        sessionId: resp.sessionId,  
-      })
-      setView('pix')
+      await ensureChain(targetChainId)
     } catch (e: any) {
-      setPixErr(e?.message || 'Falha ao gerar PIX')
-    } finally {
-      setSubmitting(false)
+      setUsdcLocalError(e?.shortMessage ?? e?.message ?? 'Não foi possível trocar de rede.')
+      return
+    }
+
+    // 4) Address do comprador
+    const buyer = (address || user?.walletAddress)?.trim() as `0x${string}` | undefined
+    if (!buyer) {
+      setUsdcLocalError('Endereço da carteira não encontrado.')
+      return
+    }
+
+    // 5) Execução
+    try {
+      await buyWithUsdc({ buyer, chainId: targetChainId, usdAmount, saleAddress: saleAddressResolved })
+    } catch (e: any) {
+      setUsdcLocalError(e?.shortMessage ?? e?.message ?? 'Falha ao comprar com USDC.')
     }
   }
 
+  // ========== CTA principal ==========
+  async function handleCTA() {
+    if (method === 'usdc') {
+      await handleUsdcBuy()
+      return
+    }
+
+    // ===== fluxo PIX =====
+    const buyer = user?.walletAddress?.trim()
+    if (meLoading) return
+    if (!buyer) return
+
+    const qty = unitPrice > 0 && Number.isFinite(amountNum) && amountNum > 0
+      ? Number(((amountNum / unitPrice)).toFixed(6))
+      : 0
+
+    if (qty <= 0) return
+
+    await createPix({ cardId: (token as any).id, tokenQuantity: qty, buyerAddress: buyer })
+      .then(() => setView('pix'))
+      .catch(() => {/* erro já no pixError */})
+  }
+
+  // ========== View PIX ==========
   if (view === 'pix' && pixData) {
     return (
       <PixPaymentSheet
-        data={pixData}
-        onBack={() => setView('form')}
+        data={pixData as PixPaymentData}
+        onBack={() => { setView('form'); setPixData(null) }}
         accentColor={accent}
         borderColor={borderColor}
       />
     )
   }
 
-  const txtPayWithPix  = t('pay-with-pix',  'Comprar com PIX')
-  const txtPayWithUsdc = t('pay-with-usdc', 'Comprar com USDC')
-  const txtQuotePix    = t('quote-prefix-pix',  'Você pagará (PIX):')
-  const txtQuoteUsdc   = t('quote-prefix-usdc', 'Você pagará (USDC):')
-  const ctaLabelBase   = method === 'usdc' ? t('cta-usdc', 'Comprar com USDC') : t('cta-pix', 'Comprar com PIX')
-  const ctaLabel       = submitting ? (method === 'pix' ? 'Gerando PIX…' : 'Processando…') : ctaLabelBase
-  const limitsText     = tpl(t('limits', 'Mín.: {min} · Máx.: {max}'), { min: fmtMoney(min!, 'USD'), max: fmtMoney(max!, 'USD') })
+  // Textos de UI
+  const ctaBase = method === 'usdc'
+    ? t('cta-usdc', 'Comprar com USDC')
+    : t('cta-pix',  'Comprar com PIX')
+
+  const ctaLabel   = (pixLoading || meLoading || usdcLoading) ? 'Carregando…' : ctaBase
+  const disableCTA = pixLoading || meLoading || usdcLoading || hasInvalidAmount
 
   return (
     <div className="rounded-2xl bg-white p-5 border-2" style={{ borderColor }}>
       <PanelTabs
         active={tab}
-        onChange={(v) => changeTab(v)}
+        onChange={(v) => { setTab(v); onTabChange?.(v) }}
         accentColor={accent}
         labels={{ buy: t('tab-buy', 'Comprar'), benefits: t('tab-benefits', 'Benefícios') }}
       />
@@ -314,95 +302,72 @@ export default function BuyPanel({
         <BenefitsPanel />
       ) : (
         <>
-          <FloatingField
-            className="mt-2"
-            id="fiat-amount"
-            label={t('label-pay', 'Pagar')}
-            type="number"
-            value={amount}
-            onChange={onAmountChange}
-            placeholder={t('placeholder-amount', fmtRange(min!, max!, 'USD'))}
+          {/* Inputs */}
+          <BuyForm
+            amount={amount}
+            qty={qtyStr}
+            tokenTicker={(token.ticker || 'UND').toUpperCase()}
             accent={accent}
-            rightSlot={<CurrencyPill label="USD" />}
-          />
-          {!!error && <p className="mt-1 text-xs text-red-600" role="alert">{error}</p>}
-
-          <FloatingField
-            className="mt-6"
-            label={t('label-receive', 'Receber')}
-            value={qtyStr}
-            onChange={onQtyChange}
-            placeholder="0"
-            accent={accent}
-            rightSlot={<CurrencyPill label={(token.ticker || 'UND').toUpperCase()} />}
+            onAmountChange={onAmountChange}
+            onQtyChange={onQtyChange}
+            payLabel={t('label-pay', 'Pagar')}
+            receiveLabel={t('label-receive', 'Receber')}
+            placeholderAmount={t('placeholder-amount', '0.00')}
           />
 
-          {canCalc && (
-            <>
-              <p className="mt-2 text-sm text-gray-700">
-                {txtQuotePix} <strong>{usdBrl ? fmtMoney(brlEstimate || 0, 'BRL') : 'calculando…'}</strong>
-              </p>
-              {canShowUSDC && (
-                <p className="mt-2 text-sm text-gray-700">
-                  {txtQuoteUsdc} <strong>{fmt2(amountNum)} USDC</strong>
-                </p>
-              )}
-            </>
-          )}
+          {/* Cotações */}
+          <QuoteSummary
+            show={canCalc}
+            pixPrefix={t('quote-prefix-pix', 'Você pagará (PIX):')}
+            usdcPrefix={t('quote-prefix-usdc', 'Você pagará (USDC):')}
+            pixText={usdBrl ? fmtMoney(brlEstimate || 0, 'BRL') : 'calculando…'}
+            usdcText={`${fmt2(amountNum)} USDC`}
+          />
 
+          {/* Métodos */}
           <div className="mt-8">
             <p className="mb-3 text-sm font-medium text-gray-700">{t('payment-method', 'Método de pagamento')}</p>
-
-            <div className="flex flex-col gap-3">
-              <button
-                type="button"
-                onClick={() => setMethod('pix')}
-                className={`rounded-xl border-2 px-4 py-3 text-left flex items-center justify-between ${method === 'pix' ? 'bg-gray-50' : 'bg-white'}`}
-                style={{ borderColor }}
-              >
-                <span className="flex items-center gap-3">
-                  <QrCode className="h-5 w-5 text-gray-800" strokeWidth={2} aria-hidden />
-                  <span className="text-sm text-gray-800">{txtPayWithPix}</span>
-                </span>
-              </button>
-
-              {canShowUSDC && (
-                <button
-                  type="button"
-                  onClick={() => setMethod('usdc')}
-                  className={`rounded-xl border-2 px-4 py-3 text-left flex items-center justify-between ${method === 'usdc' ? 'bg-gray-50' : 'bg-white'}`}
-                  style={{ borderColor }}
-                >
-                  <span className="flex items-center gap-3">
-                    <span className="relative inline-flex h-5 w-5 items-center justify-center text-gray-800">
-                      <Wallet className="h-5 w-5" strokeWidth={2} aria-hidden />
-                      <CircleDollarSign className="absolute -bottom-1 -right-1 h-3 w-3" strokeWidth={2} aria-hidden />
-                    </span>
-                    <span className="text-sm text-gray-800">{txtPayWithUsdc}</span>
-                  </span>
-                </button>
-              )}
-            </div>
+            <PaymentMethods
+              method={method}
+              setMethod={setMethod}
+              borderColor={borderColor}
+              txtPayWithPix={t('pay-with-pix', 'Comprar com PIX')}
+              txtPayWithUsdc={t('pay-with-usdc', 'Comprar com USDC')}
+            />
           </div>
 
-          {!!pixErr && <p className="mt-3 text-xs text-red-600" role="alert">{pixErr}</p>}
+          {/* Erros */}
+          {(pixError || meError) && (
+            <p className="mt-3 text-xs text-red-600" role="alert">
+              {pixError || meError}
+            </p>
+          )}
+          {(usdcError || usdcLocalError) && (
+            <p className="mt-3 text-xs text-red-600" role="alert">
+              {usdcLocalError || usdcError}
+            </p>
+          )}
+          {!meLoading && !user?.walletAddress && (
+            <p className="mt-2 text-xs text-amber-600">
+              Faça login para continuar (carteira não encontrada).
+            </p>
+          )}
 
+          {/* CTA */}
           <button
             type="button"
             onClick={handleCTA}
-            disabled={submitting}
+            disabled={disableCTA}
             className={`mt-8 w-full h-[50px] rounded-xl font-bold border-2 transition
-              ${submitting ? 'opacity-60 cursor-wait' : 'hover:opacity-90'}`}
+              ${disableCTA ? 'opacity-60 cursor-not-allowed' : 'hover:opacity-90'}`}
             style={{ backgroundColor: ctaBg, borderColor, color: ctaText }}
-            aria-disabled={submitting}
+            aria-disabled={disableCTA}
           >
             <span className="inline-flex items-center justify-center gap-2">
               {method === 'usdc' ? <Wallet className="h-5 w-5" aria-hidden /> : <QrCode className="h-5 w-5" aria-hidden />}
               <span>{ctaLabel}</span>
             </span>
           </button>
-
-          <p className="text-[11px] text-gray-500 mt-3">{limitsText}</p>
         </>
       )}
     </div>

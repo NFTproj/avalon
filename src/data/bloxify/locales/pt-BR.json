@@ -437,7 +437,9 @@
         "password": "••••••••"
       },
       "button-back": "Voltar",
-      "button-login": "Entrar"
+      "button-login": "Entrar",
+      "login-option": "Ou acesse com",
+      "login-metamask": "Escolher carteira"
     },
     "metamask-register-login": {
       "counter": {

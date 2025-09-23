@@ -7,7 +7,9 @@ import { headers } from 'next/headers'
 import ContextProvider from '@/contexts/WagmiContext'
 import { ConfigProvider } from '@/contexts/ConfigContext'
 import { AuthProvider } from '@/contexts/AuthContext'
-import ClientSWRProvider from './ClientSWRProvider'   // ⬅️ novo
+import ClientSWRProvider from './ClientSWRProvider'
+
+import WalletBoundary from '../config/WalletBoundary' // ⬅️ NOVO
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
 const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'] })
@@ -31,9 +33,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <ContextProvider cookies={cookies}>
           <ConfigProvider config={null}>
             <AuthProvider>
-              <ClientSWRProvider>
-                {children}
-              </ClientSWRProvider>
+              <WalletBoundary> {/* ⬅️ ENVOLVE APENAS ESSA PARTE */}
+                <ClientSWRProvider>
+                  {children}
+                </ClientSWRProvider>
+              </WalletBoundary>
             </AuthProvider>
           </ConfigProvider>
         </ContextProvider>

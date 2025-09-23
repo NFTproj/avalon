@@ -360,7 +360,9 @@
         "password": "••••••••"
       },
       "button-back": "Back",
-      "button-login": "Login"
+      "button-login": "Login",
+      "login-option": "Or sign in with",
+      "login-metamask": "Select Wallet"
     },
     "metamask-register-login": {
       "counter": {

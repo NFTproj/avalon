@@ -22,6 +22,11 @@ const toNum = (v: any): number => {
   return Number.isFinite(n) ? n : 0
 }
 
+function normalizeAddress(addr?: string): `0x${string}` | undefined {
+  const a = typeof addr === 'string' ? addr.trim() : ''
+  return /^0x[a-fA-F0-9]{40}$/.test(a) ? (a as `0x${string}`) : undefined
+}
+
 /* ————————————————— component ————————————————— */
 export default function BuyTokens() {
   const { colors, texts } = useContext(ConfigContext)
@@ -31,7 +36,7 @@ export default function BuyTokens() {
   const T: any = (texts as any)?.buyTokens ?? {}
   const t = (k: string, fb: string) => T?.[k] ?? fb
 
-  // identidade visual (com fallbacks seguros de tipo)
+  // identidade visual
   const accent =
     (colors?.border as Record<string, string> | undefined)?.['border-primary'] ??
     colors?.colors?.['color-primary'] ??
@@ -48,7 +53,7 @@ export default function BuyTokens() {
     titleFromCard?: string
   }
 
-  // map: cards -> tokens para UI
+  // map: cards -> tokens para UI (lista)
   const tokens: TokenWithSupply[] = useMemo(() => {
     if (!cards) return []
     return cards.map((c: any) => {
@@ -72,6 +77,31 @@ export default function BuyTokens() {
     })
   }, [cards])
 
+  // índice on-chain por id (chainId + saleAddress)
+  const onchainById = useMemo(() => {
+    const map = new Map<
+      string,
+      { chainId?: number; saleAddress?: `0x${string}`; raw?: any }
+    >()
+    ;(cards ?? []).forEach((c: any) => {
+      const chainId =
+        typeof c?.CardBlockchainData?.tokenChainId === 'number'
+          ? c.CardBlockchainData.tokenChainId
+          : (c?.blockchainPlatform?.toLowerCase?.() === 'polygon'
+              ? 137
+              : undefined)
+
+      const saleAddress = normalizeAddress(
+        c?.CardBlockchainData?.intermediaryContractAddress ??
+        c?.intermediaryContractAddress ??
+        c?.saleContractAddress
+      )
+
+      map.set(c.id, { chainId, saleAddress, raw: c })
+    })
+    return map
+  }, [cards])
+
   // seleção
   const [selectedId, setSelectedId] = useState<string | null>(null)
   useEffect(() => {
@@ -83,6 +113,8 @@ export default function BuyTokens() {
     () => tokens.find(t => t.id === selectedId) ?? null,
     [tokens, selectedId]
   )
+
+  const selectedOnchain = selectedId ? onchainById.get(selectedId) : undefined
 
   // abas
   const [tab, setTab] = useState<TabKey>('buy')
@@ -98,12 +130,19 @@ export default function BuyTokens() {
     return Math.max(0, Math.min(100, (sold / total) * 100))
   }, [selected?.initialSupply, selected?.purchasedQuantity])
 
+  // DEBUG opcional
+  if (process.env.NODE_ENV !== 'production') {
+    console.debug('[BuyTokens] selected snapshot', {
+      selectedId,
+      forcedChainId: selectedOnchain?.chainId,
+      forcedSaleAddress: selectedOnchain?.saleAddress,
+    })
+  }
+
   return (
-    // wrapper em coluna —> empurra o Footer para o rodapé
     <div className="min-h-dvh flex flex-col bg-[#f0fcff]">
       <Header />
 
-      {/* área que cresce */}
       <main className="flex-1">
         <div className="relative">
           {(authLoading || isLoading) && <LoadingOverlay />}
@@ -158,8 +197,8 @@ export default function BuyTokens() {
                     onSelect={(it) => setSelectedId(it.id)}
                     accentColor={accent}
                     neutralBorderColor={neutralItemBorder}
-                    visibleRows={2}     // mostra 2 itens e ativa scroll interno
-                    showProject={false} // esconde subtítulo/descrição
+                    visibleRows={2}
+                    showProject={false}
                     showPrice={false}
                   />
                 )}
@@ -167,19 +206,22 @@ export default function BuyTokens() {
             </section>
 
             {/* direita: painel de compra */}
-<section className="lg:col-span-6">
-  {selected && (tab === 'buy' || tab === 'benefits') && (
-    <BuyPanel
-      token={selected}
-      min={100}
-      max={99_999}
-      fiat="USD" // ou "BRL" se preferir
-      activeTab={tab as 'buy' | 'benefits'}
-      onTabChange={(next) => setTab(next)} // painel controla a aba da página (buy/benefits)
-      onSuccessNavigateTo="/dashboard"
-    />
-  )}
-</section>
+            <section className="lg:col-span-6">
+              {selected && (tab === 'buy' || tab === 'benefits') && (
+                <BuyPanel
+                  token={selected}
+                  min={100}
+                  max={99_999}
+                  fiat="USD"
+                  activeTab={tab as 'buy' | 'benefits'}
+                  onTabChange={(next) => setTab(next)}
+                  onSuccessNavigateTo="/dashboard"
+                  // 👇 força on-chain para o fluxo USDC
+                  forcedChainId={selectedOnchain?.chainId}
+                  forcedSaleAddress={selectedOnchain?.saleAddress}
+                />
+              )}
+            </section>
           </div>
         </div>
       </main>
