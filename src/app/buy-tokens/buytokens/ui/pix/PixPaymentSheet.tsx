@@ -41,6 +41,40 @@ function brlFromMinor(v?: string | number) {
 const formatBRL = (n: number) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(n)
 const middleEllipsis = (s = '', keep = 24) => (s.length <= keep * 2 ? s : `${s.slice(0, keep)} *** ${s.slice(-keep)}`)
 
+/** Normaliza status vindo do back (numérico ou textual) */
+function normalizeStatus(input?: unknown) {
+  const raw = input ?? ''
+  // 1) Se vier número ou string numérica, usa o mapa por código
+  const num = typeof raw === 'number' ? raw : Number(String(raw).trim())
+  if (!Number.isNaN(num)) {
+    switch (num) {
+      case 100: return 'WAITING_PAYMENT' // PENDING
+      case 200: return 'PROCESSING'
+      case 300: return 'CONFIRMED'      // COMPLETED
+      case 400: return 'FAILED'
+      case 500: return 'CANCELLED'
+      default:  break
+    }
+  }
+  // 2) Aliases textuais (fallback)
+  const v = String(raw).trim().toUpperCase()
+  if (['WAITING_PAYMENT', 'PENDING', 'AWAITING', 'UNPAID', 'CREATED', 'PENDING_PAYMENT'].includes(v)) return 'WAITING_PAYMENT'
+  if (['PROCESSING', 'IN_PROCESS', 'IN_PROGRESS'].includes(v)) return 'PROCESSING'
+  if (['PAID', 'SETTLED', 'RECEIVED'].includes(v)) return 'PAID'
+  if (['CONFIRMED', 'SUCCESS', 'COMPLETED', 'CONFIRMED_ONCHAIN'].includes(v)) return 'CONFIRMED'
+  if (['FAILED', 'ERROR,', 'DENIED', 'REJECTED'].includes(v)) return 'FAILED'
+  if (['CANCELLED', 'CANCELED', 'VOIDED'].includes(v)) return 'CANCELLED'
+  return 'PROCESSING'
+}
+
+/** Extrai o "payment" independente do wrapper do payload */
+function extractPayment(json: any) {
+  if (json?.data && typeof json.data === 'object' && !Array.isArray(json.data)) return json.data
+  if (json?.payment && typeof json.payment === 'object') return json.payment
+  if (json?.order && typeof json.order === 'object') return json.order
+  return json || {}
+}
+
 export default function PixPaymentSheet({
   data,
   onBack,
@@ -78,7 +112,6 @@ export default function PixPaymentSheet({
   const imgSrc = resolveQrSrc(data.qrCodeImage)
   const amountNum = brlFromMinor(data.amountInBRL)
   const amountText = amountNum ? formatBRL(amountNum) : ''
-  const brDisplay = middleEllipsis(data.brCode, 24)
 
   async function copy(txt: string) {
     try { await navigator.clipboard.writeText(txt); setCopied(true); setTimeout(() => setCopied(false), 1200) } catch {}
@@ -89,11 +122,20 @@ export default function PixPaymentSheet({
     try {
       setChecking(true)
       setCheckError(null)
+
       const url = `/api/payments/status?identifier=${encodeURIComponent(data.sessionId)}`
       const res = await fetch(url, { method: 'GET', credentials: 'include', cache: 'no-store' })
       const json = await res.json().catch(() => ({}))
-      if (!res.ok) throw new Error(json?.error || json?.message || `Falha ao consultar (${res.status})`)
-      setOrder(json)
+
+      const payment = extractPayment(json)
+
+      console.log('[PIX status raw]', payment?.status, payment)
+
+      if (!res.ok) {
+        throw new Error(json?.error || json?.message || `Falha ao consultar (${res.status})`)
+      }
+
+      setOrder(payment)
       setView('statement')
     } catch (e: any) {
       setCheckError(e?.message || 'Não foi possível verificar o pagamento.')
@@ -102,23 +144,25 @@ export default function PixPaymentSheet({
     }
   }
 
-  // callback “cancelar” enquanto não há endpoint dedicado
   async function cancelAndNew() {
-    // se você tiver um endpoint de cancelamento, chame aqui antes de redirecionar
     onNewPurchase?.()
   }
 
   /* ======= VIEW: EXTRATO ======= */
   if (view === 'statement' && order) {
-    const waiting = String(order?.status).toUpperCase() === 'WAITING_PAYMENT'
+    const statusNorm = normalizeStatus(order?.status)
+    const waiting = statusNorm === 'WAITING_PAYMENT'
+
     return (
       <PixPaymentStatement
         item={{
-          createdAt: order.createdAt || order.updatedAt,
-          amountInBRLCents: order.amountInBRL ?? data.amountInBRL,
-          tokenAmount: order.tokenAmount ?? order.tokenQuantity ?? data.tokenQuantity,
-          status: order.status,
-          ticker: order.ticker ?? 'UND',
+          createdAt: order.createdAt || order.updatedAt || order.created_at || order.updated_at,
+          amountInBRLCents:
+            order.amountInBRL ?? order.amount_in_brl_cents ?? order.amount ?? order.valueInCents ?? data.amountInBRL,
+          tokenAmount:
+            order.tokenAmount ?? order.tokenQuantity ?? order.qty ?? order.quantity ?? data.tokenQuantity,
+          status: statusNorm,
+          ticker: order.ticker ?? order.tokenTicker ?? order.tickerSymbol ?? 'UND',
         }}
         accentColor={accentColor}
         borderColor={borderColor}

@@ -1,6 +1,7 @@
 'use client'
 
 import * as React from 'react'
+import Link from 'next/link'
 
 export type PixStatementItem = {
   createdAt?: string
@@ -126,14 +127,13 @@ export default function PixPaymentStatement({
           </>
         ) : (
           <>
-            <button
-              type="button"
-              onClick={onViewOrders}
+            <Link
+              href="/buy-tokens/orders"
               className="inline-flex items-center justify-center rounded-xl border px-3 py-2 text-sm font-semibold hover:bg-gray-50"
               style={{ borderColor, color: '#0b1a2b' }}
             >
               Ver todas as ordens
-            </button>
+            </Link>
             <button
               type="button"
               onClick={onNewPurchase}
