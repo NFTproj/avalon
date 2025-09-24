@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 import DashboardWrapper from '@/app/dashboard/components/DashboardWrapper'
 import LoadingOverlay from '@/components/common/LoadingOverlay'
-import { getAllCards } from '@/lib/api/cards'
 
 export default function DashboardPage() {
   const router = useRouter()
@@ -18,11 +17,6 @@ export default function DashboardPage() {
     }
   }, [loading, user, router])
 
-  useEffect(() => {
-    getAllCards()
-      .then((res) => console.log(res.data))
-      .catch(console.error)
-  }, [])
 
   if (loading || (!user && typeof window !== 'undefined')) {
     return <LoadingOverlay />

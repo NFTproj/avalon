@@ -424,27 +424,27 @@
       {
         "id": 1,
         "name": "Buy",
-        "icon": "🛒"
+        "icon": ""
       },
       {
         "id": 2,
         "name": "Issue Certificate",
-        "icon": "📜"
+        "icon": ""
       },
       {
         "id": 3,
         "name": "Withdraw",
-        "icon": "💵"
+        "icon": ""
       },
       {
         "id": 4,
         "name": "History",
-        "icon": "📊"
+        "icon": ""
       },
       {
         "id": 5,
         "name": "KYC Verifications",
-        "icon": "🔍"
+        "icon": ""
       }
     ],
     "asset-list": {
