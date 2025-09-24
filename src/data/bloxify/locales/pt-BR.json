@@ -437,7 +437,9 @@
         "password": "••••••••"
       },
       "button-back": "Voltar",
-      "button-login": "Entrar"
+      "button-login": "Entrar",
+      "login-option": "Ou acesse com",
+      "login-metamask": "Escolher carteira"
     },
     "metamask-register-login": {
       "counter": {
@@ -678,9 +680,54 @@
     "didit-video-src": "images/kyc/verification-demo.png",
     "didit-video-alt": "Demonstração do processo KYC",
     "title-didit-verification": "Verificação Didit",
-    "didit-description":
-      "Você será redirecionado para um site externo para concluir sua verificação de identidade (KYC).",
-    "button-continue": "Continuar"
+    "didit-description": "Você será redirecionado para um site externo para concluir sua verificação de identidade (KYC).",
+    "button-continue": "Continuar",
+    "status-title": "Status de verificação", 
+    "status-view-details": "Ver detalhes", 
+    "status-success-headline": "Sua conta foi verificada com sucesso", 
+    "status-success-description": "Sua conta foi verificada com sucesso", 
+    "status-success-cta": "Voltar ao início", 
+    "status-pending-headline": "Sua conta está com a verificação em processamento", 
+    "status-pending-description": "Acompanhe como vai seu processo de verificação KYC.", 
+    "status-pending-cta": "Cancelar", 
+    "status-error-headline": "A verificação da sua conta falhou", 
+    "status-error-description": "A verificação da sua conta falhou", 
+    "status-error-cta": "Tentar novamente"
+  },
+  "buyTokens": {
+    "page-title-fallback": "Comprar Tokens",
+    "tab-buy": "Comprar",
+    "tab-benefits": "Benefícios",
+    "tab-orders": "Ordens",
+    "available-tokens": "Tokens disponíveis",
+    "load-error": "Falha ao carregar tokens.",
+    "progress-zero": "0% vendido",
+    "progress-empty": ""
+  },
+  "buyPanel": {
+    "title": "Comprar {token}",
+    "unit-price-label": "Preço unitário",
+    "invest-label": "Quanto deseja investir ({currency})",
+    "invest-placeholder": "Ex.: {min}",
+    "estimated-qty": "Quantidade estimada",
+    "total": "Total",
+    "button-continue": "Continuar",
+    "button-processing": "Processando…",
+    "limits": "Mín.: {min} · Máx.: {max}",
+    "error-min": "Valor mínimo é {min}",
+    "error-max": "Valor máximo é {max}",
+    "unit-suffix": "und",
+
+    "pay-with-pix": "Comprar com PIX",
+    "pay-with-usdc": "Comprar com USDC",
+    "quote-prefix-pix": "Você pagará (PIX):",
+    "quote-prefix-usdc": "Você pagará (USDC):",
+    "cta-pix": "Comprar com PIX",
+    "cta-usdc": "Comprar com USDC"
+  },
+  "tokenList": {
+    "empty": "Nenhum token disponível no momento.",
+    "unit-suffix": "und"
   }
   
 }

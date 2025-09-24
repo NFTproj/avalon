@@ -42,7 +42,7 @@ export async function getClientConfig({
       const themeModule = await import(
         `../../data/${client}/themes/${theme}.json`
       )
-      // Return the imported module directly (assuming JSON is the default export)
+      // Return the imported module directly (assuming JSON is the default exp ort)
       return {
         texts: configModule.default ?? configModule,
         colors: themeModule.default ?? themeModule,

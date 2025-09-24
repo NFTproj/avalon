@@ -360,7 +360,9 @@
         "password": "••••••••"
       },
       "button-back": "Back",
-      "button-login": "Login"
+      "button-login": "Login",
+      "login-option": "Or sign in with",
+      "login-metamask": "Select Wallet"
     },
     "metamask-register-login": {
       "counter": {
@@ -512,46 +514,46 @@
       }
     }
   },
-  "kyc":{
-    "kyc-step-one-title": "Complete your KYC verification!",
-    "kyc-step-one-paragraph": "Your account is not verified yet. Complete your data verification to ensure secure transactions.",
-    "kyc-step-one-button": "Start verification",
+  "kyc": {
+  "kyc-step-one-title": "Complete your KYC Verification!",
+  "kyc-step-one-paragraph": "Your account has not been verified yet. Complete your data verification to ensure transactions are processed securely.",
+  "kyc-step-one-button": "Start verification",
 
-    "kyc-step-two-title": "Enter your details",
-    "label-name": "Full name",
-    "label-cpf": "Id",
-    "label-cnpj": "Company Id",
-    "label-is-legal-person": "Do you represent a legal entity?",
-    "placeholder-name": "Enter your full name",
-    "placeholder-cpf": "Ex: 000.000.000-00",
-    "placeholder-cnpj": "Ex: 00.000.000/0001-00",
-    "checkbox-is-legal-person": "Yes",
+  "kyc-step-two-title": "Enter your information",
+  "label-name": "Full name",
+  "label-cpf": "CPF",
+  "label-cnpj": "CNPJ",
+  "label-is-legal-person": "Are you representing a legal entity?",
+  "placeholder-name": "Enter your full name",
+  "placeholder-cpf": "Ex: 000.000.000-00",
+  "placeholder-cnpj": "Ex: 00.000.000/0001-00",
+  "checkbox-is-legal-person": "Yes",
 
-    "button-back": "Back",
-    "button-next": "Continue",
+  "button-back": "Back",
+  "button-next": "Continue",
 
-    "error-name-required": "Name is required.",
-    "error-cpf-required": "Id is required .",
+  "error-name-required": "Name is required.",
+  "error-cpf-required": "CPF is required.",
 
-    "kyc-step-three-title": "Enter your address",
-    "label-country": "Select your country",
-    "placeholder-country": "Choose your country of origin",
-    "label-cep": "Enter your ZIP code",
-    "placeholder-cep": "e.g., 12345-678",
-    "label-street": "Street",
-    "placeholder-street": "Street name",
-    "label-number": "Number",
-    "placeholder-number": "123",
-    "label-city": "City",
-    "placeholder-city": "Enter your city",
-    "label-state": "State",
-    "placeholder-state": "e.g., NY",
-    "upload-instructions": "Upload the documents below:",
-    "label-contract-file": "Company Registration Document (PDF)",
-    "label-proof-file": "Proof of Address (PDF)",
-    "upload-file": "Upload PDF",
-    "upload-complete": "Upload complete",
-    "start-verification": {
+  "kyc-step-three-title": "Enter your address",
+  "label-country": "Select your country",
+  "placeholder-country": "Enter your country of origin",
+  "label-cep": "Enter your ZIP code",
+  "placeholder-cep": "Ex: 12345-678",
+  "label-street": "Street",
+  "placeholder-street": "Street name",
+  "label-number": "Number",
+  "label-city": "City",
+  "placeholder-city": "Enter your city",
+  "label-state": "State",
+  "placeholder-state": "State abbreviation",
+  "upload-instructions": "Upload the documents below:",
+  "label-contract-file": "Articles of Incorporation (PDF)",
+  "label-proof-file": "Proof of Address (PDF)",
+  "upload-file": "Upload PDF",
+  "upload-complete": "Upload complete",
+
+  "start-verification": {
     "title": "Didit Verification",
     "description": "You will be redirected to an external website to complete your identity verification (KYC).",
     "button-continue": "Continue",
@@ -564,7 +566,61 @@
       "src": "images/login/kyc-video-placeholder.png",
       "alt": "Didit Flow Demonstration"
     }
+  },
 
-    }
+  "didit-logo-src": "images/kyc/didit-logo.svg",
+  "didit-logo-alt": "Didit Logo",
+  "didit-video-src": "images/kyc/verification-demo.png",
+  "didit-video-alt": "KYC Process Demonstration",
+  "title-didit-verification": "Didit Verification",
+  "didit-description": "You will be redirected to an external website to complete your identity verification (KYC).",
+  "button-continue": "Continue",
+
+  "status-title": "Verification Status",
+  "status-view-details": "View details",
+  "status-success-headline": "Your account has been successfully verified",
+  "status-success-description": "Your account has been successfully verified",
+  "status-success-cta": "Back to home",
+  "status-pending-headline": "Your account verification is in progress",
+  "status-pending-description": "Track the progress of your KYC verification process.",
+  "status-pending-cta": "Cancel",
+  "status-error-headline": "Your account verification has failed",
+  "status-error-description": "Your account verification has failed",
+  "status-error-cta": "Try again"
+},
+"buyTokens": {
+    "page-title-fallback": "Buy Tokens",
+    "tab-buy": "Buy",
+    "tab-benefits": "Benefits",
+    "tab-orders": "Orders",
+    "available-tokens": "Available tokens",
+    "load-error": "Failed to load tokens.",
+    "progress-zero": "0% sold",
+    "progress-empty": ""
+  },
+  "buyPanel": {
+    "title": "Buy {token}",
+    "unit-price-label": "Unit price",
+    "invest-label": "How much do you want to invest ({currency})",
+    "invest-placeholder": "E.g., {min}",
+    "estimated-qty": "Estimated quantity",
+    "total": "Total",
+    "button-continue": "Continue",
+    "button-processing": "Processing…",
+    "limits": "Min: {min} · Max: {max}",
+    "error-min": "Minimum amount is {min}",
+    "error-max": "Maximum amount is {max}",
+    "unit-suffix": "units",
+
+    "pay-with-pix": "Buy with PIX",
+    "pay-with-usdc": "Buy with USDC",
+    "quote-prefix-pix": "You will pay (PIX):",
+    "quote-prefix-usdc": "You will pay (USDC):",
+    "cta-pix": "Buy with PIX",
+    "cta-usdc": "Buy with USDC"
+  },
+  "tokenList": {
+    "empty": "No tokens available at the moment.",
+    "unit-suffix": "units"
   }
 }

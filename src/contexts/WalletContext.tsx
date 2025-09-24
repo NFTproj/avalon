@@ -1,296 +1,127 @@
+// src/contexts/WalletContext.tsx
 'use client'
 
-import React, { createContext, useContext, useReducer, useCallback, ReactNode } from 'react'
-import { useAccount, useSwitchChain, useChainId } from 'wagmi'
-import { WalletData, Network, SUPPORTED_NETWORKS, WalletError } from '@/types/wallet'
+import React, { createContext, useContext, useMemo, useCallback } from 'react'
+import { useAccount, useDisconnect, useSwitchChain, useSignMessage } from 'wagmi'
+import { createAppKit, useAppKit } from '@reown/appkit/react'
+import { wagmiAdapter, projectId, networks } from '@/config/web3modal'
+import { getAccount, watchAccount } from '@wagmi/core' // ⬅️ actions do wagmi
 
-// Estado do contexto
-interface WalletState {
-  wallets: WalletData[]
-  activeWallet: WalletData | null
-  isLoading: boolean
-  error: string | null
-  selectedNetwork: Network
+type WalletCtx = {
+  address?: `0x${string}`
   isConnected: boolean
+  chainId?: number
+  connector?: any
+  openModal: () => Promise<void>
+  disconnect: () => Promise<void>
+  ensureConnected: () => Promise<`0x${string}`>
+  ensureChain: (target: number) => Promise<void>
+  ensureConnectedOnChain: (target: number) => Promise<`0x${string}`>  // ⬅️ novo helper
+  signAndGetSig: (message: string) => Promise<string>
 }
 
-// Ações do reducer
-type WalletAction =
-  | { type: 'SET_LOADING'; payload: boolean }
-  | { type: 'SET_ERROR'; payload: string | null }
-  | { type: 'SET_WALLETS'; payload: WalletData[] }
-  | { type: 'SET_ACTIVE_WALLET'; payload: WalletData | null }
-  | { type: 'SET_SELECTED_NETWORK'; payload: Network }
-  | { type: 'SET_CONNECTED'; payload: boolean }
-  | { type: 'UPDATE_WALLET_DATA'; payload: { address: string; data: Partial<WalletData> } }
-  | { type: 'CLEAR_ERROR' }
-  | { type: 'RESET_STATE' }
+const Ctx = createContext<WalletCtx | null>(null)
 
-// Estado inicial
-const initialState: WalletState = {
-  wallets: [],
-  activeWallet: null,
-  isLoading: false,
-  error: null,
-  selectedNetwork: SUPPORTED_NETWORKS[0], // Ethereum por padrão
-  isConnected: false,
+/* ——— AppKit init (client-only, uma vez) ——— */
+const metadata = {
+  name: 'Bloxify',
+  description: 'Tokenização',
+  url: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
+  icons: ['https://avatars.githubusercontent.com/u/179229932'],
 }
 
-// Reducer para gerenciar o estado
-function walletReducer(state: WalletState, action: WalletAction): WalletState {
-  switch (action.type) {
-    case 'SET_LOADING':
-      return { ...state, isLoading: action.payload }
-    
-    case 'SET_ERROR':
-      return { ...state, error: action.payload, isLoading: false }
-    
-    case 'SET_WALLETS':
-      return { ...state, wallets: action.payload }
-    
-    case 'SET_ACTIVE_WALLET':
-      return { ...state, activeWallet: action.payload }
-    
-    case 'SET_SELECTED_NETWORK':
-      return { ...state, selectedNetwork: action.payload }
-    
-    case 'SET_CONNECTED':
-      return { ...state, isConnected: action.payload }
-    
-    case 'UPDATE_WALLET_DATA':
-      return {
-        ...state,
-        wallets: state.wallets.map(wallet =>
-          wallet.address === action.payload.address
-            ? { ...wallet, ...action.payload.data }
-            : wallet
-        ),
-        activeWallet: state.activeWallet?.address === action.payload.address
-          ? { ...state.activeWallet, ...action.payload.data }
-          : state.activeWallet,
-      }
-    
-    case 'CLEAR_ERROR':
-      return { ...state, error: null }
-    
-    case 'RESET_STATE':
-      return initialState
-    
-    default:
-      return state
-  }
+declare global { interface Window { __APPKIT_INIT__?: boolean } }
+
+if (typeof window !== 'undefined' && !window.__APPKIT_INIT__) {
+  createAppKit({
+    adapters: [wagmiAdapter],
+    projectId,
+    networks: networks as unknown as [any, ...any[]],
+    metadata,
+    features: { connectMethodsOrder: ['wallet'] },
+  })
+  window.__APPKIT_INIT__ = true
 }
 
-// Interface do contexto
-interface WalletContextValue {
-  // Estado
-  wallets: WalletData[]
-  activeWallet: WalletData | null
-  isLoading: boolean
-  error: string | null
-  selectedNetwork: Network
-  isConnected: boolean
-  
-  // Ações
-  connectWallet: (network: Network) => Promise<void>
-  disconnectWallet: (address: string) => void
-  refreshData: () => Promise<void>
-  switchNetwork: (network: Network) => Promise<void>
-  clearError: () => void
-  updateWalletData: (address: string, data: Partial<WalletData>) => void
-}
+export function WalletProvider({ children }: { children: React.ReactNode }) {
+  const { address, isConnected, chainId, connector } = useAccount()
+  const { disconnectAsync } = useDisconnect()
+  const { switchChainAsync } = useSwitchChain()
+  const { open } = useAppKit()
+  const { signMessageAsync } = useSignMessage()
 
-// Criação do contexto
-const WalletContext = createContext<WalletContextValue | undefined>(undefined)
+  const openModal = useCallback(async () => { await open?.() }, [open])
 
-// Provider do contexto
-export function WalletProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(walletReducer, initialState)
-  
-  // Hooks do Wagmi
-  const { address, isConnected: wagmiConnected } = useAccount()
-  const { switchChain } = useSwitchChain()
-  const chainId = useChainId()
-  
-  // Atualizar estado de conexão quando Wagmi mudar
-  React.useEffect(() => {
-    dispatch({ type: 'SET_CONNECTED', payload: wagmiConnected })
-    
-    if (wagmiConnected && address) {
-      // Usuário conectado - buscar dados da wallet
-      refreshData()
-    } else {
-      // Usuário desconectado - limpar dados
-      dispatch({ type: 'SET_WALLETS', payload: [] })
-      dispatch({ type: 'SET_ACTIVE_WALLET', payload: null })
-    }
-  }, [wagmiConnected, address])
-  
-  // Atualizar rede selecionada quando chainId mudar
-  React.useEffect(() => {
-    const network = SUPPORTED_NETWORKS.find(n => n.id === chainId)
-    if (network && network.id !== state.selectedNetwork.id) {
-      dispatch({ type: 'SET_SELECTED_NETWORK', payload: network })
-    }
-  }, [chainId, state.selectedNetwork.id])
-  
-  // Conectar wallet
-  const connectWallet = useCallback(async (network: Network) => {
-    try {
-      dispatch({ type: 'SET_LOADING', payload: true })
-      dispatch({ type: 'CLEAR_ERROR' })
-      
-      // Se não estiver conectado, conectar via Wagmi
-      if (!wagmiConnected) {
-        // Aqui você pode implementar a lógica de conexão
-        // Por enquanto, vamos assumir que já está conectado
-        throw new Error('Wallet connection not implemented yet')
-      }
-      
-      // Se estiver conectado mas em rede diferente, trocar rede
-      if (chainId !== network.id) {
-        await switchChain({ chainId: network.id })
-      }
-      
-      dispatch({ type: 'SET_SELECTED_NETWORK', payload: network })
-      
-      // Buscar dados da wallet
-      await refreshData()
-      
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Failed to connect wallet'
-      dispatch({ type: 'SET_ERROR', payload: errorMessage })
-      console.error('[WalletContext] Connect wallet error:', error)
-    }
-  }, [wagmiConnected, chainId, switchChain])
-  
-  // Desconectar wallet
-  const disconnectWallet = useCallback((address: string) => {
-    dispatch({ type: 'SET_LOADING', payload: true })
-    
-    try {
-      // Remover wallet específica
-      const updatedWallets = state.wallets.filter(w => w.address !== address)
-      dispatch({ type: 'SET_WALLETS', payload: updatedWallets })
-      
-      // Se era a wallet ativa, limpar
-      if (state.activeWallet?.address === address) {
-        dispatch({ type: 'SET_ACTIVE_WALLET', payload: null })
-      }
-      
-      dispatch({ type: 'SET_LOADING', payload: false })
-    } catch (error) {
-      console.error('[WalletContext] Disconnect wallet error:', error)
-      dispatch({ type: 'SET_ERROR', payload: 'Failed to disconnect wallet' })
-    }
-  }, [state.wallets, state.activeWallet])
-  
-  // Atualizar dados da wallet
-  const refreshData = useCallback(async () => {
-    if (!address || !wagmiConnected) return
-    
-    try {
-      dispatch({ type: 'SET_LOADING', payload: true })
-      dispatch({ type: 'CLEAR_ERROR' })
-      
-      // TODO: Implementar busca de dados reais da blockchain
-      // Por enquanto, vamos criar dados mock para teste
-      const mockWalletData: WalletData = {
-        address,
-        network: state.selectedNetwork,
-        balance: {
-          native: '0.0',
-          usd: 0,
+  const disconnect = useCallback(async () => { await disconnectAsync() }, [disconnectAsync])
+
+  // ✅ Conecta usando actions do wagmi, funciona com MetaMask e WalletConnect
+  const ensureConnected = useCallback(async () => {
+    const cfg = wagmiAdapter.wagmiConfig
+    const acc = getAccount(cfg)
+    if (acc.isConnected && acc.address) return acc.address as `0x${string}`
+
+    await openModal()
+
+    return await new Promise<`0x${string}`>((resolve, reject) => {
+      const timeout = setTimeout(() => {
+        unwatch(); reject(new Error('Conexão de carteira não confirmada.'))
+      }, 30_000) // 30s
+
+      const unwatch = watchAccount(cfg, {
+        onChange(a) {
+          if (a.status === 'connected' && a.address) {
+            clearTimeout(timeout)
+            unwatch()
+            resolve(a.address as `0x${string}`)
+          }
         },
-        tokens: [],
-        transactions: [],
-        lastUpdated: new Date(),
-        totalValueUSD: 0,
-      }
-      
-      dispatch({ type: 'SET_WALLETS', payload: [mockWalletData] })
-      dispatch({ type: 'SET_ACTIVE_WALLET', payload: mockWalletData })
-      
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Failed to refresh wallet data'
-      dispatch({ type: 'SET_ERROR', payload: errorMessage })
-      console.error('[WalletContext] Refresh data error:', error)
-    } finally {
-      dispatch({ type: 'SET_LOADING', payload: false })
+      })
+    })
+  }, [openModal])
+
+  // ✅ Troca de rede (só depois de conectado)
+  const ensureChain = useCallback(async (target: number) => {
+    if (!target) throw new Error('chainId alvo inválido')
+    // se ainda não estiver conectado, o switch pode falhar em alguns conectores
+    const cfg = wagmiAdapter.wagmiConfig
+    const acc = getAccount(cfg)
+    if (!acc.isConnected) await ensureConnected()
+
+    if (chainId !== target) {
+      await switchChainAsync({ chainId: target })
     }
-  }, [address, wagmiConnected, state.selectedNetwork])
-  
-  // Trocar rede
-  const switchNetwork = useCallback(async (network: Network) => {
-    try {
-      dispatch({ type: 'SET_LOADING', payload: true })
-      dispatch({ type: 'CLEAR_ERROR' })
-      
-      if (chainId !== network.id) {
-        await switchChain({ chainId: network.id })
-      }
-      
-      dispatch({ type: 'SET_SELECTED_NETWORK', payload: network })
-      
-      // Atualizar dados para a nova rede
-      await refreshData()
-      
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Failed to switch network'
-      dispatch({ type: 'SET_ERROR', payload: errorMessage })
-      console.error('[WalletContext] Switch network error:', error)
-    } finally {
-      dispatch({ type: 'SET_LOADING', payload: false })
-    }
-  }, [chainId, switchChain, refreshData])
-  
-  // Limpar erro
-  const clearError = useCallback(() => {
-    dispatch({ type: 'CLEAR_ERROR' })
-  }, [])
-  
-  // Atualizar dados específicos da wallet
-  const updateWalletData = useCallback((address: string, data: Partial<WalletData>) => {
-    dispatch({ type: 'UPDATE_WALLET_DATA', payload: { address, data } })
-  }, [])
-  
-  // Valor do contexto
-  const contextValue: WalletContextValue = {
-    // Estado
-    wallets: state.wallets,
-    activeWallet: state.activeWallet,
-    isLoading: state.isLoading,
-    error: state.error,
-    selectedNetwork: state.selectedNetwork,
-    isConnected: state.isConnected,
-    
-    // Ações
-    connectWallet,
-    disconnectWallet,
-    refreshData,
-    switchNetwork,
-    clearError,
-    updateWalletData,
-  }
-  
-  return (
-    <WalletContext.Provider value={contextValue}>
-      {children}
-    </WalletContext.Provider>
-  )
+  }, [chainId, ensureConnected, switchChainAsync])
+
+  // ✅ Helper que faz os dois passos em sequência
+  const ensureConnectedOnChain = useCallback(async (target: number) => {
+    const addr = await ensureConnected()
+    await ensureChain(target)
+    return addr
+  }, [ensureConnected, ensureChain])
+
+  const signAndGetSig = useCallback(async (message: string) => {
+    if (!message) throw new Error('Mensagem vazia para assinatura')
+    return await signMessageAsync({ message })
+  }, [signMessageAsync])
+
+  const value = useMemo<WalletCtx>(() => ({
+    address: address as `0x${string}` | undefined,
+    isConnected,
+    chainId,
+    connector,
+    openModal,
+    disconnect,
+    ensureConnected,
+    ensureChain,
+    ensureConnectedOnChain, // ⬅️ exposto
+    signAndGetSig,
+  }), [address, isConnected, chainId, connector, openModal, disconnect, ensureConnected, ensureChain, ensureConnectedOnChain, signAndGetSig])
+
+  return <Ctx.Provider value={value}>{children}</Ctx.Provider>
 }
 
-// Hook para usar o contexto
 export function useWallet() {
-  const context = useContext(WalletContext)
-  if (context === undefined) {
-    throw new Error('useWallet must be used within a WalletProvider')
-  }
-  return context
-}
-
-// Hook para verificar se o contexto está disponível
-export function useWalletContext() {
-  const context = useContext(WalletContext)
-  return context
+  const v = useContext(Ctx)
+  if (!v) throw new Error('useWallet deve ser usado dentro de <WalletProvider>')
+  return v
 }

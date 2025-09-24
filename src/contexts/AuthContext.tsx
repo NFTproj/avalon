@@ -24,6 +24,7 @@ export interface AuthUser {
   email: string;
   walletAddress: `0x${string}`;        
   kycStatus: 'pending' | 'approved' | 'rejected';
+  kycStatusCode?: number;  
   permissions: string[];
   
 }
