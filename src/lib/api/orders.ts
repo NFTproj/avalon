@@ -4,7 +4,7 @@ export type Order = {
   id: string
   type?: string | number
   amount?: string
-  status: string | number  // pode vir "300" etc
+  status: string | number
   txHash?: string
   toAddress?: string
   fromAddress?: string
@@ -27,7 +27,6 @@ export type Pagination = {
 export type OrdersResponse = {
   data: Order[]
   pagination?: Pagination
-  // …qualquer “additionalProp” que o back envie
 }
 
 export type OrdersQuery = {
@@ -40,6 +39,7 @@ export type OrdersQuery = {
   to?: string   // ISO
   search?: string
   sort?: string // ex.: "createdAt:desc"
+  userId?: string
 }
 
 /** Monta ?query=string */
@@ -47,14 +47,39 @@ function toQuery(q?: OrdersQuery) {
   const sp = new URLSearchParams()
   if (!q) return ''
   Object.entries(q).forEach(([k, v]) => {
-    if (v !== undefined && v !== null && String(v) !== '') sp.append(k, String(v))
+    if (v !== undefined && v !== null && String(v) !== '') {
+      sp.append(k, String(v))
+    }
   })
   const s = sp.toString()
   return s ? `?${s}` : ''
 }
 
+/** Normaliza o shape vindo da API (data|transactions) */
+function normalizeOrdersJson(json: any, fallback: {page: number; limit: number}): OrdersResponse {
+  const list =
+    Array.isArray(json?.data) ? json.data :
+    Array.isArray(json?.transactions) ? json.transactions :
+    []
+
+  const pagination: Pagination | undefined =
+    json?.pagination ?? (json?.total != null
+      ? {
+          total: Number(json.total) || list.length,
+          limit: Number(fallback.limit),
+          currentPage: Number(fallback.page),
+          totalPages: Math.max(1, Math.ceil((Number(json.total) || list.length) / Number(fallback.limit))),
+        }
+      : undefined)
+
+  return { data: list as Order[], pagination }
+}
+
 /** Lista ordens via rota protegida do Next */
 export async function listOrders(q?: OrdersQuery): Promise<OrdersResponse> {
+  const page = Number(q?.page ?? 1)
+  const limit = Number(q?.limit ?? 10)
+
   const res = await fetch(`/api/orders${toQuery(q)}`, {
     method: 'GET',
     credentials: 'include',
@@ -62,7 +87,8 @@ export async function listOrders(q?: OrdersQuery): Promise<OrdersResponse> {
   })
   const json = await res.json().catch(() => ({}))
   if (!res.ok) throw new Error(json?.error || json?.message || 'Falha ao listar ordens')
-  return json
+
+  return normalizeOrdersJson(json, { page, limit })
 }
 
 /** Detalhe da ordem */
@@ -74,5 +100,5 @@ export async function getOrder(id: string): Promise<Order> {
   })
   const json = await res.json().catch(() => ({}))
   if (!res.ok) throw new Error(json?.error || json?.message || 'Falha ao carregar ordem')
-  return json?.data || json
+  return (json?.data || json) as Order
 }

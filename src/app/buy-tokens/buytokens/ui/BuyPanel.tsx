@@ -18,7 +18,7 @@ import { fmtMoney, toNumber, formatQty, fmt2 } from '@/utils/format'
 import type { PixPaymentData } from '@/lib/services/payments/types'
 import { useWallet } from '@/contexts/WalletContext'
 import LoadingOverlay from '@/components/common/LoadingOverlay'
-import { useBanner } from '@/components/common/GlobalBanner' // ⬅️ usar banner global
+import { useBanner } from '@/components/common/GlobalBanner'
 
 import {
   BuyForm,
@@ -65,7 +65,7 @@ export default function BuyPanel({
 }: Props) {
   const router = useRouter()
   const { colors, texts } = useContext(ConfigContext)
-  const { showBanner } = useBanner() // ⬅️ hook do banner global
+  const { showBanner } = useBanner()
 
   // Wallet
   const {
@@ -107,7 +107,7 @@ export default function BuyPanel({
   const [tab, setTab] = React.useState<PanelTabKey>(activeTab ?? 'buy')
   React.useEffect(() => { if (activeTab) setTab(activeTab) }, [activeTab])
 
-  // Detector metamask (informativo)
+  // Detector metamask (opcional/informativo)
   const [isMetaMask, setIsMetaMask] = React.useState(false)
   React.useEffect(() => {
     let alive = true
@@ -222,19 +222,28 @@ export default function BuyPanel({
         chainId: targetChainId,
         usdAmount,
         saleAddress: saleAddressResolved,
-        // usdcAddress: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359' as `0x${string}`, // se quiser forçar
       })
 
       setBusyMsg(null)
-      showBanner({ type: 'success', text: 'Transação confirmada! 🎉' }, { timeout: 7000 }) // ⬅️ 7s
+      showBanner({ type: 'success', text: 'Transação confirmada! 🎉' }, { timeout: 7000 })
       // router.push(onSuccessNavigateTo) // opcional
     } catch (e: any) {
       setBusyMsg(null)
       const msg = e?.shortMessage ?? e?.message ?? 'Falha ao comprar com USDC.'
       setUsdcLocalError(msg)
-      showBanner({ type: 'error', text: msg }, { timeout: 7000 }) // ⬅️ 7s
+      showBanner({ type: 'error', text: msg }, { timeout: 7000 })
     }
   }
+
+  // ======== regra VISIBILIDADE USDC (email => esconde) ========
+  const isEmailAccount = !!user?.email?.trim()
+  const showUsdc = !meLoading && !isEmailAccount
+
+  // se USDC não estiver disponível, garante que o método selecionado seja PIX
+  React.useEffect(() => {
+    if (!showUsdc && method === 'usdc') setMethod('pix')
+  }, [showUsdc, method])
+  // ============================================================
 
   // ========== CTA principal ==========
   async function handleCTA() {
@@ -258,8 +267,6 @@ export default function BuyPanel({
     try {
       await createPix({ cardId: (token as any).id, tokenQuantity: qty, buyerAddress: buyer })
       setView('pix')
-      // se quiser banner também ao gerar o PIX:
-      // showBanner({ type: 'success', text: 'PIX gerado com sucesso.' }, { timeout: 7000 })
     } catch (e: any) {
       const msg = e?.shortMessage ?? e?.message ?? 'Falha ao gerar PIX.'
       showBanner({ type: 'error', text: msg }, { timeout: 7000 })
@@ -333,6 +340,7 @@ export default function BuyPanel({
               borderColor={borderColor}
               txtPayWithPix={t('pay-with-pix', 'Comprar com PIX')}
               txtPayWithUsdc={t('pay-with-usdc', 'Comprar com USDC')}
+              showUsdc={showUsdc}                 // 👈 só renderiza o botão de USDC se true
             />
           </div>
 
