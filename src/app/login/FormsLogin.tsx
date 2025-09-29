@@ -1,6 +1,6 @@
 'use client'
 
-import { FormEvent, useContext, useState } from 'react'
+import { FormEvent, useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
@@ -17,21 +17,22 @@ import metamaskLogo from '@/assets/icons/common/metamask-logo.png'
 
 export default function LoginForm() {
   const { colors, texts } = useContext(ConfigContext)
-  const loginTexts = texts?.register?.['step-four']
+  const loginTexts = texts?.register?.['step-four'] as any
 
   // Wallet
   const { open } = useAppKit()
-  const { address, isConnected, isConnecting } = useAccount()
+  const { address, status, isConnecting } = useAccount() // status: 'disconnected' | 'connected' | 'reconnecting'
   const { disconnect } = useDisconnect()
   const { signMessageAsync } = useSignMessage()
 
-  // Form
+  // Form / estados
   const [email, setEmail] = useState('')
   const [password, setPass] = useState('')
   const [showPwd, setShow] = useState(false)
-  const [loading, setLoad] = useState(false)   // email/senha
-  const [wLoading, setWLoad] = useState(false) // abrindo modal / conectando
-  const [sLoading, setSLoad] = useState(false) // assinando
+  const [loading, setLoad] = useState(false)
+  const [wLoading, setWLoad] = useState(false)
+  const [sLoading, setSLoad] = useState(false)
+  const [pendingSign, setPendingSign] = useState(false) // assinar após conectar
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
 
@@ -50,34 +51,64 @@ export default function LoginForm() {
     }
   }
 
-  // Botão único: conecta se preciso, senão assina e autentica
-  const handleWalletButton = async () => {
-    setError(null)
-
+  // Assinar e logar (reuso)
+  const signAndLogin = async () => {
+    if (!address) return
     try {
-      if (!isConnected) {
-        setWLoad(true)
-        await open()           // abre modal para escolher carteira
-        return                 // usuário clica de novo para assinar
-      }
-
       setSLoad(true)
       const message = `Sign this message to verify ownership of ${address}`
       const signature = await signMessageAsync({ message })
-
-      await registerWithMetamask({ walletAddress: address!, signature })
+      await registerWithMetamask({ walletAddress: address, signature })
       await mutateUser()
       router.push('/dashboard')
     } catch (err: any) {
-      console.error('[WALLET BUTTON ERROR]', err)
+      console.error('[SIGN & LOGIN ERROR]', err)
       setError(err?.message ?? 'Erro ao autenticar com a carteira.')
     } finally {
-      setWLoad(false)
       setSLoad(false)
+      setPendingSign(false)
     }
   }
 
+  // Botão: abre modal e marca intenção; se já conectado, assina na hora
+  const handleWalletButton = async () => {
+    setError(null)
+    try {
+      if (status !== 'connected') {
+        setPendingSign(true)
+        setWLoad(true)
+        await open() // usuário escolhe a carteira
+        return       // assinatura dispara no useEffect
+      }
+      await signAndLogin()
+    } catch (err: any) {
+      console.error('[WALLET BUTTON ERROR]', err)
+      setError(err?.message ?? 'Erro ao autenticar com a carteira.')
+      setPendingSign(false)
+    } finally {
+      setWLoad(false)
+    }
+  }
+
+  // Assim que conectar e houver intenção, assina automaticamente
+  useEffect(() => {
+    if (pendingSign && status === 'connected' && address && !sLoading) {
+      signAndLogin()
+    }
+  }, [pendingSign, status, address, sLoading]) // observa status/address
+
   const borderErr = error ? 'border-red-500' : ''
+
+  // Textos do botão via JSON
+  const wb = loginTexts?.walletButton ?? {}
+  const walletLabel =
+    sLoading
+      ? (wb.signing ?? 'Assinando...')
+      : (wLoading || isConnecting || status === 'reconnecting')
+        ? (wb.connecting ?? 'Conectando...')
+        : (status === 'connected')
+          ? (wb.connected ?? 'Assinar e entrar')
+          : (wb.disconnected ?? 'Escolher carteira')
 
   return (
     <div className="relative w-full max-w-md">
@@ -138,8 +169,7 @@ export default function LoginForm() {
           />
         </div>
 
-        {/* Divider */}
-        <div className="flex items-center my-6">
+         <div className="flex items-center my-6">
           <div className="flex-grow border-t border-gray-300"></div>
           <span className="mx-4 text-gray-600">{loginTexts?.['login-option'] ?? 'Ou acesse com'}</span>
           <div className="flex-grow border-t border-gray-300"></div>
@@ -162,22 +192,17 @@ export default function LoginForm() {
           "
           style={{ borderColor: colors?.border['border-primary'] }}
         >
-          <Image src={metamaskLogo} alt="MetaMask" width={28} height={28} className="shrink-0" />
+          <Image
+            src={metamaskLogo}
+            alt={loginTexts?.walletAlt ?? 'MetaMask'}
+            width={28}
+            height={28}
+            className="shrink-0"
+          />
           <span className="text-left leading-tight text-gray-800">
-            <span className="block text-base">
-              {sLoading
-                ? 'Assinando...'
-                : wLoading || isConnecting
-                  ? 'Conectando...'
-                  : isConnected
-                    ? 'Assinar e entrar'
-                    : 'Escolher carteira'}
-            </span>
+            <span className="block text-base">{walletLabel}</span>
           </span>
         </button>
-
-
-        
       </form>
     </div>
   )

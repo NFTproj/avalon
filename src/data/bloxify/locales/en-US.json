@@ -362,7 +362,12 @@
       "button-back": "Back",
       "button-login": "Login",
       "login-option": "Or sign in with",
-      "login-metamask": "Select Wallet"
+    "walletButton": {
+      "signing": "Signing...",
+      "connecting": "Connecting...",
+      "connected": "Sign and continue",
+      "disconnected": "Choose wallet"
+      }
     },
     "metamask-register-login": {
       "counter": {
@@ -611,7 +616,7 @@
     "error-min": "Minimum amount is {min}",
     "error-max": "Maximum amount is {max}",
     "unit-suffix": "units",
-
+    "payment-method": "Payment method",
     "pay-with-pix": "Buy with PIX",
     "pay-with-usdc": "Buy with USDC",
     "quote-prefix-pix": "You will pay (PIX):",
