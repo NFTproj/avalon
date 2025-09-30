@@ -7,7 +7,7 @@ import MainLayout from '@/components/layout/MainLayout'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import { useAuth } from '@/contexts/AuthContext'
 import { useTokenMetrics } from '@/hooks/useTokenMetrics'
-import { getAllCards, getPublicCards, Card as ApiCard } from '@/lib/api/cards'
+import { getAllCards,  Card as ApiCard } from '@/lib/api/cards'
 import ProgressBar from '@/components/common/ProgressBar'
 import LoadingOverlay from '@/components/common/LoadingOverlay'
 import ImageFromJSON from '@/components/core/ImageFromJSON'
@@ -65,7 +65,7 @@ export default function TokenDetailsPage() {
         // Primeiro tenta usar cards públicos, depois autenticados se falhar
         let response
         try {
-          response = await getPublicCards()
+          response = await getAllCards()
           console.log('📡 TokenDetailsPage: Usando dados públicos')
         } catch (publicError) {
           console.log('TokenDetailsPage: Fallback para API autenticada')
@@ -446,14 +446,11 @@ export default function TokenDetailsPage() {
                             className="font-semibold text-sm font-mono"
                             style={{ color: colors?.colors['color-primary'] }}
                           >
-                            {token.CardBlockchainData?.tokenAddress ? 
-                              `${token.CardBlockchainData.tokenAddress.slice(0, 8)}...${token.CardBlockchainData.tokenAddress.slice(-6)}` :
-                              'N/A'
-                            }
+                            xprolknadslndas
                           </span>
-                          {token.CardBlockchainData?.tokenAddress && (
+                          
                             <button
-                              onClick={() => navigator.clipboard.writeText(token.CardBlockchainData?.tokenAddress || '')}
+                              onClick={() => navigator.clipboard.writeText('')}
                               className="p-1 hover:bg-gray-100 rounded"
                               title="Copiar endereço"
                             >
@@ -461,7 +458,7 @@ export default function TokenDetailsPage() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                               </svg>
                             </button>
-                          )}
+                         
                         </div>
                       </div>
                       <div className="flex flex-col gap-2">
@@ -665,11 +662,11 @@ export default function TokenDetailsPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <p className="text-sm text-gray-600 mb-1">Rede:</p>
-                        <p className="font-medium">{token.CardBlockchainData?.tokenNetwork || 'N/A'}</p>
+                        <p className="font-medium">Polygon</p>
                       </div>
                       <div>
                         <p className="text-sm text-gray-600 mb-1">Símbolo:</p>
-                        <p className="font-medium">{token.ticker || 'N/A'}</p>
+                        <p className="font-medium">TBIO</p>
                       </div>
                       <div>
                         <p className="text-sm text-gray-600 mb-1">Status:</p>
@@ -683,11 +680,11 @@ export default function TokenDetailsPage() {
                           {token.status}
                         </span>
                       </div>
-                      {token.CardBlockchainData?.tokenAddress && (
+                      
                         <div>
                           <p className="text-sm text-gray-600 mb-1">Explorador:</p>
                           <Link
-                            href={`https://${token.CardBlockchainData.tokenNetwork === 'matic' ? 'polygonscan' : 'etherscan'}.io/token/${token.CardBlockchainData.tokenAddress}`}
+                            href="https://${token.CardBlockchainData.tokenNetwork"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-1 text-sm font-medium hover:opacity-80"
@@ -697,7 +694,7 @@ export default function TokenDetailsPage() {
                             <ExternalLink className="w-3 h-3" />
                           </Link>
                         </div>
-                      )}
+                   
                     </div>
                   </div>
                 </div>

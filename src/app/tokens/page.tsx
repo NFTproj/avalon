@@ -1,44 +1,96 @@
 'use client'
 
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import MainLayout from '@/components/layout/MainLayout'
 import Token from '@/components/common/Token'
+import { useCards } from '@/lib/hooks/useCards'
+
+const toNum = (v: any): number => {
+  if (v === null || v === undefined) return 0
+  if (typeof v === 'number') return Number.isFinite(v) ? v : 0
+  const s = String(v).replace(/[.,](?=\d{3}\b)/g, '').replace(',', '.')
+  const n = Number(s)
+  return Number.isFinite(n) ? n : 0
+}
+
+function SkeletonCard() {
+  return (
+    <div className="rounded-xl border bg-white p-4 shadow-lg h-full animate-pulse">
+      <div className="h-28 w-full rounded-lg bg-gray-200 mb-4" />
+      <div className="h-5 w-2/3 bg-gray-200 rounded mb-2" />
+      <div className="h-4 w-1/2 bg-gray-200 rounded mb-4" />
+      <div className="flex gap-2 mb-4">
+        <div className="h-6 w-16 rounded-full bg-gray-200" />
+        <div className="h-6 w-20 rounded-full bg-gray-200" />
+        <div className="h-6 w-14 rounded-full bg-gray-200" />
+      </div>
+      <div className="h-4 w-3/4 bg-gray-200 rounded mb-2" />
+      <div className="h-4 w-1/2 bg-gray-200 rounded mb-2" />
+      <div className="h-4 w-2/3 bg-gray-200 rounded mb-4" />
+      <div className="h-3 w-full bg-gray-200 rounded" />
+    </div>
+  )
+}
 
 export default function TokensPage() {
   const { colors, texts } = useContext(ConfigContext)
   const [filter, setFilter] = useState<'all' | 'available'>('all')
   const tokensPage = texts?.['tokensPage']
 
-  const tokensList = [
-    { id: 1, name: 'TOKEN TBIO', subtitle: 'Fazenda Eliane Mato Grosso', price: '15', launchDate: 'July 31, 2024', tokensAvailable: '1019820.10', identifierCode: 'TBIO', image: 'icons/bloxify/man-similing.png', sold: 516820, total: 1000000, labels: [{ name: 'CPR' }, { name: 'CARBONO' }, { name: 'VERDE' }] },
-    { id: 2, name: 'TOKEN TBIO', subtitle: 'Fazenda Eliane Mato Grosso', price: '15', launchDate: 'July 31, 2024', tokensAvailable: '1019820.00', identifierCode: 'TBIO', image: 'icons/bloxify/man-similing.png', sold: 516820, total: 1000000, labels: [{ name: 'CPR' }, { name: 'CARBONO' }, { name: 'VERDE' }] },
-    { id: 3, name: 'TOKEN TBIO', subtitle: 'Fazenda Eliane Mato Grosso', price: '15', launchDate: 'July 31, 2024', tokensAvailable: '1019820.00', identifierCode: 'TBIO', image: 'icons/bloxify/man-similing.png', sold: 1000000, total: 1000000, labels: [{ name: 'CPR' }, { name: 'CARBONO' }, { name: 'VERDE' }] },
-  ]
+  const { cards, isLoading, error } = useCards()
 
-  const filteredTokens =
+  // ====== map Card -> Token props (exatamente como você pediu) ======
+  const tokens = useMemo(() => {
+    if (!cards) return []
+    return cards
+      // opcional: esconda cards cancelados (status '500')
+      .filter((c: any) => String(c?.status ?? '100') !== '500')
+      .map((c: any) => {
+        const cbd = c?.CardBlockchainData ?? {}
+        const initialSupply        = toNum(cbd.initialSupply)           // total supply
+        const purchasedQuantity    = toNum(cbd.purchasedQuantity)       // sold
+        const available            = Math.max(0, initialSupply - purchasedQuantity)
+        const tokenPriceMicros     = toNum(cbd.tokenPrice)              // "1000000"
+        const price                = tokenPriceMicros / 1_000_000       // ex.: 1.0
+        return {
+          id: c.id,
+          name: c.name ?? 'TOKEN',
+          subtitle: '',                                 // aguardando backend retornar
+          labels: (c.tags ?? []).map((name: string) => ({ name })),
+          price: String(price),                         // TokenCard espera string
+          launchDate: c.launchDate ?? '',               // ISO string
+          tokensAvailable: String(initialSupply),       // ← mostrar TOTAL SUPPLY
+          identifierCode: c.ticker ?? '',               // ticker
+          image: c.logoUrl ?? '/images/tokens/default.png', // logo real
+          sold: purchasedQuantity,                      // vendidos
+          total: initialSupply,                         // total (para barra)
+          // (se seu <Token/> também mostra “Disponíveis”, ele calcula via total - sold)
+          available,                                    // só se você usar no componente
+        }
+      })
+  }, [cards])
+
+  const tokensToShow =
     filter === 'available'
-      ? tokensList.filter((t: any) => t.total - t.sold > 0)
-      : tokensList
+      ? tokens.filter(t => (t.total - t.sold) > 0)
+      : tokens
 
-  // nº de colunas atuais (para placeholders)
-  const [cols, setCols] = useState(1)
-  useEffect(() => {
-    const calc = () => {
-      const w = window.innerWidth
-      if (w >= 1536) setCols(4)      // 2xl → 4 col
-      else if (w >= 1280) setCols(3) // xl  → 3 col  (1440px cai aqui)
-      else if (w >= 640)  setCols(2) // sm  → 2 col
-      else                setCols(1) // base → 1 col
-    }
-    calc()
-    window.addEventListener('resize', calc)
-    return () => window.removeEventListener('resize', calc)
-  }, [])
+  function splitGradient(text: string): Array<{ text: string; gradient: boolean }> {
+  const out: Array<{ text: string; gradient: boolean }> = []
+  if (!text) return out
+  const parts = text.split(/(\[\[.*?\]\])/g) // mantém os marcadores no array
+  for (const p of parts) {
+    if (!p) continue
+    const m = p.match(/^\[\[(.*?)\]\]$/)
+    if (m) out.push({ text: m[1], gradient: true })
+    else out.push({ text: p, gradient: false })
+  }
+  return out
+}
 
-  const tokensToShow = filteredTokens
-  const placeholdersCount = tokensToShow.length < cols ? cols - tokensToShow.length : 0
-
+const rawTitle = tokensPage?.title ?? ''
+const titleParts = splitGradient(rawTitle)
   return (
     <MainLayout>
       <main
@@ -47,10 +99,28 @@ export default function TokensPage() {
       >
         <div className="max-w-6xl mx-auto text-center mb-12">
           <h1
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4"
+            className="
+              text-balance
+              text-4xl sm:text-5xl lg:text-6xl
+              font-extrabold leading-tight tracking-[-0.015em] mb-4
+            "
             style={{ color: colors?.colors['color-primary'] }}
           >
-            {tokensPage?.title}
+            {titleParts.map((part, i) =>
+              part.gradient ? (
+                <span
+                  key={i}
+                  className="
+                    bg-gradient-to-r from-[#2a6cff] via-[#8a5cff] to-[#f21bd8]
+                    bg-clip-text text-transparent
+                  "
+                >
+                  {part.text}
+                </span>
+              ) : (
+                <span key={i}>{part.text}</span>
+              )
+            )}
           </h1>
           <p
             className="text-xl sm:text-2xl lg:text-3xl px-0 lg:px-24"
@@ -60,7 +130,8 @@ export default function TokensPage() {
           </p>
         </div>
 
-        <div className="flex justify-start gap-4 mb-8 ">
+        {/* filtros */}
+        <div className="flex justify-start gap-4 mb-8">
           <button
             onClick={() => setFilter('all')}
             className="px-4 py-2 rounded-lg cursor-pointer shadow-md"
@@ -91,42 +162,42 @@ export default function TokensPage() {
           </button>
         </div>
 
-        {/* 1 col (mobile), 2 (tablet), 3 (desktop ≥1280), 4 (superwide ≥1536) */}
+        {/* grid 1/2/3/4 e estados */}
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8">
-          {tokensToShow.map((token: any) => (
-            <div key={token.id} className="h-full">
+          {isLoading &&
+            Array.from({ length: 6 }).map((_, i) => (
+              <SkeletonCard key={`sk-${i}`} />
+            ))}
+
+          {!isLoading && !error && tokensToShow.map((t: any) => (
+            <div key={t.id} className="h-full">
               <Token
-                name={token.name}
-                subtitle={token.subtitle}
-                price={token.price}
-                launchDate={token.launchDate}
-                tokensAvailable={token.tokensAvailable}
-                identifierCode={token.identifierCode}
-                image={token.image}
-                labels={token.labels}
-                sold={token.sold}
-                total={token.total}
+                name={t.name}
+                subtitle={t.subtitle}
+                price={t.price}
+                launchDate={t.launchDate}
+                tokensAvailable={t.tokensAvailable}  // total supply
+                identifierCode={t.identifierCode}
+                image={t.image}  
+                href={`/tokens/${t.id}`}                     // logoUrl real
+                labels={t.labels}
+                sold={t.sold}
+                total={t.total}
               />
             </div>
           ))}
 
-          {placeholdersCount > 0 &&
-            Array.from({ length: placeholdersCount }).map((_, idx) => (
-              <div key={`placeholder-${idx}`} className="h-full">
-                <div
-                  className="rounded-xl shadow-lg border h-full flex flex-col items-center justify-center p-6 transition-all duration-300"
-                  style={{
-                    backgroundColor: colors?.token['background'],
-                    borderColor: colors?.token['border'],
-                    borderWidth: '1px',
-                  }}
-                >
-                  <p className="text-lg font-medium text-gray-500 text-center">
-                    {tokensPage?.newTokens}
-                  </p>
-                </div>
-              </div>
-            ))}
+          {!isLoading && !error && tokensToShow.length === 0 && (
+            <p className="text-sm text-gray-500 col-span-full">
+              Nenhum token disponível.
+            </p>
+          )}
+
+          {!isLoading && error && (
+            <p className="text-sm text-red-600 col-span-full">
+              Falha ao carregar tokens.
+            </p>
+          )}
         </div>
       </main>
     </MainLayout>
