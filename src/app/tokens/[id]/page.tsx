@@ -4,8 +4,6 @@ import React, { useContext, useMemo } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import MainLayout from '@/components/layout/MainLayout'
 import { ConfigContext } from '@/contexts/ConfigContext'
-import { useAuth } from '@/contexts/AuthContext'
-import { useTokenMetrics } from '@/hooks/useTokenMetrics'
 import { useCards } from '@/lib/hooks/useCards'
 import ProgressBar from '@/components/common/ProgressBar'
 import LoadingOverlay from '@/components/common/LoadingOverlay'
@@ -16,7 +14,6 @@ import TokenTabs from './components/TokenTabs'
 
 export default function TokenDetailsPage() {
   const { colors, texts } = useContext(ConfigContext)
-  const { user } = useAuth()
   const router = useRouter()
   const { id } = useParams() as { id: string }
 
@@ -69,30 +66,6 @@ export default function TokenDetailsPage() {
     cbd.tokenNetwork === 'matic' || cbd.tokenNetwork === 'polygon' ? 'polygonscan' : 'etherscan'
 
   const labelColorsPalette = ['#8B7355', '#00D4AA', '#4CAF50']
-
-  // ====== Métricas ======
-  const {
-    stats,
-    loading: metricsLoading,
-    error: metricsError,
-    refresh: refreshMetrics,
-  } = useTokenMetrics({
-    userId: user?.id,
-    walletAddress: user?.walletAddress,
-    timeframe: '24h',
-    enableConversion: false,
-  })
-
-  // normaliza possíveis strings -> number para casar com TokenTabs
-  const statsForTabs = stats
-    ? {
-        totalTokenTypes: Number((stats as any).totalTokenTypes ?? 0),
-        totalValue: Number((stats as any).totalValue ?? 0),
-        hasPositiveGrowth: Boolean((stats as any).hasPositiveGrowth),
-        averageGrowth: Number((stats as any).averageGrowth ?? 0),
-        bestPerforming: (stats as any).bestPerforming as string | undefined,
-      }
-    : null
 
   // ====== Estados auxiliares mock (mantidos) ======
   const formattedPrice = '$ 15.00'
@@ -173,15 +146,7 @@ export default function TokenDetailsPage() {
     image: token?.cardBackgroundUrl ?? undefined, // só o background
   }
 
-  // ====== PROPS do TokenTabs (mapeando card -> props esperados) ======
-  const tabsToken = {
-    ticker: token.ticker,
-    status: token.status,
-    launchDate: (token as any).launchDate,
-    tokenPrice: (token as any).tokenPrice ?? (token as any).priceMicroUsd ?? 0, // micro USD (6 casas)
-    initialSupply: (token as any).initialSupply ?? (token as any).totalSupply ?? 0,
-  }
-
+  // ====== ABAS (passa o token cru) ======
   return (
     <MainLayout>
       <main
@@ -206,16 +171,17 @@ export default function TokenDetailsPage() {
               labelMap={labelMap}
             />
 
-            {/* ABAS – via componente */}
+            {/* ABAS – via componente (métricas mockadas/sem fetch) */}
             <TokenTabs
               token={token}
               cbd={cbd}
               explorerHost={explorerHost}
               tokenDetails={tokenDetails}
-              stats={statsForTabs}
-              metricsLoading={metricsLoading}
-              metricsError={metricsError}
-              refreshMetrics={refreshMetrics}
+              // métricas desativadas
+              //stats={null}
+              //metricsLoading={false}
+              //metricsError={null}
+              //refreshMetrics={() => {}}
             />
           </div>
 

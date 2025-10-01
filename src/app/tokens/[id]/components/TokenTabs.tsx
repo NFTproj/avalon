@@ -1,27 +1,29 @@
 'use client'
 
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 import { ConfigContext } from '@/contexts/ConfigContext'
 
-// UI subcomponents (você já criou)
+// UI subcomponents
 import InfoTab from './ui/TokenTabs/InfoTab'
 import TokenInfoTab from './ui/TokenTabs/TokenInfoTab'
-import MetricsTab from './ui/TokenTabs/MetricsTab'
+// import MetricsTab from './ui/TokenTabs/MetricsTab' // ← (DESATIVADO por enquanto)
 import DocumentsTab from './ui/TokenTabs/DocumentsTab'
 import BenefitsTab from './ui/TokenTabs/BenefitsTab'
 
-// Reusa o mesmo tipo do MetricsTab pra evitar divergência
-import type { Stats } from './ui/TokenTabs/MetricsTab'
+// Reusa o mesmo tipo do MetricsTab
+// import type { Stats } from './ui/TokenTabs/MetricsTab' // ← (DESATIVADO por enquanto)
 
 export type TokenTabsProps = {
   token: any
   cbd: { tokenNetwork?: string; tokenAddress?: string }
   explorerHost: string // 'polygonscan' | 'etherscan'
   tokenDetails?: any
-  stats: Stats
-  metricsLoading: boolean
-  metricsError: string | null
-  refreshMetrics: () => void
+
+  // ===== MÉTRICAS (desativado por enquanto) =====
+  // stats: Stats
+  // metricsLoading: boolean
+  // metricsError: string | null
+  // refreshMetrics: () => void
 }
 
 export default function TokenTabs({
@@ -29,21 +31,45 @@ export default function TokenTabs({
   cbd,
   explorerHost,
   tokenDetails,
-  stats,
-  metricsLoading,
-  metricsError,
-  refreshMetrics,
+  // ===== MÉTRICAS (desativado por enquanto) =====
+  // stats,
+  // metricsLoading,
+  // metricsError,
+  // refreshMetrics,
 }: TokenTabsProps) {
   const { colors } = useContext(ConfigContext)
-  const [tab, setTab] = useState<'info' | 'tokenInfo' | 'metrics' | 'documents' | 'benefits'>('info')
 
-  const tabs = [
-    { key: 'info',       label: tokenDetails?.tabs?.infos?.title ?? 'Informações' },
-    { key: 'tokenInfo',  label: tokenDetails?.tabs?.['token-info']?.title ?? 'Detalhes do Token' },
-    { key: 'metrics',    label: 'Métricas' },
-    { key: 'documents',  label: tokenDetails?.tabs?.docs?.title ?? 'Documentos' },
-    { key: 'benefits',   label: tokenDetails?.tabs?.benefits?.title ?? 'Benefícios' },
-  ] as const
+  // há algum field2..field7 no metadata?
+  const hasTokenInfoMeta = useMemo(() => {
+    const arr = Array.isArray(token?.metadata) ? token.metadata : []
+    if (!arr.length) return false
+    const fields = new Set(arr.map((m: any) => m?.field))
+    const keys = ['field2','field3','field4','field5','field6','field7']
+    return keys.some(k => fields.has(k))
+  }, [token])
+
+  // tabs visíveis (sem "tokenInfo" se só tiver field1)
+  const tabs = useMemo(() => {
+    const base = [
+      { key: 'info',      label: tokenDetails?.tabs?.infos?.title ?? 'Informações' },
+      // injeta tokenInfo só quando há meta 2..7
+      ...(hasTokenInfoMeta
+        ? [{ key: 'tokenInfo', label: tokenDetails?.tabs?.['token-info']?.title ?? 'Detalhes do Token' }]
+        : []),
+      // { key: 'metrics',   label: 'Métricas' }, // ← (DESATIVADO por enquanto)
+      { key: 'documents', label: tokenDetails?.tabs?.docs?.title ?? 'Documentos' },
+      { key: 'benefits',  label: tokenDetails?.tabs?.benefits?.title ?? 'Benefícios' },
+    ] as const
+    return base
+  }, [hasTokenInfoMeta, tokenDetails])
+
+  // estado da aba (string para simplificar quando "tokenInfo" some)
+  const [tab, setTab] = useState<string>('info')
+
+  // se a aba atual for "tokenInfo" e ela não existir mais, volta pra "info"
+  useEffect(() => {
+    if (tab === 'tokenInfo' && !hasTokenInfoMeta) setTab('info')
+  }, [tab, hasTokenInfoMeta])
 
   return (
     <div>
@@ -52,7 +78,7 @@ export default function TokenTabs({
         {tabs.map(({ key, label }) => (
           <button
             key={key}
-            onClick={() => setTab(key as any)}
+            onClick={() => setTab(key)}
             className="px-4 py-2 -mb-px font-medium whitespace-nowrap"
             style={{
               borderBottom: tab === key ? `2px solid ${colors?.colors['color-primary']}` : 'none',
@@ -75,8 +101,9 @@ export default function TokenTabs({
           />
         )}
 
-        {tab === 'tokenInfo' && <TokenInfoTab />}
+        {hasTokenInfoMeta && tab === 'tokenInfo' && <TokenInfoTab token={token} />}
 
+        {/* ===== MÉTRICAS (desativado por enquanto) =====
         {tab === 'metrics' && (
           <MetricsTab
             stats={stats}
@@ -85,6 +112,7 @@ export default function TokenTabs({
             onRefresh={refreshMetrics}
           />
         )}
+        */}
 
         {tab === 'documents' && <DocumentsTab tokenDetails={tokenDetails} />}
 

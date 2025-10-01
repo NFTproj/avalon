@@ -5,7 +5,7 @@ import { ExternalLink } from 'lucide-react'
 import { useContext, useMemo } from 'react'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import {
-  formatLaunchDateUTC,   // <<< usa a função nova
+  formatLaunchDateUTC,
   shortAddr,
   formatUSD6,
   formatBRNumber,
@@ -39,8 +39,14 @@ function Field({ label, value }: { label: string; value: string | number }) {
 export default function InfoTab({ token, cbd, tokenDetails }: InfoTabProps) {
   const { colors } = useContext(ConfigContext)
 
-  // === pega o bloco de blockchain em Pascal/camel
-  const cbdObj = (token?.CardBlockchainData ?? token?.cardBlockchainData ?? {}) as Record<string, any>
+  // === metadata -> map (fieldX -> value)
+  const metaMap: Record<string, string> = useMemo(() => {
+    const arr = Array.isArray(token?.metadata) ? token.metadata : []
+    return arr.reduce((acc: Record<string, string>, it: any) => {
+      if (it?.field && it?.value != null) acc[it.field] = String(it.value)
+      return acc
+    }, {})
+  }, [token])
 
   // === datas (UTC, sem timezone-shift)
   const launchDate = pick<string>(token, [
@@ -51,6 +57,7 @@ export default function InfoTab({ token, cbd, tokenDetails }: InfoTabProps) {
   ])
 
   // === preço (micros) e supply: mesma regra da página de listagem
+  const cbdObj = (token?.CardBlockchainData ?? token?.cardBlockchainData ?? {}) as Record<string, any>
   const priceMicros = toNum(
     cbdObj.tokenPrice ??
       token.tokenPrice ??
@@ -68,9 +75,11 @@ export default function InfoTab({ token, cbd, tokenDetails }: InfoTabProps) {
       token.initial_supply
   )
 
-  const ticker = pick<string>(token, ['ticker', 'symbol']) || 'N/A'
+  // === identifier: usa field1 do metadata, cai pro ticker/symbol
+  const ticker = pick<string>(token, ['ticker', 'symbol'])
+  const identifier = (metaMap['field1'] && metaMap['field1'].trim()) || ticker || 'N/A'
 
-  // >>> data igual à listagem
+  // === formatados
   const offerOpening = formatLaunchDateUTC(launchDate, 'pt-BR')
   const unitValue = formatUSD6(priceMicros)          // ex.: 1_000_000 -> $ 1.00
   const tonsOffered = formatBRNumber(initialSupply)  // ex.: 100000000 -> 100.000.000
@@ -104,9 +113,11 @@ export default function InfoTab({ token, cbd, tokenDetails }: InfoTabProps) {
             label={tokenDetails?.tabs?.infos?.['offer-opening'] ?? 'Abertura da oferta'}
             value={offerOpening}
           />
+
+          {/* usa field1 do metadata como Código ISIN (fallback pro ticker) */}
           <Field
             label={tokenDetails?.tabs?.infos?.['identifier-code'] ?? 'Código ISIN'}
-            value={ticker}
+            value={identifier}
           />
 
           {/* Endereço + copiar */}
