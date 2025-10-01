@@ -109,7 +109,7 @@ export default function TokenTabs({
             stats={stats}
             loading={metricsLoading}
             error={metricsError}
-            onRefresh={refreshMetrics}
+            onRefresh={refreshMetrics} //
           />
         )}
         */}
