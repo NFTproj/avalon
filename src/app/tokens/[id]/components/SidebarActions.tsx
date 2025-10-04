@@ -29,13 +29,8 @@ export default function SidebarActions({
   const [navigating, setNavigating] = useState(false)
 
   const handleBuy = useCallback(() => {
-    if (navigating) return
-    setNavigating(true)
-    const base = (process.env.NEXT_PUBLIC_BUY_BASE_URL || '').replace(/\/$/, '')
-    const path = `/buy-tokens?token=${encodeURIComponent(String(tokenId))}`
-    const url = base ? `${base}${path}` : path
-    router.push(url) // mesma aba
-  }, [tokenId, navigating, router])
+    router.push(`/buy-tokens?token=${encodeURIComponent(String(tokenId))}`)
+  }, [router, tokenId])
 
   return (
     <div className="w-full lg:w-80 xl:w-96">
