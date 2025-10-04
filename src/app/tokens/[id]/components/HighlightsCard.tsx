@@ -7,30 +7,37 @@ import { ConfigContext } from '@/contexts/ConfigContext'
 type HighlightsCardProps = {
   title?: string
   description?: string
-  // ex.: { chave1: 'https://...', chave2: 'https://...' }
-  socialLinks?: Record<string, string> | null | undefined
-  // mapeia a chave para o rótulo do botão
-  labelMap?: Record<string, string> | undefined
+  // só precisamos de link1 e link2
+  socialLinks?: Partial<Record<'link1' | 'link2', string>> | null
+}
+
+type BtnLink = { href: string; label: string }
+function isBtnLink(x: { href?: string; label: string }): x is BtnLink {
+  return typeof x.href === 'string' && x.href.trim().length > 0
 }
 
 export default function HighlightsCard({
   title,
   description,
   socialLinks,
-  labelMap,
 }: HighlightsCardProps) {
-  const { colors } = useContext(ConfigContext)
+  const { colors, texts } = useContext(ConfigContext)
 
-  const links = useMemo(
-    () =>
-      Object.entries(socialLinks ?? {})
-        .filter(([, href]) => typeof href === 'string' && href.trim().length > 0)
-        .map(([key, href]) => ({
-          href,
-          label: labelMap?.[key] ?? key, // fallback: usa a chave como label
-        })),
-    [socialLinks, labelMap]
-  )
+  // ✅ pega labels dos locales sem criar objeto {} tipado
+  const labelDocs =
+    texts?.['token-details']?.highlights?.['view-docs'] ?? 'View offer docs'
+  const labelMore =
+    texts?.['token-details']?.highlights?.['more-info'] ?? 'More information'
+
+  const links = useMemo<BtnLink[]>(() => {
+    const candidates = [
+      { href: socialLinks?.link1, label: labelDocs },
+      { href: socialLinks?.link2, label: labelMore },
+    ]
+    return candidates.filter(isBtnLink)
+  }, [socialLinks, labelDocs, labelMore])
+
+  if (!title && !description && links.length === 0) return null
 
   return (
     <div
@@ -50,9 +57,11 @@ export default function HighlightsCard({
         </h2>
       )}
 
-      {/* Parágrafo único: o \n vira espaço (não quebramos em colunas) */}
       {description && (
-        <p className="text-sm" style={{ color: colors?.colors['color-secondary'] }}>
+        <p
+          className="text-sm"
+          style={{ color: colors?.colors['color-secondary'], whiteSpace: 'pre-line' }}
+        >
           {description}
         </p>
       )}
@@ -62,7 +71,7 @@ export default function HighlightsCard({
           {links.map(({ href, label }, i) => (
             <Link
               key={`${href}-${i}`}
-              href={href}
+              href={href} // agora é string garantida
               target="_blank"
               rel="noopener noreferrer"
               className="px-4 py-2 rounded-full cursor-pointer"

@@ -378,12 +378,20 @@
         "title": "Token Info"
       },
       "docs": {
-        "title": "Documents"
+        "title": "Documents",
+        "link1": "Twitter",
+        "link2": "Instagram",
+        "link3": "Termos de Uso ",
+        "link4": "Documentos",
+        "link5": "Politica de privacidade",
+        "link6": "Odr"
       },
       "benefits": {
         "title": "Benefits",
-        "rights": "Rights",
-        "risks": "Risks"
+        "cta": {
+          "type": "certificate",
+          "label": "Emitir certificado"
+        }
       }
     }
   },

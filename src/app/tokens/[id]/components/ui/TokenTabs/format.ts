@@ -80,3 +80,45 @@ export function formatLaunchDateUTC(iso?: string, locale: string = 'pt-BR') {
     timeZone: 'UTC',
   }).format(d)
 }
+
+// retorna 'pt-BR' | 'en-US' etc. (use o que vc já tem; este é só um fallback)
+export function getLocale(texts: any): string {
+  const fromTexts = texts?.locale || texts?.i18n?.locale || texts?.language || texts?.lang
+  if (typeof fromTexts === 'string' && fromTexts.trim()) return fromTexts
+  if (typeof document !== 'undefined') {
+    const htmlLang = document.documentElement?.lang
+    if (htmlLang && htmlLang.trim()) return htmlLang
+  }
+  if (typeof navigator !== 'undefined') return navigator.language || 'pt-BR'
+  return 'pt-BR'
+}
+
+/**
+ * Tenta achar `baseKey` localizável no objeto:
+ * - baseKey_ll-CC (ex.: longDescription_en-US)
+ * - baseKey_ll     (ex.: longDescription_en)
+ * - baseKey        (fallback sem sufixo)
+ * - outras chaves de fallback passadas (ex.: 'description[...]')
+ */
+export function resolveLocalized(
+  obj: any,
+  baseKey: string,
+  locale: string,
+  extraFallbacks: string[] = []
+): string | undefined {
+  if (!obj) return undefined
+  const norm = (s: string) => s.replace('-', '_')         // en-US -> en_US
+  const ll = locale.split('-')[0].toLowerCase()           // en
+  const llCC = norm(locale)                                // en_US
+  const candidates = [
+    `${baseKey}_${llCC}`,
+    `${baseKey}_${ll}`,
+    baseKey,
+    ...extraFallbacks,
+  ]
+  for (const k of candidates) {
+    const v = obj?.[k]
+    if (typeof v === 'string' && v.trim()) return v
+  }
+  return undefined
+}

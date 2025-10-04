@@ -1,3 +1,4 @@
+// src/app/tokens/[id]/components/TokenTabs.tsx
 'use client'
 
 import { useContext, useEffect, useMemo, useState } from 'react'
@@ -18,7 +19,6 @@ export type TokenTabsProps = {
   cbd: { tokenNetwork?: string; tokenAddress?: string }
   explorerHost: string // 'polygonscan' | 'etherscan'
   tokenDetails?: any
-
   // ===== MÉTRICAS (desativado por enquanto) =====
   // stats: Stats
   // metricsLoading: boolean
@@ -48,28 +48,35 @@ export default function TokenTabs({
     return keys.some(k => fields.has(k))
   }, [token])
 
-  // tabs visíveis (sem "tokenInfo" se só tiver field1)
+  // existe CTA de benefícios no locale?
+  const hasBenefitsCta = useMemo(() => {
+    const cta = tokenDetails?.tabs?.benefits?.cta
+    return Boolean(cta?.type || cta?.href) // se tiver tipo ou href explícito, mostra a aba
+  }, [tokenDetails])
+
+  // tabs visíveis
   const tabs = useMemo(() => {
-    const base = [
+    return [
       { key: 'info',      label: tokenDetails?.tabs?.infos?.title ?? 'Informações' },
-      // injeta tokenInfo só quando há meta 2..7
       ...(hasTokenInfoMeta
         ? [{ key: 'tokenInfo', label: tokenDetails?.tabs?.['token-info']?.title ?? 'Detalhes do Token' }]
         : []),
       // { key: 'metrics',   label: 'Métricas' }, // ← (DESATIVADO por enquanto)
       { key: 'documents', label: tokenDetails?.tabs?.docs?.title ?? 'Documentos' },
-      { key: 'benefits',  label: tokenDetails?.tabs?.benefits?.title ?? 'Benefícios' },
+      ...(hasBenefitsCta
+        ? [{ key: 'benefits',  label: tokenDetails?.tabs?.benefits?.title ?? 'Benefícios' }]
+        : []),
     ] as const
-    return base
-  }, [hasTokenInfoMeta, tokenDetails])
+  }, [hasTokenInfoMeta, hasBenefitsCta, tokenDetails])
 
-  // estado da aba (string para simplificar quando "tokenInfo" some)
+  // estado da aba
   const [tab, setTab] = useState<string>('info')
 
-  // se a aba atual for "tokenInfo" e ela não existir mais, volta pra "info"
+  // corrige seleção quando alguma aba deixa de existir
   useEffect(() => {
     if (tab === 'tokenInfo' && !hasTokenInfoMeta) setTab('info')
-  }, [tab, hasTokenInfoMeta])
+    if (tab === 'benefits'  && !hasBenefitsCta)  setTab('info')
+  }, [tab, hasTokenInfoMeta, hasBenefitsCta])
 
   return (
     <div>
@@ -109,14 +116,16 @@ export default function TokenTabs({
             stats={stats}
             loading={metricsLoading}
             error={metricsError}
-            onRefresh={refreshMetrics} //
+            onRefresh={refreshMetrics}
           />
         )}
         */}
 
-        {tab === 'documents' && <DocumentsTab tokenDetails={tokenDetails} />}
+        {tab === 'documents' && <DocumentsTab token={token} tokenDetails={tokenDetails} />}
 
-        {tab === 'benefits' && <BenefitsTab tokenDetails={tokenDetails} />}
+        {hasBenefitsCta && tab === 'benefits' && (
+         <BenefitsTab tokenId={token?.id} tokenDetails={tokenDetails} />
+        )}
       </div>
     </div>
   )
