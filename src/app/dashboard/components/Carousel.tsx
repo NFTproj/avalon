@@ -60,9 +60,9 @@ export default function Carousel() {
     <div
       className="
         w-full max-h-[650px] aspect-[4/3] mt-1 mx-auto
-        bg-[#fdfcf7] rounded-2xl shadow-md z-10
+        bg-[#fdfcf7] rounded-2xl shadow-md z-0
         lg:absolute lg:right-12 lg:top-1/2 lg:-translate-y-1/2
-        lg:w-1/2 lg:h-[140%] lg:aspect-auto lg:max-h-none lg:mt-0 lg:mx-0
+        lg:w-1/2 lg:h-[115%] lg:aspect-auto lg:max-h-none lg:mt-0 lg:mx-0
         overflow-hidden
         p-2 sm:p-1
       "

@@ -5,6 +5,8 @@ import { ConfigContext } from "@/contexts/ConfigContext"
 import { useAuth } from "@/contexts/AuthContext"
 import { useUserTokenBalances } from "@/hooks/useUserTokenBalances"
 import { useCards } from "@/lib/hooks/useCards"
+import type { Card as ApiCard } from "@/lib/api/cards"
+import type { Card as InternalCard } from "@/types/card"
 
 interface TokenMetricsProps {
   className?: string
@@ -17,8 +19,50 @@ export default function TokenMetrics({ className = "" }: TokenMetricsProps) {
   const { user } = useAuth()
   const { cards } = useCards()
 
+  // Converte "API Card" (lib/api/cards) -> "Internal Card" (types/card)
+  const getChainIdFromNetwork = (network?: string): number => {
+    const n = String(network || '').toLowerCase()
+    switch (n) {
+      case 'ethereum':
+      case 'eth':
+        return 1
+      case 'polygon':
+      case 'matic':
+        return 137
+      case 'arbitrum':
+        return 42161
+      case 'sepolia':
+        return 11155111
+      default:
+        return 137
+    }
+  }
+
+  const internalCards = useMemo<InternalCard[]>(() => {
+    const list = (cards ?? []) as ApiCard[]
+    return list
+      .map((c): InternalCard | null => {
+        const bc = c?.cardBlockchainData
+        const addr = bc?.tokenAddress
+        if (!addr) return null
+        const net = bc?.network || 'polygon'
+        return {
+          id: c.id,
+          name: c.name,
+          status: String(c.status).toUpperCase() === 'INACTIVE' ? 'INACTIVE' : 'ACTIVE',
+          CardBlockchainData: {
+            tokenAddress: addr as `0x${string}`,
+            tokenNetwork: net,
+            tokenChainId: getChainIdFromNetwork(net),
+            tokenPrice: '1.00',
+          },
+        }
+      })
+      .filter((v): v is InternalCard => v !== null)
+  }, [cards])
+
   const { assets, loading } = useUserTokenBalances(
-    cards,
+    internalCards,
     user?.walletAddress as `0x${string}` | undefined,
   )
 

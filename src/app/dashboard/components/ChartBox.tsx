@@ -118,7 +118,7 @@ export default function ChartBox() {
   }
 
   return (
-    <div className="mt-6 w-full">
+    <div className="mt-6 w-full relative z-20">
       {/* Card de saldo real */}
       {!loading && !error && isConnected && balance && (
         <div className="mb-6 p-4 bg-white rounded-lg shadow-sm border-2 border-blue-200">

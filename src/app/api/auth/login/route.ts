@@ -2,12 +2,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(req: NextRequest) {
+  // Define variáveis de ambiente no escopo da função para uso no try/catch
+  const apiUrl = process.env.BLOXIFY_URL_BASE
+  const apiKey = process.env.BLOXIFY_API_KEY
+  const clientId = process.env.CLIENT_ID 
+
   try {
     const { email, password } = await req.json()
-
-    const apiUrl = process.env.BLOXIFY_URL_BASE
-    const apiKey = process.env.BLOXIFY_API_KEY
-    const clientId = process.env.CLIENT_ID 
 
     if (!apiUrl || !apiKey) {
       return NextResponse.json({ error: 'Configuração inválida' }, { status: 500 })
