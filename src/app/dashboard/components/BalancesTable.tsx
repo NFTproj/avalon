@@ -72,7 +72,7 @@ export default function BalancesTable({ className = "" }: { className?: string }
   }
 
   return (
-    <div className={`w-full mt-6 ${className}`}>
+    <div className={`w-full mt-10 ${className}`}>
       {/* Cabeçalho "Sua carteira Slab" */}
       <div className="mb-0">
         <div
