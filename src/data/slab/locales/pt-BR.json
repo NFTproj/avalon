@@ -21,7 +21,6 @@
             ]
           }
         ],
-
         "navThree": [
           {
             "title": "Idioma",
@@ -290,7 +289,14 @@
         "password": "••••••••"
       },
       "button-back": "Voltar",
-      "button-login": "Entrar"
+      "button-login": "Entrar",
+      "Login-Option":"Ou acesse com",
+      "walletButton": {
+        "signing": "Assinando...",
+        "connecting": "Conectando...",
+        "connected": "Assinar e entrar",
+        "disconnected": "Escolher carteira"
+      }
     },
     "metamask-register-login": {
       "counter": {
@@ -404,7 +410,7 @@
     "disclaimer": "Não invista antes de saber todas as informações essenciais sobre a oferta"
   },
   "tokensPage": {
-    "title": "Descubra hoje as melhores oportunidades de tokens digitais",
+    "title": "Descubra hoje as [[melhores oportunidades]] de tokens digitais",
     "subtitle": "Os tokens que você já conhece, as melhores oportunidades, na palma da sua mão!",
     "filters": {
       "all": "Todos",
@@ -434,12 +440,20 @@
         "title": "Token Info"
       },
       "docs": {
-        "title": "Documentos"
+        "title": "Documents",
+        "link1": "Twitter",
+        "link2": "Instagram",
+        "link3": "Termos de Uso ",
+        "link4": "Documentos",
+        "link5": "Politica de privacidade",
+        "link6": "Odr"
       },
       "benefits": {
         "title": "Benefícios",
-        "rights": "Direitos",
-        "risks": "Riscos"
+        "cta": {
+          "type": "certificate",
+          "label": "Emitir certificado"
+        }
       }
     }
   },
@@ -504,5 +518,42 @@
     "title-didit-verification": "Verificação Didit",
     "didit-description": "Você será redirecionado para um site externo para concluir sua verificação de identidade (KYC).",
     "button-continue": "Continuar"
+  },
+  "buyTokens": {
+    "page-title-fallback": "Comprar Tokens",
+    "tab-buy": "Comprar",
+    "tab-benefits": "Benefícios",
+    "tab-orders": "Ordens",
+    "available-tokens": "Tokens disponíveis",
+    "load-error": "Falha ao carregar tokens.",
+    "progress-zero": "0% vendido",
+    "progress-empty": ""
+  },
+  "buyPanel": {
+    "title": "Comprar {token}",
+    "unit-price-label": "Preço unitário",
+    "invest-label": "Quanto deseja investir ({currency})",
+    "invest-placeholder": "Ex.: {min}",
+    "estimated-qty": "Quantidade estimada",
+    "total": "Total",
+    "button-continue": "Continuar",
+    "button-processing": "Processando…",
+    "limits": "Mín.: {min} · Máx.: {max}",
+    "error-min": "Valor mínimo é {min}",
+    "error-max": "Valor máximo é {max}",
+    "unit-suffix": "und",
+    "payment-method": "Método de pagamento",
+    "pay-with-pix": "Comprar com PIX",
+    "pay-with-usdc": "Comprar com USDC",
+    "quote-prefix-pix": "Você pagará (PIX):",
+    "quote-prefix-usdc": "Você pagará (USDC):",
+    "label-pay": "Pagar",
+    "label-receive": "Receber",
+    "cta-pix": "Comprar com PIX",
+    "cta-usdc": "Comprar com USDC"
+  },
+  "tokenList": {
+    "empty": "Nenhum token disponível no momento.",
+    "unit-suffix": "und"
   }
 }

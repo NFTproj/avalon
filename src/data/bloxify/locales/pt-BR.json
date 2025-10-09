@@ -21,7 +21,6 @@
             ]
           }
         ],
-
         "navThree": [
           {
             "title": "Idioma",
@@ -438,8 +437,13 @@
       },
       "button-back": "Voltar",
       "button-login": "Entrar",
-      "login-option": "Ou acesse com",
-      "login-metamask": "Escolher carteira"
+      "Login-Option":"Ou acesse com",
+      "walletButton": {
+        "signing": "Assinando...",
+        "connecting": "Conectando...",
+        "connected": "Assinar e entrar",
+        "disconnected": "Escolher carteira"
+      }
     },
     "metamask-register-login": {
       "counter": {
@@ -583,7 +587,7 @@
     "disclaimer": "Não invista antes de saber todas as informações essenciais sobre a oferta"
   },
   "tokensPage": {
-    "title": "Descubra hoje as melhores oportunidades de tokens digitais",
+    "title": "Descubra hoje as [[melhores oportunidades]] de tokens digitais",
     "subtitle": "Os tokens que você já conhece, as melhores oportunidades, na palma da sua mão!",
     "filters": {
       "all": "Todos",
@@ -717,7 +721,7 @@
     "error-min": "Valor mínimo é {min}",
     "error-max": "Valor máximo é {max}",
     "unit-suffix": "und",
-
+    "payment-method": "Método de pagamento",
     "pay-with-pix": "Comprar com PIX",
     "pay-with-usdc": "Comprar com USDC",
     "quote-prefix-pix": "Você pagará (PIX):",

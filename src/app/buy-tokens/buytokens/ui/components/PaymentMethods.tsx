@@ -15,6 +15,7 @@ export default function PaymentMethods({
   onSelectUsdcPrepare,
   accentColor,               // opcional: sobrescreve cor do tema
   disabled = false,
+  showUsdc = true,           // 👈 NOVO: controla visibilidade do botão USDC
 }: {
   method: Method
   setMethod: (m: Method) => void
@@ -24,6 +25,7 @@ export default function PaymentMethods({
   onSelectUsdcPrepare?: () => Promise<void>
   accentColor?: string
   disabled?: boolean
+  showUsdc?: boolean
 }) {
   const { colors } = useContext(ConfigContext)
   const themeAccent =
@@ -34,6 +36,11 @@ export default function PaymentMethods({
 
   const [preparing, setPreparing] = React.useState(false)
   const [err, setErr] = React.useState<string | null>(null)
+
+  // se USDC não está disponível, garanta que o method fique em 'pix'
+  React.useEffect(() => {
+    if (!showUsdc && method === 'usdc') setMethod('pix')
+  }, [showUsdc, method, setMethod])
 
   const onPixClick = () => {
     if (disabled || preparing) return
@@ -73,23 +80,25 @@ export default function PaymentMethods({
         label="PIX"
       />
 
-      <MethodCard
-        selected={method === 'usdc'}
-        onClick={onUsdcClick}
-        disabled={disabled || preparing}
-        borderColor={borderColor}
-        accentColor={themeAccent}
-        left={
-          <span className="flex items-center gap-3">
-            <span className="relative inline-flex h-5 w-5 items-center justify-center text-gray-800">
-              <Wallet className="h-5 w-5" aria-hidden />
-              <CircleDollarSign className="absolute -bottom-1 -right-1 h-3 w-3" aria-hidden />
+      {showUsdc && (
+        <MethodCard
+          selected={method === 'usdc'}
+          onClick={onUsdcClick}
+          disabled={disabled || preparing}
+          borderColor={borderColor}
+          accentColor={themeAccent}
+          left={
+            <span className="flex items-center gap-3">
+              <span className="relative inline-flex h-5 w-5 items-center justify-center text-gray-800">
+                <Wallet className="h-5 w-5" aria-hidden />
+                <CircleDollarSign className="absolute -bottom-1 -right-1 h-3 w-3" aria-hidden />
+              </span>
+              <span className="text-sm text-gray-800">{preparing ? 'Conectando…' : txtPayWithUsdc}</span>
             </span>
-            <span className="text-sm text-gray-800">{preparing ? 'Conectando…' : txtPayWithUsdc}</span>
-          </span>
-        }
-        label="USDC"
-      />
+          }
+          label="USDC"
+        />
+      )}
 
       {!!err && <p className="mt-1 text-xs text-red-600" role="alert">{err}</p>}
     </fieldset>

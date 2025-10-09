@@ -1,7 +1,8 @@
 // app/buy-tokens/components/BuyTokens.tsx
 'use client'
 
-import { useContext, useMemo, useEffect, useState } from 'react'
+import { useContext, useMemo, useEffect, useState, useRef } from 'react'
+import { useSearchParams, useRouter, usePathname } from 'next/navigation'   // ⬅️ add usePathname
 import Header from '@/components/landingPage/Header'
 import Footer from '@/components/common/footer'
 import { ConfigContext } from '@/contexts/ConfigContext'
@@ -32,6 +33,12 @@ export default function BuyTokens() {
   const { colors, texts } = useContext(ConfigContext)
   const { loading: authLoading } = useAuth()
   const { cards, isLoading, error } = useCards()
+
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const pathname = usePathname()                                  // ⬅️ add
+  const urlTokenKey = (searchParams.get('token') || '').toLowerCase()
+  const didInitFromUrl = useRef(false)
 
   const T: any = (texts as any)?.buyTokens ?? {}
   const t = (k: string, fb: string) => T?.[k] ?? fb
@@ -104,10 +111,45 @@ export default function BuyTokens() {
 
   // seleção
   const [selectedId, setSelectedId] = useState<string | null>(null)
+
+  // ⬇️ inicializa a seleção a partir da URL (id OU ticker) e garante fallback pro primeiro token
   useEffect(() => {
-    if (tokens.length === 0) { setSelectedId(null); return }
-    if (!selectedId || !tokens.find(t => t.id === selectedId)) setSelectedId(tokens[0].id)
-  }, [tokens, selectedId])
+    if (!tokens.length) { setSelectedId(null); return }
+
+    if (!didInitFromUrl.current) {
+      const pre =
+        urlTokenKey &&
+        tokens.find(
+          t =>
+            t.id.toLowerCase() === urlTokenKey ||
+            (t.ticker && t.ticker.toLowerCase() === urlTokenKey)
+        )
+      setSelectedId(pre ? pre.id : tokens[0].id)
+      didInitFromUrl.current = true
+
+      // se não tinha ?token=, escreve o primeiro na URL
+      if (!urlTokenKey) {
+        const qs = new URLSearchParams(searchParams.toString())
+        qs.set('token', (pre ? pre.id : tokens[0].id))
+        router.replace(`${pathname}?${qs.toString()}`)          // ⬅️ 1 arg
+      }
+      return
+    }
+
+    // tokens mudaram: mantém seleção válida
+    if (!selectedId || !tokens.find(t => t.id === selectedId)) {
+      setSelectedId(tokens[0].id)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tokens, urlTokenKey])
+
+  // sincroniza URL quando o usuário seleciona outro token
+  const handleSelect = (it: TokenItem) => {
+    setSelectedId(it.id)
+    const qs = new URLSearchParams(searchParams.toString())
+    qs.set('token', it.id)
+    router.replace(`${pathname}?${qs.toString()}`)              // ⬅️ 1 arg
+  }
 
   const selected = useMemo(
     () => tokens.find(t => t.id === selectedId) ?? null,
@@ -130,7 +172,6 @@ export default function BuyTokens() {
     return Math.max(0, Math.min(100, (sold / total) * 100))
   }, [selected?.initialSupply, selected?.purchasedQuantity])
 
-  // DEBUG opcional
   if (process.env.NODE_ENV !== 'production') {
     console.debug('[BuyTokens] selected snapshot', {
       selectedId,
@@ -142,7 +183,6 @@ export default function BuyTokens() {
   return (
     <div className="min-h-dvh flex flex-col bg-[#f0fcff]">
       <Header />
-
       <main className="flex-1">
         <div className="relative">
           {(authLoading || isLoading) && <LoadingOverlay />}
@@ -194,7 +234,7 @@ export default function BuyTokens() {
                   <TokenList
                     items={tokens}
                     selectedId={selectedId}
-                    onSelect={(it) => setSelectedId(it.id)}
+                    onSelect={handleSelect}
                     accentColor={accent}
                     neutralBorderColor={neutralItemBorder}
                     visibleRows={2}
@@ -216,7 +256,6 @@ export default function BuyTokens() {
                   activeTab={tab as 'buy' | 'benefits'}
                   onTabChange={(next) => setTab(next)}
                   onSuccessNavigateTo="/dashboard"
-                  // 👇 força on-chain para o fluxo USDC
                   forcedChainId={selectedOnchain?.chainId}
                   forcedSaleAddress={selectedOnchain?.saleAddress}
                 />

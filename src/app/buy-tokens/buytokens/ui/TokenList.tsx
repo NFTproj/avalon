@@ -10,7 +10,7 @@ export type TokenItem = {
   name: string
   project?: string
   logoUrl?: string
-  tags?: string[]          // se vier vazio/undefined, não renderizamos a seção
+  tags?: string[]
   price: number
   ticker?: string
 }
@@ -64,6 +64,8 @@ export default function TokenList({
     return <div className="text-sm text-gray-500 py-8 text-center">Nenhum token disponível no momento.</div>
   }
 
+  const SELECTED_BORDER = '#0b1a2b' // preto “do tema” que você já usa
+
   return (
     <ul
       ref={listRef}
@@ -74,8 +76,8 @@ export default function TokenList({
     >
       {items.map((it) => {
         const selected = it.id === selectedId
-        const borderColor = selected ? accentColor : neutralBorderColor
-        const bg = selected ? hexToRgba(accentColor, 0.06) : '#FFFFFF'
+        const borderColor = selected ? SELECTED_BORDER : neutralBorderColor
+        const bg = selected ? '#FFFFFF' : '#FFFFFF' // mantém branco
         const ringStyle: CSSWithRingVar = { ['--tw-ring-color']: borderColor }
 
         const tags = Array.isArray(it.tags) ? it.tags.slice(0, 3) : []
@@ -85,12 +87,13 @@ export default function TokenList({
             <button
               type="button"
               onClick={() => onSelect(it)}
-              className="w-full text-left rounded-2xl border bg-white shadow-sm transition hover:shadow-md focus:outline-none focus:ring-2"
+              className={`w-full text-left rounded-2xl border-2 bg-white shadow-sm transition
+                          hover:shadow-md focus:outline-none focus:ring-2`}
               style={{ borderColor, backgroundColor: bg }}
             >
               <div className="p-5 sm:p-6 flex items-center justify-between gap-4">
                 <div className="min-w-0 flex-1">
-                  {/* Título + ticker com # */}
+                  {/* Título + ticker */}
                   <div className="flex items-center gap-2">
                     <p className="text-sm font-semibold text-gray-900 truncate">{it.name}</p>
                     {!!it.ticker && (
@@ -100,14 +103,14 @@ export default function TokenList({
                     )}
                   </div>
 
-                  {/* Descrição opcional (off por padrão) */}
+                  {/* Descrição opcional */}
                   {showProject && it.project && (
                     <h3 className="text-base sm:text-lg font-semibold text-gray-900 mt-1 truncate">
                       {it.project}
                     </h3>
                   )}
 
-                  {/* Tags (só se vierem do backend) — texto sempre escuro */}
+                  {/* Tags */}
                   {tags.length > 0 && (
                     <div className="mt-3 flex flex-wrap gap-2">
                       {tags.map((tag, i) => (
@@ -122,7 +125,7 @@ export default function TokenList({
                   )}
                 </div>
 
-                {/* Logo preenchendo o círculo + preço opcional */}
+                {/* Preço + logo */}
                 <div className="flex items-center gap-3 shrink-0">
                   {showPrice && (
                     <p className="text-sm font-semibold text-right">
@@ -132,7 +135,7 @@ export default function TokenList({
                   )}
                   <div
                     className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full ring-2 overflow-hidden bg-white"
-                    style={ringStyle}
+                    style={{ ...ringStyle }}
                   >
                     {it.logoUrl ? (
                       <Image src={it.logoUrl} alt={it.name} fill className="object-cover" />
@@ -165,10 +168,10 @@ function hexToRgba(hex?: string, alpha = 0.08) {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`
 }
 
-/** chips pastel por posição; texto fica sempre escuro */
+/** chips pastel por posição */
 function chipClassByIndex(index: number) {
   const i = index % 3
-  if (i === 0) return 'bg-[#EAEFCB] border-[#C9D79B]' // oliva pastel
-  if (i === 1) return 'bg-[#D5FBF0] border-[#9EEFD9]' // mint pastel
-  return 'bg-[#E6F8F4] border-[#BFECE3]'              // aqua pastel
+  if (i === 0) return 'bg-[#EAEFCB] border-[#C9D79B]'
+  if (i === 1) return 'bg-[#D5FBF0] border-[#9EEFD9]'
+  return 'bg-[#E6F8F4] border-[#BFECE3]'
 }

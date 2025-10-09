@@ -248,7 +248,14 @@
         "password": "••••••••"
       },
       "button-back": "Back",
-      "button-login": "Login"
+      "button-login": "Login",
+      "login-option": "Or sign in with",
+    "walletButton": {
+      "signing": "Signing...",
+      "connecting": "Connecting...",
+      "connected": "Sign and continue",
+      "disconnected": "Choose wallet"
+      }
     },
     "metamask-register-login": {
     "counter": {
@@ -341,7 +348,7 @@
     "disclaimer": "Do not invest before knowing all essential information about the offering"
   },
   "tokensPage": {
-    "title": "Discover the best digital token opportunities today",
+    "title": "Discover the [[best digital token opportunities]] today",
     "subtitle": "The tokens you already know, the best opportunities, at your fingertips!",
     "filters": {
       "all": "All",
@@ -371,12 +378,20 @@
         "title": "Token Info"
       },
       "docs": {
-        "title": "Documents"
+        "title": "Documents",
+        "link1": "Twitter",
+        "link2": "Instagram",
+        "link3": "Termos de Uso ",
+        "link4": "Documentos",
+        "link5": "Politica de privacidade",
+        "link6": "Odr"
       },
       "benefits": {
         "title": "Benefits",
-        "rights": "Rights",
-        "risks": "Risks"
+        "cta": {
+          "type": "certificate",
+          "label": "Emitir certificado"
+        }
       }
     }
   },
@@ -434,5 +449,42 @@
       }
 
     }
-  }
+  },
+  "buyTokens": {
+  "page-title-fallback": "Buy Tokens",
+  "tab-buy": "Buy",
+  "tab-benefits": "Benefits",
+  "tab-orders": "Orders",
+  "available-tokens": "Available Tokens",
+  "load-error": "Failed to load tokens.",
+  "progress-zero": "0% sold",
+  "progress-empty": ""
+},
+"buyPanel": {
+  "title": "Buy {token}",
+  "unit-price-label": "Unit price",
+  "invest-label": "How much do you want to invest ({currency})",
+  "invest-placeholder": "Ex.: {min}",
+  "estimated-qty": "Estimated quantity",
+  "total": "Total",
+  "button-continue": "Continue",
+  "button-processing": "Processing…",
+  "limits": "Min.: {min} · Max.: {max}",
+  "error-min": "Minimum value is {min}",
+  "error-max": "Maximum value is {max}",
+  "unit-suffix": "unit",
+  "label-pay": "Pay",
+  "label-receive": "Receive",
+  "payment-method": "Payment method",
+  "pay-with-pix": "Buy with PIX",
+  "pay-with-usdc": "Buy with USDC",
+  "quote-prefix-pix": "You will pay (PIX):",
+  "quote-prefix-usdc": "You will pay (USDC):",
+  "cta-pix": "Buy with PIX",
+  "cta-usdc": "Buy with USDC"
+},
+"tokenList": {
+  "empty": "No tokens available at the moment.",
+  "unit-suffix": "unit"
+}
 }

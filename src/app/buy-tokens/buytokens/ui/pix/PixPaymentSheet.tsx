@@ -1,8 +1,10 @@
 'use client'
 
 import * as React from 'react'
+import { useContext } from 'react'
 import { ArrowLeft, Clipboard } from 'lucide-react'
 import PixPaymentStatement from './PixPaymentStatement'
+import { ConfigContext } from '@/contexts/ConfigContext'
 
 export type PixPaymentData = {
   paymentLink?: string
@@ -41,28 +43,51 @@ function brlFromMinor(v?: string | number) {
 const formatBRL = (n: number) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(n)
 const middleEllipsis = (s = '', keep = 24) => (s.length <= keep * 2 ? s : `${s.slice(0, keep)} *** ${s.slice(-keep)}`)
 
-/** Normaliza status vindo do back (numérico ou textual) */
+/** Cor de texto legível para um fundo dado (fallbacks inclusos) */
+function readableTextOn(bg?: string, dark = '#0b1a2b', light = '#FFFFFF') {
+  const h = (bg || '').trim()
+  const m = h.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i)
+  if (!m) return dark
+  const r = parseInt(m[1], 16), g = parseInt(m[2], 16), b = parseInt(m[3], 16)
+  const yiq = (r * 299 + g * 587 + b * 114) / 1000
+  return yiq >= 180 ? dark : light
+}
+
+/** Normaliza status vindo do back (numérico ou textual) p/ UI */
 function normalizeStatus(input?: unknown) {
+  // Enum recebido:
+  // 100 PENDING_TRANSFER
+  // 200 TRANSFERRED
+  // 300 FAILED
+  // 400 WAITING_PAYMENT
+  // 500 PENDING_TRANSFER_RETRY
+  // 600 PENDING_PAYMENT
+
   const raw = input ?? ''
-  // 1) Se vier número ou string numérica, usa o mapa por código
   const num = typeof raw === 'number' ? raw : Number(String(raw).trim())
+
   if (!Number.isNaN(num)) {
     switch (num) {
-      case 100: return 'WAITING_PAYMENT' // PENDING
-      case 200: return 'PROCESSING'
-      case 300: return 'CONFIRMED'      // COMPLETED
-      case 400: return 'FAILED'
-      case 500: return 'CANCELLED'
-      default:  break
+      case 400: // WAITING_PAYMENT
+      case 600: // PENDING_PAYMENT
+        return 'WAITING_PAYMENT'
+      case 100: // PENDING_TRANSFER
+      case 500: // PENDING_TRANSFER_RETRY
+        return 'PROCESSING'
+      case 200: // TRANSFERRED
+        return 'CONFIRMED'
+      case 300: // FAILED
+        return 'FAILED'
+      default:
+        break
     }
   }
-  // 2) Aliases textuais (fallback)
+
   const v = String(raw).trim().toUpperCase()
-  if (['WAITING_PAYMENT', 'PENDING', 'AWAITING', 'UNPAID', 'CREATED', 'PENDING_PAYMENT'].includes(v)) return 'WAITING_PAYMENT'
-  if (['PROCESSING', 'IN_PROCESS', 'IN_PROGRESS'].includes(v)) return 'PROCESSING'
-  if (['PAID', 'SETTLED', 'RECEIVED'].includes(v)) return 'PAID'
-  if (['CONFIRMED', 'SUCCESS', 'COMPLETED', 'CONFIRMED_ONCHAIN'].includes(v)) return 'CONFIRMED'
-  if (['FAILED', 'ERROR,', 'DENIED', 'REJECTED'].includes(v)) return 'FAILED'
+  if (['WAITING_PAYMENT', 'PENDING', 'AWAITING', 'UNPAID', 'CREATED', 'PENDING_PAYMENT', '600'].includes(v)) return 'WAITING_PAYMENT'
+  if (['PENDING_TRANSFER', 'PENDING_TRANSFER_RETRY', 'PAID', 'SETTLED', 'IN_PROCESS', 'IN_PROGRESS', '100', '500'].includes(v)) return 'PROCESSING'
+  if (['TRANSFERRED', 'CONFIRMED', 'SUCCESS', 'COMPLETED', 'CONFIRMED_ONCHAIN', '200'].includes(v)) return 'CONFIRMED'
+  if (['FAILED', 'ERROR', 'DENIED', 'REJECTED', '300'].includes(v)) return 'FAILED'
   if (['CANCELLED', 'CANCELED', 'VOIDED'].includes(v)) return 'CANCELLED'
   return 'PROCESSING'
 }
@@ -83,11 +108,23 @@ export default function PixPaymentSheet({
   expiresInMs = 15 * 60 * 1000,
   onViewOrders,
   onNewPurchase,
-  ctaBgEnabled = '#19C3F0',
-  ctaTextEnabled = '#0b1a2b',
+  ctaBgEnabled,
+  ctaTextEnabled,
 }: Props) {
-  const [view, setView] = React.useState<'pix' | 'statement'>('pix')
+  const { colors } = useContext(ConfigContext)
 
+  // ===== tema (com overrides por props) =====
+  const themeAccent  = colors?.colors?.['color-primary'] ?? '#19C3F0'
+  const themeBorder  = colors?.border?.['border-primary'] ?? themeAccent
+  const themeBtnBg   = (colors?.buttons as Record<string, string> | undefined)?.['button-primary'] ?? themeAccent
+
+  const usedAccent   = accentColor ?? themeAccent
+  const usedBorder   = borderColor ?? themeBorder
+  const usedCtaBg    = ctaBgEnabled ?? themeBtnBg
+  const usedCtaText  = ctaTextEnabled ?? readableTextOn(usedCtaBg)
+
+  // ===== estado local =====
+  const [view, setView] = React.useState<'pix' | 'statement'>('pix')
   const [deadline] = React.useState(() => Date.now() + expiresInMs)
   const [now, setNow] = React.useState(() => Date.now())
   const [copied, setCopied] = React.useState(false)
@@ -129,8 +166,6 @@ export default function PixPaymentSheet({
 
       const payment = extractPayment(json)
 
-      console.log('[PIX status raw]', payment?.status, payment)
-
       if (!res.ok) {
         throw new Error(json?.error || json?.message || `Falha ao consultar (${res.status})`)
       }
@@ -164,14 +199,14 @@ export default function PixPaymentSheet({
           status: statusNorm,
           ticker: order.ticker ?? order.tokenTicker ?? order.tickerSymbol ?? 'UND',
         }}
-        accentColor={accentColor}
-        borderColor={borderColor}
+        accentColor={usedAccent}
+        borderColor={usedBorder}
         onViewOrders={!waiting ? onViewOrders : undefined}
         onNewPurchase={!waiting ? (onNewPurchase ?? onBack) : undefined}
         onShowPixDetails={waiting ? () => setView('pix') : undefined}
         onCancelPendingPayment={waiting ? cancelAndNew : undefined}
-        ctaBg={ctaBgEnabled}
-        ctaText={ctaTextEnabled}
+        ctaBg={usedCtaBg}
+        ctaText={usedCtaText}
       />
     )
   }
@@ -180,17 +215,21 @@ export default function PixPaymentSheet({
   const ctaEnabled = !isExpired && canCheckTime && !checking
 
   return (
-    <div className="rounded-2xl bg-white p-5 border-2" style={{ borderColor }}>
+    <div className="rounded-2xl bg-white p-5 border-2" style={{ borderColor: usedBorder }}>
       <div className="mb-4 flex items-start justify-between">
-        <h3 className="text-lg font-semibold" style={{ color: accentColor }}>Pague com PIX</h3>
-        <button type="button" onClick={onBack} className="inline-flex items-center gap-1 text-sm text-gray-600 hover:text-gray-800">
+        <h3 className="text-lg font-semibold" style={{ color: usedAccent }}>Pague com PIX</h3>
+        <button
+          type="button"
+          onClick={onBack}
+          className="inline-flex items-center gap-1 text-sm text-gray-600 hover:text-gray-800"
+        >
           <ArrowLeft size={16} /> Voltar
         </button>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-[320px_minmax(0,1fr)] gap-6">
         <div className="flex flex-col items-center">
-          <div className="rounded-xl border bg-white p-3" style={{ borderColor, width: QR_SIZE + 24, height: QR_SIZE + 24 }}>
+          <div className="rounded-xl border bg-white p-3" style={{ borderColor: usedBorder, width: QR_SIZE + 24, height: QR_SIZE + 24 }}>
             {imgSrc
               ? <img src={imgSrc} alt="QR Code PIX" style={{ width: QR_SIZE, height: QR_SIZE }} className="object-contain" />
               : <div className="grid place-items-center text-gray-400" style={{ width: QR_SIZE, height: QR_SIZE }}>QR indisponível</div>}
@@ -221,7 +260,7 @@ export default function PixPaymentSheet({
 
           <div
             className="w-full rounded-lg border bg-gray-50 p-3 text-sm text-gray-800 font-mono break-all select-all"
-            style={{ borderColor }}
+            style={{ borderColor: usedBorder }}
             title={data.brCode || ''}
           >
             {middleEllipsis(data.brCode, 24) || '—'}
@@ -249,9 +288,9 @@ export default function PixPaymentSheet({
               disabled={!ctaEnabled}
               className="inline-flex items-center justify-center rounded-lg px-3 py-2 text-sm font-semibold transition"
               style={{
-                backgroundColor: ctaEnabled ? ctaBgEnabled : '#e5e7eb',
-                color: ctaEnabled ? ctaTextEnabled : '#6b7280',
-                border: `2px solid ${borderColor}`,
+                backgroundColor: ctaEnabled ? usedCtaBg : '#e5e7eb',
+                color: ctaEnabled ? usedCtaText : '#6b7280',
+                border: `2px solid ${usedBorder}`,
                 opacity: checking ? .6 : 1,
                 cursor: ctaEnabled ? 'pointer' : 'not-allowed'
               }}
@@ -276,7 +315,7 @@ export default function PixPaymentSheet({
           align-items: center;
           gap: .35rem;
           cursor: pointer;
-          color: ${accentColor} !important;
+          color: ${usedAccent} !important;
           font-weight: 700;
           font-size: .9rem;
         }

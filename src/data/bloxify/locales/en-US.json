@@ -362,7 +362,12 @@
       "button-back": "Back",
       "button-login": "Login",
       "login-option": "Or sign in with",
-      "login-metamask": "Select Wallet"
+    "walletButton": {
+      "signing": "Signing...",
+      "connecting": "Connecting...",
+      "connected": "Sign and continue",
+      "disconnected": "Choose wallet"
+      }
     },
     "metamask-register-login": {
       "counter": {
@@ -475,7 +480,7 @@
     "disclaimer": "Do not invest before knowing all essential information about the offering"
   },
   "tokensPage": {
-    "title": "Discover the best digital token opportunities today",
+    "title": "Discover the [[best digital token opportunities]] today",
     "subtitle": "The tokens you already know, the best opportunities, at your fingertips!",
     "filters": {
       "all": "All",
@@ -611,7 +616,7 @@
     "error-min": "Minimum amount is {min}",
     "error-max": "Maximum amount is {max}",
     "unit-suffix": "units",
-
+    "payment-method": "Payment method",
     "pay-with-pix": "Buy with PIX",
     "pay-with-usdc": "Buy with USDC",
     "quote-prefix-pix": "You will pay (PIX):",
