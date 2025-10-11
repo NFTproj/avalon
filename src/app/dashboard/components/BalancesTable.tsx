@@ -1,16 +1,16 @@
 "use client"
 
-import { useMemo, useContext, useState } from "react"
-import { useUser } from "@/hooks/useUser"
+import { useMemo, useContext, useState, useEffect } from "react"
+import { useAuth } from "@/contexts/AuthContext"
 import { ConfigContext } from "@/contexts/ConfigContext"
+import { useUserTokenBalances } from "@/hooks/useUserTokenBalances"
+import { getAllCards } from "@/lib/api/cards"
+import { Card } from "@/types/card"
 
 interface BalanceItem {
   id: string
   name: string
   ticker?: string
-  status?: string
-  tags?: string[]
-  launchDate?: string
   logoUrl?: string
   CardBlockchainData?: {
     tokenAddress?: string
@@ -23,12 +23,73 @@ interface BalanceItem {
 
 export default function BalancesTable({ className = "" }: { className?: string }) {
   const { colors } = useContext(ConfigContext)
-  const { user } = useUser()
+  const { user } = useAuth()
+  const [cards, setCards] = useState<Card[]>([])
+  const [loadingCards, setLoadingCards] = useState(true)
 
+  // Buscar cards da API
+  useEffect(() => {
+    const fetchCards = async () => {
+      try {
+        setLoadingCards(true)
+        const response = await getAllCards()
+        if (response.data && Array.isArray(response.data)) {
+          const validCards = response.data
+            .filter((card: any) => card.cardBlockchainData?.tokenAddress)
+            .map((card: any) => ({
+              id: card.id,
+              name: card.name,
+              status: card.status as 'ACTIVE' | 'INACTIVE',
+              CardBlockchainData: {
+                tokenAddress: card.cardBlockchainData.tokenAddress as `0x${string}`,
+                tokenNetwork: card.cardBlockchainData.network || 'polygon',
+                tokenChainId: card.cardBlockchainData.tokenChainId || 137,
+                tokenPrice: String(card.cardBlockchainData.tokenPrice || '1.00'),
+              }
+            }))
+          setCards(validCards)
+        }
+      } catch (error) {
+        console.error('Erro ao buscar cards:', error)
+      } finally {
+        setLoadingCards(false)
+      }
+    }
+
+    fetchCards()
+  }, [])
+
+  // Buscar saldos reais da blockchain
+  const { assets, loading: loadingBalances } = useUserTokenBalances(
+    cards,
+    user?.walletAddress as `0x${string}` | undefined
+  )
+
+  // Converter assets para o formato esperado pela tabela
   const balances = useMemo<BalanceItem[]>(() => {
-    const list = (user?.balances ?? []) as BalanceItem[]
-    return Array.isArray(list) ? list : []
-  }, [user])
+    if (!assets || assets.length === 0) return []
+    
+    return assets
+      .filter(asset => {
+        const balance = Number(asset.balanceRaw) / Math.pow(10, asset.decimals)
+        return balance > 0 // Mostrar apenas tokens com saldo
+      })
+      .map(asset => {
+        const balance = Number(asset.balanceRaw) / Math.pow(10, asset.decimals)
+        
+        // Buscar informações adicionais do card original
+        const apiCard = cards.find(c => c.id === asset.card.id)
+        
+        return {
+          id: asset.card.id,
+          name: asset.card.name,
+          ticker: asset.symbol,
+          logoUrl: (apiCard as any)?.logoUrl,
+          CardBlockchainData: asset.card.CardBlockchainData,
+          balance: balance
+        }
+      })
+  }, [assets, cards])
 
   // Paginação simples client-side
   const [page, setPage] = useState(1)
@@ -51,6 +112,8 @@ export default function BalancesTable({ className = "" }: { className?: string }
   const tableHeaderBg = 'rgba(64, 64, 64, 0.15)' // mesma cor com ~15%
   const tableBodyBg = '#FFFFF2'
 
+  const isLoading = loadingCards || loadingBalances
+
   if (!user) {
     return (
       <div className={`w-full ${className}`}>
@@ -61,11 +124,21 @@ export default function BalancesTable({ className = "" }: { className?: string }
     )
   }
 
+  if (isLoading) {
+    return (
+      <div className={`w-full ${className}`}>
+        <div className="p-6 bg-white rounded-lg shadow-md border border-gray-200 text-center">
+          <p className="text-sm text-gray-600">Carregando seus tokens...</p>
+        </div>
+      </div>
+    )
+  }
+
   if (!balances || balances.length === 0) {
     return (
       <div className={`w-full ${className}`}>
         <div className="p-6 bg-white rounded-lg shadow-md border border-gray-200 text-center">
-          <p className="text-sm text-gray-600">Nenhum balance encontrado.</p>
+          <p className="text-sm text-gray-600">Você ainda não possui tokens na sua carteira.</p>
         </div>
       </div>
     )

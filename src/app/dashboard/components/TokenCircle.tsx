@@ -2,7 +2,6 @@
 
 import { ResponsiveContainer, PieChart, Pie, Cell, Sector } from 'recharts';
 import { useAuth } from '@/contexts/AuthContext';
-import { useUser } from '@/hooks/useUser';
 import { useUserTokenBalances } from '@/hooks/useUserTokenBalances';
 import { getAllCards } from '@/lib/api/cards';
 import { Card } from '@/types/card';
@@ -10,8 +9,8 @@ import { useEffect, useState } from 'react';
 
 interface TokenCircleProps {
   tokens: { name: string; price: number; color: string }[];
-  show: boolean; 
-  toggleShow: () => void; 
+  show: boolean;
+  toggleShow: () => void;
 }
 
 // Tipos fortes para itens do gráfico
@@ -23,10 +22,9 @@ type ChartItem = {
   unitValue: number;
 }
 
-// Dados de fallback para quando não há tokens reais
+// Dados de fallback para quando não há tokens reais (visual neutro)
 const fallbackData: ChartItem[] = [
-  { name: '#TBIO', price: 500, balance: 50, color: '#80ffa0', unitValue: 10 },
-  { name: '#TBIO2', price: 500, balance: 50, color: '#00ffcc', unitValue: 10 },
+  { name: 'Sem tokens', price: 1, balance: 0, color: '#e5e7eb', unitValue: 0 },
 ];
 
 // Helper para suavizar cor (mistura com branco)
@@ -48,7 +46,7 @@ function lightenColor(hex: string, factor = 0.25) {
 // Converter API Card para Card interno
 const convertApiCardToCard = (apiCard: any): Card | null => {
   if (!apiCard.cardBlockchainData?.tokenAddress) return null;
-  
+
   return {
     id: apiCard.id,
     name: apiCard.name,
@@ -74,7 +72,6 @@ const getChainIdFromNetwork = (network: string): number => {
 
 export default function TokenCircle({ tokens, show, toggleShow }: TokenCircleProps) {
   const { user } = useAuth();
-  const { user: mockUser } = useUser();
   const [cards, setCards] = useState<Card[]>([]);
   const [usingFallback, setUsingFallback] = useState(false);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
@@ -88,7 +85,7 @@ export default function TokenCircle({ tokens, show, toggleShow }: TokenCirclePro
           const convertedCards = response.data
             .map(convertApiCardToCard)
             .filter((card): card is Card => card !== null);
-          
+
           if (convertedCards.length > 0) {
             setCards(convertedCards);
             setUsingFallback(false);
@@ -113,40 +110,34 @@ export default function TokenCircle({ tokens, show, toggleShow }: TokenCirclePro
     user?.walletAddress as `0x${string}` | undefined
   );
 
-  // Gerar dados para o gráfico: prioriza dados reais; depois /api/me; por fim fallback
+  // Gerar dados para o gráfico: usa dados reais da blockchain ou fallback
   const generateChartData = (): ChartItem[] => {
     const colors = ['#80ffa0', '#00ffcc', '#0080ff', '#ff8000', '#ff0080', '#aa66ff', '#66ffaa'];
 
     if (assets && assets.length > 0) {
-      return assets.map((asset, index): ChartItem => {
+      // Filtrar apenas assets com saldo > 0
+      const assetsWithBalance = assets.filter(asset => {
         const balance = Number(asset.balanceRaw) / Math.pow(10, asset.decimals);
-        const unitValue = parseFloat(asset.card?.CardBlockchainData?.tokenPrice || '1.00');
-        const totalValue = balance * unitValue;
-        return {
-          name: asset.symbol || 'TKN',
-          price: totalValue,
-          color: colors[index % colors.length],
-          balance,
-          unitValue,
-        };
+        return balance > 0;
       });
+
+      if (assetsWithBalance.length > 0) {
+        return assetsWithBalance.map((asset, index): ChartItem => {
+          const balance = Number(asset.balanceRaw) / Math.pow(10, asset.decimals);
+          const unitValue = parseFloat(asset.card?.CardBlockchainData?.tokenPrice || '1.00');
+          const totalValue = balance * unitValue;
+          return {
+            name: asset.symbol || 'TKN',
+            price: totalValue,
+            color: colors[index % colors.length],
+            balance,
+            unitValue,
+          };
+        });
+      }
     }
 
-    if (mockUser?.balances && mockUser.balances.length > 0) {
-      return mockUser.balances.map((b: any, index: number): ChartItem => {
-        const balance = Number(b.balance) || 0;
-        const unitValue = parseFloat(b.CardBlockchainData?.tokenPrice || '1.00');
-        const totalValue = balance * unitValue;
-        return {
-          name: b.ticker || b.name || `TOKEN_${index + 1}`,
-          price: totalValue,
-          color: colors[index % colors.length],
-          balance,
-          unitValue,
-        };
-      });
-    }
-
+    // Retornar fallback apenas se não houver dados reais
     return fallbackData;
   };
 
@@ -159,7 +150,13 @@ export default function TokenCircle({ tokens, show, toggleShow }: TokenCirclePro
   }));
 
   const totalTokenBalance: number = chartData.reduce((sum: number, item: ChartItem) => sum + item.balance, 0);
-  const showingExample = (!assets || assets.length === 0) && (!mockUser?.balances || mockUser.balances.length === 0);
+
+  // Verificar se está mostrando dados reais ou exemplo
+  const hasRealData = assets && assets.length > 0 && assets.some(asset => {
+    const balance = Number(asset.balanceRaw) / Math.pow(10, asset.decimals);
+    return balance > 0;
+  });
+  const showingExample = !hasRealData;
 
   const renderActiveShape = (props: any) => {
     const RADIAN = Math.PI / 180;
@@ -280,20 +277,30 @@ export default function TokenCircle({ tokens, show, toggleShow }: TokenCirclePro
         </PieChart>
       </ResponsiveContainer>
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-        <p className="text-xl font-bold text-gray-800">
-          {show ? `R$ ${totalPrice.toFixed(2)}` : 'R$ ******'}
-        </p>
-        <p className="text-sm text-gray-600">
-          {showingExample ? 'Total Investido (Exemplo)' : 'Total Investido'}
-        </p>
-        <p className="text-xs text-gray-600 mt-1">
-          {showingExample ? 'Total de Tokens (Exemplo): ' : 'Total de Tokens: '}
-          {totalTokenBalance.toLocaleString('pt-BR')}
-        </p>
-        {showingExample && (
-          <p className="text-xs text-yellow-600 mt-1">
-            Dados de exemplo
-          </p>
+        {showingExample ? (
+          <>
+            <p className="text-lg font-semibold text-gray-500 mb-2">
+              Nenhum token encontrado
+            </p>
+            <p className="text-xs text-gray-500">
+              Compre tokens para ver
+            </p>
+            <p className="text-xs text-gray-500">
+              seu portfólio aqui
+            </p>
+          </>
+        ) : (
+          <>
+            <p className="text-xl font-bold text-gray-800">
+              {show ? `R$ ${totalPrice.toFixed(2)}` : 'R$ ******'}
+            </p>
+            <p className="text-sm text-gray-600">
+              Total Investido
+            </p>
+            <p className="text-xs text-gray-600 mt-1">
+              Total de Tokens: {totalTokenBalance.toLocaleString('pt-BR')}
+            </p>
+          </>
         )}
       </div>
     </div>
