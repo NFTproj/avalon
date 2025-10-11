@@ -65,12 +65,12 @@ export default function CertificateEmission() {
           {/* Título */}
           <div className="text-center mb-8">
             <h1
-              className="mb-4"
+              className="mb-4 px-4"
               style={{
                 fontFamily: 'Inter, sans-serif',
                 fontWeight: 700,
-                fontSize: '65px',
-                lineHeight: '72px',
+                fontSize: 'clamp(32px, 8vw, 65px)',
+                lineHeight: 'clamp(36px, 9vw, 72px)',
                 letterSpacing: '-1px',
                 textAlign: 'center',
                 color: colors?.colors?.['color-primary'] || '#19C3F0'
@@ -79,12 +79,12 @@ export default function CertificateEmission() {
               Emissão de certificado
             </h1>
             <p
-              className="text-gray-600"
+              className="text-gray-600 px-4"
               style={{
                 fontFamily: 'Inter, sans-serif',
                 fontWeight: 400,
-                fontSize: '36px',
-                lineHeight: '32px',
+                fontSize: 'clamp(16px, 4vw, 36px)',
+                lineHeight: 'clamp(24px, 5vw, 32px)',
                 letterSpacing: '0px',
                 textAlign: 'center'
               }}

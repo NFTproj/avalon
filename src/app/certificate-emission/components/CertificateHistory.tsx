@@ -279,64 +279,113 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
             return (
               <div
                 key={cert.id}
-                className="bg-white rounded-2xl border border-gray-200 p-6 flex items-center gap-6 hover:shadow-lg transition-shadow"
+                className="bg-white rounded-2xl border border-gray-200 p-4 md:p-6 hover:shadow-lg transition-shadow"
               >
-                {/* Logo */}
-                <div className="flex-shrink-0">
-                  {cert.cardLogoUrl ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={cert.cardLogoUrl}
-                      alt={cert.cardName}
-                      className="w-32 h-24 object-cover rounded-xl"
-                    />
-                  ) : (
-                    <div className="w-32 h-24 bg-gray-200 rounded-xl" />
-                  )}
-                </div>
+                {/* Título do Card - Mobile */}
+                <h3 className="text-base md:text-lg font-semibold text-gray-700 mb-3 md:hidden">
+                  {cert.cardName}
+                </h3>
 
-                {/* Informações */}
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    {cert.cardName}
-                  </h3>
-                  <p className="text-sm text-gray-600 mb-2">
-                    Emitido em: {cert.emittedAt}
-                  </p>
-                  
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className="text-sm text-gray-600">Status:</span>
-                    <span
-                      className="inline-block px-3 py-1 rounded-full text-xs font-medium"
-                      style={{
-                        backgroundColor: statusBadge.bg,
-                        color: statusBadge.text
-                      }}
-                    >
-                      {statusBadge.label}
-                    </span>
+                {/* Conteúdo Principal */}
+                <div className="flex gap-4 md:gap-6 md:items-center">
+                  {/* Logo */}
+                  <div className="flex-shrink-0">
+                    {cert.cardLogoUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={cert.cardLogoUrl}
+                        alt={cert.cardName}
+                        className="w-20 h-20 md:w-32 md:h-24 object-cover rounded-xl"
+                      />
+                    ) : (
+                      <div className="w-20 h-20 md:w-32 md:h-24 bg-gray-200 rounded-xl" />
+                    )}
                   </div>
 
-                  {cert.certificateId && (
-                    <p className="text-sm text-gray-600 mb-1">
-                      ID: {cert.certificateId}
+                  {/* Informações */}
+                  <div className="flex-1 min-w-0">
+                    {/* Título - Desktop */}
+                    <h3 className="hidden md:block text-lg font-semibold text-gray-900 mb-2">
+                      {cert.cardName}
+                    </h3>
+
+                    <p className="text-xs md:text-sm text-gray-600 mb-1 md:mb-2">
+                      Emitido em: {cert.emittedAt}
                     </p>
-                  )}
-                  
-                  <p className="text-sm text-gray-600">
-                    Quantidade usada: {cert.quantity.toLocaleString('pt-BR')}
-                  </p>
+                    
+                    <div className="flex flex-wrap items-center gap-2 mb-1 md:mb-2">
+                      <span className="text-xs md:text-sm text-gray-600">Status:</span>
+                      <span
+                        className="inline-block px-2 md:px-3 py-1 rounded-md text-xs font-medium"
+                        style={{
+                          backgroundColor: statusBadge.bg,
+                          color: statusBadge.text
+                        }}
+                      >
+                        {statusBadge.label}
+                      </span>
+                    </div>
+
+                    {cert.certificateId && (
+                      <p className="text-xs md:text-sm text-gray-600 mb-1">
+                        ID: {cert.certificateId}
+                      </p>
+                    )}
+                    
+                    <p className="text-xs md:text-sm text-gray-600">
+                      Quantidade usada: {cert.quantity.toLocaleString('pt-BR')}
+                    </p>
+                  </div>
+
+                  {/* Ações - Desktop */}
+                  <div className="hidden md:block md:flex-shrink-0">
+                    {cert.status === 'emitido' && (
+                      <button
+                        onClick={() => handleDownload(cert)}
+                        className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-white text-base font-medium transition-all hover:shadow-lg whitespace-nowrap"
+                        style={{ backgroundColor: accentColor }}
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76" />
+                        </svg>
+                        Solicitar Reenvio
+                      </button>
+                    )}
+                    {cert.status === 'pendente' && (
+                      <button
+                        className="flex items-center justify-center gap-2 px-6 py-3 bg-gray-200 text-gray-600 rounded-xl text-base font-medium cursor-not-allowed"
+                        disabled
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Pendente
+                      </button>
+                    )}
+                    {cert.status === 'falha' && (
+                      <button
+                        onClick={() => handleReemit(cert)}
+                        className="px-6 py-3 border-2 rounded-xl text-base font-medium transition-all hover:bg-cyan-50"
+                        style={{ 
+                          borderColor: accentColor,
+                          color: accentColor
+                        }}
+                      >
+                        Reemitir
+                      </button>
+                    )}
+                  </div>
                 </div>
 
-                {/* Ações */}
-                <div className="flex-shrink-0">
+                {/* Ações - Mobile (abaixo do conteúdo) */}
+                <div className="mt-3 flex justify-end md:hidden">
                   {cert.status === 'emitido' && (
                     <button
                       onClick={() => handleDownload(cert)}
-                      className="flex items-center gap-2 px-6 py-3 rounded-xl text-white font-medium transition-all hover:shadow-lg"
+                      className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-white text-sm font-medium transition-all hover:shadow-lg"
                       style={{ backgroundColor: accentColor }}
                     >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76" />
                       </svg>
                       Solicitar Reenvio
@@ -344,10 +393,10 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
                   )}
                   {cert.status === 'pendente' && (
                     <button
-                      className="flex items-center gap-2 px-6 py-3 bg-gray-200 text-gray-600 rounded-xl font-medium cursor-not-allowed"
+                      className="flex items-center justify-center gap-2 px-4 py-2 bg-gray-200 text-gray-600 rounded-xl text-sm font-medium cursor-not-allowed"
                       disabled
                     >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                       Pendente
@@ -356,7 +405,7 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
                   {cert.status === 'falha' && (
                     <button
                       onClick={() => handleReemit(cert)}
-                      className="px-6 py-3 border-2 rounded-xl font-medium transition-all hover:bg-cyan-50"
+                      className="px-4 py-2 border-2 rounded-xl text-sm font-medium transition-all hover:bg-cyan-50"
                       style={{ 
                         borderColor: accentColor,
                         color: accentColor
