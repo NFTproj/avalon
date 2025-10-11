@@ -80,6 +80,7 @@ export default function TokenDetailsPage() {
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-100 flex items-center justify-center">
               <AlertCircle className="w-8 h-8 text-red-600" />
             </div>
+
             <h2 className="text-xl font-semibold mb-2 text-gray-800">Erro ao Carregar Token</h2>
             <p className="text-gray-600 mb-4">{String(error)}</p>
             <div className="flex gap-3 justify-center">
