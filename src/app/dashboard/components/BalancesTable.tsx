@@ -155,8 +155,20 @@ export default function BalancesTable({ className = "" }: { className?: string }
                   {/* Ações */}
                   <td className="px-6 py-4">
                     <div className="flex justify-end gap-3 whitespace-nowrap">
-                      <button className="text-sm hover:underline" style={{ color: tableTextColor }}>Comprar</button>
-                      <button className="text-sm hover:underline" style={{ color: tableTextColor }}>Vender</button>
+                      <button 
+                        className="text-sm hover:underline" 
+                        style={{ color: tableTextColor }}
+                        onClick={() => window.location.href = `/buy-tokens?token=${b.id}`}
+                      >
+                        Comprar
+                      </button>
+                      <button 
+                        className="text-sm hover:underline" 
+                        style={{ color: tableTextColor }}
+                        onClick={() => window.location.href = `/certificate-emission?cardId=${b.id}`}
+                      >
+                        Vender
+                      </button>
                     </div>
                   </td>
                 </tr>
