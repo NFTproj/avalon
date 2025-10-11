@@ -77,12 +77,12 @@ export default function TokenCircle({ show }: TokenCircleProps) {
     });
   }, [user]);
 
-  const totalPrice: number = useMemo(() => 
+  const totalPrice: number = useMemo(() =>
     chartData.reduce((sum: number, item: ChartItem) => sum + item.price, 0),
     [chartData]
   );
 
-  const proportionalData: (ChartItem & { value: number })[] = useMemo(() => 
+  const proportionalData: (ChartItem & { value: number })[] = useMemo(() =>
     chartData.map((item: ChartItem) => ({
       ...item,
       value: totalPrice > 0 ? (item.price / totalPrice) * 100 : 0,
@@ -90,13 +90,13 @@ export default function TokenCircle({ show }: TokenCircleProps) {
     [chartData, totalPrice]
   );
 
-  const totalTokenBalance: number = useMemo(() => 
+  const totalTokenBalance: number = useMemo(() =>
     chartData.reduce((sum: number, item: ChartItem) => sum + item.balance, 0),
     [chartData]
   );
 
   // Verificar se está mostrando dados reais ou exemplo
-  const showingExample = useMemo(() => 
+  const showingExample = useMemo(() =>
     !user?.balances || user.balances.length === 0 || user.balances.every((b: any) => b.balance <= 0),
     [user]
   );
