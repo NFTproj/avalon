@@ -86,15 +86,56 @@ export async function resendCode(payload: ResendCodePayload) {
 }
 
 
-export async function refreshAccess() {
-  const res = await fetch('/api/auth/refresh', {
-    method: 'POST',
-    credentials: 'include',
-  })
-  if (!res.ok) throw new Error('Falha no refresh')
+// Mutex para evitar múltiplas chamadas simultâneas de refresh
+let refreshPromise: Promise<void> | null = null;
 
-  await res.json()
-  mutateUser()               // revalida /api/auth/me
+export async function refreshAccess() {
+  // Se já existe um refresh em andamento, reutiliza a mesma promise
+  if (refreshPromise) {
+    console.log('[refreshAccess] Refresh já em andamento, aguardando...');
+    return refreshPromise;
+  }
+
+  console.log('[refreshAccess] Iniciando refresh do token...');
+  
+  refreshPromise = (async () => {
+    try {
+      const res = await fetch('/api/auth/refresh', {
+        method: 'POST',
+        credentials: 'include',
+      });
+
+      if (!res.ok) {
+        const error = await res.json().catch(() => ({ error: 'Erro desconhecido' }));
+        console.error('[refreshAccess] Falha no refresh:', error);
+        
+        // Se refresh token expirou ou é inválido, redirecionar para login
+        if (res.status === 401) {
+          console.warn('[refreshAccess] Refresh token inválido, redirecionando para login...');
+          // Limpar cookies localmente
+          document.cookie = 'accessToken=; path=/; max-age=0';
+          document.cookie = 'refreshToken=; path=/; max-age=0';
+          
+          // Redirecionar após um pequeno delay
+          setTimeout(() => {
+            window.location.href = '/login';
+          }, 500);
+        }
+        
+        throw new Error(error.error || 'Falha no refresh');
+      }
+
+      await res.json();
+      console.log('[refreshAccess] Token renovado com sucesso');
+      
+      mutateUser(); // revalida /api/auth/me
+    } finally {
+      // Limpa o mutex após completar (sucesso ou erro)
+      refreshPromise = null;
+    }
+  })();
+
+  return refreshPromise;
 }
 
 export interface MetamaskRegisterPayload {
