@@ -1,5 +1,7 @@
 // src/lib/api/cards.ts
 
+import { apiFetch } from './fetcher'
+
 export interface CardBlockchainData {
     tokenName: string
     tokenSymbol: string
@@ -22,12 +24,6 @@ export interface CardBlockchainData {
   }
   
   export async function getAllCards(): Promise<GetCardsResponse> {
-    const res = await fetch('/api/cards', {
-      method: 'GET',
-      credentials: 'include',
-    })
-  
-    if (!res.ok) throw new Error('Erro ao buscar cards')
-    return await res.json()
+    return apiFetch<GetCardsResponse>('/api/cards')
   }
   

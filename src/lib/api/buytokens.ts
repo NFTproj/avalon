@@ -1,5 +1,7 @@
 // src/lib/api/payments.ts
 
+import { apiFetch } from './fetcher'
+
 /** Payload que vamos enviar para a rota interna /api/payments/pix */
 export interface PixPaymentPayload {
   cardId: string;            // id do card
@@ -31,19 +33,10 @@ export async function buyWithPix(payload: PixPaymentPayload): Promise<PixPayment
     ...(payload.network ? { network: payload.network } : {}),
   };
 
-  // ← ajuste AQUI para bater com a pasta pix/route.ts
-  const res = await fetch('/api/payments', {
+  return apiFetch<PixPaymentResponse>('/api/payments', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',    // mantém cookies (accessToken)
     body: JSON.stringify(body),
   });
-
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) {
-    throw new Error(data?.error || data?.message || `Falha ao gerar PIX (${res.status})`);
-  }
-  return data as PixPaymentResponse;
 }
 
 export function qrBase64ToDataUrl(b64?: string) {
