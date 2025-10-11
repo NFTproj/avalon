@@ -26,7 +26,19 @@ export interface AuthUser {
   kycStatus: 'pending' | 'approved' | 'rejected';
   kycStatusCode?: number;  
   permissions: string[];
-  
+  balances?: Array<{
+    id: string;
+    name: string;
+    ticker?: string;
+    logoUrl?: string;
+    CardBlockchainData?: {
+      tokenAddress?: string;
+      tokenNetwork?: string;
+      tokenChainId?: number;
+      tokenPrice?: string;
+    };
+    balance: number;
+  }>;
 }
 
 interface MeResponse {

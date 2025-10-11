@@ -1,10 +1,11 @@
 'use client'
 
-import { useContext } from 'react'
+import { useContext, useMemo } from 'react'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import { useAuth } from '@/contexts/AuthContext'
 import Link from 'next/link'
 import Carousel from './Carousel'
+import { KycStatusCode, getKycStatusInfo } from '@/types/kyc'
 
 export default function WelcomeBox() {
   const { colors, texts } = useContext(ConfigContext)
@@ -24,21 +25,17 @@ export default function WelcomeBox() {
     return `${address.slice(0, 6)}...${address.slice(-4)}`
   }
 
-  // Definir status KYC com cores
-  const getKycStatusInfo = (status: string) => {
-    switch (status) {
-      case 'approved':
-        return { text: 'KYC Aprovado', color: '#10B981' }
-      case 'rejected':
-        return { text: 'KYC Rejeitado', color: '#EF4444' }
-      case 'pending':
-        return { text: 'KYC Pendente', color: '#F59E0B' }
-      default:
-        return { text: 'KYC Não Iniciado', color: '#6B7280' }
+  // Obter informações do status KYC usando o enum
+  const kycInfo = useMemo(() => {
+    const status = user?.kycStatusCode ?? user?.kycStatus;
+    if (typeof status === 'number') {
+      return getKycStatusInfo(status);
     }
-  }
-
-  const kycInfo = user?.kycStatus ? getKycStatusInfo(user.kycStatus) : null
+    if (typeof status === 'string') {
+      return getKycStatusInfo(Number(status) || KycStatusCode.NOT_STARTED);
+    }
+    return null;
+  }, [user]);
 
   return (
     <div className="relative w-full flex justify-center items-center">
@@ -108,13 +105,15 @@ export default function WelcomeBox() {
           
           {/* Links de ação baseados no status do usuário */}
           <div className="flex flex-col gap-3">
-            {user?.kycStatus !== 'approved' && (
+            {kycInfo && kycInfo.code !== KycStatusCode.APPROVED && (
               <Link
                 href="/kyc"
                 className="inline-block text-sm font-semibold underline break-words hover:opacity-80 transition-opacity"
                 style={{ color: linkColor }}
               >
-                {user?.kycStatus === 'pending' ? 'Verificar Status do KYC' : 'Complete sua Verificação KYC'}
+                {kycInfo.code === KycStatusCode.IN_PROGRESS || kycInfo.code === KycStatusCode.REVIEW
+                  ? 'Verificar Status do KYC'
+                  : 'Complete sua Verificação KYC'}
               </Link>
             )}
             

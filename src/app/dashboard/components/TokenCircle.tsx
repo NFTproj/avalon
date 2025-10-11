@@ -1,11 +1,9 @@
 'use client';
 
+import { useMemo } from 'react';
 import { ResponsiveContainer, PieChart, Pie, Cell, Sector } from 'recharts';
 import { useAuth } from '@/contexts/AuthContext';
-import { useUserTokenBalances } from '@/hooks/useUserTokenBalances';
-import { getAllCards } from '@/lib/api/cards';
-import { Card } from '@/types/card';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface TokenCircleProps {
   tokens: { name: string; price: number; color: string }[];
@@ -43,120 +41,65 @@ function lightenColor(hex: string, factor = 0.25) {
   }
 }
 
-// Converter API Card para Card interno
-const convertApiCardToCard = (apiCard: any): Card | null => {
-  if (!apiCard.cardBlockchainData?.tokenAddress) return null;
-
-  return {
-    id: apiCard.id,
-    name: apiCard.name,
-    status: apiCard.status as 'ACTIVE' | 'INACTIVE',
-    CardBlockchainData: {
-      tokenAddress: apiCard.cardBlockchainData.tokenAddress as `0x${string}`,
-      tokenNetwork: apiCard.cardBlockchainData.network || 'polygon',
-      tokenChainId: getChainIdFromNetwork(apiCard.cardBlockchainData.network || 'polygon'),
-      tokenPrice: '1.00',
-    }
-  }
-}
-
-const getChainIdFromNetwork = (network: string): number => {
-  switch (network.toLowerCase()) {
-    case 'ethereum': return 1;
-    case 'polygon': return 137;
-    case 'arbitrum': return 42161;
-    case 'sepolia': return 11155111;
-    default: return 137;
-  }
-}
-
-export default function TokenCircle({ tokens, show, toggleShow }: TokenCircleProps) {
+export default function TokenCircle({ show }: TokenCircleProps) {
   const { user } = useAuth();
-  const [cards, setCards] = useState<Card[]>([]);
-  const [usingFallback, setUsingFallback] = useState(false);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 
-  // Buscar cards reais
-  useEffect(() => {
-    const fetchCards = async () => {
-      try {
-        const response = await getAllCards();
-        if (response.data && Array.isArray(response.data)) {
-          const convertedCards = response.data
-            .map(convertApiCardToCard)
-            .filter((card): card is Card => card !== null);
-
-          if (convertedCards.length > 0) {
-            setCards(convertedCards);
-            setUsingFallback(false);
-          } else {
-            setUsingFallback(true);
-          }
-        } else {
-          setUsingFallback(true);
-        }
-      } catch (error) {
-        console.error('Erro ao buscar cards para gráfico:', error);
-        setUsingFallback(true);
-      }
-    };
-
-    fetchCards();
-  }, []);
-
-  // Usar hook para buscar saldos reais
-  const { assets, loading } = useUserTokenBalances(
-    cards,
-    user?.walletAddress as `0x${string}` | undefined
-  );
-
-  // Gerar dados para o gráfico: usa dados reais da blockchain ou fallback
-  const generateChartData = (): ChartItem[] => {
+  // Gerar dados para o gráfico usando balances da API
+  const chartData: ChartItem[] = useMemo(() => {
     const colors = ['#80ffa0', '#00ffcc', '#0080ff', '#ff8000', '#ff0080', '#aa66ff', '#66ffaa'];
 
-    if (assets && assets.length > 0) {
-      // Filtrar apenas assets com saldo > 0
-      const assetsWithBalance = assets.filter(asset => {
-        const balance = Number(asset.balanceRaw) / Math.pow(10, asset.decimals);
-        return balance > 0;
-      });
-
-      if (assetsWithBalance.length > 0) {
-        return assetsWithBalance.map((asset, index): ChartItem => {
-          const balance = Number(asset.balanceRaw) / Math.pow(10, asset.decimals);
-          const unitValue = parseFloat(asset.card?.CardBlockchainData?.tokenPrice || '1.00');
-          const totalValue = balance * unitValue;
-          return {
-            name: asset.symbol || 'TKN',
-            price: totalValue,
-            color: colors[index % colors.length],
-            balance,
-            unitValue,
-          };
-        });
-      }
+    if (!user?.balances || !Array.isArray(user.balances) || user.balances.length === 0) {
+      return fallbackData;
     }
 
-    // Retornar fallback apenas se não houver dados reais
-    return fallbackData;
-  };
+    // Filtrar apenas balances com saldo > 0
+    const balancesWithTokens = user.balances.filter((b: any) => b.balance > 0);
 
-  const chartData: ChartItem[] = generateChartData();
-  const totalPrice: number = chartData.reduce((sum: number, item: ChartItem) => sum + item.price, 0);
+    if (balancesWithTokens.length === 0) {
+      return fallbackData;
+    }
 
-  const proportionalData: (ChartItem & { value: number })[] = chartData.map((item: ChartItem) => ({
-    ...item,
-    value: totalPrice > 0 ? (item.price / totalPrice) * 100 : 0,
-  }));
+    return balancesWithTokens.map((b: any, index: number): ChartItem => {
+      const balance = Number(b.balance) || 0;
+      // tokenPrice vem em centavos (1000000 = R$ 10.000,00)
+      const priceInCents = parseFloat(b.CardBlockchainData?.tokenPrice ?? '0') || 0;
+      const unitValue = priceInCents / 100; // Converter para reais
+      const totalValue = balance * unitValue;
 
-  const totalTokenBalance: number = chartData.reduce((sum: number, item: ChartItem) => sum + item.balance, 0);
+      return {
+        name: b.ticker || b.name || `TOKEN_${index + 1}`,
+        price: totalValue,
+        color: colors[index % colors.length],
+        balance,
+        unitValue,
+      };
+    });
+  }, [user]);
+
+  const totalPrice: number = useMemo(() => 
+    chartData.reduce((sum: number, item: ChartItem) => sum + item.price, 0),
+    [chartData]
+  );
+
+  const proportionalData: (ChartItem & { value: number })[] = useMemo(() => 
+    chartData.map((item: ChartItem) => ({
+      ...item,
+      value: totalPrice > 0 ? (item.price / totalPrice) * 100 : 0,
+    })),
+    [chartData, totalPrice]
+  );
+
+  const totalTokenBalance: number = useMemo(() => 
+    chartData.reduce((sum: number, item: ChartItem) => sum + item.balance, 0),
+    [chartData]
+  );
 
   // Verificar se está mostrando dados reais ou exemplo
-  const hasRealData = assets && assets.length > 0 && assets.some(asset => {
-    const balance = Number(asset.balanceRaw) / Math.pow(10, asset.decimals);
-    return balance > 0;
-  });
-  const showingExample = !hasRealData;
+  const showingExample = useMemo(() => 
+    !user?.balances || user.balances.length === 0 || user.balances.every((b: any) => b.balance <= 0),
+    [user]
+  );
 
   const renderActiveShape = (props: any) => {
     const RADIAN = Math.PI / 180;
