@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';
@@ -8,11 +8,30 @@ import 'swiper/css/pagination';
 import TokenCircle from './TokenCircle';
 import { Eye, EyeOff } from 'lucide-react'; 
 import CustomButton from '../../../components/core/Buttons/CustomButton';
+import { useAuth } from '@/contexts/AuthContext';
+import { useRouter } from 'next/navigation';
 
 export default function Carousel() {
   const [showTotal, setShowTotal] = useState(true); 
+  const { user, loading } = useAuth();
+  const router = useRouter();
 
   const toggleShowTotal = () => setShowTotal((prev) => !prev); 
+
+  // Lê o código de status KYC mesmo que venha em formatos diferentes
+  const getKycCode = (u: any): number => {
+    const v: any = u?.kycStatusCode ?? u?.kycStatus;
+    if (typeof v === 'number') return v;
+    if (typeof v === 'string') return Number(v) || 100;
+    if (v && typeof v === 'object' && 'code' in v) return Number((v as any).code) || 100;
+    return 100; // NOT_STARTED por padrão
+  };
+
+  const kycCode = useMemo(() => getKycCode(user), [user]);
+  const shouldShowKycSlide = useMemo(() => {
+    // Regra: não mostrar se já fez (APPROVED = 300)
+    return kycCode !== 300;
+  }, [kycCode]);
 
   const slides = [
     // Slide 1
@@ -30,22 +49,24 @@ export default function Carousel() {
 
       <TokenCircle show={showTotal} toggleShow={toggleShowTotal} tokens={[]} />
     </div>,
-
-    // Slide 2
-    <div className="h-full w-full flex flex-col items-center justify-center">
-      <div className="text-center p-4 sm:p-2 border border-4 rounded-lg shadow-md flex flex-col items-center justify-center w-full max-w-[400px] sm:max-w-[300px] lg:max-w-[690px]">
-        <p className="text-base sm:text-lg lg:text-xl p-8">
-          Faça a verificação KYC e desbloqueie todas as funcionalidades da plataforma.
-        </p>
-        <CustomButton
-          type="button"
-          text="Verificação KYC"
-          className="mt-4 px-4 py-2 sm:px-6 sm:py-3 lg:px-8 lg:py-2 ml-auto"
-          textColor="#000000"
-          borderColor="#08CEFF"
-        />
+    // Slide 2 (KYC) — renderiza apenas se não estiver aprovado
+    ...(shouldShowKycSlide ? [
+      <div className="h-full w-full flex flex-col items-center justify-center">
+        <div className="text-center p-4 sm:p-2 border border-4 rounded-lg shadow-md flex flex-col items-center justify-center w-full max-w-[400px] sm:max-w-[300px] lg:max-w-[690px]">
+          <p className="text-base sm:text-lg lg:text-xl p-8">
+            Faça a verificação KYC e desbloqueie todas as funcionalidades da plataforma.
+          </p>
+          <CustomButton
+            type="button"
+            text="Verificação KYC"
+            className="mt-4 px-4 py-2 sm:px-6 sm:py-3 lg:px-8 lg:py-2 ml-auto"
+            textColor="#000000"
+            borderColor="#08CEFF"
+            onClick={() => router.push('/kyc')}
+          />
+        </div>
       </div>
-    </div>,
+    ] : []),
 
     // Slide 3
     <div className="text-center">
@@ -60,9 +81,9 @@ export default function Carousel() {
     <div
       className="
         w-full max-h-[650px] aspect-[4/3] mt-1 mx-auto
-        bg-[#fdfcf7] rounded-2xl shadow-md z-10
+        bg-[#fdfcf7] rounded-2xl shadow-md z-0
         lg:absolute lg:right-12 lg:top-1/2 lg:-translate-y-1/2
-        lg:w-1/2 lg:h-[140%] lg:aspect-auto lg:max-h-none lg:mt-0 lg:mx-0
+        lg:w-1/2 lg:h-[115%] lg:aspect-auto lg:max-h-none lg:mt-0 lg:mx-0
         overflow-hidden
         p-2 sm:p-1
       "

@@ -5,6 +5,7 @@ import ChartBox from './ChartBox'
 import AssetList from './AssetList'
 import WalletInfo from './WalletInfo'
 import TokenMetrics from './TokenMetrics'
+import BalancesTable from './BalancesTable'
 
 export default function DashboardWrapper() {
   return (
@@ -23,6 +24,7 @@ export default function DashboardWrapper() {
       >
         <WelcomeBox />
         <ChartBox />
+        <BalancesTable />
         
         {/* Grid de informações da carteira e tokens */}
         <div className="w-full space-y-6">
