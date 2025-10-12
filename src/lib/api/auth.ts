@@ -88,8 +88,15 @@ export async function resendCode(payload: ResendCodePayload) {
 
 // Mutex para evitar múltiplas chamadas simultâneas de refresh
 let refreshPromise: Promise<void> | null = null;
+let isRedirecting = false; // Flag para evitar múltiplos redirects
 
 export async function refreshAccess() {
+  // Se já está redirecionando, não tenta refresh
+  if (isRedirecting) {
+    console.log('[refreshAccess] Já está redirecionando para login, abortando...');
+    throw new Error('Redirecting to login');
+  }
+
   // Se já existe um refresh em andamento, reutiliza a mesma promise
   if (refreshPromise) {
     console.log('[refreshAccess] Refresh já em andamento, aguardando...');
@@ -112,14 +119,16 @@ export async function refreshAccess() {
         // Se refresh token expirou ou é inválido, redirecionar para login
         if (res.status === 401) {
           console.warn('[refreshAccess] Refresh token inválido, redirecionando para login...');
+          
+          // Marcar que está redirecionando
+          isRedirecting = true;
+          
           // Limpar cookies localmente
           document.cookie = 'accessToken=; path=/; max-age=0';
           document.cookie = 'refreshToken=; path=/; max-age=0';
           
-          // Redirecionar após um pequeno delay
-          setTimeout(() => {
-            window.location.href = '/login';
-          }, 500);
+          // Redirecionar imediatamente
+          window.location.href = '/login';
         }
         
         throw new Error(error.error || 'Falha no refresh');
@@ -131,7 +140,10 @@ export async function refreshAccess() {
       mutateUser(); // revalida /api/auth/me
     } finally {
       // Limpa o mutex após completar (sucesso ou erro)
-      refreshPromise = null;
+      // Mas não limpa se está redirecionando
+      if (!isRedirecting) {
+        refreshPromise = null;
+      }
     }
   })();
 

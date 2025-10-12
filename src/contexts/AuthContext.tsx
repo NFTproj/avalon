@@ -71,15 +71,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const [showLoading, setShowLoading] = useState(false);
 
+  // Verificar se está na página de login/register para não tentar autenticar
+  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
+  const isPublicPage = pathname === '/login' || pathname === '/register' || pathname === '/register-metamask';
+
   /** 4.1 ▸ SWR para consultar /api/auth/me */
   const {
     data,
     isLoading,
     mutate,
   } = useSWR<MeResponse>(
-    '/api/auth/me',
+    isPublicPage ? null : '/api/auth/me', // Desabilita SWR em páginas públicas
     url => apiFetch<MeResponse>(url),
-    { revalidateOnFocus: false }
+    { 
+      revalidateOnFocus: false,
+      shouldRetryOnError: false, // Não tenta novamente em caso de erro
+      errorRetryCount: 0, // Não faz retry
+    }
   );
 
   /* 4.2 ▸ expõe mutate globalmente */
