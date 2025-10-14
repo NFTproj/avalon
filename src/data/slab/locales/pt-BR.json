@@ -555,5 +555,36 @@
   "tokenList": {
     "empty": "Nenhum token disponível no momento.",
     "unit-suffix": "und"
+  },
+  "certificateEmission": {
+    "page-title": "Emissão de certificado",
+    "page-subtitle": "Registre sua compensação ambiental e receba seu certificado digital com selo de verificação.",
+    "token-label": "Token a ser utilizado",
+    "quantity-label": "Quantidade de tokens compensados",
+    "quantity-placeholder": "0-1500",
+    "balance-available": "Saldo disponível: {balance} tokens",
+    "button-emit": "Emitir certificado",
+    "button-emitting": "Emitindo...",
+    "button-emitted": "Certificado Emitido",
+    "button-resend": "Solicitar Reenvio",
+    "success-message": "Seu certificado foi emitido. Acompanhe o andamento da análise e verifique regularmente seu e-mail para futuras atualizações.",
+    "error-message": "A emissão do seu certificado não foi concluída. Verifique se há saldo suficiente em tokens e tente novamente",
+    "error-card-not-found": "Token não encontrado",
+    "error-card-id-missing": "ID do card não fornecido",
+    "error-loading": "Erro ao carregar dados do token",
+    "history-title": "Histórico de certificados",
+    "history-loading": "Carregando histórico...",
+    "history-empty": "Nenhum certificado encontrado",
+    "filter-year": "Ano:",
+    "filter-token": "Token:",
+    "filter-status": "Status:",
+    "status-emitido": "Emitido",
+    "status-pendente": "Em validação",
+    "status-falha": "Falha na validação",
+    "button-pending": "Pendente",
+    "button-reemit": "Reemitir",
+    "emitted-at": "Emitido em:",
+    "certificate-id": "ID:",
+    "quantity-used": "Quantidade usada:"
   }
 }

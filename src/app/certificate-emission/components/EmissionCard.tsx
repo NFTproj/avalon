@@ -12,7 +12,7 @@ interface EmissionCardProps {
 }
 
 export default function EmissionCard({ card, userBalance, onSuccess }: EmissionCardProps) {
-  const { colors } = useContext(ConfigContext)
+  const { colors, texts, locale } = useContext(ConfigContext)
   const { user } = useAuth()
   
   const [quantity, setQuantity] = useState<number>(0)
@@ -23,9 +23,18 @@ export default function EmissionCard({ card, userBalance, onSuccess }: EmissionC
   const accentColor = '#08CEFF'
   const maxQuantity = Math.min(userBalance, 1500)
 
+  // Evita erro de indexação tipada em objetos gerados a partir de JSON
+  const ceTexts = texts?.certificateEmission as Record<string, string> | undefined
+  const t = (key: string, fallback: string) => ceTexts?.[key] ?? fallback
+
   const handleEmit = async () => {
     if (quantity <= 0 || quantity > maxQuantity) {
-      setError('Verifique se há saldo suficiente em tokens e tente novamente')
+      setError(
+        t(
+          'error-message',
+          'A emissão do seu certificado não foi concluída. Verifique se há saldo suficiente em tokens e tente novamente',
+        ),
+      )
       return
     }
 
@@ -49,7 +58,12 @@ export default function EmissionCard({ card, userBalance, onSuccess }: EmissionC
       }, 3000)
     } catch (err: any) {
       console.error('Erro ao emitir certificado:', err)
-      setError('A emissão do seu certificado não foi concluída. Verifique se há saldo suficiente em tokens e tente novamente')
+      setError(
+        t(
+          'error-message',
+          'A emissão do seu certificado não foi concluída. Verifique se há saldo suficiente em tokens e tente novamente',
+        ),
+      )
     } finally {
       setLoading(false)
     }
@@ -60,7 +74,7 @@ export default function EmissionCard({ card, userBalance, onSuccess }: EmissionC
       {/* Token a ser utilizado */}
       <div className="mb-8">
         <label className="block text-xl font-semibold text-gray-900 mb-4">
-          Token a ser utilizado
+          {t('token-label', 'Token a ser utilizado')}
         </label>
         <div className="relative">
           <input
@@ -85,7 +99,10 @@ export default function EmissionCard({ card, userBalance, onSuccess }: EmissionC
                 </div>
                 <div className="flex-1">
                   <p className="text-sm text-gray-700 leading-relaxed">
-                    Seu certificado foi emitido. Acompanhe o andamento da análise e verifique regularmente seu e-mail para futuras atualizações.
+                    {t(
+                      'success-message',
+                      'Seu certificado foi emitido. Acompanhe o andamento da análise e verifique regularmente seu e-mail para futuras atualizações.',
+                    )}
                   </p>
                 </div>
               </div>
@@ -115,7 +132,7 @@ export default function EmissionCard({ card, userBalance, onSuccess }: EmissionC
       {/* Quantidade de tokens compensados */}
       <div className="mb-10">
         <label className="block text-xl font-semibold text-gray-900 mb-4">
-          Quantidade de tokens compensados
+          {t('quantity-label', 'Quantidade de tokens compensados')}
         </label>
         <div className="relative">
           <select
@@ -132,13 +149,13 @@ export default function EmissionCard({ card, userBalance, onSuccess }: EmissionC
             }}
             disabled={loading || success}
           >
-            <option value={0}>0-1500</option>
+            <option value={0}>{t('quantity-placeholder', '0-1500')}</option>
             {Array.from({ length: Math.min(15, Math.ceil(maxQuantity / 100)) }, (_, i) => {
               const value = (i + 1) * 100
               if (value <= maxQuantity) {
                 return (
                   <option key={value} value={value}>
-                    {value}
+                    {value.toLocaleString(locale || 'pt-BR')}
                   </option>
                 )
               }
@@ -170,18 +187,18 @@ export default function EmissionCard({ card, userBalance, onSuccess }: EmissionC
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-            Emitindo...
+            {t('button-emitting', 'Emitindo...')}
           </>
         ) : success ? (
           <>
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
-            Certificado Emitido
+            {t('button-emitted', 'Certificado Emitido')}
           </>
         ) : (
           <>
-            Emitindo certificado
+            {t('button-emit', 'Emitir certificado')}
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="10" strokeWidth="2" />
             </svg>

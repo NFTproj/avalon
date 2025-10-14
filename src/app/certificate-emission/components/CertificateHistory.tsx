@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { apiFetch } from '@/lib/api/fetcher'
+import { ConfigContext } from '@/contexts/ConfigContext'
 
 interface Certificate {
   id: string
@@ -19,6 +20,7 @@ interface CertificateHistoryProps {
 }
 
 export default function CertificateHistory({ cardId }: CertificateHistoryProps) {
+  const { texts, locale } = useContext(ConfigContext)
   const [certificates, setCertificates] = useState<Certificate[]>([])
   const [loading, setLoading] = useState(true)
   const [filters, setFilters] = useState({
@@ -101,25 +103,29 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
     fetchCertificates()
   }, [cardId])
 
+  // Evita erro de indexação tipada em objetos gerados a partir de JSON
+  const ceTexts = texts?.certificateEmission as Record<string, string> | undefined
+  const t = (key: string, fallback: string) => ceTexts?.[key] ?? fallback
+
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'emitido':
         return {
           bg: '#E8F5E9',
           text: '#2E7D32',
-          label: 'Emitido'
+          label: t('status-emitido', 'Emitido')
         }
       case 'pendente':
         return {
           bg: '#F5F5F5',
           text: '#616161',
-          label: 'Em validação'
+          label: t('status-pendente', 'Em validação')
         }
       case 'falha':
         return {
           bg: '#FFEBEE',
           text: '#C62828',
-          label: 'Falha na validação'
+          label: t('status-falha', 'Falha na validação')
         }
       default:
         return {
@@ -168,7 +174,7 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
   if (loading) {
     return (
       <div className="text-center py-8">
-        <p className="text-gray-600">Carregando histórico...</p>
+        <p className="text-gray-600">{t('history-loading', 'Carregando histórico...')}</p>
       </div>
     )
   }
@@ -191,7 +197,7 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
           />
         </svg>
         <h2 className="text-3xl font-bold text-gray-900">
-          Histórico de certificados
+          {t('history-title', 'Histórico de certificados')}
         </h2>
       </div>
 
@@ -205,7 +211,7 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
             className="appearance-none px-4 py-2 pr-10 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium focus:outline-none cursor-pointer border-2"
             style={{ borderColor: accentColor }}
           >
-            <option value="all">Ano:</option>
+            <option value="all">{t('filter-year', 'Ano:')}</option>
             <option value="2025">2025</option>
             <option value="2024">2024</option>
             <option value="2023">2023</option>
@@ -228,7 +234,7 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
             className="appearance-none px-4 py-2 pr-10 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium focus:outline-none cursor-pointer border-2"
             style={{ borderColor: accentColor }}
           >
-            <option value="all">Token:</option>
+            <option value="all">{t('filter-token', 'Token:')}</option>
             <option value="TBIO1">TBIO1</option>
             <option value="TBIO2">TBIO2</option>
           </select>
@@ -250,10 +256,10 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
             className="appearance-none px-4 py-2 pr-10 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium focus:outline-none cursor-pointer border-2"
             style={{ borderColor: accentColor }}
           >
-            <option value="all">Status:</option>
-            <option value="emitido">Emitido</option>
-            <option value="pendente">Pendente</option>
-            <option value="falha">Falha</option>
+            <option value="all">{t('filter-status', 'Status:')}</option>
+            <option value="emitido">{t('status-emitido', 'Emitido')}</option>
+            <option value="pendente">{t('status-pendente', 'Pendente')}</option>
+            <option value="falha">{t('status-falha', 'Falha')}</option>
           </select>
           <svg 
             className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" 
@@ -270,7 +276,7 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
       <div className="space-y-4">
         {filteredCertificates.length === 0 ? (
           <div className="text-center py-12 bg-white rounded-2xl border border-gray-200">
-            <p className="text-gray-600">Nenhum certificado encontrado</p>
+            <p className="text-gray-600">{t('history-empty', 'Nenhum certificado encontrado')}</p>
           </div>
         ) : (
           filteredCertificates.map((cert) => {
@@ -310,11 +316,11 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
                     </h3>
 
                     <p className="text-xs md:text-sm text-gray-600 mb-1 md:mb-2">
-                      Emitido em: {cert.emittedAt}
+                      {t('emitted-at', 'Emitido em:')} {cert.emittedAt}
                     </p>
                     
                     <div className="flex flex-wrap items-center gap-2 mb-1 md:mb-2">
-                      <span className="text-xs md:text-sm text-gray-600">Status:</span>
+                      <span className="text-xs md:text-sm text-gray-600">{t('filter-status', 'Status:')}</span>
                       <span
                         className="inline-block px-2 md:px-3 py-1 rounded-md text-xs font-medium"
                         style={{
@@ -328,12 +334,12 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
 
                     {cert.certificateId && (
                       <p className="text-xs md:text-sm text-gray-600 mb-1">
-                        ID: {cert.certificateId}
+                        {t('certificate-id', 'ID:')} {cert.certificateId}
                       </p>
                     )}
                     
                     <p className="text-xs md:text-sm text-gray-600">
-                      Quantidade usada: {cert.quantity.toLocaleString('pt-BR')}
+                      {t('quantity-used', 'Quantidade usada:')} {cert.quantity.toLocaleString(locale || 'pt-BR')}
                     </p>
                   </div>
 
@@ -348,7 +354,7 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76" />
                         </svg>
-                        Solicitar Reenvio
+                        {t('button-resend', 'Solicitar Reenvio')}
                       </button>
                     )}
                     {cert.status === 'pendente' && (
@@ -359,7 +365,7 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        Pendente
+                        {t('button-pending', 'Pendente')}
                       </button>
                     )}
                     {cert.status === 'falha' && (
@@ -371,7 +377,7 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
                           color: accentColor
                         }}
                       >
-                        Reemitir
+                        {t('button-reemit', 'Reemitir')}
                       </button>
                     )}
                   </div>
@@ -388,7 +394,7 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76" />
                       </svg>
-                      Solicitar Reenvio
+                      {t('button-resend', 'Solicitar Reenvio')}
                     </button>
                   )}
                   {cert.status === 'pendente' && (
@@ -399,7 +405,7 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      Pendente
+                      {t('button-pending', 'Pendente')}
                     </button>
                   )}
                   {cert.status === 'falha' && (
@@ -411,7 +417,7 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
                         color: accentColor
                       }}
                     >
-                      Reemitir
+                      {t('button-reemit', 'Reemitir')}
                     </button>
                   )}
                 </div>

@@ -12,7 +12,7 @@ import EmissionCard from './EmissionCard'
 import CertificateHistory from './CertificateHistory'
 
 export default function CertificateEmission() {
-  const { colors } = useContext(ConfigContext)
+  const { colors, texts } = useContext(ConfigContext)
   const { user, loading: authLoading } = useAuth()
   const searchParams = useSearchParams()
   const cardId = searchParams.get('cardId')
@@ -24,7 +24,10 @@ export default function CertificateEmission() {
   // Buscar dados do card
   useEffect(() => {
     if (!cardId) {
-      setError('ID do card não fornecido')
+      setError(
+        texts?.certificateEmission?.['error-card-id-missing'] ??
+          'ID do card não fornecido'
+      )
       setLoading(false)
       return
     }
@@ -36,13 +39,19 @@ export default function CertificateEmission() {
         const foundCard = response.data?.find((c: any) => c.id === cardId)
 
         if (!foundCard) {
-          setError('Token não encontrado')
+          setError(
+            texts?.certificateEmission?.['error-card-not-found'] ??
+              'Token não encontrado'
+          )
         } else {
           setCard(foundCard)
         }
       } catch (err) {
         console.error('Erro ao buscar card:', err)
-        setError('Erro ao carregar dados do token')
+        setError(
+          texts?.certificateEmission?.['error-loading'] ??
+            'Erro ao carregar dados do token'
+        )
       } finally {
         setLoading(false)
       }
@@ -76,7 +85,8 @@ export default function CertificateEmission() {
                 color: colors?.colors?.['color-primary'] || '#19C3F0'
               }}
             >
-              Emissão de certificado
+              {texts?.certificateEmission?.['page-title'] ??
+                'Emissão de certificado'}
             </h1>
             <p
               className="text-gray-600 px-4"
@@ -89,7 +99,8 @@ export default function CertificateEmission() {
                 textAlign: 'center'
               }}
             >
-              Registre sua compensação ambiental e receba seu certificado digital com selo de verificação.
+              {texts?.certificateEmission?.['page-subtitle'] ??
+                'Registre sua compensação ambiental e receba seu certificado digital com selo de verificação.'}
             </p>
           </div>
 

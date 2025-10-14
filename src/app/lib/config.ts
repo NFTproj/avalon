@@ -1,6 +1,22 @@
 import clientDefaultData from '../../data/bloxify/locales/pt-BR.json'
 import themaDefaultData from '../../data/bloxify/themes/light.json'
 
+// Importa LOCALES e THEMES estaticamente para garantir inclusão no bundle
+// Bloxify
+import bloxifyPtBR from '../../data/bloxify/locales/pt-BR.json'
+import bloxifyEnUS from '../../data/bloxify/locales/en-US.json'
+import bloxifyLight from '../../data/bloxify/themes/light.json'
+
+// Slab
+import slabPtBR from '../../data/slab/locales/pt-BR.json'
+import slabEnUS from '../../data/slab/locales/en-US.json'
+import slabLight from '../../data/slab/themes/light.json'
+
+// PowerAssetX
+import powerassetxPtBR from '../../data/powerassetx/locales/pt-BR.json'
+import powerassetxEnUS from '../../data/powerassetx/locales/en-US.json'
+import powerassetxLight from '../../data/powerassetx/themes/light.json'
+
 export type TextsConfig = typeof clientDefaultData
 export type ColorsConfig = typeof themaDefaultData
 export interface ClientConfig {
@@ -19,46 +35,55 @@ export async function getClientConfig({
   locale?: string
   theme?: ThemeMode
 } = {}): Promise<ClientConfig> {
-  const client =
-    process.env.CLIENT ?? process.env.NEXT_PUBLIC_CLIENT ?? 'bloxify'
+  const client = process.env.CLIENT ?? process.env.NEXT_PUBLIC_CLIENT ?? 'bloxify'
   const isBloxify = client === 'bloxify'
 
-  const localesToTry = [
-    'pt-BR',
-    'en-US',
-    'es-ES',
-    'fr-FR',
-    'de-DE',
-    'it-IT',
-    'ja-JP',
-  ]
+  // Normaliza variantes comuns
+  const norm = (l: string): string => {
+    const s = (l || '').toLowerCase()
+    if (s === 'en' || s === 'en-us' || s === 'en_us') return 'en-US'
+    if (s === 'pt' || s === 'pt-br' || s === 'pt_br') return 'pt-BR'
+    return l
+  }
+  const localeNormalized = norm(locale)
 
-  for (const _currentLocale of localesToTry) {
-    try {
-      // Use a relative path from the current file
-      const configModule = await import(
-        `../../data/${client}/locales/${locale}.json`
-      )
-      const themeModule = await import(
-        `../../data/${client}/themes/${theme}.json`
-      )
-      // Return the imported module directly (assuming JSON is the default exp ort)
-      return {
-        texts: configModule.default ?? configModule,
-        colors: themeModule.default ?? themeModule,
-        client: client,
-        isBloxify: isBloxify,
-      }
-    } catch (error) {
-      console.warn(`Config not found for ${client}/${locale}`)
-    }
+  const localesMap: Record<string, Record<string, any>> = {
+    bloxify: {
+      'pt-BR': bloxifyPtBR,
+      'en-US': bloxifyEnUS,
+    },
+    slab: {
+      'pt-BR': slabPtBR,
+      'en-US': slabEnUS,
+    },
+    powerassetx: {
+      'pt-BR': powerassetxPtBR,
+      'en-US': powerassetxEnUS,
+    },
   }
 
-  // Final fallback
+  const themesMap: Record<string, Record<ThemeMode, any>> = {
+    bloxify: {
+      light: bloxifyLight,
+    },
+    slab: {
+      light: slabLight,
+    },
+    powerassetx: {
+      light: powerassetxLight,
+    },
+  }
+
+  const clientLocales = localesMap[client]
+  const clientThemes = themesMap[client]
+
+  const texts = clientLocales?.[localeNormalized] ?? clientLocales?.['pt-BR'] ?? clientDefaultData
+  const colors = clientThemes?.[theme] ?? themaDefaultData
+
   return {
-    texts: clientDefaultData,
-    colors: themaDefaultData,
-    client: client,
-    isBloxify: isBloxify,
+    texts,
+    colors,
+    client,
+    isBloxify,
   }
 }

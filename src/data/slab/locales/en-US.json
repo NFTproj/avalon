@@ -486,5 +486,36 @@
 "tokenList": {
   "empty": "No tokens available at the moment.",
   "unit-suffix": "unit"
+},
+"certificateEmission": {
+  "page-title": "Certificate Issuance",
+  "page-subtitle": "Record your environmental offset and receive your digital certificate with a verification seal.",
+  "token-label": "Token to be used",
+  "quantity-label": "Quantity of compensated tokens",
+  "quantity-placeholder": "0-1500",
+  "balance-available": "Available balance: {balance} tokens",
+  "button-emit": "Issue certificate",
+  "button-emitting": "Issuing...",
+  "button-emitted": "Certificate Issued",
+  "success-message": "Your certificate has been issued. Track the analysis progress and check your email regularly for updates.",
+  "error-message": "Your certificate issuance was not completed. Check if you have enough token balance and try again",
+  "error-card-not-found": "Token not found",
+  "error-card-id-missing": "Card ID not provided",
+  "error-loading": "Error loading token data",
+  "history-title": "Certificate history",
+  "history-loading": "Loading history...",
+  "history-empty": "No certificates found",
+  "filter-year": "Year:",
+  "filter-token": "Token:",
+  "filter-status": "Status:",
+  "status-emitido": "Issued",
+  "status-pendente": "Under review",
+  "status-falha": "Validation failed",
+  "emitted-at": "Issued on:",
+  "certificate-id": "ID:",
+  "quantity-used": "Quantity used:",
+  "button-pending": "Pending",
+  "button-reemit": "Reissue",
+  "button-resend": "Request Resend"
 }
 }
