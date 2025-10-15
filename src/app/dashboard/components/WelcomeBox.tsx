@@ -11,7 +11,7 @@ export default function WelcomeBox() {
   const { colors, texts } = useContext(ConfigContext)
   const { user } = useAuth()
 
-  const welcomeTexts = texts?.dashboard?.['welcome-box']
+  const welcomeTexts = (texts?.dashboard as any)?.['welcome-box']
   const textColor = '#FFFFFF'
   const linkColor = '#08CEFF'
   const backgroundColor = 'linear-gradient(135deg, #1F2937 0%, #374151 100%)'
@@ -59,7 +59,7 @@ export default function WelcomeBox() {
               {welcomeTexts?.title?.replace('Slab', 'Bloxify') || `Bem-vindo(a) à Bloxify, ${userName}!`}
             </h1>
             <h2 className="text-xl font-semibold mb-2 break-words">
-              {welcomeTexts?.description || 'Conheça os projetos que foram tokenizados, invista com segurança e tenha o controle total do seu patrimônio.'}
+              {welcomeTexts?.subtitle || 'Conheça os projetos que foram tokenizados, invista com segurança e tenha o controle total do seu patrimônio.'}
             </h2>
             
             {/* Informações do usuário */}
@@ -89,7 +89,7 @@ export default function WelcomeBox() {
                       border: `1px solid ${kycInfo.color}40`
                     }}
                   >
-                    {kycInfo.text}
+                    {kycInfo.label}
                   </span>
                 </p>
               )}
@@ -112,8 +112,8 @@ export default function WelcomeBox() {
                 style={{ color: linkColor }}
               >
                 {kycInfo.code === KycStatusCode.IN_PROGRESS || kycInfo.code === KycStatusCode.REVIEW
-                  ? 'Verificar Status do KYC'
-                  : 'Complete sua Verificação KYC'}
+                  ? welcomeTexts?.buttons?.['check-kyc'] || 'Verificar Status do KYC'
+                  : welcomeTexts?.buttons?.['complete-kyc'] || 'Complete sua Verificação KYC'}
               </Link>
             )}
             
@@ -122,7 +122,7 @@ export default function WelcomeBox() {
               className="inline-block text-sm font-semibold underline break-words hover:opacity-80 transition-opacity"
               style={{ color: linkColor }}
             >
-              {welcomeTexts?.link || 'Explorar Tokens Disponíveis'}
+              {welcomeTexts?.buttons?.['explore-tokens'] || 'Explorar Tokens Disponíveis'}
             </Link>
           </div>
         </div>

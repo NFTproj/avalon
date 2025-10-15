@@ -213,12 +213,16 @@ export default function AssetList() {
   }
 
   if (assets.length === 0) {
+    const assetTexts = texts?.dashboard?.['asset-list'] as any
     return (
       <div className="w-full mt-8 rounded-t-lg overflow-hidden">
         <div className="p-8 text-center">
-          <p className="text-gray-600">Nenhum token encontrado na sua carteira</p>
+          <p className="text-gray-600">{assetTexts?.messages?.['no-tokens'] || 'Nenhum token encontrado na sua carteira'}</p>
           <p className="text-sm text-gray-500 mt-1">
-            {usingFallback ? 'Dados de exemplo não têm saldos reais' : 'Compre tokens para começar a investir'}
+            {usingFallback 
+              ? (assetTexts?.messages?.['sample-data'] || 'Dados de exemplo não têm saldos reais')
+              : (assetTexts?.messages?.['buy-to-start'] || 'Compre tokens para começar a investir')
+            }
           </p>
         </div>
       </div>

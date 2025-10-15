@@ -19,7 +19,7 @@ interface BalanceItem {
 }
 
 export default function BalancesTable({ className = "" }: { className?: string }) {
-  const { colors } = useContext(ConfigContext)
+  const { colors, texts } = useContext(ConfigContext)
   const { user, loading } = useAuth()
 
   // Usar os balances que vêm diretamente da API /api/auth/me
@@ -52,6 +52,7 @@ export default function BalancesTable({ className = "" }: { className?: string }
     return balances.slice(start, start + pageSize)
   }, [balances, page])
 
+  const balancesTexts = (texts?.dashboard as any)?.['balances-table']
   const headerBgColor = colors?.dashboard?.background?.['table-header'] ?? '#f8f7e9'
   const tableBodyBgColor = colors?.dashboard?.background?.['table-body'] ?? '#fdfcf7'
   const headerTextColor = colors?.dashboard?.colors?.text ?? '#404040'
@@ -68,7 +69,7 @@ export default function BalancesTable({ className = "" }: { className?: string }
     return (
       <div className={`w-full ${className}`}>
         <div className="p-6 bg-white rounded-lg shadow-md border border-gray-200 text-center">
-          <p className="text-sm text-gray-600">Faça login para ver seus balances.</p>
+          <p className="text-sm text-gray-600">{balancesTexts?.messages?.['login-required'] ?? 'Faça login para ver seus balances.'}</p>
         </div>
       </div>
     )
@@ -78,7 +79,7 @@ export default function BalancesTable({ className = "" }: { className?: string }
     return (
       <div className={`w-full ${className}`}>
         <div className="p-6 bg-white rounded-lg shadow-md border border-gray-200 text-center">
-          <p className="text-sm text-gray-600">Carregando seus tokens...</p>
+          <p className="text-sm text-gray-600">{balancesTexts?.messages?.loading ?? 'Carregando seus tokens...'}</p>
         </div>
       </div>
     )
@@ -88,7 +89,7 @@ export default function BalancesTable({ className = "" }: { className?: string }
     return (
       <div className={`w-full ${className}`}>
         <div className="p-6 bg-white rounded-lg shadow-md border border-gray-200 text-center">
-          <p className="text-sm text-gray-600">Você ainda não possui tokens na sua carteira.</p>
+          <p className="text-sm text-gray-600">{balancesTexts?.messages?.['no-tokens'] ?? 'Você ainda não possui tokens na sua carteira.'}</p>
         </div>
       </div>
     )
@@ -103,7 +104,7 @@ export default function BalancesTable({ className = "" }: { className?: string }
           style={{ background: slabHeaderBg, color: slabHeaderTextColor }}
         >
           <h2 className="text-xl sm:text-2xl font-bold">
-            Sua carteira <span style={{ color: highlightColor }}>Slab</span>
+            {balancesTexts?.title ?? 'Sua carteira'} <span style={{ color: highlightColor }}>{balancesTexts?.highlight ?? 'Slab'}</span>
           </h2>
         </div>
       </div>
@@ -113,10 +114,10 @@ export default function BalancesTable({ className = "" }: { className?: string }
         <table className="min-w-[720px] w-full table-fixed">
           <thead style={{ background: tableHeaderBg, color: headerTextColor }}>
             <tr>
-              <th className="w-[45%] pl-0 pr-6 py-3 text-left font-semibold">Projeto</th>
-              <th className="w-[20%] px-6 py-3 text-left font-semibold">Valor unitário</th>
-              <th className="w-[25%] px-6 py-3 text-left font-semibold">Valor Total</th>
-              <th className="w-[10%] px-6 py-3 text-right font-semibold">Ações</th>
+              <th className="w-[45%] pl-0 pr-6 py-3 text-left font-semibold">{balancesTexts?.columns?.project ?? 'Projeto'}</th>
+              <th className="w-[20%] px-6 py-3 text-left font-semibold">{balancesTexts?.columns?.['unit-value'] ?? 'Valor unitário'}</th>
+              <th className="w-[25%] px-6 py-3 text-left font-semibold">{balancesTexts?.columns?.['total-value'] ?? 'Valor Total'}</th>
+              <th className="w-[10%] px-6 py-3 text-right font-semibold">{balancesTexts?.columns?.actions ?? 'Ações'}</th>
             </tr>
           </thead>
           <tbody style={{ color: tableTextColor, background: tableBodyBg }}>
@@ -160,14 +161,14 @@ export default function BalancesTable({ className = "" }: { className?: string }
                         style={{ color: tableTextColor }}
                         onClick={() => window.location.href = `/buy-tokens?token=${b.id}`}
                       >
-                        Comprar
+                        {(balancesTexts as any)?.actions?.buy || 'Comprar'}
                       </button>
                       <button 
                         className="text-sm hover:underline" 
                         style={{ color: tableTextColor }}
                         onClick={() => window.location.href = `/certificate-emission?cardId=${b.id}`}
                       >
-                        Vender
+                        {(balancesTexts as any)?.actions?.sell || 'Vender'}
                       </button>
                     </div>
                   </td>
@@ -179,21 +180,26 @@ export default function BalancesTable({ className = "" }: { className?: string }
 
         {/* Paginação */}
         <div className="flex items-center justify-between px-6 py-3 border-t border-gray-300" style={{ color: tableTextColor }}>
-          <div className="text-sm">Página {page} de {totalPages}</div>
+          <div className="text-sm">
+            {((balancesTexts as any)?.pagination?.['page-info'] || 'Página {current} de {total}')
+              .replace('{current}', page.toString())
+              .replace('{total}', totalPages.toString())
+            }
+          </div>
           <div className="flex gap-2">
             <button
               className="px-3 py-1 bg-gray-100 rounded disabled:opacity-50"
               disabled={page <= 1}
               onClick={() => setPage(p => Math.max(1, p - 1))}
             >
-              Anterior
+              {(balancesTexts as any)?.pagination?.previous || 'Anterior'}
             </button>
             <button
               className="px-3 py-1 bg-gray-100 rounded disabled:opacity-50"
               disabled={page >= totalPages}
               onClick={() => setPage(p => Math.min(totalPages, p + 1))}
             >
-              Próximo
+              {(balancesTexts as any)?.pagination?.next || 'Próximo'}
             </button>
           </div>
         </div>

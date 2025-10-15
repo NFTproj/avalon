@@ -26,7 +26,7 @@ export interface ClientConfig {
   isBloxify: boolean
 }
 
-export type ThemeMode = 'light' | 'dark'
+export type ThemeMode = 'light'
 
 export async function getClientConfig({
   locale = 'pt-BR',

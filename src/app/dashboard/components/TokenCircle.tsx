@@ -1,8 +1,9 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useContext } from 'react';
 import { ResponsiveContainer, PieChart, Pie, Cell, Sector } from 'recharts';
 import { useAuth } from '@/contexts/AuthContext';
+import { ConfigContext } from '@/contexts/ConfigContext';
 import { useState } from 'react';
 
 interface TokenCircleProps {
@@ -43,8 +44,10 @@ function lightenColor(hex: string, factor = 0.25) {
 
 export default function TokenCircle({ show }: TokenCircleProps) {
   const { user } = useAuth();
+  const { texts } = useContext(ConfigContext);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 
+  const tokenTexts = (texts?.dashboard as any)?.['token-circle'];
   // Gerar dados para o gráfico usando balances da API
   const chartData: ChartItem[] = useMemo(() => {
     const colors = ['#80ffa0', '#00ffcc', '#0080ff', '#ff8000', '#ff0080', '#aa66ff', '#66ffaa'];
@@ -125,9 +128,9 @@ export default function TokenCircle({ show }: TokenCircleProps) {
     const ey = my;
     const boxPadding = 10;
     const nameText: string = String(payload.name ?? '');
-    const saldoText: string = `Saldo: ${Number(payload.balance ?? 0).toLocaleString('pt-BR')}`;
-    const unitText: string = `Unitário: R$ ${Number(payload.unitValue ?? 0).toFixed(2)}`;
-    const totalText: string = `Total: R$ ${Number(payload.price ?? 0).toFixed(2)}`;
+    const saldoText: string = `${tokenTexts?.labels?.balance || 'Saldo'}: ${Number(payload.balance ?? 0).toLocaleString('pt-BR')}`;
+    const unitText: string = `${tokenTexts?.labels?.unit || 'Unitário'}: R$ ${Number(payload.unitValue ?? 0).toFixed(2)}`;
+    const totalText: string = `${tokenTexts?.labels?.total || 'Total'}: R$ ${Number(payload.price ?? 0).toFixed(2)}`;
     const maxLen: number = Math.max(nameText.length, saldoText.length, unitText.length, totalText.length);
     const approxChar = 7; // largura média por caractere com font-size 12
     const boxWidth: number = Math.min(110, Math.max(95, maxLen * approxChar + boxPadding * 2));
@@ -223,13 +226,13 @@ export default function TokenCircle({ show }: TokenCircleProps) {
         {showingExample ? (
           <>
             <p className="text-lg font-semibold text-gray-500 mb-2">
-              Nenhum token encontrado
+              {tokenTexts?.messages?.['no-tokens'] || 'Nenhum token encontrado'}
             </p>
             <p className="text-xs text-gray-500">
-              Compre tokens para ver
+              {tokenTexts?.messages?.['buy-tokens-line1'] || 'Compre tokens para ver'}
             </p>
             <p className="text-xs text-gray-500">
-              seu portfólio aqui
+              {tokenTexts?.messages?.['buy-tokens-line2'] || 'seu portfólio aqui'}
             </p>
           </>
         ) : (
@@ -238,10 +241,10 @@ export default function TokenCircle({ show }: TokenCircleProps) {
               {show ? `R$ ${totalPrice.toFixed(2)}` : 'R$ ******'}
             </p>
             <p className="text-sm text-gray-600">
-              Total Investido
+              {tokenTexts?.['total-invested'] || 'Total Investido'}
             </p>
             <p className="text-xs text-gray-600 mt-1">
-              Total de Tokens: {totalTokenBalance.toLocaleString('pt-BR')}
+              {tokenTexts?.['total-tokens'] || 'Total de Tokens'}: {totalTokenBalance.toLocaleString('pt-BR')}
             </p>
           </>
         )}

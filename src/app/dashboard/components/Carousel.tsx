@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useContext } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';
@@ -9,14 +9,17 @@ import TokenCircle from './TokenCircle';
 import { Eye, EyeOff } from 'lucide-react'; 
 import CustomButton from '../../../components/core/Buttons/CustomButton';
 import { useAuth } from '@/contexts/AuthContext';
+import { ConfigContext } from '@/contexts/ConfigContext';
 import { useRouter } from 'next/navigation';
 import { KycStatusCode, shouldShowKycPrompt } from '@/types/kyc';
 
 export default function Carousel() {
   const [showTotal, setShowTotal] = useState(true); 
   const { user } = useAuth();
+  const { texts } = useContext(ConfigContext);
   const router = useRouter();
 
+  const carouselTexts = (texts?.dashboard as any)?.carousel;
   const toggleShowTotal = () => setShowTotal((prev) => !prev); 
 
   // Lê o código de status KYC do usuário
@@ -59,11 +62,11 @@ export default function Carousel() {
         <div key="kyc-prompt" className="h-full w-full flex flex-col items-center justify-center">
           <div className="text-center p-4 sm:p-2 border border-4 rounded-lg shadow-md flex flex-col items-center justify-center w-full max-w-[400px] sm:max-w-[300px] lg:max-w-[690px]">
             <p className="text-base sm:text-lg lg:text-xl p-8">
-              Faça a verificação KYC e desbloqueie todas as funcionalidades da plataforma.
+              {carouselTexts?.message || 'Faça a verificação KYC e desbloqueie todas as funcionalidades da plataforma.'}
             </p>
             <CustomButton
               type="button"
-              text="Verificação KYC"
+              text={carouselTexts?.button || 'Verificação KYC'}
               className="mt-4 px-4 py-2 sm:px-6 sm:py-3 lg:px-8 lg:py-2 ml-auto"
               textColor="#000000"
               borderColor="#08CEFF"

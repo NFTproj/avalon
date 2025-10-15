@@ -26,6 +26,7 @@ export default function ChartBox() {
   const [error, setError] = useState<string | null>(null)
   const [ethPriceUSD, setEthPriceUSD] = useState(0)
 
+  const chartTexts = (texts?.dashboard as any)?.['chart-box']
   const borderColor = colors?.dashboard?.buttons?.['action-border'] || '#00ffe1'
   const iconColor = '#00838F'
 
@@ -80,7 +81,7 @@ export default function ChartBox() {
         }
       } catch (error) {
         if (!cancelled) {
-          setError('Erro ao carregar transações')
+          setError(chartTexts?.messages?.error || 'Erro ao carregar transações')
           setRecentTransactions([])
         }
       } finally {
@@ -124,7 +125,7 @@ export default function ChartBox() {
         <div className="mb-6 p-4 bg-white rounded-lg shadow-sm border-2 border-blue-200">
           <div className="text-center">
             <h3 className="text-lg font-semibold text-gray-800 mb-2">
-              Saldo da Carteira
+              {chartTexts?.title || 'Saldo da Carteira'}
             </h3>
             <div className="text-3xl font-bold text-blue-600">
               $ {(parseFloat(formatEther(balance.value)) * ethPriceUSD).toFixed(2)}
@@ -134,7 +135,7 @@ export default function ChartBox() {
             </div>
             {recentTransactions.length > 0 && (
               <p className="text-sm text-gray-600 mt-1">
-                {recentTransactions.length} transações recentes
+                {recentTransactions.length} {chartTexts?.['recent-transactions'] || 'transações recentes'}
               </p>
             )}
           </div>
@@ -150,7 +151,7 @@ export default function ChartBox() {
               onClick={() => window.location.reload()} 
               className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 text-sm"
             >
-              Tentar novamente
+              {chartTexts?.buttons?.retry || 'Tentar novamente'}
             </button>
           </div>
         </div>
@@ -203,7 +204,7 @@ export default function ChartBox() {
       {loading && (
         <div className="mt-6 text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-2 text-gray-600">Carregando dados da carteira...</p>
+          <p className="mt-2 text-gray-600">{chartTexts?.messages?.loading || 'Carregando dados da carteira...'}</p>
         </div>
       )}
     </div>
