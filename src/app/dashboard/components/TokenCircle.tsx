@@ -65,9 +65,9 @@ export default function TokenCircle({ show }: TokenCircleProps) {
 
     return balancesWithTokens.map((b: any, index: number): ChartItem => {
       const balance = Number(b.balance) || 0;
-      // tokenPrice vem em centavos (1000000 = R$ 10.000,00)
-      const priceInCents = parseFloat(b.CardBlockchainData?.tokenPrice ?? '0') || 0;
-      const unitValue = priceInCents / 100; // Converter para reais
+      // tokenPrice vem em formato web3 (1000000 = ~1 USD)
+      const priceInMicros = parseFloat(b.CardBlockchainData?.tokenPrice ?? '0') || 0;
+      const unitValue = priceInMicros / 1_000_000; // Converter para USD (1000000 = 1 USD)
       const totalValue = balance * unitValue;
 
       return {
@@ -128,9 +128,9 @@ export default function TokenCircle({ show }: TokenCircleProps) {
     const ey = my;
     const boxPadding = 10;
     const nameText: string = String(payload.name ?? '');
-    const saldoText: string = `${tokenTexts?.labels?.balance || 'Saldo'}: ${Number(payload.balance ?? 0).toLocaleString('pt-BR')}`;
-    const unitText: string = `${tokenTexts?.labels?.unit || 'Unitário'}: R$ ${Number(payload.unitValue ?? 0).toFixed(2)}`;
-    const totalText: string = `${tokenTexts?.labels?.total || 'Total'}: R$ ${Number(payload.price ?? 0).toFixed(2)}`;
+    const saldoText: string = `${tokenTexts?.labels?.balance || 'Balance'}: ${Number(payload.balance ?? 0).toLocaleString('pt-BR')}`;
+    const unitText: string = `${tokenTexts?.labels?.unit || 'Unit'}: $ ${Number(payload.unitValue ?? 0).toFixed(2)}`;
+    const totalText: string = `${tokenTexts?.labels?.total || 'Total'}: $ ${Number(payload.price ?? 0).toFixed(2)}`;
     const maxLen: number = Math.max(nameText.length, saldoText.length, unitText.length, totalText.length);
     const approxChar = 7; // largura média por caractere com font-size 12
     const boxWidth: number = Math.min(110, Math.max(95, maxLen * approxChar + boxPadding * 2));
@@ -238,7 +238,7 @@ export default function TokenCircle({ show }: TokenCircleProps) {
         ) : (
           <>
             <p className="text-xl font-bold text-gray-800">
-              {show ? `R$ ${totalPrice.toFixed(2)}` : 'R$ ******'}
+              {show ? `$ ${totalPrice.toFixed(2)}` : '$ ******'}
             </p>
             <p className="text-sm text-gray-600">
               {tokenTexts?.['total-invested'] || 'Total Investido'}

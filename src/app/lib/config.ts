@@ -27,7 +27,6 @@ export interface ClientConfig {
 }
 
 export type ThemeMode = 'light'
-
 export async function getClientConfig({
   locale = 'pt-BR',
   theme = 'light',

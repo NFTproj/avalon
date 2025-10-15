@@ -122,12 +122,12 @@ export default function BalancesTable({ className = "" }: { className?: string }
           </thead>
           <tbody style={{ color: tableTextColor, background: tableBodyBg }}>
             {paginated.map((b, idx) => {
-              // tokenPrice vem em centavos (1000000 = R$ 10.000,00)
-              const priceInCents = parseFloat(b.CardBlockchainData?.tokenPrice ?? '0') || 0
-              const price = priceInCents / 100 // Converter centavos para reais
+              // tokenPrice vem em formato web3 (1000000 = ~1 USD)
+              const priceInMicros = parseFloat(b.CardBlockchainData?.tokenPrice ?? '0') || 0
+              const price = priceInMicros / 1_000_000 // Converter para USD (1000000 = 1 USD)
               const total = price > 0 ? b.balance * price : b.balance
 
-              const formatBRL = (n: number) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(n)
+              const formatUSD = (n: number) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n)
 
               return (
                 <tr key={`${b.id}-${idx}`} className="border-t border-gray-200 align-middle">
@@ -148,10 +148,10 @@ export default function BalancesTable({ className = "" }: { className?: string }
                   </td>
 
                   {/* Valor unitário */}
-                  <td className="px-6 py-4 text-gray-700 whitespace-nowrap">{formatBRL(price)}</td>
+                  <td className="px-6 py-4 text-gray-700 whitespace-nowrap">{formatUSD(price)}</td>
 
                   {/* Valor Total */}
-                  <td className="px-6 py-4 text-gray-700 whitespace-nowrap">{formatBRL(total)}</td>
+                  <td className="px-6 py-4 text-gray-700 whitespace-nowrap">{formatUSD(total)}</td>
 
                   {/* Ações */}
                   <td className="px-6 py-4">

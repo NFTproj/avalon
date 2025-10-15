@@ -85,10 +85,12 @@ export default function TokenCard({
 
   const formattedPrice = useMemo(() => {
     if (price) return price.includes('$') ? price : `$ ${price}`
-    if (unitValue && unitValue > 0) return `R$ ${unitValue.toFixed(2)}`
-    if (card.CardBlockchainData?.tokenPrice) return `$ ${parseFloat(card.CardBlockchainData.tokenPrice).toFixed(2)}`
+    if (unitValue && unitValue > 0) return `$ ${unitValue.toFixed(2)}`
+    // Usar a estrutura correta da API que pode ter tanto CardBlockchainData quanto cardBlockchainData
+    const blockchainData = (card as any).CardBlockchainData || (card as any).cardBlockchainData
+    if (blockchainData?.tokenPrice) return `$ ${parseFloat(blockchainData.tokenPrice).toFixed(2)}`
     return 'Indisponível'
-  }, [price, unitValue, card.CardBlockchainData?.tokenPrice])
+  }, [price, unitValue, card])
 
   const tokenTexts = texts?.token
 
@@ -145,47 +147,29 @@ export default function TokenCard({
 
           <div className="w-full h-full flex items-center justify-center">
             {/* Prioridade: logoUrl -> cardBackgroundUrl -> image -> fallback */}
-            {card.logoUrl ? (
-              <Image
-                src={card.logoUrl}
-                alt={card.name}
-                width={80}
-                height={80}
-                className="rounded-full w-full h-full object-cover"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                  const fallback = target.parentElement?.querySelector('.fallback-icon');
-                  if (fallback) {
-                    fallback.classList.remove('hidden');
-                  }
-                }}
-              />
-            ) : card.cardBackgroundUrl ? (
-              <Image
-                src={card.cardBackgroundUrl}
-                alt={card.name}
-                width={80}
-                height={80}
-                className="rounded-full w-full h-full object-cover"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                  const fallback = target.parentElement?.querySelector('.fallback-icon');
-                  if (fallback) {
-                    fallback.classList.remove('hidden');
-                  }
-                }}
-              />
-            ) : card.image ? (
+            {(card as any).logoUrl ? (
               <img
-                src={card.image}
+                src={(card as any).logoUrl}
                 alt={card.name}
-                className="rounded-full w-full h-full object-cover"
+                className="w-full h-full object-cover rounded-full"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.style.display = 'none';
-                  const fallback = target.parentElement?.querySelector('.fallback-icon');
+                  const fallback = target.parentElement?.querySelector('.fallback-icon') as HTMLElement;
+                  if (fallback) {
+                    fallback.classList.remove('hidden');
+                  }
+                }}
+              />
+            ) : (card as any).cardBackgroundUrl ? (
+              <img
+                src={(card as any).cardBackgroundUrl}
+                alt={card.name}
+                className="w-full h-full object-cover rounded-full"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  const fallback = target.parentElement?.querySelector('.fallback-icon') as HTMLElement;
                   if (fallback) {
                     fallback.classList.remove('hidden');
                   }
@@ -193,7 +177,7 @@ export default function TokenCard({
               />
             ) : null}
             
-            <div className={`fallback-icon w-full h-full rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center ${(card.logoUrl || card.cardBackgroundUrl || card.image) ? 'hidden' : ''}`}>
+            <div className={`fallback-icon w-full h-full rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center ${((card as any).logoUrl || (card as any).cardBackgroundUrl || (card as any).image) ? 'hidden' : ''}`}>
               <ImageFromJSON
                 src="icons/bloxify/tokenization.svg"
                 alt="Token"
@@ -237,7 +221,7 @@ export default function TokenCard({
             className="font-semibold text-sm"
             style={{ color: textColor }}
           >
-            {launchDate || (card.launchDate ? new Date(card.launchDate).toLocaleDateString('pt-BR') : 'A definir')}
+            {launchDate || ((card as any).launchDate ? new Date((card as any).launchDate).toLocaleDateString('pt-BR') : 'A definir')}
           </span>
         </div>
 
@@ -272,7 +256,7 @@ export default function TokenCard({
             className="font-bold text-sm"
             style={{ color: textColor }}
           >
-            {identifierCode || card.ticker || card.id.substring(0, 8).toUpperCase()}
+            {identifierCode || (card as any).ticker || card.id.substring(0, 8).toUpperCase()}
           </span>
         </div>
       </div>
