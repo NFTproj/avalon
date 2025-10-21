@@ -111,7 +111,8 @@ export default function PixPaymentSheet({
   ctaBgEnabled,
   ctaTextEnabled,
 }: Props) {
-  const { colors } = useContext(ConfigContext)
+  const { colors, texts } = useContext(ConfigContext)
+  const loginTexts = texts?.register?.['step-four'] as any
 
   // ===== tema (com overrides por props) =====
   const themeAccent  = colors?.colors?.['color-primary'] ?? '#19C3F0'
