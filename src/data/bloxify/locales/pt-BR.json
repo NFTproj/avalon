@@ -727,7 +727,22 @@
     "quote-prefix-pix": "Você pagará (PIX):",
     "quote-prefix-usdc": "Você pagará (USDC):",
     "cta-pix": "Comprar com PIX",
-    "cta-usdc": "Comprar com USDC"
+    "cta-usdc": "Comprar com USDC",
+      "pix-copia-cola": "PIX copia e cola",
+    "pix-copy": "Copiar código",
+    "pix-copied": "Copiado!",
+    "value-label": "Valor",
+    "pix-amount-to-pay": "Valor a pagar",
+    "pix-expires-in": "Expira em {mm}:{ss}",
+    "pix-expired": "Expirado",
+    "pix-verify": "Já paguei, verificar",
+    "pix-verifying": "Verificando…",
+    "pix-wait-to-check": "Aguarde {s}s para verificar.",
+    "error-no-session": "Sem sessionId para verificar.",
+    "error-fetch-status": "Falha ao consultar ({status})",
+    "error-generic": "Não foi possível verificar o pagamento.",
+    "qty-label": "Quantidade (tokens)"
+
   },
   "tokenList": {
     "empty": "Nenhum token disponível no momento.",

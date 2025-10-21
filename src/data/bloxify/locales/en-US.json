@@ -622,7 +622,22 @@
     "quote-prefix-pix": "You will pay (PIX):",
     "quote-prefix-usdc": "You will pay (USDC):",
     "cta-pix": "Buy with PIX",
-    "cta-usdc": "Buy with USDC"
+    "cta-usdc": "Buy with USDC",
+    "back": "Back",
+    "pix-copia-cola": "PIX copy and paste",
+    "pix-copy": "Copy code",
+    "pix-copied": "Copied!",
+    "value-label": "Amount",
+    "pix-amount-to-pay": "Amount to pay",
+    "pix-expires-in": "Expires in {mm}:{ss}",
+    "pix-expired": "Expired",
+    "pix-verify": "I’ve paid, check",
+    "pix-verifying": "Checking…",
+    "pix-wait-to-check": "Please wait {s}s to check.",
+    "error-no-session": "Missing sessionId to verify.",
+    "error-fetch-status": "Failed to query ({status})",
+    "error-generic": "Could not verify the payment.",
+    "qty-label": "Quantity (tokens)"
   },
   "tokenList": {
     "empty": "No tokens available at the moment.",
