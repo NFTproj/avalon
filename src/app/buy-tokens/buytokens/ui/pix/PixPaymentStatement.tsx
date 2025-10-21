@@ -132,7 +132,9 @@ export default function PixPaymentStatement({
             <button
               type="button"
               onClick={onShowPixDetails}
+
               className="inline-flex items-center justify-center cursor-pointer rounded-xl px-3 py-2 text-sm font-semibold shadow-sm transition hover:opacity-90 focus:outline-none"
+
               style={{ backgroundColor: ctaBg, color: ctaText, border: `2px solid ${borderColor}` }}
             >
               Ver detalhes do PIX
@@ -141,6 +143,7 @@ export default function PixPaymentStatement({
               type="button"
               onClick={handleCancelAndNew}
               disabled={canceling}
+
               className="inline-flex items-center justify-center cursor-pointer rounded-xl border px-3 py-2 text-sm font-semibold hover:bg-gray-50 disabled:opacity-60"
               style={{ borderColor, color: '#0b1a2b' }}
             >
@@ -152,7 +155,9 @@ export default function PixPaymentStatement({
             <button
               type="button"
               onClick={handleViewOrders}
+
               className="inline-flex items-center justify-center cursor-pointer rounded-xl border px-3 py-2 text-sm font-semibold hover:bg-gray-50"
+
               style={{ borderColor, color: '#0b1a2b' }}
             >
               Ver todas as ordens
@@ -160,7 +165,9 @@ export default function PixPaymentStatement({
             <button
               type="button"
               onClick={handleCancelAndNew}
+
               className="inline-flex items-center justify-center cursor-pointer rounded-xl px-3 py-2 text-sm font-semibold shadow-sm transition hover:opacity-90 focus:outline-none"
+
               style={{ backgroundColor: ctaBg, color: ctaText, border: `2px solid ${borderColor}` }}
             >
               Realizar nova compra
