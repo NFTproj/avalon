@@ -273,11 +273,17 @@ function Header() {
                   <ChevronDown className="w-4 h-4 transition group-open:rotate-180" />
                 </summary>
 
-                <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-lg z-50 min-w-[8rem]">
+                <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-lg z-50 min-w-[10rem]">
                   <ul className="flex flex-col p-2 space-y-1 text-left">
                     <li
+                      onClick={() => router.push('/profile')}
+                      className="cursor-pointer text-sm text-gray-700 px-4 py-2 rounded hover:bg-gray-100 transition-colors"
+                    >
+                      {lpHeader?.buttons?.buttonProfile || 'Perfil'}
+                    </li>
+                    <li
                       onClick={logout}
-                      className="cursor-pointer text-sm text-red-600 px-4 py-2 rounded hover:bg-gray-100"
+                      className="cursor-pointer text-sm text-red-600 px-4 py-2 rounded hover:bg-gray-100 transition-colors"
                     >
                       {lpHeader?.buttons.buttonLogout}
                     </li>

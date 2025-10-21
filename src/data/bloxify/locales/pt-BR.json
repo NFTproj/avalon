@@ -42,6 +42,7 @@
       "buttons": {
         "button": "Criar conta",
         "buttonLogin": "Entrar",
+        "buttonProfile": "Perfil",
         "buttonLogout": "sair"
       }
     },
@@ -732,6 +733,36 @@
   "tokenList": {
     "empty": "Nenhum token disponível no momento.",
     "unit-suffix": "und"
+  },
+  "profile": {
+    "page-title": "Perfil",
+    "menu": {
+      "configurations": "Configurações",
+      "settings": "Cadastro",
+      "password-update": "Atualizar senha",
+      "verify-account": "Verificar conta",
+      "verify-certificate": "Validar CERT(KYC)",
+      "close-account": "Encerrar conta",
+      "security": "Segurança",
+      "enable-2fa": "Ativar 2FA",
+      "verify-two-step": "Verificar em duas etapas",
+      "connected-devices": "Dispositivos conectados",
+      "preferences": "Preferências",
+      "language": "Idioma",
+      "notifications": "Notificações"
+    },
+    "close-account": {
+      "title": "Encerrar conta",
+      "warning-title": "Atenção",
+      "warning-message": "Encerrar a sua ação permanente todos seus dados serão apagados de nossos sistemas ( excluíndo CERTIFICADOS DE RX de sua passagem pela plataforma) este processo não pode ser desfeito. Use com cuidado!",
+      "email-label": "Informe seu endereço de e-mail para validar o encerramento",
+      "email-placeholder": "Digite seu e-mail para confirmar",
+      "button-cancel": "Cancelar",
+      "button-confirm": "Encerrar conta",
+      "email-mismatch": "O e-mail informado não corresponde ao e-mail da conta",
+      "success-message": "Conta encerrada com sucesso",
+      "error-message": "Erro ao encerrar conta. Tente novamente."
+    }
   },
   "certificateEmission": {
     "page-title": "Emissão de certificado",

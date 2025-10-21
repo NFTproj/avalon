@@ -42,6 +42,7 @@
       "buttons": {
         "button": "Create Account",
         "buttonLogin": "Login",
+        "buttonProfile": "Profile",
         "buttonLogout": "Logout"
       }
     },
