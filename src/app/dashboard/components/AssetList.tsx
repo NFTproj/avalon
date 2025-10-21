@@ -211,7 +211,7 @@ export default function AssetList() {
       </div>
     )
   }
-
+/* 
   if (assets.length === 0) {
     const assetTexts = texts?.dashboard?.['asset-list'] as any
     return (
@@ -227,11 +227,11 @@ export default function AssetList() {
         </div>
       </div>
     )
-  }
-
+  } */
+/* 
   return (
     <div className="w-full mt-8 rounded-t-lg overflow-hidden">
-      {/* Cabeçalho */}
+     
       <div className="p-4" style={{ backgroundColor: headerBgColor }}>
         <h2
           className="text-xl font-bold flex items-center"
@@ -254,7 +254,7 @@ export default function AssetList() {
         )}
       </div>
 
-      {/* Cabeçalhos da tabela */}
+      {}
       <div
         className="grid"
         style={{
@@ -274,7 +274,6 @@ export default function AssetList() {
         </div>
       </div>
 
-      {/* Listagem dos ativos reais */}
       <div style={{ backgroundColor: tableBodyBgColor }}>
         {assets.map((asset, index) => {
           const balance = Number(asset.balanceRaw) / Math.pow(10, asset.decimals)
@@ -297,4 +296,6 @@ export default function AssetList() {
       </div>
     </div>
   )
+
+*/
 }
