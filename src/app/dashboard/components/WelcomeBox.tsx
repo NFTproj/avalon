@@ -58,7 +58,7 @@ export default function WelcomeBox() {
             <h1 className="text-2xl font-bold mb-2 break-words">
               {welcomeTexts?.title?.replace('Slab', 'Bloxify') || `Bem-vindo(a) à Bloxify, ${userName}!`}
             </h1>
-            <h2 className="text-xl font-semibold mb-2 break-words">
+            <h2 className="text-xl font-semibold mb-2 break-words whitespace-pre-line">
               {welcomeTexts?.subtitle || 'Conheça os projetos que foram tokenizados, invista com segurança e tenha o controle total do seu patrimônio.'}
             </h2>
             
@@ -96,12 +96,9 @@ export default function WelcomeBox() {
             </div>
           </div>
           
-          <p
-            className="text-base mb-6 whitespace-pre-line break-words lg:w-[400px] text-left opacity-90"
-            dangerouslySetInnerHTML={{
-              __html: welcomeTexts?.description || 'Gerencie seus investimentos em tokens de forma fácil e segura.',
-            }}
-          />
+          <p className="text-base mb-6 whitespace-pre-line break-words lg:w-[400px] text-left opacity-90">
+            {welcomeTexts?.description || 'Gerencie seus investimentos em tokens de forma fácil e segura.'}
+          </p>
           
           {/* Links de ação baseados no status do usuário */}
           <div className="flex flex-col gap-3">

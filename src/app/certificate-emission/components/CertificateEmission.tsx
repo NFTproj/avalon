@@ -63,8 +63,15 @@ export default function CertificateEmission() {
   // Buscar saldo do usuário
   const userBalance = user?.balances?.find((b: any) => b.id === cardId)?.balance || 0
 
+  const pageBg = colors?.certificateEmission?.background?.page || '#FFFFFF'
+  const titleColor = colors?.certificateEmission?.colors?.title || '#1F2937'
+  const subtitleColor = colors?.certificateEmission?.colors?.subtitle || '#6B7280'
+  const errorBg = colors?.certificateEmission?.background?.error || '#FEF2F2'
+  const errorBorder = colors?.certificateEmission?.border?.error || '#FCA5A5'
+  const errorText = colors?.certificateEmission?.colors?.['error-text'] || '#DC2626'
+
   return (
-    <div className="min-h-dvh flex flex-col bg-[#f0fcff]">
+    <div className="min-h-dvh flex flex-col" style={{ backgroundColor: pageBg }}>
       <Header />
 
       <main className="flex-1">
@@ -73,31 +80,16 @@ export default function CertificateEmission() {
         <div className="mx-auto max-w-4xl px-4 py-8">
           {/* Título */}
           <div className="text-center mb-8">
-            <h1
-              className="mb-4 px-4"
-              style={{
-                fontFamily: 'Inter, sans-serif',
-                fontWeight: 700,
-                fontSize: 'clamp(32px, 8vw, 65px)',
-                lineHeight: 'clamp(36px, 9vw, 72px)',
-                letterSpacing: '-1px',
-                textAlign: 'center',
-                color: colors?.colors?.['color-primary'] || '#19C3F0'
-              }}
+            <h1 
+              className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 px-4"
+              style={{ color: titleColor }}
             >
               {texts?.certificateEmission?.['page-title'] ??
                 'Emissão de certificado'}
             </h1>
-            <p
-              className="text-gray-600 px-4"
-              style={{
-                fontFamily: 'Inter, sans-serif',
-                fontWeight: 400,
-                fontSize: 'clamp(16px, 4vw, 36px)',
-                lineHeight: 'clamp(24px, 5vw, 32px)',
-                letterSpacing: '0px',
-                textAlign: 'center'
-              }}
+            <p 
+              className="text-base md:text-lg px-4 max-w-3xl mx-auto"
+              style={{ color: subtitleColor }}
             >
               {texts?.certificateEmission?.['page-subtitle'] ??
                 'Registre sua compensação ambiental e receba seu certificado digital com selo de verificação.'}
@@ -106,8 +98,14 @@ export default function CertificateEmission() {
 
           {/* Card de Emissão */}
           {error ? (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
-              <p className="text-red-600">{error}</p>
+            <div 
+              className="border-2 rounded-2xl p-6 text-center shadow-md"
+              style={{ 
+                backgroundColor: errorBg,
+                borderColor: errorBorder
+              }}
+            >
+              <p className="font-medium" style={{ color: errorText }}>{error}</p>
             </div>
           ) : card ? (
             <EmissionCard

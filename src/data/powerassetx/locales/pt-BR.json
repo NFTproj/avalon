@@ -344,7 +344,7 @@
     "welcome-box": {
       "name": "Antônio",
       "title": "Bem-vindo (a) à Slab!",
-      "description": "Conheça os projetos que foram tokenizados, investa com segurança e tenha o controle total do seu patrimônio na palma da sua mão.",
+      "description": "Conheça os projetos que foram tokenizados, \ninvesta com segurança e tenha o controle total do seu patrimônio na palma da sua mão.",
       "link": "Ver detalhes",
       "tokens-title": "Seus Tokens:",
       "tokens": ["#TBIO", "#TBIO2"]
@@ -536,9 +536,9 @@
   },
   "dashboard": {
     "welcome-box": {
-      "title": "Bem-vindo(a) à PowerAssetX, {userName}!",
-      "subtitle": "Conheça os projetos que foram tokenizados, invista com segurança e tenha o controle total do seu patrimônio.",
-      "description": "Conheça os projetos que foram tokenizados, invista com segurança e tenha o controle total do seu patrimônio.",
+      "title": "Bem-vindo(a) à PowerAssetX",
+      "subtitle": "Conheça os projetos que foram tokenizados, \ninvista com segurança e tenha o controle total \ndo seu patrimônio.",
+      "description": "Conheça os projetos que foram tokenizados, \ninvista com segurança e tenha o controle total \ndo seu patrimônio.",
       "buttons": {
         "explore-tokens": "Explorar Tokens Disponíveis",
         "complete-kyc": "Complete sua Verificação KYC"

@@ -471,7 +471,7 @@
 },
 "dashboard": {
   "welcome-box": {
-    "title": "Welcome to PowerAssetX, {userName}!",
+    "title": "Welcome to PowerAssetX",
     "subtitle": "Discover tokenized projects, invest safely and have full control of your assets.",
     "description": "Discover tokenized projects, invest safely and have full control of your assets.",
     "buttons": {

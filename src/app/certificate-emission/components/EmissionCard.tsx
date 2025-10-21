@@ -20,7 +20,21 @@ export default function EmissionCard({ card, userBalance, onSuccess }: EmissionC
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
 
-  const accentColor = '#08CEFF'
+  // Cores dinâmicas do tema
+  const accentColor = colors?.certificateEmission?.colors?.accent || '#08CEFF'
+  const cardBg = colors?.certificateEmission?.background?.card || '#FFFFFF'
+  const cardBorder = colors?.certificateEmission?.border?.card || '#E5E7EB'
+  const inputBorder = colors?.certificateEmission?.border?.input || '#08CEFF'
+  const labelColor = colors?.certificateEmission?.colors?.label || '#1F2937'
+  const inputTextColor = colors?.certificateEmission?.colors?.['input-text'] || '#4B5563'
+  const inputDisabledColor = colors?.certificateEmission?.colors?.['input-disabled'] || '#9CA3AF'
+  const buttonBg = colors?.certificateEmission?.button?.['primary-bg'] || '#08CEFF'
+  const buttonText = colors?.certificateEmission?.button?.['primary-text'] || '#FFFFFF'
+  const successBg = colors?.certificateEmission?.colors?.['success-bg'] || '#F0FDF4'
+  const successBorder = colors?.certificateEmission?.colors?.['success-border'] || '#22C55E'
+  const successText = colors?.certificateEmission?.colors?.['success-text'] || '#16A34A'
+  const errorBorder = colors?.certificateEmission?.colors?.['error-border'] || '#FCA5A5'
+  const errorText = colors?.certificateEmission?.colors?.['error-text'] || '#DC2626'
   const maxQuantity = Math.min(userBalance, 1500)
 
   // Evita erro de indexação tipada em objetos gerados a partir de JSON
@@ -70,10 +84,16 @@ export default function EmissionCard({ card, userBalance, onSuccess }: EmissionC
   }
 
   return (
-    <div className="bg-white rounded-3xl shadow-lg p-8 md:p-12 max-w-2xl mx-auto">
+    <div 
+      className="rounded-2xl shadow-xl border p-8 md:p-12 max-w-2xl mx-auto"
+      style={{ 
+        backgroundColor: cardBg,
+        borderColor: cardBorder
+      }}
+    >
       {/* Token a ser utilizado */}
       <div className="mb-8">
-        <label className="block text-xl font-semibold text-gray-900 mb-4">
+        <label className="block text-lg font-bold mb-4" style={{ color: labelColor }}>
           {t('token-label', 'Token a ser utilizado')}
         </label>
         <div className="relative">
@@ -81,19 +101,30 @@ export default function EmissionCard({ card, userBalance, onSuccess }: EmissionC
             type="text"
             value={card.name}
             disabled
-            className="w-full px-6 py-4 border-3 rounded-2xl bg-white text-gray-400 text-lg font-medium focus:outline-none"
+            className="w-full px-6 py-4 border-3 rounded-2xl text-lg font-medium focus:outline-none"
             style={{ 
-              borderColor: accentColor,
-              borderWidth: '3px'
+              borderColor: inputBorder,
+              borderWidth: '3px',
+              backgroundColor: cardBg,
+              color: inputDisabledColor
             }}
           />
           
           {/* Mensagem de Sucesso */}
           {success && (
             <div className="absolute left-full ml-4 top-0 bottom-0 flex items-center">
-              <div className="flex items-start gap-3 bg-white p-4 rounded-lg border-l-4 border-green-500 shadow-lg min-w-[300px]">
-                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
-                  <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div 
+                className="flex items-start gap-3 p-4 rounded-lg border-l-4 shadow-lg min-w-[300px]"
+                style={{ 
+                  backgroundColor: successBg,
+                  borderColor: successBorder
+                }}
+              >
+                <div 
+                  className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-0.5"
+                  style={{ backgroundColor: `${successBorder}20` }}
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: successText }}>
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
@@ -112,9 +143,18 @@ export default function EmissionCard({ card, userBalance, onSuccess }: EmissionC
           {/* Mensagem de Erro */}
           {error && (
             <div className="absolute left-full ml-4 top-0 bottom-0 flex items-center">
-              <div className="flex items-start gap-3 bg-white p-4 rounded-lg border-l-4 border-red-500 shadow-lg min-w-[300px]">
-                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-red-100 flex items-center justify-center mt-0.5">
-                  <svg className="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div 
+                className="flex items-start gap-3 p-4 rounded-lg border-l-4 shadow-lg min-w-[300px]"
+                style={{ 
+                  backgroundColor: `${errorBorder}20`,
+                  borderColor: errorBorder
+                }}
+              >
+                <div 
+                  className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-0.5"
+                  style={{ backgroundColor: `${errorBorder}40` }}
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: errorText }}>
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </div>
@@ -131,7 +171,7 @@ export default function EmissionCard({ card, userBalance, onSuccess }: EmissionC
 
       {/* Quantidade de tokens compensados */}
       <div className="mb-10">
-        <label className="block text-xl font-semibold text-gray-900 mb-4">
+        <label className="block text-lg font-bold mb-4" style={{ color: labelColor }}>
           {t('quantity-label', 'Quantidade de tokens compensados')}
         </label>
         <div className="relative">
@@ -142,10 +182,12 @@ export default function EmissionCard({ card, userBalance, onSuccess }: EmissionC
               setError(null)
               setSuccess(false)
             }}
-            className="w-full px-6 py-4 border-3 rounded-2xl bg-white text-gray-600 text-lg font-medium focus:outline-none appearance-none cursor-pointer"
+            className="w-full px-6 py-4 border-3 rounded-2xl text-lg font-medium focus:outline-none appearance-none cursor-pointer"
             style={{ 
-              borderColor: accentColor,
-              borderWidth: '3px'
+              borderColor: inputBorder,
+              borderWidth: '3px',
+              backgroundColor: cardBg,
+              color: inputTextColor
             }}
             disabled={loading || success}
           >
@@ -176,9 +218,10 @@ export default function EmissionCard({ card, userBalance, onSuccess }: EmissionC
         type="button"
         onClick={handleEmit}
         disabled={loading || success || quantity <= 0}
-        className="w-full py-5 rounded-2xl text-white text-xl font-bold transition-all duration-200 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-xl"
+        className="w-full py-5 rounded-2xl text-xl font-bold transition-all duration-200 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-xl"
         style={{
-          backgroundColor: accentColor,
+          backgroundColor: buttonBg,
+          color: buttonText
         }}
       >
         {loading ? (

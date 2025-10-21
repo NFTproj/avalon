@@ -20,7 +20,7 @@ interface CertificateHistoryProps {
 }
 
 export default function CertificateHistory({ cardId }: CertificateHistoryProps) {
-  const { texts, locale } = useContext(ConfigContext)
+  const { texts, locale, colors } = useContext(ConfigContext)
   const [certificates, setCertificates] = useState<Certificate[]>([])
   const [loading, setLoading] = useState(true)
   const [filters, setFilters] = useState({
@@ -29,7 +29,15 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
     status: 'all',
   })
 
-  const accentColor = '#08CEFF'
+  // Cores dinâmicas do tema
+  const accentColor = colors?.certificateEmission?.colors?.accent || '#08CEFF'
+  const cardBg = colors?.certificateEmission?.history?.['card-bg'] || '#FFFFFF'
+  const cardBorder = colors?.certificateEmission?.history?.['card-border'] || '#E5E7EB'
+  const filterBg = colors?.certificateEmission?.history?.['filter-bg'] || '#F3F4F6'
+  const filterBorder = colors?.certificateEmission?.history?.['filter-border'] || '#08CEFF'
+  const filterText = colors?.certificateEmission?.history?.['filter-text'] || '#4B5563'
+  const titleColor = colors?.certificateEmission?.colors?.title || '#1F2937'
+  const subtitleColor = colors?.certificateEmission?.colors?.subtitle || '#6B7280'
 
   useEffect(() => {
     const fetchCertificates = async () => {
@@ -196,7 +204,7 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" 
           />
         </svg>
-        <h2 className="text-3xl font-bold text-gray-900">
+        <h2 className="text-3xl font-bold" style={{ color: titleColor }}>
           {t('history-title', 'Histórico de certificados')}
         </h2>
       </div>
@@ -208,8 +216,12 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
           <select
             value={filters.year}
             onChange={(e) => setFilters({ ...filters, year: e.target.value })}
-            className="appearance-none px-4 py-2 pr-10 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium focus:outline-none cursor-pointer border-2"
-            style={{ borderColor: accentColor }}
+            className="appearance-none px-4 py-2 pr-10 rounded-lg text-sm font-medium focus:outline-none cursor-pointer border-2"
+            style={{ 
+              backgroundColor: filterBg,
+              color: filterText,
+              borderColor: filterBorder
+            }}
           >
             <option value="all">{t('filter-year', 'Ano:')}</option>
             <option value="2025">2025</option>
@@ -231,8 +243,12 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
           <select
             value={filters.token}
             onChange={(e) => setFilters({ ...filters, token: e.target.value })}
-            className="appearance-none px-4 py-2 pr-10 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium focus:outline-none cursor-pointer border-2"
-            style={{ borderColor: accentColor }}
+            className="appearance-none px-4 py-2 pr-10 rounded-lg text-sm font-medium focus:outline-none cursor-pointer border-2"
+            style={{ 
+              backgroundColor: filterBg,
+              color: filterText,
+              borderColor: filterBorder
+            }}
           >
             <option value="all">{t('filter-token', 'Token:')}</option>
             <option value="TBIO1">TBIO1</option>
@@ -253,8 +269,12 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
           <select
             value={filters.status}
             onChange={(e) => setFilters({ ...filters, status: e.target.value })}
-            className="appearance-none px-4 py-2 pr-10 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium focus:outline-none cursor-pointer border-2"
-            style={{ borderColor: accentColor }}
+            className="appearance-none px-4 py-2 pr-10 rounded-lg text-sm font-medium focus:outline-none cursor-pointer border-2"
+            style={{ 
+              backgroundColor: filterBg,
+              color: filterText,
+              borderColor: filterBorder
+            }}
           >
             <option value="all">{t('filter-status', 'Status:')}</option>
             <option value="emitido">{t('status-emitido', 'Emitido')}</option>
@@ -275,8 +295,14 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
       {/* Lista de certificados */}
       <div className="space-y-4">
         {filteredCertificates.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-2xl border border-gray-200">
-            <p className="text-gray-600">{t('history-empty', 'Nenhum certificado encontrado')}</p>
+          <div 
+            className="text-center py-12 rounded-2xl border shadow-sm"
+            style={{ 
+              backgroundColor: cardBg,
+              borderColor: cardBorder
+            }}
+          >
+            <p style={{ color: subtitleColor }}>{t('history-empty', 'Nenhum certificado encontrado')}</p>
           </div>
         ) : (
           filteredCertificates.map((cert) => {
@@ -285,7 +311,11 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
             return (
               <div
                 key={cert.id}
-                className="bg-white rounded-2xl border border-gray-200 p-4 md:p-6 hover:shadow-lg transition-shadow"
+                className="rounded-2xl border p-4 md:p-6 shadow-md hover:shadow-xl transition-all"
+                style={{
+                  backgroundColor: cardBg,
+                  borderColor: cardBorder
+                }}
               >
                 {/* Título do Card - Mobile */}
                 <h3 className="text-base md:text-lg font-semibold text-gray-700 mb-3 md:hidden">
@@ -348,8 +378,11 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
                     {cert.status === 'emitido' && (
                       <button
                         onClick={() => handleDownload(cert)}
-                        className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-white text-base font-medium transition-all hover:shadow-lg whitespace-nowrap"
-                        style={{ backgroundColor: accentColor }}
+                        className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-base font-medium transition-all hover:shadow-lg whitespace-nowrap"
+                        style={{ 
+                          backgroundColor: accentColor,
+                          color: '#FFFFFF'
+                        }}
                       >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76" />
@@ -371,10 +404,11 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
                     {cert.status === 'falha' && (
                       <button
                         onClick={() => handleReemit(cert)}
-                        className="px-6 py-3 border-2 rounded-xl text-base font-medium transition-all hover:bg-cyan-50"
+                        className="px-6 py-3 border-2 rounded-xl text-base font-medium transition-all"
                         style={{ 
                           borderColor: accentColor,
-                          color: accentColor
+                          color: accentColor,
+                          backgroundColor: 'transparent'
                         }}
                       >
                         {t('button-reemit', 'Reemitir')}
@@ -388,8 +422,11 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
                   {cert.status === 'emitido' && (
                     <button
                       onClick={() => handleDownload(cert)}
-                      className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-white text-sm font-medium transition-all hover:shadow-lg"
-                      style={{ backgroundColor: accentColor }}
+                      className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all hover:shadow-lg"
+                      style={{ 
+                        backgroundColor: accentColor,
+                        color: '#FFFFFF'
+                      }}
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76" />
@@ -411,10 +448,11 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
                   {cert.status === 'falha' && (
                     <button
                       onClick={() => handleReemit(cert)}
-                      className="px-4 py-2 border-2 rounded-xl text-sm font-medium transition-all hover:bg-cyan-50"
+                      className="px-4 py-2 border-2 rounded-xl text-sm font-medium transition-all"
                       style={{ 
                         borderColor: accentColor,
-                        color: accentColor
+                        color: accentColor,
+                        backgroundColor: 'transparent'
                       }}
                     >
                       {t('button-reemit', 'Reemitir')}
