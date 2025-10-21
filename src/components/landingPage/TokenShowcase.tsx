@@ -1,10 +1,16 @@
 'use client'
 
-import { useContext, useMemo } from 'react'
+import { useContext, useMemo, useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import { useCards } from '@/lib/hooks/useCards'
 import Token from '@/components/common/Token'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, Pagination, A11y, EffectCoverflow } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import 'swiper/css/effect-coverflow'
 
 const toNum = (v: any): number => {
   if (v === null || v === undefined) return 0
@@ -36,6 +42,12 @@ export default function TokenShowcase() {
   const { cards, isLoading, error } = useCards()
   const router = useRouter()
   const landingTexts = texts?.['landing-page']?.tokens
+  const [isMounted, setIsMounted] = useState(false)
+
+  // Garantir que o Swiper só renderize no cliente
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   // Mapear cards da API para o formato Token
   const tokens = useMemo(() => {
@@ -96,15 +108,26 @@ export default function TokenShowcase() {
           </h2>
         </div>
 
-        {/* Grid de Cards com Flexbox */}
-        <div className="flex flex-wrap justify-center gap-8 lg:gap-10 mb-16">
-          {isLoading &&
-            Array.from({ length: 6 }).map((_, i) => (
+        {/* Grid de Cards com Flexbox ou Carousel */}
+        {isLoading && (
+          <div className="flex flex-wrap justify-center gap-8 lg:gap-10 mb-16">
+            {Array.from({ length: 6 }).map((_, i) => (
               <SkeletonCard key={`skeleton-${i}`} />
             ))}
+          </div>
+        )}
 
-          {!isLoading &&
-            tokens.map((token: any) => (
+        {!isLoading && tokens.length === 0 && (
+          <div className="flex flex-wrap justify-center gap-8 lg:gap-10 mb-16">
+            <p className="text-sm text-gray-500 col-span-full">
+              Nenhum token disponível.
+            </p>
+          </div>
+        )}
+
+        {!isLoading && tokens.length > 0 && tokens.length <= 3 && (
+          <div className="flex flex-wrap justify-center gap-8 lg:gap-10 mb-16">
+            {tokens.map((token: any) => (
               <div
                 key={token.id}
                 className="w-full sm:w-[calc(50%-16px)] lg:w-[calc(33.333%-27px)] max-w-sm"
@@ -124,13 +147,52 @@ export default function TokenShowcase() {
                 />
               </div>
             ))}
+          </div>
+        )}
 
-          {!isLoading && tokens.length === 0 && (
-            <p className="text-sm text-gray-500 col-span-full">
-              Nenhum token disponível.
-            </p>
-          )}
-        </div>
+        {!isLoading && tokens.length > 3 && isMounted && (
+          <div className="mb-16">
+            <Swiper
+              modules={[Navigation, Pagination, A11y, EffectCoverflow]}
+              effect="coverflow"
+              grabCursor={true}
+              centeredSlides={true}
+              slidesPerView="auto"
+              coverflowEffect={{
+                rotate: 15,
+                stretch: 50,
+                depth: 150,
+                modifier: 1,
+                slideShadows: true,
+              }}
+              navigation
+              pagination={{ clickable: true }}
+              className="pb-12 coverflow-swiper"
+            >
+              {tokens.map((token: any) => (
+                <SwiperSlide key={token.id} className="coverflow-slide">
+                  <div className="flex justify-center">
+                    <div className="w-full max-w-sm">
+                      <Token
+                        name={token.name}
+                        subtitle={token.subtitle}
+                        price={token.price}
+                        launchDate={token.launchDate}
+                        tokensAvailable={token.tokensAvailable}
+                        identifierCode={token.identifierCode}
+                        image={token.image}
+                        href={`/tokens/${token.id}`}
+                        labels={token.labels}
+                        sold={token.sold}
+                        total={token.total}
+                      />
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        )}
 
        
       </div>
