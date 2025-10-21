@@ -571,8 +571,11 @@
       "subtitle": "Conheça os projetos que foram tokenizados, \ninvista com segurança e tenha o controle total \ndo seu patrimônio.",
       "description": "Conheça os projetos que foram tokenizados, \ninvista com segurança e tenha o controle total \ndo seu patrimônio.",
       "buttons": {
+        "copy": "Copiar",
+        "copied": "Copiado!",
         "explore-tokens": "Explorar Tokens Disponíveis",
-        "complete-kyc": "Complete sua Verificação KYC"
+        "complete-kyc": "Complete sua Verificação KYC",
+        "check-kyc": "Verificar Status do KYC"
       }
     },
     "balances-table": {

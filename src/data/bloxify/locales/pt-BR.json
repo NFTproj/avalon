@@ -499,10 +499,17 @@
     "welcome-box": {
       "name": "Antônio",
       "title": "Bem-vindo (a) à Slab!",
-      "description": "Conheça os projetos que foram tokenizados, \ninvesta com segurança e tenha o controle total do seu patrimônio na palma da sua mão.",
+      "description": "Conheça os projetos que foram tokenizados, \ninvista com segurança e tenha o controle total do seu patrimônio na palma da sua mão.",
       "link": "Ver detalhes",
       "tokens-title": "Seus Tokens:",
-      "tokens": ["#TBIO", "#TBIO2"]
+      "tokens": ["#TBIO", "#TBIO2"],
+      "buttons": {
+        "copy": "Copiar",
+        "copied": "Copiado!",
+        "explore-tokens": "Explorar Tokens Disponíveis",
+        "complete-kyc": "Complete sua Verificação KYC",
+        "check-kyc": "Verificar Status do KYC"
+      }
     },
     "action-buttons": [
       {

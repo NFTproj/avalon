@@ -556,8 +556,11 @@
     "subtitle": "Discover tokenized projects, invest safely and have full control of your assets.",
     "description": "Discover tokenized projects, invest safely and have full control of your assets.",
     "buttons": {
+      "copy": "Copy",
+      "copied": "Copied!",
       "explore-tokens": "Explore Available Tokens",
-      "complete-kyc": "Complete your KYC Verification"
+      "complete-kyc": "Complete your KYC Verification",
+      "check-kyc": "Check KYC Status"
     }
   },
   "balances-table": {

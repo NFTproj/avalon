@@ -1,6 +1,6 @@
 'use client'
 
-import { useContext, useMemo } from 'react'
+import { useContext, useMemo, useState } from 'react'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import { useAuth } from '@/contexts/AuthContext'
 import Link from 'next/link'
@@ -10,6 +10,7 @@ import { KycStatusCode, getKycStatusInfo } from '@/types/kyc'
 export default function WelcomeBox() {
   const { colors, texts } = useContext(ConfigContext)
   const { user } = useAuth()
+  const [copied, setCopied] = useState(false)
 
   const welcomeTexts = (texts?.dashboard as any)?.['welcome-box']
   const textColor = '#FFFFFF'
@@ -23,6 +24,19 @@ export default function WelcomeBox() {
   const formatWalletAddress = (address: string) => {
     if (!address) return ''
     return `${address.slice(0, 6)}...${address.slice(-4)}`
+  }
+
+  // Copiar endereço da wallet para área de transferência
+  const copyToClipboard = async () => {
+    if (!user?.walletAddress) return
+    
+    try {
+      await navigator.clipboard.writeText(user.walletAddress)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch (err) {
+      console.error('Erro ao copiar:', err)
+    }
   }
 
   // Obter informações do status KYC usando o enum
@@ -75,6 +89,15 @@ export default function WelcomeBox() {
                 <p className="flex items-center gap-2">
                   <span className="opacity-70">Wallet:</span>
                   <span className="font-mono">{formatWalletAddress(user.walletAddress)}</span>
+                  <button
+                    onClick={copyToClipboard}
+                    className="text-xs px-2 py-1 rounded hover:bg-white/10 transition-all"
+                    style={{ color: linkColor }}
+                  >
+                    {copied 
+                      ? (welcomeTexts?.buttons?.copied || 'Copiado!') 
+                      : (welcomeTexts?.buttons?.copy || 'Copiar')}
+                  </button>
                 </p>
               )}
               

@@ -425,7 +425,14 @@
       "description": "Explore tokenized projects, invest securely, and keep full control of your assets in the palm of your hand.",
       "link": "View details",
       "tokens-title": "Your Tokens:",
-      "tokens": ["#TBIO", "#TBIO2"]
+      "tokens": ["#TBIO", "#TBIO2"],
+      "buttons": {
+        "copy": "Copy",
+        "copied": "Copied!",
+        "explore-tokens": "Explore Available Tokens",
+        "complete-kyc": "Complete your KYC Verification",
+        "check-kyc": "Check KYC Status"
+      }
     },
     "action-buttons": [
       {
