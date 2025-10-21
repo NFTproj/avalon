@@ -7,7 +7,7 @@ import FormsContact from '@/components/landingPage/FormsContact'
 import Header from '@/components/landingPage/Header'
 import Hero from '@/components/landingPage/Hero'
 import TokenizationSteps from '@/components/landingPage/TokenizationSteps'
-import TokensCarousel from '@/components/landingPage/TokensCarousel'
+import TokenShowcase from '@/components/landingPage/TokenShowcase'
 import { useContext } from 'react'
 import { ConfigContext } from '@/contexts/ConfigContext'
 
@@ -26,7 +26,7 @@ export default function Home() {
         <TokenizationSteps />
         {!isBloxify && (
           <>
-            <TokensCarousel />
+            <TokenShowcase />
             <FaqTabs
               title={texts?.['landing-page']?.faq?.title}
               questions={texts?.['landing-page']?.faq?.questions || []}
@@ -35,7 +35,7 @@ export default function Home() {
         )}
         {isBloxify && (
           <>
-            <TokensCarousel />
+            <TokenShowcase />
             <FeaturesShowcase />
             <FormsContact />
           </>
