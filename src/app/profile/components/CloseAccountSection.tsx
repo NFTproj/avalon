@@ -12,7 +12,7 @@ interface CloseAccountSectionProps {
 export default function CloseAccountSection({ userEmail }: CloseAccountSectionProps) {
   const { colors, texts } = useContext(ConfigContext)
   const router = useRouter()
-  const [email, setEmail] = useState('')
+  const [reason, setReason] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -24,19 +24,13 @@ export default function CloseAccountSection({ userEmail }: CloseAccountSectionPr
 
   const handleCloseAccount = async () => {
     setError('')
-    
-    if (email.toLowerCase().trim() !== userEmail.toLowerCase().trim()) {
-      setError(profileTexts?.['email-mismatch'] || 'O e-mail informado não corresponde ao e-mail da conta')
-      return
-    }
-
     setLoading(true)
     
     try {
       // TODO: Implementar API de encerramento de conta
       // const response = await apiFetch('/api/user/close-account', {
       //   method: 'POST',
-      //   body: JSON.stringify({ email })
+      //   body: JSON.stringify({ reason })
       // })
       
       // Simular delay
@@ -61,20 +55,20 @@ export default function CloseAccountSection({ userEmail }: CloseAccountSectionPr
 
       {/* Warning Box */}
       <div 
-        className="border-l-4 rounded-lg p-4 mb-6 flex gap-3"
+        className="border rounded-lg p-4 mb-6 flex gap-3"
         style={{ 
           backgroundColor: '#FEF2F2',
-          borderColor: '#DC2626'
+          borderColor: '#FCA5A5'
         }}
       >
-        <AlertTriangle size={24} className="flex-shrink-0 text-red-600 mt-0.5" />
+        <AlertTriangle size={20} className="flex-shrink-0 text-red-600 mt-0.5" />
         <div>
-          <h3 className="font-bold text-red-600 mb-1">
+          <h3 className="font-bold text-red-600 mb-1 text-sm">
             {profileTexts?.['warning-title'] || 'Atenção'}
           </h3>
           <p className="text-sm text-gray-700 leading-relaxed">
             {profileTexts?.['warning-message'] || 
-              'Encerrar a sua ação permanente todos seus dados serão apagados de nossos sistemas ( excluíndo CERTIFICADOS DE RX de sua passagem pela plataforma) este processo não pode ser desfeito. Use com cuidado!'}
+              'Encerrar sua é uma ação permanente.Todos seus dados serão excluídos e não poderão ser recuperados.Certifique-se de que deseja realmente prosseguir com a exclusão.'}
           </p>
         </div>
       </div>
@@ -82,25 +76,25 @@ export default function CloseAccountSection({ userEmail }: CloseAccountSectionPr
       {/* Form */}
       <div className="mb-6">
         <label 
-          htmlFor="email-confirm" 
+          htmlFor="reason-input" 
           className="block text-sm font-medium mb-2"
           style={{ color: textColor }}
         >
-          {profileTexts?.['email-label'] || 'Informe seu endereço de e-mail para validar o encerramento'}
+          {profileTexts?.['email-label'] || 'Motivo da exclusão(opcional)'}
         </label>
-        <input
-          id="email-confirm"
-          type="email"
-          value={email}
+        <textarea
+          id="reason-input"
+          value={reason}
           onChange={(e) => {
-            setEmail(e.target.value)
+            setReason(e.target.value)
             setError('')
           }}
-          placeholder={profileTexts?.['email-placeholder'] || 'Digite seu e-mail para confirmar'}
-          className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all"
+          placeholder={profileTexts?.['email-placeholder'] || 'Nos diga por que está encerrando sua conta'}
+          className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all resize-none"
+          rows={4}
           style={{
             borderColor: error ? '#DC2626' : '#D1D5DB',
-            backgroundColor: bgColor,
+            backgroundColor: '#FFFFFF',
           }}
           disabled={loading}
         />
@@ -112,21 +106,22 @@ export default function CloseAccountSection({ userEmail }: CloseAccountSectionPr
       </div>
 
       {/* Buttons */}
-      <div className="flex flex-col sm:flex-row gap-3 justify-end">
+      <div className="flex flex-col sm:flex-row gap-3 justify-start">
         <button
-          onClick={() => setEmail('')}
+          onClick={() => setReason('')}
           disabled={loading}
           className="px-6 py-2 rounded-lg border font-medium transition-all hover:bg-gray-50 disabled:opacity-50"
           style={{
             borderColor: '#D1D5DB',
             color: secondaryTextColor,
+            backgroundColor: '#FFFFFF'
           }}
         >
           {profileTexts?.['button-cancel'] || 'Cancelar'}
         </button>
         <button
           onClick={handleCloseAccount}
-          disabled={loading || !email}
+          disabled={loading}
           className="px-6 py-2 rounded-lg font-medium text-white transition-all hover:opacity-90 disabled:opacity-50"
           style={{
             backgroundColor: '#DC2626',

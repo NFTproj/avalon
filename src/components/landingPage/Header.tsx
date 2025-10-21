@@ -22,17 +22,18 @@ function Header() {
   const nav = lpHeader?.navigations
   const [hovered, setHovered] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
 
   const aboutRef = useRef<HTMLDetailsElement>(null)
   const productsRef = useRef<HTMLDetailsElement>(null)
   const langRef = useRef<HTMLDetailsElement>(null)
-  const outRef = useRef<HTMLDetailsElement>(null)
+  const outRef = useRef<HTMLDivElement>(null)
   useOutsideClick(aboutRef, () => aboutRef.current?.removeAttribute('open'))
   useOutsideClick(productsRef, () =>
     productsRef.current?.removeAttribute('open'),
   )
   useOutsideClick(langRef, () => langRef.current?.removeAttribute('open'))
-  useOutsideClick(outRef, () => outRef.current?.removeAttribute('open'))
+  useOutsideClick(outRef, () => setIsUserMenuOpen(false))
 
   function formatUserDisplay(user: any) {
     if (!user) return ''
@@ -267,29 +268,49 @@ function Header() {
         <div className="flex justify-end items-center gap-4">
           {loading ? null : user ? (
             <>
-              <details ref={outRef} className="relative group hidden lg:block">
-                <summary className="flex items-center gap-2 cursor-pointer text-sm font-medium text-black list-none">
+              <div ref={outRef} className="relative hidden lg:block">
+                <button
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                  className="flex items-center gap-2 cursor-pointer text-sm font-medium text-black"
+                >
                   {`Olá, ${formatUserDisplay(user)}`}
-                  <ChevronDown className="w-4 h-4 transition group-open:rotate-180" />
-                </summary>
+                  <ChevronDown className={`w-4 h-4 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} />
+                </button>
 
-                <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-lg z-50 min-w-[10rem]">
-                  <ul className="flex flex-col p-2 space-y-1 text-left">
-                    <li
-                      onClick={() => router.push('/profile')}
-                      className="cursor-pointer text-sm text-gray-700 px-4 py-2 rounded hover:bg-gray-100 transition-colors"
-                    >
-                      {lpHeader?.buttons?.buttonProfile || 'Perfil'}
-                    </li>
-                    <li
-                      onClick={logout}
-                      className="cursor-pointer text-sm text-red-600 px-4 py-2 rounded hover:bg-gray-100 transition-colors"
-                    >
-                      {lpHeader?.buttons.buttonLogout}
-                    </li>
-                  </ul>
-                </div>
-              </details>
+                {isUserMenuOpen && (
+                  <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-lg z-50 min-w-[10rem]">
+                    <ul className="flex flex-col p-2 space-y-1 text-left">
+                      <li
+                        onClick={() => {
+                          router.push('/dashboard')
+                          setIsUserMenuOpen(false)
+                        }}
+                        className="cursor-pointer text-sm text-gray-700 px-4 py-2 rounded hover:bg-gray-100 transition-colors"
+                      >
+                        {lpHeader?.buttons?.buttonHome || 'Home'}
+                      </li>
+                      <li
+                        onClick={() => {
+                          router.push('/profile')
+                          setIsUserMenuOpen(false)
+                        }}
+                        className="cursor-pointer text-sm text-gray-700 px-4 py-2 rounded hover:bg-gray-100 transition-colors"
+                      >
+                        {lpHeader?.buttons?.buttonProfile || 'Perfil'}
+                      </li>
+                      <li
+                        onClick={() => {
+                          logout()
+                          setIsUserMenuOpen(false)
+                        }}
+                        className="cursor-pointer text-sm text-red-600 px-4 py-2 rounded hover:bg-gray-100 transition-colors"
+                      >
+                        {lpHeader?.buttons.buttonLogout}
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
             </>
           ) : (
             <>

@@ -132,20 +132,7 @@ export default function TokenShowcase() {
           )}
         </div>
 
-        {/* Botão Ver Todos */}
-        {!isLoading && tokens.length > 0 && (
-          <div className="text-center">
-            <button
-              onClick={() => router.push('/tokens')}
-              className="px-8 py-3 rounded-lg font-semibold text-white transition-all hover:shadow-lg hover:scale-105"
-              style={{
-                backgroundColor: colors?.border['border-primary'] ?? '#08CEFF',
-              }}
-            >
-              Ver todos os tokens
-            </button>
-          </div>
-        )}
+       
       </div>
     </section>
   )

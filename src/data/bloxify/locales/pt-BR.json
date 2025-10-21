@@ -42,6 +42,7 @@
       "buttons": {
         "button": "Criar conta",
         "buttonLogin": "Entrar",
+        "buttonHome": "Home",
         "buttonProfile": "Perfil",
         "buttonLogout": "sair"
       }
@@ -754,12 +755,11 @@
     "close-account": {
       "title": "Encerrar conta",
       "warning-title": "Atenção",
-      "warning-message": "Encerrar a sua ação permanente todos seus dados serão apagados de nossos sistemas ( excluíndo CERTIFICADOS DE RX de sua passagem pela plataforma) este processo não pode ser desfeito. Use com cuidado!",
-      "email-label": "Informe seu endereço de e-mail para validar o encerramento",
-      "email-placeholder": "Digite seu e-mail para confirmar",
+      "warning-message": "Encerrar sua é uma ação permanente.Todos seus dados serão excluídos e não poderão ser recuperados.Certifique-se de que deseja realmente prosseguir com a exclusão.",
+      "email-label": "Motivo da exclusão(opcional)",
+      "email-placeholder": "Nos diga por que está encerrando sua conta",
       "button-cancel": "Cancelar",
       "button-confirm": "Encerrar conta",
-      "email-mismatch": "O e-mail informado não corresponde ao e-mail da conta",
       "success-message": "Conta encerrada com sucesso",
       "error-message": "Erro ao encerrar conta. Tente novamente."
     }
