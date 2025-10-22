@@ -105,7 +105,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await apiFetch('/api/auth/logout', { method: 'POST' });
       mutate();            // invalida cache do /me
 
-      setTimeout(() => router.push('/login'), 800);
+      // Usar window.location para forçar um hard reload e evitar erros de hidratação
+      setTimeout(() => {
+        if (typeof window !== 'undefined') {
+          window.location.href = '/login';
+        }
+      }, 800);
     } catch (err) {
       console.error('[Logout error]', err);
       setShowLoading(false);

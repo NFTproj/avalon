@@ -105,6 +105,28 @@ body {
   transition: all 0.3s ease;
 }
 
+/* Escopo do carousel de tokens: empurrar setas um pouco para fora */
+.tokens-swiper {
+  overflow: visible; /* garante que as setas fora do container sejam visíveis */
+}
+
+.tokens-swiper .swiper-button-next {
+  right: -18px; /* fora do container */
+}
+.tokens-swiper .swiper-button-prev {
+  left: -18px; /* fora do container */
+}
+
+@media (min-width: 640px) {
+  .tokens-swiper .swiper-button-next { right: -22px; }
+  .tokens-swiper .swiper-button-prev { left: -22px; }
+}
+
+@media (min-width: 1024px) {
+  .tokens-swiper .swiper-button-next { right: -28px; }
+  .tokens-swiper .swiper-button-prev { left: -28px; }
+}
+
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
   background: rgba(255, 255, 255, 1);

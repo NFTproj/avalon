@@ -28,8 +28,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const cookies = hdr.get('cookie') ?? null
 
   return (
-    <html lang="pt-BR" className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable}`}>
-      <body className="antialiased">
+    <html lang="pt-BR" className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable}`} suppressHydrationWarning>
+      <body className="antialiased" suppressHydrationWarning>
         <ContextProvider cookies={cookies}>
           <ConfigProvider config={null}>
             <AuthProvider>

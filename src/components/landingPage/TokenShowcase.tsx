@@ -6,11 +6,9 @@ import { ConfigContext } from '@/contexts/ConfigContext'
 import { useCards } from '@/lib/hooks/useCards'
 import Token from '@/components/common/Token'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Pagination, A11y, EffectCoverflow } from 'swiper/modules'
+import { Navigation, A11y } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
-import 'swiper/css/pagination'
-import 'swiper/css/effect-coverflow'
 
 const toNum = (v: any): number => {
   if (v === null || v === undefined) return 0
@@ -153,24 +151,18 @@ export default function TokenShowcase() {
         {!isLoading && tokens.length > 3 && isMounted && (
           <div className="mb-16">
             <Swiper
-              modules={[Navigation, Pagination, A11y, EffectCoverflow]}
-              effect="coverflow"
-              grabCursor={true}
-              centeredSlides={true}
-              slidesPerView="auto"
-              coverflowEffect={{
-                rotate: 15,
-                stretch: 50,
-                depth: 150,
-                modifier: 1,
-                slideShadows: true,
-              }}
+              modules={[Navigation, A11y]}
+              spaceBetween={24}
               navigation
-              pagination={{ clickable: true }}
-              className="pb-12 coverflow-swiper"
+              slidesPerView={1}
+              breakpoints={{
+                640: { slidesPerView: 2, spaceBetween: 24 },
+                1024: { slidesPerView: 3, spaceBetween: 32 },
+              }}
+              className="pb-6 tokens-swiper"
             >
               {tokens.map((token: any) => (
-                <SwiperSlide key={token.id} className="coverflow-slide">
+                <SwiperSlide key={token.id}>
                   <div className="flex justify-center">
                     <div className="w-full max-w-sm">
                       <Token
