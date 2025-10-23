@@ -3,25 +3,20 @@ import { NextRequest, NextResponse } from 'next/server'
 export async function GET(req: NextRequest) {
   try {
     const apiUrl = process.env.BLOXIFY_URL_BASE
-    const apiKey = process.env.BLOXIFY_API_KEY
     const clientId = process.env.CLIENT_ID
 
-    const accessToken = req.cookies.get('accessToken')?.value
-
-    if (!apiUrl || !apiKey || !clientId || !accessToken) {
-      return NextResponse.json({ error: 'Configuração ou token ausente' }, { status: 500 })
+    if (!apiUrl || !clientId) {
+      return NextResponse.json({ error: 'Configuração ausente' }, { status: 500 })
     }
 
-    const response = await fetch(`${apiUrl}/card`, {
-      method: 'GET',
-      headers: {
-        'x-api-key': apiKey,
-        'client-id': clientId,
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    })
+    // lê page e limit da query do front, com defaults
+    const { searchParams } = new URL(req.url)
+    const page = searchParams.get('page') ?? '1'
+    const limit = searchParams.get('limit') ?? '20'
 
+    const url = `${apiUrl}/card?clientId=${encodeURIComponent(clientId)}&page=${encodeURIComponent(page)}&limit=${encodeURIComponent(limit)}`
+
+    const response = await fetch(url, { method: 'GET' })
     const data = await response.json()
 
     if (!response.ok) {
