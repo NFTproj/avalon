@@ -12,11 +12,10 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Configuração ou token ausente' }, { status: 500 })
     }
 
-    const response = await fetch(`${apiUrl}/card`, {
+    const response = await fetch(`${apiUrl}/card?clientId=${clientId}`, {
       method: 'GET',
       headers: {
         'x-api-key': apiKey,
-        'client-id': clientId,
         'Authorization': `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
       },
