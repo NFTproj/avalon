@@ -42,8 +42,8 @@ export default function LoginForm() {
     setLoad(true)
     try {
       await loginUser({ email, password })
-      await mutateUser()
-      router.push('/dashboard')
+      // Usar window.location para forçar reload e recarregar o AuthContext
+      window.location.href = '/dashboard'
     } catch (err) {
       console.error('[LOGIN ERROR]', err)
       setError('E-mail ou senha inválidos. Tente novamente.')
@@ -59,8 +59,8 @@ export default function LoginForm() {
       const message = `Sign this message to verify ownership of ${address}`
       const signature = await signMessageAsync({ message })
       await registerWithMetamask({ walletAddress: address, signature })
-      await mutateUser()
-      router.push('/dashboard')
+      // Usar window.location para forçar reload e recarregar o AuthContext
+      window.location.href = '/dashboard'
     } catch (err: any) {
       console.error('[SIGN & LOGIN ERROR]', err)
       setError(err?.message ?? 'Erro ao autenticar com a carteira.')

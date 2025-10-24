@@ -42,6 +42,8 @@
       "buttons": {
         "button": "Create Account",
         "buttonLogin": "Login",
+        "buttonHome": "Home",
+        "buttonProfile": "Profile",
         "buttonLogout": "Logout"
       }
     },
@@ -423,7 +425,14 @@
       "description": "Explore tokenized projects, invest securely, and keep full control of your assets in the palm of your hand.",
       "link": "View details",
       "tokens-title": "Your Tokens:",
-      "tokens": ["#TBIO", "#TBIO2"]
+      "tokens": ["#TBIO", "#TBIO2"],
+      "buttons": {
+        "copy": "Copy",
+        "copied": "Copied!",
+        "explore-tokens": "Explore Available Tokens",
+        "complete-kyc": "Complete your KYC Verification",
+        "check-kyc": "Check KYC Status"
+      }
     },
     "action-buttons": [
       {
@@ -642,5 +651,66 @@
   "tokenList": {
     "empty": "No tokens available at the moment.",
     "unit-suffix": "units"
+  },
+  "profile": {
+    "page-title": "Profile",
+    "menu": {
+      "configurations": "Configurations",
+      "settings": "Settings",
+      "password-update": "Update password",
+      "verify-account": "Verify account",
+      "verify-certificate": "Validate CERT(KYC)",
+      "close-account": "Close account",
+      "security": "Security",
+      "enable-2fa": "Enable 2FA",
+      "verify-two-step": "Two-step verification",
+      "connected-devices": "Connected devices",
+      "preferences": "Preferences",
+      "language": "Language",
+      "notifications": "Notifications"
+    },
+    "close-account": {
+      "title": "Close account",
+      "warning-title": "Warning",
+      "warning-message": "Closing your account is permanent. All your data will be deleted from our systems (excluding RX CERTIFICATES of your passage through the platform). This process cannot be undone. Use with caution!",
+      "email-label": "Enter your email address to validate account closure",
+      "email-placeholder": "Type your email to confirm",
+      "button-cancel": "Cancel",
+      "button-confirm": "Close account",
+      "email-mismatch": "The email entered does not match the account email",
+      "success-message": "Account closed successfully",
+      "error-message": "Error closing account. Please try again."
+    }
+  },
+  "certificateEmission": {
+    "page-title": "Certificate Issuance",
+    "page-subtitle": "Record your environmental offset and receive your digital certificate with a verification seal.",
+    "token-label": "Token to be used",
+    "quantity-label": "Quantity of compensated tokens",
+    "quantity-placeholder": "0-1500",
+    "balance-available": "Available balance: {balance} tokens",
+    "button-emit": "Issue certificate",
+    "button-emitting": "Issuing...",
+    "button-emitted": "Certificate Issued",
+    "success-message": "Your certificate has been issued. Track the analysis progress and check your email regularly for updates.",
+    "error-message": "Your certificate issuance was not completed. Check if you have enough token balance and try again",
+    "error-card-not-found": "Token not found",
+    "error-card-id-missing": "Card ID not provided",
+    "error-loading": "Error loading token data",
+    "history-title": "Certificate history",
+    "history-loading": "Loading history...",
+    "history-empty": "No certificates found",
+    "filter-year": "Year:",
+    "filter-token": "Token:",
+    "filter-status": "Status:",
+    "status-emitido": "Issued",
+    "status-pendente": "Under review",
+    "status-falha": "Validation failed",
+    "emitted-at": "Issued on:",
+    "certificate-id": "ID:",
+    "quantity-used": "Quantity used:",
+    "button-pending": "Pending",
+    "button-reemit": "Reissue",
+    "button-resend": "Request Resend"
   }
 }

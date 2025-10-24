@@ -1,5 +1,7 @@
 // lib/api/tokenMetrics.ts
 
+import { apiFetch } from './fetcher'
+
 export interface TokenHourlyData {
   tokenId: string
   tokenSymbol: string
@@ -57,30 +59,14 @@ export async function getTokenHourlyMetrics(
   walletAddress: string,
   timeframe: '24h' | '7d' | '30d' = '24h'
 ): Promise<UserTokenMetrics> {
-  const res = await fetch(`/api/tokens/metrics/hourly?userId=${userId}&wallet=${walletAddress}&timeframe=${timeframe}`, {
-    method: 'GET',
-    credentials: 'include',
-  })
-
-  if (!res.ok) {
-    throw new Error('Erro ao buscar métricas horárias dos tokens')
-  }
-
-  return await res.json()
+  return apiFetch<UserTokenMetrics>(
+    `/api/tokens/metrics/hourly?userId=${userId}&wallet=${walletAddress}&timeframe=${timeframe}`
+  )
 }
 
 // Função para buscar taxas de conversão (preparação para futuro)
 export async function getConversionRates(): Promise<ConversionStructure> {
-  const res = await fetch('/api/tokens/conversion-rates', {
-    method: 'GET',
-    credentials: 'include',
-  })
-
-  if (!res.ok) {
-    throw new Error('Erro ao buscar taxas de conversão')
-  }
-
-  return await res.json()
+  return apiFetch<ConversionStructure>('/api/tokens/conversion-rates')
 }
 
 // Função para converter valor de token para moeda fiduciária

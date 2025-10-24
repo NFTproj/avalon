@@ -1,12 +1,84 @@
 'use client'
 
-import { useContext } from 'react'
+import { useContext, useMemo, useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { ConfigContext } from '@/contexts/ConfigContext'
+import { useCards } from '@/lib/hooks/useCards'
 import Token from '@/components/common/Token'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, A11y } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
+
+const toNum = (v: any): number => {
+  if (v === null || v === undefined) return 0
+  if (typeof v === 'number') return Number.isFinite(v) ? v : 0
+  const s = String(v).replace(/[.,](?=\d{3}\b)/g, '').replace(',', '.')
+  const n = Number(s)
+  return Number.isFinite(n) ? n : 0
+}
+
+function SkeletonCard() {
+  return (
+    <div className="w-full sm:w-[calc(50%-16px)] lg:w-[calc(33.333%-27px)] max-w-sm">
+      <div className="rounded-xl border bg-white p-4 shadow-lg h-full animate-pulse">
+        <div className="h-28 w-full rounded-lg bg-gray-200 mb-4" />
+        <div className="h-5 w-2/3 bg-gray-200 rounded mb-2" />
+        <div className="h-4 w-1/2 bg-gray-200 rounded mb-4" />
+        <div className="flex gap-2 mb-4">
+          <div className="h-6 w-16 rounded-full bg-gray-200" />
+          <div className="h-6 w-20 rounded-full bg-gray-200" />
+        </div>
+        <div className="h-3 w-full bg-gray-200 rounded" />
+      </div>
+    </div>
+  )
+}
 
 export default function TokenShowcase() {
   const { colors, texts } = useContext(ConfigContext)
-  const tokens = texts?.['landing-page'].tokens
+  const { cards, isLoading, error } = useCards()
+  const router = useRouter()
+  const landingTexts = texts?.['landing-page']?.tokens
+  const [isMounted, setIsMounted] = useState(false)
+
+  // Garantir que o Swiper só renderize no cliente
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  // Mapear cards da API para o formato Token
+  const tokens = useMemo(() => {
+    if (!cards) return []
+    return cards
+      .filter((c: any) => String(c?.status ?? '100') !== '500')
+      .slice(0, 6) // Limite de 6 tokens para a landing
+      .map((c: any) => {
+        const cbd = c?.CardBlockchainData ?? {}
+        const initialSupply = toNum(cbd.initialSupply)
+        const purchasedQuantity = toNum(cbd.purchasedQuantity)
+        const tokenPriceMicros = toNum(cbd.tokenPrice)
+        const price = tokenPriceMicros / 1_000_000
+
+        return {
+          id: c.id,
+          name: c.name ?? 'TOKEN',
+          subtitle: '',
+          labels: (c.tags ?? []).map((name: string) => ({ name })),
+          price: String(price),
+          launchDate: c.launchDate ?? '',
+          tokensAvailable: String(initialSupply),
+          identifierCode: c.ticker ?? '',
+          image: c.logoUrl ?? '/images/tokens/default.png',
+          sold: purchasedQuantity,
+          total: initialSupply,
+        }
+      })
+  }, [cards])
+
+  if (error) {
+    return null // Não mostrar nada se houver erro
+  }
 
   return (
     <section
@@ -30,32 +102,91 @@ export default function TokenShowcase() {
               color: colors?.colors?.['color-primary'] ?? '#202020',
             }}
           >
-            {tokens?.title}
+            {landingTexts?.title || 'Tokens Disponíveis'}
           </h2>
         </div>
 
-        {/* Grid de Cards com Flexbox */}
-        <div className="flex flex-wrap justify-center gap-8 lg:gap-10 mb-16">
-          {tokens?.list.map((token) => (
-            <div
-              key={token.id}
-              className="w-full sm:w-[calc(50%-16px)] lg:w-[calc(33.333%-27px)] max-w-sm"
+        {/* Grid de Cards com Flexbox ou Carousel */}
+        {isLoading && (
+          <div className="flex flex-wrap justify-center gap-8 lg:gap-10 mb-16">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <SkeletonCard key={`skeleton-${i}`} />
+            ))}
+          </div>
+        )}
+
+        {!isLoading && tokens.length === 0 && (
+          <div className="flex flex-wrap justify-center gap-8 lg:gap-10 mb-16">
+            <p className="text-sm text-gray-500 col-span-full">
+              Nenhum token disponível.
+            </p>
+          </div>
+        )}
+
+        {!isLoading && tokens.length > 0 && tokens.length <= 3 && (
+          <div className="flex flex-wrap justify-center gap-8 lg:gap-10 mb-16">
+            {tokens.map((token: any) => (
+              <div
+                key={token.id}
+                className="w-full sm:w-[calc(50%-16px)] lg:w-[calc(33.333%-27px)] max-w-sm"
+              >
+                <Token
+                  name={token.name}
+                  subtitle={token.subtitle}
+                  price={token.price}
+                  launchDate={token.launchDate}
+                  tokensAvailable={token.tokensAvailable}
+                  identifierCode={token.identifierCode}
+                  image={token.image}
+                  href={`/tokens/${token.id}`}
+                  labels={token.labels}
+                  sold={token.sold}
+                  total={token.total}
+                />
+              </div>
+            ))}
+          </div>
+        )}
+
+        {!isLoading && tokens.length > 3 && isMounted && (
+          <div className="mb-16">
+            <Swiper
+              modules={[Navigation, A11y]}
+              spaceBetween={24}
+              navigation
+              slidesPerView={1}
+              breakpoints={{
+                640: { slidesPerView: 2, spaceBetween: 24 },
+                1024: { slidesPerView: 3, spaceBetween: 32 },
+              }}
+              className="pb-6 tokens-swiper"
             >
-              <Token
-                name={token.name}
-                subtitle={token.subtitle}
-                price={token.price}
-                launchDate={token.launchDate}
-                tokensAvailable={token.tokensAvailable}
-                identifierCode={token.identifierCode}
-                image={token.image}
-                labels={token.labels}
-                sold={token.sold}
-                total={token.total}
-              />
-            </div>
-          ))}
-        </div>
+              {tokens.map((token: any) => (
+                <SwiperSlide key={token.id}>
+                  <div className="flex justify-center">
+                    <div className="w-full max-w-sm">
+                      <Token
+                        name={token.name}
+                        subtitle={token.subtitle}
+                        price={token.price}
+                        launchDate={token.launchDate}
+                        tokensAvailable={token.tokensAvailable}
+                        identifierCode={token.identifierCode}
+                        image={token.image}
+                        href={`/tokens/${token.id}`}
+                        labels={token.labels}
+                        sold={token.sold}
+                        total={token.total}
+                      />
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        )}
+
+       
       </div>
     </section>
   )

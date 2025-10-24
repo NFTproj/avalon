@@ -25,7 +25,7 @@ export default function MetricsTab({
   error: string | null
   onRefresh: () => void
 }) {
-  const { colors } = useContext(ConfigContext)
+  const { colors, texts } = useContext(ConfigContext)
 
   return (
     <div className="space-y-6">
@@ -69,7 +69,7 @@ export default function MetricsTab({
         ) : stats ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="p-4 rounded-lg bg-gray-50 text-center">
-              <p className="text-sm text-gray-600 mb-1">Total de Tokens</p>
+              <p className="text-sm text-gray-600 mb-1">{(texts?.dashboard as any)?.['token-metrics']?.['total-tokens'] || 'Total de Tokens'}</p>
               <p className="text-xl font-bold" style={{ color: colors?.colors['color-primary'] }}>
                 {stats.totalTokenTypes}
               </p>

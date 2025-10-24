@@ -1,16 +1,13 @@
 "use client"
 
 import { useMemo, useContext, useState } from "react"
-import { useUser } from "@/hooks/useUser"
+import { useAuth } from "@/contexts/AuthContext"
 import { ConfigContext } from "@/contexts/ConfigContext"
 
 interface BalanceItem {
   id: string
   name: string
   ticker?: string
-  status?: string
-  tags?: string[]
-  launchDate?: string
   logoUrl?: string
   CardBlockchainData?: {
     tokenAddress?: string
@@ -22,12 +19,28 @@ interface BalanceItem {
 }
 
 export default function BalancesTable({ className = "" }: { className?: string }) {
-  const { colors } = useContext(ConfigContext)
-  const { user } = useUser()
+  const { colors, texts } = useContext(ConfigContext)
+  const { user, loading } = useAuth()
 
+  // Usar os balances que vêm diretamente da API /api/auth/me
   const balances = useMemo<BalanceItem[]>(() => {
-    const list = (user?.balances ?? []) as BalanceItem[]
-    return Array.isArray(list) ? list : []
+    if (!user?.balances || !Array.isArray(user.balances)) return []
+    
+    return user.balances
+      .filter((b: any) => b.balance > 0) // Mostrar apenas tokens com saldo
+      .map((b: any) => ({
+        id: b.id,
+        name: b.name,
+        ticker: b.ticker,
+        logoUrl: b.logoUrl,
+        CardBlockchainData: b.CardBlockchainData ? {
+          tokenAddress: b.CardBlockchainData.tokenAddress,
+          tokenNetwork: b.CardBlockchainData.tokenNetwork,
+          tokenChainId: b.CardBlockchainData.tokenChainId,
+          tokenPrice: b.CardBlockchainData.tokenPrice,
+        } : undefined,
+        balance: Number(b.balance) || 0
+      }))
   }, [user])
 
   // Paginação simples client-side
@@ -39,6 +52,7 @@ export default function BalancesTable({ className = "" }: { className?: string }
     return balances.slice(start, start + pageSize)
   }, [balances, page])
 
+  const balancesTexts = (texts?.dashboard as any)?.['balances-table']
   const headerBgColor = colors?.dashboard?.background?.['table-header'] ?? '#f8f7e9'
   const tableBodyBgColor = colors?.dashboard?.background?.['table-body'] ?? '#fdfcf7'
   const headerTextColor = colors?.dashboard?.colors?.text ?? '#404040'
@@ -55,7 +69,17 @@ export default function BalancesTable({ className = "" }: { className?: string }
     return (
       <div className={`w-full ${className}`}>
         <div className="p-6 bg-white rounded-lg shadow-md border border-gray-200 text-center">
-          <p className="text-sm text-gray-600">Faça login para ver seus balances.</p>
+          <p className="text-sm text-gray-600">{balancesTexts?.messages?.['login-required'] ?? 'Faça login para ver seus balances.'}</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (loading) {
+    return (
+      <div className={`w-full ${className}`}>
+        <div className="p-6 bg-white rounded-lg shadow-md border border-gray-200 text-center">
+          <p className="text-sm text-gray-600">{balancesTexts?.messages?.loading ?? 'Carregando seus tokens...'}</p>
         </div>
       </div>
     )
@@ -65,7 +89,7 @@ export default function BalancesTable({ className = "" }: { className?: string }
     return (
       <div className={`w-full ${className}`}>
         <div className="p-6 bg-white rounded-lg shadow-md border border-gray-200 text-center">
-          <p className="text-sm text-gray-600">Nenhum balance encontrado.</p>
+          <p className="text-sm text-gray-600">{balancesTexts?.messages?.['no-tokens'] ?? 'Você ainda não possui tokens na sua carteira.'}</p>
         </div>
       </div>
     )
@@ -80,7 +104,7 @@ export default function BalancesTable({ className = "" }: { className?: string }
           style={{ background: slabHeaderBg, color: slabHeaderTextColor }}
         >
           <h2 className="text-xl sm:text-2xl font-bold">
-            Sua carteira <span style={{ color: highlightColor }}>Slab</span>
+            {balancesTexts?.title ?? 'Sua carteira'} <span style={{ color: highlightColor }}>{balancesTexts?.highlight ?? 'Slab'}</span>
           </h2>
         </div>
       </div>
@@ -90,18 +114,20 @@ export default function BalancesTable({ className = "" }: { className?: string }
         <table className="min-w-[720px] w-full table-fixed">
           <thead style={{ background: tableHeaderBg, color: headerTextColor }}>
             <tr>
-              <th className="w-[45%] pl-0 pr-6 py-3 text-left font-semibold">Projeto</th>
-              <th className="w-[20%] px-6 py-3 text-left font-semibold">Valor unitário</th>
-              <th className="w-[25%] px-6 py-3 text-left font-semibold">Valor Total</th>
-              <th className="w-[10%] px-6 py-3 text-right font-semibold">Ações</th>
+              <th className="w-[45%] pl-0 pr-6 py-3 text-left font-semibold">{balancesTexts?.columns?.project ?? 'Projeto'}</th>
+              <th className="w-[20%] px-6 py-3 text-left font-semibold">{balancesTexts?.columns?.['unit-value'] ?? 'Valor unitário'}</th>
+              <th className="w-[25%] px-6 py-3 text-left font-semibold">{balancesTexts?.columns?.['total-value'] ?? 'Valor Total'}</th>
+              <th className="w-[10%] px-6 py-3 text-right font-semibold">{balancesTexts?.columns?.actions ?? 'Ações'}</th>
             </tr>
           </thead>
           <tbody style={{ color: tableTextColor, background: tableBodyBg }}>
             {paginated.map((b, idx) => {
-              const price = parseFloat(b.CardBlockchainData?.tokenPrice ?? '0') || 0
+              // tokenPrice vem em formato web3 (1000000 = ~1 USD)
+              const priceInMicros = parseFloat(b.CardBlockchainData?.tokenPrice ?? '0') || 0
+              const price = priceInMicros / 1_000_000 // Converter para USD (1000000 = 1 USD)
               const total = price > 0 ? b.balance * price : b.balance
 
-              const formatBRL = (n: number) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(n)
+              const formatUSD = (n: number) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n)
 
               return (
                 <tr key={`${b.id}-${idx}`} className="border-t border-gray-200 align-middle">
@@ -122,16 +148,28 @@ export default function BalancesTable({ className = "" }: { className?: string }
                   </td>
 
                   {/* Valor unitário */}
-                  <td className="px-6 py-4 text-gray-700 whitespace-nowrap">{formatBRL(price)}</td>
+                  <td className="px-6 py-4 text-gray-700 whitespace-nowrap">{formatUSD(price)}</td>
 
                   {/* Valor Total */}
-                  <td className="px-6 py-4 text-gray-700 whitespace-nowrap">{formatBRL(total)}</td>
+                  <td className="px-6 py-4 text-gray-700 whitespace-nowrap">{formatUSD(total)}</td>
 
                   {/* Ações */}
                   <td className="px-6 py-4">
                     <div className="flex justify-end gap-3 whitespace-nowrap">
-                      <button className="text-sm hover:underline" style={{ color: tableTextColor }}>Comprar</button>
-                      <button className="text-sm hover:underline" style={{ color: tableTextColor }}>Vender</button>
+                      <button 
+                        className="text-sm hover:underline" 
+                        style={{ color: tableTextColor }}
+                        onClick={() => window.location.href = `/buy-tokens?token=${b.id}`}
+                      >
+                        {(balancesTexts as any)?.actions?.buy || 'Comprar'}
+                      </button>
+                      <button 
+                        className="text-sm hover:underline" 
+                        style={{ color: tableTextColor }}
+                        onClick={() => window.location.href = `/certificate-emission?cardId=${b.id}`}
+                      >
+                        {(balancesTexts as any)?.actions?.sell || 'Vender'}
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -142,21 +180,26 @@ export default function BalancesTable({ className = "" }: { className?: string }
 
         {/* Paginação */}
         <div className="flex items-center justify-between px-6 py-3 border-t border-gray-300" style={{ color: tableTextColor }}>
-          <div className="text-sm">Página {page} de {totalPages}</div>
+          <div className="text-sm">
+            {((balancesTexts as any)?.pagination?.['page-info'] || 'Página {current} de {total}')
+              .replace('{current}', page.toString())
+              .replace('{total}', totalPages.toString())
+            }
+          </div>
           <div className="flex gap-2">
             <button
               className="px-3 py-1 bg-gray-100 rounded disabled:opacity-50"
               disabled={page <= 1}
               onClick={() => setPage(p => Math.max(1, p - 1))}
             >
-              Anterior
+              {(balancesTexts as any)?.pagination?.previous || 'Anterior'}
             </button>
             <button
               className="px-3 py-1 bg-gray-100 rounded disabled:opacity-50"
               disabled={page >= totalPages}
               onClick={() => setPage(p => Math.min(totalPages, p + 1))}
             >
-              Próximo
+              {(balancesTexts as any)?.pagination?.next || 'Próximo'}
             </button>
           </div>
         </div>

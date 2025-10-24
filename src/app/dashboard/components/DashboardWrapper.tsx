@@ -3,8 +3,8 @@
 import WelcomeBox from './WelcomeBox'
 import ChartBox from './ChartBox'
 import AssetList from './AssetList'
-import WalletInfo from './WalletInfo'
-import TokenMetrics from './TokenMetrics'
+// import WalletInfo from './WalletInfo'
+// import TokenMetrics from './TokenMetrics'
 import BalancesTable from './BalancesTable'
 
 export default function DashboardWrapper() {
@@ -28,11 +28,11 @@ export default function DashboardWrapper() {
         
         {/* Grid de informações da carteira e tokens */}
         <div className="w-full space-y-6">
-          {/* Primeira linha - Wallet e Métricas */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+          {/* Primeira linha - Wallet e Métricas - COMENTADO */}
+          {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
             <WalletInfo showDetails={true} />
             <TokenMetrics />
-          </div>
+          </div> */}
           
           {/* Segunda linha - Lista de Assets */}
           <div className="w-full">

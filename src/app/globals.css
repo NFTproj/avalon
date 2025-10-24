@@ -92,3 +92,88 @@ body {
     }
   }
 }
+
+/* Estilos customizados para o Swiper carousel */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #08CEFF !important;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  width: 44px !important;
+  height: 44px !important;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  transition: all 0.3s ease;
+}
+
+/* Escopo do carousel de tokens: empurrar setas um pouco para fora */
+.tokens-swiper {
+  overflow: visible; /* garante que as setas fora do container sejam visíveis */
+}
+
+.tokens-swiper .swiper-button-next {
+  right: -18px; /* fora do container */
+}
+.tokens-swiper .swiper-button-prev {
+  left: -18px; /* fora do container */
+}
+
+@media (min-width: 640px) {
+  .tokens-swiper .swiper-button-next { right: -22px; }
+  .tokens-swiper .swiper-button-prev { left: -22px; }
+}
+
+@media (min-width: 1024px) {
+  .tokens-swiper .swiper-button-next { right: -28px; }
+  .tokens-swiper .swiper-button-prev { left: -28px; }
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 18px !important;
+  font-weight: bold;
+}
+
+.swiper-pagination-bullet {
+  background: #08CEFF !important;
+  opacity: 0.4;
+  width: 10px;
+  height: 10px;
+  transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
+  width: 24px;
+  border-radius: 5px;
+}
+
+/* Estilos para o efeito Coverflow 3D */
+.coverflow-swiper {
+  padding: 40px 20px 60px !important;
+  overflow: visible !important;
+}
+
+.coverflow-slide {
+  width: 360px !important;
+  max-width: 90vw;
+  transition: transform 0.3s ease;
+}
+
+/* Card central maior e em destaque */
+.swiper-slide-active .coverflow-slide > div > div {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+/* Ajuste para mobile */
+@media (max-width: 640px) {
+  .coverflow-slide {
+    width: 280px !important;
+  }
+}

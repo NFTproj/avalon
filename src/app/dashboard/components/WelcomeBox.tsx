@@ -1,16 +1,18 @@
 'use client'
 
-import { useContext } from 'react'
+import { useContext, useMemo, useState } from 'react'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import { useAuth } from '@/contexts/AuthContext'
 import Link from 'next/link'
 import Carousel from './Carousel'
+import { KycStatusCode, getKycStatusInfo } from '@/types/kyc'
 
 export default function WelcomeBox() {
   const { colors, texts } = useContext(ConfigContext)
   const { user } = useAuth()
+  const [copied, setCopied] = useState(false)
 
-  const welcomeTexts = texts?.dashboard?.['welcome-box']
+  const welcomeTexts = (texts?.dashboard as any)?.['welcome-box']
   const textColor = '#FFFFFF'
   const linkColor = '#08CEFF'
   const backgroundColor = 'linear-gradient(135deg, #1F2937 0%, #374151 100%)'
@@ -24,21 +26,30 @@ export default function WelcomeBox() {
     return `${address.slice(0, 6)}...${address.slice(-4)}`
   }
 
-  // Definir status KYC com cores
-  const getKycStatusInfo = (status: string) => {
-    switch (status) {
-      case 'approved':
-        return { text: 'KYC Aprovado', color: '#10B981' }
-      case 'rejected':
-        return { text: 'KYC Rejeitado', color: '#EF4444' }
-      case 'pending':
-        return { text: 'KYC Pendente', color: '#F59E0B' }
-      default:
-        return { text: 'KYC Não Iniciado', color: '#6B7280' }
+  // Copiar endereço da wallet para área de transferência
+  const copyToClipboard = async () => {
+    if (!user?.walletAddress) return
+    
+    try {
+      await navigator.clipboard.writeText(user.walletAddress)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch (err) {
+      console.error('Erro ao copiar:', err)
     }
   }
 
-  const kycInfo = user?.kycStatus ? getKycStatusInfo(user.kycStatus) : null
+  // Obter informações do status KYC usando o enum
+  const kycInfo = useMemo(() => {
+    const status = user?.kycStatusCode ?? user?.kycStatus;
+    if (typeof status === 'number') {
+      return getKycStatusInfo(status);
+    }
+    if (typeof status === 'string') {
+      return getKycStatusInfo(Number(status) || KycStatusCode.NOT_STARTED);
+    }
+    return null;
+  }, [user]);
 
   return (
     <div className="relative w-full flex justify-center items-center">
@@ -61,8 +72,8 @@ export default function WelcomeBox() {
             <h1 className="text-2xl font-bold mb-2 break-words">
               {welcomeTexts?.title?.replace('Slab', 'Bloxify') || `Bem-vindo(a) à Bloxify, ${userName}!`}
             </h1>
-            <h2 className="text-xl font-semibold mb-2 break-words">
-              {welcomeTexts?.description || 'Conheça os projetos que foram tokenizados, invista com segurança e tenha o controle total do seu patrimônio.'}
+            <h2 className="text-xl font-semibold mb-2 break-words whitespace-pre-line">
+              {welcomeTexts?.subtitle || 'Conheça os projetos que foram tokenizados, invista com segurança e tenha o controle total do seu patrimônio.'}
             </h2>
             
             {/* Informações do usuário */}
@@ -78,6 +89,15 @@ export default function WelcomeBox() {
                 <p className="flex items-center gap-2">
                   <span className="opacity-70">Wallet:</span>
                   <span className="font-mono">{formatWalletAddress(user.walletAddress)}</span>
+                  <button
+                    onClick={copyToClipboard}
+                    className="text-xs px-2 py-1 rounded hover:bg-white/10 transition-all"
+                    style={{ color: linkColor }}
+                  >
+                    {copied 
+                      ? (welcomeTexts?.buttons?.copied || 'Copiado!') 
+                      : (welcomeTexts?.buttons?.copy || 'Copiar')}
+                  </button>
                 </p>
               )}
               
@@ -92,29 +112,28 @@ export default function WelcomeBox() {
                       border: `1px solid ${kycInfo.color}40`
                     }}
                   >
-                    {kycInfo.text}
+                    {kycInfo.label}
                   </span>
                 </p>
               )}
             </div>
           </div>
           
-          <p
-            className="text-base mb-6 whitespace-pre-line break-words lg:w-[400px] text-left opacity-90"
-            dangerouslySetInnerHTML={{
-              __html: welcomeTexts?.description || 'Gerencie seus investimentos em tokens de forma fácil e segura.',
-            }}
-          />
+          <p className="text-base mb-6 whitespace-pre-line break-words lg:w-[400px] text-left opacity-90">
+            {welcomeTexts?.description || 'Gerencie seus investimentos em tokens de forma fácil e segura.'}
+          </p>
           
           {/* Links de ação baseados no status do usuário */}
           <div className="flex flex-col gap-3">
-            {user?.kycStatus !== 'approved' && (
+            {kycInfo && kycInfo.code !== KycStatusCode.APPROVED && (
               <Link
                 href="/kyc"
                 className="inline-block text-sm font-semibold underline break-words hover:opacity-80 transition-opacity"
                 style={{ color: linkColor }}
               >
-                {user?.kycStatus === 'pending' ? 'Verificar Status do KYC' : 'Complete sua Verificação KYC'}
+                {kycInfo.code === KycStatusCode.IN_PROGRESS || kycInfo.code === KycStatusCode.REVIEW
+                  ? welcomeTexts?.buttons?.['check-kyc'] || 'Verificar Status do KYC'
+                  : welcomeTexts?.buttons?.['complete-kyc'] || 'Complete sua Verificação KYC'}
               </Link>
             )}
             
@@ -123,7 +142,7 @@ export default function WelcomeBox() {
               className="inline-block text-sm font-semibold underline break-words hover:opacity-80 transition-opacity"
               style={{ color: linkColor }}
             >
-              {welcomeTexts?.link || 'Explorar Tokens Disponíveis'}
+              {welcomeTexts?.buttons?.['explore-tokens'] || 'Explorar Tokens Disponíveis'}
             </Link>
           </div>
         </div>

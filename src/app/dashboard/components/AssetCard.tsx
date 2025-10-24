@@ -50,12 +50,12 @@ export default function AssetCard({
       </div>
 
       <div className="py-6 flex items-center justify-center pr-7">
-        <p style={{ color: tableTextColor }}>R$ {unitValue.toFixed(2)}</p>
+        <p style={{ color: tableTextColor }}>$ {unitValue.toFixed(2)}</p>
       </div>
 
       <div className="py-6 pl-6 pr-6 flex justify-between items-center">
         <p className="font-medium" style={{ color: tableTextColor }}>
-          R$ {totalValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+          $ {totalValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
         </p>
         <div className="flex gap-3">
           <button

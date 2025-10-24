@@ -61,5 +61,41 @@
   "progress-bar": {
     "background": "#E5E5E5",
     "foreground": "#08CEFF"
+  },
+  "certificateEmission": {
+    "background": {
+      "page": "#F2FCFF",
+      "card": "#FFFFFF",
+      "error": "#FEF2F2"
+    },
+    "colors": {
+      "title": "#202020",
+      "subtitle": "#6b6f70",
+      "accent": "#0066FF",
+      "label": "#202020",
+      "input-text": "#404040",
+      "input-disabled": "#9CA3AF",
+      "error-text": "#DC2626",
+      "error-border": "#FCA5A5",
+      "success-bg": "#F0FDF4",
+      "success-border": "#22C55E",
+      "success-text": "#16A34A"
+    },
+    "border": {
+      "input": "#0066FF",
+      "card": "#E5E7EB",
+      "error": "#FCA5A5"
+    },
+    "button": {
+      "primary-bg": "#0066FF",
+      "primary-text": "#FFFFFF"
+    },
+    "history": {
+      "card-bg": "#FFFFFF",
+      "card-border": "#E5E7EB",
+      "filter-bg": "#F3F4F6",
+      "filter-border": "#0066FF",
+      "filter-text": "#404040"
+    }
   }
 }

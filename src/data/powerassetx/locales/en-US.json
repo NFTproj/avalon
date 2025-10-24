@@ -42,6 +42,8 @@
       "buttons": {
         "button": "Create Account",
         "buttonLogin": "Login",
+        "buttonHome": "Home",
+        "buttonProfile": "Profile",
         "buttonLogout": "Logout"
       }
     },
@@ -323,6 +325,11 @@
     "buttons": {
       "buy": "Buy",
       "sell": "Sell"
+    },
+    "messages": {
+      "no-tokens": "No tokens found in your wallet",
+      "sample-data": "Sample data does not have real balances",
+      "buy-to-start": "Buy tokens to start investing"
     }
   }
 },
@@ -430,7 +437,127 @@
     "demo": {
       "src": "images/login/kyc-video-placeholder.png",
       "alt": "Didit verification demo"
-    }
   }
 }
-}
+},
+"certificateEmission": {
+  "page-title": "Certificate Issuance",
+  "page-subtitle": "Record your environmental offset and receive your digital certificate with a verification seal.",
+  "token-label": "Token to be used",
+  "quantity-label": "Quantity of compensated tokens",
+  "quantity-placeholder": "0-1500",
+  "balance-available": "Available balance: {balance} tokens",
+  "button-emit": "Issue certificate",
+  "button-emitting": "Issuing...",
+  "button-emitted": "Certificate Issued",
+  "success-message": "Your certificate has been issued. Track the analysis progress and check your email regularly for updates.",
+  "error-message": "Your certificate issuance was not completed. Check if you have enough token balance and try again",
+  "error-card-not-found": "Token not found",
+  "error-card-id-missing": "Card ID not provided",
+  "error-loading": "Error loading token data",
+  "history-title": "Certificate history",
+  "history-loading": "Loading history...",
+  "history-empty": "No certificates found",
+  "filter-year": "Year:",
+  "filter-token": "Token:",
+  "filter-status": "Status:",
+  "status-emitido": "Issued",
+  "status-pendente": "Under review",
+  "status-falha": "Validation failed",
+  "emitted-at": "Issued on:",
+  "certificate-id": "ID:",
+  "quantity-used": "Quantity used:",
+  "button-pending": "Pending",
+  "button-reemit": "Reissue",
+  "button-resend": "Request Resend"
+},
+"dashboard": {
+  "welcome-box": {
+    "title": "Welcome to PowerAssetX",
+    "subtitle": "Discover tokenized projects, invest safely and have full control of your assets.",
+    "description": "Discover tokenized projects, invest safely and have full control of your assets.",
+    "buttons": {
+      "copy": "Copy",
+      "copied": "Copied!",
+      "explore-tokens": "Explore Available Tokens",
+      "complete-kyc": "Complete your KYC Verification",
+      "check-kyc": "Check KYC Status"
+    }
+  },
+  "balances-table": {
+    "title": "Your wallet",
+    "highlight": "PowerAssetX",
+    "columns": {
+      "project": "Project",
+      "unit-value": "Unit value",
+      "total-value": "Total Value",
+      "actions": "Actions"
+    },
+    "actions": {
+      "buy": "Buy",
+      "sell": "Sell"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "page-info": "Page {current} of {total}"
+    },
+    "messages": {
+      "login-required": "Please log in to view your balances.",
+      "loading": "Loading your tokens...",
+      "no-tokens": "You don't have any tokens in your wallet yet."
+    }
+  },
+  "chart-box": {
+    "wallet-balance": "Wallet Balance",
+    "recent-transactions": "recent transactions",
+    "loading": "Loading wallet data...",
+    "try-again": "Try again",
+    "actions": {
+      "buy-tokens": "Buy Tokens",
+      "documents": "Documents",
+      "wallet": "Wallet",
+      "profile": "Profile",
+      "kyc": "KYC Verification"
+    }
+  },
+  "token-circle": {
+    "no-tokens": "No tokens found",
+    "buy-tokens": "Buy tokens to see",
+    "portfolio-here": "your portfolio here",
+    "total-invested": "Total Invested",
+    "total-tokens": "Total Tokens"
+  },
+  "token-metrics": {
+    "title": "Token Metrics (24h)",
+    "refresh": "Refresh metrics",
+    "loading": "Loading metrics...",
+    "error": "Error Loading Metrics",
+    "try-again": "Try Again",
+    "no-data": "Token Metrics",
+    "no-data-message": "No metrics data available yet. Metrics will start being collected after you acquire tokens.",
+    "total-tokens": "Total Tokens",
+    "total-value": "Total Value",
+    "growth-rate": "Average Growth per Hour",
+    "best-performance": "Best Performance:",
+    "worst-performance": "Worst Performance:",
+    "average-performance": "Average Performance:",
+    "performance-suffix": "in the last 24h"
+  },
+  "carousel": {
+    "message": "Complete KYC verification and unlock all platform features.",
+    "button": "KYC Verification"
+  },
+  "asset-list": {
+    "title": "Your wallet",
+    "highlight": "PowerAssetX",
+    "columns": {
+      "project": "Project",
+      "unit-value": "Unit value",
+      "total-value": "Total Value"
+    },
+    "buttons": {
+      "buy": "Buy",
+      "sell": "Sell"
+    }
+  }}}

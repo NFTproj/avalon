@@ -6,7 +6,6 @@ import { useUserTokenBalances } from '@/hooks/useUserTokenBalances'
 import { getAllCards, Card as ApiCard } from '@/lib/api/cards'
 import { Card as LocalCard } from '@/types/card'
 import { useRouter } from 'next/navigation'
-import { isValidCardForBlockchain, getChainIdFromNetwork } from '@/lib/utils/cardValidation'
 
 interface TokenGridProps {
   showTitle?: boolean
@@ -19,45 +18,23 @@ export default function TokenGrid({
   maxCards,
   className = ''
 }: TokenGridProps) {
-  const { texts, colors } = useContext(ConfigContext)
   const { user } = useAuth()
+  const { config } = useContext(ConfigContext)
   const router = useRouter()
+  
   const [cards, setCards] = useState<ApiCard[]>([])
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
 
-  // Buscar dados reais dos cards
+  // Buscar cards da API
   useEffect(() => {
     const fetchCards = async () => {
       try {
         setLoading(true)
-        setError(null)
-        
         const response = await getAllCards()
-        
-        if (response.data && Array.isArray(response.data)) {
-          
-          // Separar cards com e sem blockchain data
-          const cardsWithToken = response.data.filter(isValidCardForBlockchain)
-          const cardsWithoutToken = response.data.filter(card => !isValidCardForBlockchain(card) && card.name)
-          
-          
-          // Usar todos os cards (com e sem token para exibição)
-          const allCards = [...cardsWithToken, ...cardsWithoutToken]
-          
-          if (allCards.length > 0) {
-            setCards(allCards)
-          } else {
-            setCards([])
-            setError('Nenhum card disponível no momento')
-          }
-        } else {
-          setCards([])
-          setError('API não retornou dados válidos')
-        }
+        setCards(response.data || [])
       } catch (error) {
+        console.error('Erro ao buscar cards:', error)
         setCards([])
-        setError('Erro ao conectar com a API. Tente novamente.')
       } finally {
         setLoading(false)
       }
@@ -66,67 +43,54 @@ export default function TokenGrid({
     fetchCards()
   }, [])
 
-  // Converter ApiCards para o formato esperado pelo hook (apenas cards com tokenAddress válido)
+  // Preparar dados para o hook de balanços
   const cardsForHook = useMemo(() => {
-    if (!cards || cards.length === 0) return []
-    
-    return cards
-      .filter(isValidCardForBlockchain)
-      .map((apiCard): LocalCard => {
-        const blockchainData = apiCard.CardBlockchainData!
-        return {
-          id: apiCard.id,
-          name: apiCard.name,
-          status: apiCard.status as 'ACTIVE' | 'INACTIVE',
-          CardBlockchainData: {
-            tokenAddress: blockchainData.tokenAddress as `0x${string}`,
-            tokenNetwork: (blockchainData.tokenNetwork || 'polygon') as string,
-            tokenChainId: blockchainData.tokenChainId || getChainIdFromNetwork(blockchainData.tokenNetwork),
-            tokenPrice: String(blockchainData.tokenPrice || '1.00'),
-          }
+    return cards.map((card): LocalCard => {
+      const blockchainData = (card as any).CardBlockchainData || (card as any).cardBlockchainData || {}
+      
+      return {
+        id: card.id,
+        name: card.name,
+        status: (card as any).status || 'ACTIVE',
+        CardBlockchainData: {
+          tokenAddress: blockchainData.tokenAddress || null,
+          tokenNetwork: blockchainData.tokenNetwork || 'polygon',
+          tokenChainId: blockchainData.tokenChainId || 137,
+          tokenPrice: String(blockchainData.tokenPrice || '1000000'), // Valor padrão em formato web3
         }
-      })
+      }
+    })
   }, [cards])
 
   // Usar o hook real para buscar saldos de tokens
-  const { assets, loading: balancesLoading } = useUserTokenBalances(
-    cardsForHook,
-    user?.walletAddress as `0x${string}` | undefined
-  )
+  const { assets } = useUserTokenBalances(cardsForHook, user?.walletAddress as `0x${string}` | undefined)
 
-  // Preparar cards para exibição
-  const cardsToShow = useMemo(() => {
-    if (!cards || cards.length === 0) return []
-    
-    let displayCards = cards
-    
-    if (maxCards) {
-      displayCards = displayCards.slice(0, maxCards)
-    }
+  // Processar dados dos cards
+  const processedCards = useMemo(() => {
+    return cards.map(card => {
+      // Verificar se tem dados blockchain válidos
+      const blockchainData = (card as any).CardBlockchainData || (card as any).cardBlockchainData || {}
+      const hasValidToken = blockchainData && blockchainData.tokenAddress
 
-    return displayCards.map(card => {
-      // Verificar se o card tem tokenAddress válido
-      const hasValidToken = isValidCardForBlockchain(card)
-      
-      // Encontrar o asset correspondente baseado no ID do card (apenas para cards válidos)
+      // Encontrar o asset correspondente baseado no ID do card
       const asset = hasValidToken ? assets.find(a => a.card.id === card.id) : null
       
-      // Calcular balanço de tokens (apenas para cards com token válido)
+      // Calcular balanço de tokens
       const tokenBalance = asset 
         ? Number(asset.balanceRaw) / Math.pow(10, Number(asset.decimals)) 
         : 0
       
-      // Dados do progresso de venda (apenas se CardBlockchainData disponível)
-      const soldTokens = card.CardBlockchainData?.purchasedQuantity 
-        ? Number(card.CardBlockchainData.purchasedQuantity)
+      // Dados do progresso de venda
+      const soldTokens = blockchainData.purchasedQuantity 
+        ? Number(blockchainData.purchasedQuantity)
         : 0
-      const totalSupply = card.CardBlockchainData?.initialSupply 
-        ? Number(card.CardBlockchainData.initialSupply)
+      const totalSupply = blockchainData.initialSupply 
+        ? Number(blockchainData.initialSupply)
         : 1000000 // valor padrão quando não há dados
       
-      // Preparar dados de preço
-      const tokenPrice = card.CardBlockchainData?.tokenPrice 
-        ? parseFloat(card.CardBlockchainData.tokenPrice)
+      // Preparar dados de preço - CORREÇÃO PRINCIPAL AQUI
+      const tokenPrice = blockchainData.tokenPrice 
+        ? parseFloat(blockchainData.tokenPrice) / 1_000_000 // Converter formato web3 para USD
         : 15.00 // preço padrão
 
       // Preparar tags/labels com cores
@@ -137,109 +101,39 @@ export default function TokenGrid({
         'EM DESENVOLVIMENTO': '#FF9800'
       }
 
-      const cardLabels = card.tags.map(tag => ({
+      const cardLabels = ((card as any).tags || []).map((tag: string) => ({
         name: tag.toUpperCase(),
         color: labelMap[tag.toUpperCase()] || undefined
       }))
 
-      // Adicionar label especial se não tem token válido
-      if (!hasValidToken) {
-        cardLabels.push({
-          name: 'EM DESENVOLVIMENTO',
-          color: '#FF9800'
-        })
-      }
-
       return {
-        apiCard: card,
-        unitValue: tokenPrice,
-        totalValue: tokenBalance,
-        userBalance: tokenBalance,
-        profitability: 0, // removendo dados mockados
-        lastPayDate: card.launchDate || new Date().toISOString(),
-        sold: soldTokens,
-        total: totalSupply,
-        hasValidToken, // Flag para indicar se tem token válido
-        labels: cardLabels
-      }
+          id: card.id,
+          name: card.name,
+          image: card.image, // Usar 'image' em vez de 'logoUrl'
+          userBalance: tokenBalance,
+          profitability: 0, // removendo dados mockados
+          lastPayDate: (card as any).launchDate || new Date().toISOString(),
+          sold: soldTokens,
+          total: totalSupply,
+          unitValue: tokenPrice, // Preço já convertido corretamente
+          totalValue: tokenBalance,
+          labels: cardLabels,
+          hasValidToken
+        }
     })
-  }, [cards, assets, maxCards, balancesLoading])
+  }, [cards, assets])
 
-  const headerTextColor = colors?.dashboard?.colors?.text ?? '#FFFFFF'
-  const highlightColor = colors?.dashboard?.colors?.highlight ?? '#00ffe1'
+  // Aplicar limite de cards se especificado
+  const displayCards = maxCards ? processedCards.slice(0, maxCards) : processedCards
 
-  const handleCardClick = (cardId: string) => {
+  const handleBuyToken = (cardId: string) => {
     router.push(`/tokens/${cardId}`)
   }
 
-  const handleBuyToken = (cardId: string) => {
-    // Implementar lógica de compra
-  }
-
-  const handleSellToken = (cardId: string) => {
-    // Implementar lógica de venda
-  }
-
-  if (loading || balancesLoading) {
+  if (loading) {
     return (
-      <div className={`w-full ${className}`}>
-        {showTitle && (
-          <div className="mb-6">
-            <h2 className="text-2xl font-bold" style={{ color: headerTextColor }}>
-              Tokens Disponíveis
-            </h2>
-          </div>
-        )}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[1, 2, 3].map(i => (
-            <div key={i} className="bg-white rounded-lg shadow-md p-6 animate-pulse">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-16 h-16 bg-gray-300 rounded-lg"></div>
-                <div className="flex-1">
-                  <div className="h-4 bg-gray-300 rounded mb-2"></div>
-                  <div className="h-3 bg-gray-300 rounded w-1/2"></div>
-                </div>
-              </div>
-              <div className="space-y-2 mb-4">
-                <div className="h-3 bg-gray-300 rounded"></div>
-                <div className="h-3 bg-gray-300 rounded w-3/4"></div>
-              </div>
-              <div className="flex gap-3">
-                <div className="flex-1 h-8 bg-gray-300 rounded"></div>
-                <div className="flex-1 h-8 bg-gray-300 rounded"></div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    )
-  }
-
-  if (error) {
-    return (
-      <div className={`w-full ${className}`}>
-        <div className="text-center p-8 bg-white rounded-lg shadow-md">
-          <div className="text-red-600 mb-2">{error}</div>
-          <button 
-            onClick={() => window.location.reload()} 
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-          >
-            Tentar novamente
-          </button>
-        </div>
-      </div>
-    )
-  }
-
-  if (cardsToShow.length === 0) {
-    return (
-      <div className={`w-full ${className}`}>
-        <div className="text-center p-8 bg-white rounded-lg shadow-md">
-          <p className="text-gray-600">Nenhum token encontrado</p>
-          <p className="text-sm text-gray-500 mt-1">
-            Entre em contato com o suporte para mais informações
-          </p>
-        </div>
+      <div className="flex justify-center items-center py-8">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
       </div>
     )
   }
@@ -247,41 +141,47 @@ export default function TokenGrid({
   return (
     <div className={`w-full ${className}`}>
       {showTitle && (
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold flex items-center gap-2" style={{ color: headerTextColor }}>
-            Tokens Disponíveis
-            <span style={{ color: highlightColor }}>
-              {texts?.dashboard?.['asset-list']?.highlight ?? 'Slab'}
-            </span>
-          </h2>
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-bold text-gray-900">Meus Tokens</h2>
         </div>
       )}
-
+      
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {cardsToShow.map(({ apiCard, unitValue, totalValue, userBalance, profitability, lastPayDate, sold, total, hasValidToken, labels }) => (
-          <TokenCard
-            key={apiCard.id}
-            card={apiCard}
-            unitValue={unitValue}
-            totalValue={totalValue}
-            userBalance={userBalance}
-            profitability={profitability}
-            launchDate={apiCard.launchDate ? new Date(apiCard.launchDate).toLocaleDateString('pt-BR') : undefined}
-            sold={sold}
-            total={total}
-            price={hasValidToken && unitValue > 0 ? `$ ${unitValue.toFixed(2)}` : undefined}
-            tokensAvailable={hasValidToken ? `${(total - sold).toLocaleString('pt-BR')}` : 'Aguardando deploy'}
-            identifierCode={apiCard.ticker || apiCard.id.substring(0, 8).toUpperCase()}
-            labels={labels}
-            onBuy={() => handleBuyToken(apiCard.id)}
-            onSell={userBalance > 0 ? () => handleSellToken(apiCard.id) : undefined}
-            onClick={() => handleCardClick(apiCard.id)}
-            buyText={texts?.dashboard?.['asset-list']?.buttons?.buy ?? 'Comprar'}
-            sellText={texts?.dashboard?.['asset-list']?.buttons?.sell ?? 'Vender'}
-            showActions={true}
-          />
-        ))}
+        {displayCards.map((processedCard) => {
+          const { 
+            id, name, image, userBalance, profitability, 
+            sold, total, unitValue, totalValue, labels, hasValidToken 
+          } = processedCard
+
+          // Encontrar o card original para passar para o TokenCard
+          const originalCard = cards.find(c => c.id === id)!
+
+          return (
+            <TokenCard
+              key={id}
+              card={originalCard}
+              price={hasValidToken && unitValue > 0 ? `$ ${unitValue.toFixed(2)}` : undefined}
+              launchDate={(originalCard as any).launchDate ? new Date((originalCard as any).launchDate).toLocaleDateString('pt-BR') : undefined}
+              tokensAvailable={hasValidToken ? `${(total - sold).toLocaleString('pt-BR')}` : 'Aguardando deploy'}
+              identifierCode={(originalCard as any).ticker || originalCard.id.substring(0, 8).toUpperCase()}
+              labels={labels}
+              sold={sold}
+              total={total}
+              unitValue={unitValue}
+              totalValue={totalValue}
+              userBalance={userBalance}
+              profitability={profitability}
+              onBuy={() => handleBuyToken(originalCard.id)}
+            />
+          )
+        })}
       </div>
+      
+      {displayCards.length === 0 && (
+        <div className="text-center py-8">
+          <p className="text-gray-500">Nenhum token encontrado</p>
+        </div>
+      )}
     </div>
   )
 }

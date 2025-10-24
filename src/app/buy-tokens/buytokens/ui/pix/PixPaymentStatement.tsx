@@ -2,6 +2,8 @@
 'use client'
 
 import * as React from 'react'
+import { useContext } from 'react'
+import { ConfigContext } from '@/contexts/ConfigContext'
 
 export type PixStatementItem = {
   createdAt?: string
@@ -23,16 +25,33 @@ type Props = {
   ctaText?: string
 }
 
+/** formata BRL a partir de centavos */
+const fmtBRL = (cents?: string | number) => {
+  const n = typeof cents === 'string' ? Number(cents) : cents
+  const v = Number.isFinite(n) ? Number(n) / 100 : 0
+  return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(v)
+}
+
 function StatusChip({ status }: { status?: string }) {
+  const { texts } = useContext(ConfigContext)
+  const TX = (texts as any) ?? {}
+  // seção opcional no JSON para sobrescrever os rótulos do status
+  const S  = TX?.paymentStatement?.status ?? {}
+
   const s = String(status || 'PROCESSING').toUpperCase()
-  const map: Record<string, { dot: string; label: string }> = {
-    WAITING_PAYMENT: { dot: '#f59e0b', label: 'Aguardando pagamento' },
-    PROCESSING:     { dot: '#9ca3af', label: 'Processando' },
-    PAID:           { dot: '#10b981', label: 'Pago' },
-    CONFIRMED:      { dot: '#10b981', label: 'Confirmado' },
-    FAILED:         { dot: '#ef4444', label: 'Falhou' },
-    CANCELLED:      { dot: '#ef4444', label: 'Cancelado' },
+
+  const map: Record<
+    string,
+    { dot: string; label: string }
+  > = {
+    WAITING_PAYMENT: { dot: '#f59e0b', label: S?.waiting ?? 'Awaiting payment' },
+    PROCESSING:      { dot: '#9ca3af', label: S?.processing ?? 'Processing' },
+    PAID:            { dot: '#10b981', label: S?.paid ?? 'Paid' },
+    CONFIRMED:       { dot: '#10b981', label: S?.confirmed ?? 'Confirmed' },
+    FAILED:          { dot: '#ef4444', label: S?.failed ?? 'Failed' },
+    CANCELLED:       { dot: '#ef4444', label: S?.cancelled ?? 'Canceled' },
   }
+
   const sty = map[s] || map.PROCESSING
   return (
     <span className="inline-flex items-center gap-2 text-xs font-medium whitespace-nowrap text-black">
@@ -40,12 +59,6 @@ function StatusChip({ status }: { status?: string }) {
       {sty.label}
     </span>
   )
-}
-
-const fmtBRL = (cents?: string | number) => {
-  const n = typeof cents === 'string' ? Number(cents) : cents
-  const v = Number.isFinite(n) ? Number(n) / 100 : 0
-  return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(v)
 }
 
 export default function PixPaymentStatement({
@@ -59,33 +72,52 @@ export default function PixPaymentStatement({
   ctaBg = '#19C3F0',
   ctaText = '#0b1a2b',
 }: Props) {
+  const { texts } = useContext(ConfigContext)
+
+  // helper de tradução com fallback em inglês
+  const TX = (texts as any) ?? {}
+  const PS = TX.paymentStatement ?? {}  // você pode colocar esses textos em texts.paymentStatement no JSON
+
+  const t = (key: string, fb: string) => (PS?.[key] ?? fb)
+
+  const L = {
+    title:            t('title', 'Payment'),
+    monthHeader:      t('month-header', 'Activity'),
+    labelValue:       t('label-value', 'Amount'),
+    labelQty:         t('label-qty', 'Quantity'),
+    labelStatus:      t('label-status', 'Status'),
+    btnViewPix:       t('btn-view-pix', 'View PIX details'),
+    btnCancelNew:     t('btn-cancel-new', 'Cancel and start a new purchase'),
+    btnViewOrders:    t('btn-view-orders', 'View all orders'),
+    btnNewPurchase:   t('btn-new-purchase', 'Make a new purchase'),
+    cancelling:       t('cancelling', 'Cancelling…'),
+  }
+
   const [canceling, setCanceling] = React.useState(false)
 
   const handleViewOrders = React.useCallback(() => {
     if (onViewOrders) return onViewOrders()
-    // fallback: abre a lista de ordens na MESMA aba
+    // fallback: navega na MESMA aba
     window.location.href = '/buy-tokens/orders'
   }, [onViewOrders])
 
   const handleCancelAndNew = React.useCallback(async () => {
     try {
       setCanceling(true)
-      // se você precisar cancelar algo no backend, mantenha esse callback:
       if (onCancelPendingPayment) await onCancelPendingPayment()
     } finally {
       setCanceling(false)
       if (onNewPurchase) return onNewPurchase()
-      // fallback mais simples: vai pra tela de compra (mesma aba)
       window.location.href = '/buy-tokens'
-      // se só quiser recarregar a página atual, troque por:
-      // window.location.reload()
     }
   }, [onCancelPendingPayment, onNewPurchase])
 
   const dt = item.createdAt ? new Date(item.createdAt) : null
   const dia  = dt ? dt.toLocaleDateString('pt-BR') : '—'
   const hora = dt ? dt.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : '—'
-  const monthHeader = dt ? dt.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' }) : 'Movimentações'
+  const monthHeader = dt
+    ? dt.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })
+    : L.monthHeader
 
   const amountText = fmtBRL(item.amountInBRLCents)
   const qtyText = `${item.tokenAmount ?? '—'} ${item.ticker ?? 'UND'}`
@@ -94,7 +126,7 @@ export default function PixPaymentStatement({
   return (
     <div className="rounded-2xl bg-white p-5 border-2" style={{ borderColor }}>
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="text-lg font-semibold" style={{ color: accentColor }}>Pagamento</h3>
+        <h3 className="text-lg font-semibold" style={{ color: accentColor }}>{L.title}</h3>
       </div>
 
       <h4 className="text-sm font-semibold text-gray-700 mb-3 capitalize">{monthHeader}</h4>
@@ -108,17 +140,17 @@ export default function PixPaymentStatement({
 
           <div className="flex-1 grid grid-cols-3 lg:grid-cols-4 gap-8">
             <div className="text-sm">
-              <div className="text-gray-500">Valor</div>
+              <div className="text-gray-500">{L.labelValue}</div>
               <div className="font-semibold text-emerald-600">{amountText}</div>
             </div>
 
             <div className="text-sm">
-              <div className="text-gray-500">Quantidade</div>
+              <div className="text-gray-500">{L.labelQty}</div>
               <div className="font-semibold text-gray-900">{qtyText}</div>
             </div>
 
             <div className="text-sm lg:col-span-2 lg:justify-self-end">
-              <div className="text-gray-500 mb-1">Status</div>
+              <div className="text-gray-500 mb-1">{L.labelStatus}</div>
               <StatusChip status={item.status} />
             </div>
           </div>
@@ -132,22 +164,20 @@ export default function PixPaymentStatement({
             <button
               type="button"
               onClick={onShowPixDetails}
-
               className="inline-flex items-center justify-center cursor-pointer rounded-xl px-3 py-2 text-sm font-semibold shadow-sm transition hover:opacity-90 focus:outline-none"
-
               style={{ backgroundColor: ctaBg, color: ctaText, border: `2px solid ${borderColor}` }}
             >
-              Ver detalhes do PIX
+              {L.btnViewPix}
             </button>
+
             <button
               type="button"
               onClick={handleCancelAndNew}
               disabled={canceling}
-
               className="inline-flex items-center justify-center cursor-pointer rounded-xl border px-3 py-2 text-sm font-semibold hover:bg-gray-50 disabled:opacity-60"
               style={{ borderColor, color: '#0b1a2b' }}
             >
-              {canceling ? 'Cancelando…' : 'Cancelar e fazer nova compra'}
+              {canceling ? L.cancelling : L.btnCancelNew}
             </button>
           </>
         ) : (
@@ -155,22 +185,19 @@ export default function PixPaymentStatement({
             <button
               type="button"
               onClick={handleViewOrders}
-
               className="inline-flex items-center justify-center cursor-pointer rounded-xl border px-3 py-2 text-sm font-semibold hover:bg-gray-50"
-
               style={{ borderColor, color: '#0b1a2b' }}
             >
-              Ver todas as ordens
+              {L.btnViewOrders}
             </button>
+
             <button
               type="button"
               onClick={handleCancelAndNew}
-
               className="inline-flex items-center justify-center cursor-pointer rounded-xl px-3 py-2 text-sm font-semibold shadow-sm transition hover:opacity-90 focus:outline-none"
-
               style={{ backgroundColor: ctaBg, color: ctaText, border: `2px solid ${borderColor}` }}
             >
-              Realizar nova compra
+              {L.btnNewPurchase}
             </button>
           </>
         )}

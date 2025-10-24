@@ -35,6 +35,7 @@ export default function Home() {
         )}
         {isBloxify && (
           <>
+            <TokenShowcase />
             <FeaturesShowcase />
             <FormsContact />
           </>

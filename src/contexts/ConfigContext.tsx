@@ -42,14 +42,14 @@ export const ConfigProvider = ({
   children: ReactNode
 }) => {
   /* ---------- idioma salvo no localStorage ou default pt-BR ---------- */
-  const [locale, setLocale] = useState<string>('en')
+  const [locale, setLocale] = useState<string>('pt-BR')
   const [mounted, setMounted] = useState(false)
   const [client, setClient] = useState<string>('')
   const [isBloxify, setIsBloxify] = useState<boolean>(false)
 
   useEffect(() => {
     const stored = localStorage.getItem('locale')
-    setLocale(stored ?? 'en')
+    setLocale(stored ?? 'pt-BR')
     setMounted(true)
   }, [])
 

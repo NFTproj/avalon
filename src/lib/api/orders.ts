@@ -1,5 +1,7 @@
 // src/lib/api/orders.ts
 
+import { apiFetch } from './fetcher'
+
 export type Order = {
   id: string
   type?: string | number
@@ -80,25 +82,12 @@ export async function listOrders(q?: OrdersQuery): Promise<OrdersResponse> {
   const page = Number(q?.page ?? 1)
   const limit = Number(q?.limit ?? 10)
 
-  const res = await fetch(`/api/orders${toQuery(q)}`, {
-    method: 'GET',
-    credentials: 'include',
-    cache: 'no-store',
-  })
-  const json = await res.json().catch(() => ({}))
-  if (!res.ok) throw new Error(json?.error || json?.message || 'Falha ao listar ordens')
-
+  const json = await apiFetch(`/api/orders${toQuery(q)}`)
   return normalizeOrdersJson(json, { page, limit })
 }
 
 /** Detalhe da ordem */
 export async function getOrder(id: string): Promise<Order> {
-  const res = await fetch(`/api/orders/${encodeURIComponent(id)}`, {
-    method: 'GET',
-    credentials: 'include',
-    cache: 'no-store',
-  })
-  const json = await res.json().catch(() => ({}))
-  if (!res.ok) throw new Error(json?.error || json?.message || 'Falha ao carregar ordem')
+  const json = await apiFetch(`/api/orders/${encodeURIComponent(id)}`)
   return (json?.data || json) as Order
 }

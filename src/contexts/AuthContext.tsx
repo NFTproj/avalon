@@ -26,7 +26,19 @@ export interface AuthUser {
   kycStatus: 'pending' | 'approved' | 'rejected';
   kycStatusCode?: number;  
   permissions: string[];
-  
+  balances?: Array<{
+    id: string;
+    name: string;
+    ticker?: string;
+    logoUrl?: string;
+    CardBlockchainData?: {
+      tokenAddress?: string;
+      tokenNetwork?: string;
+      tokenChainId?: number;
+      tokenPrice?: string;
+    };
+    balance: number;
+  }>;
 }
 
 interface MeResponse {
@@ -59,15 +71,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const [showLoading, setShowLoading] = useState(false);
 
+  // Verificar se está na página de login/register para não tentar autenticar
+  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
+  const isPublicPage = pathname === '/login' || pathname === '/register' || pathname === '/register-metamask';
+
   /** 4.1 ▸ SWR para consultar /api/auth/me */
   const {
     data,
     isLoading,
     mutate,
   } = useSWR<MeResponse>(
-    '/api/auth/me',
+    isPublicPage ? null : '/api/auth/me', // Desabilita SWR em páginas públicas
     url => apiFetch<MeResponse>(url),
-    { revalidateOnFocus: false }
+    { 
+      revalidateOnFocus: false,
+      shouldRetryOnError: false, // Não tenta novamente em caso de erro
+      errorRetryCount: 0, // Não faz retry
+    }
   );
 
   /* 4.2 ▸ expõe mutate globalmente */
@@ -85,7 +105,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await apiFetch('/api/auth/logout', { method: 'POST' });
       mutate();            // invalida cache do /me
 
-      setTimeout(() => router.push('/login'), 800);
+      // Usar window.location para forçar um hard reload e evitar erros de hidratação
+      setTimeout(() => {
+        if (typeof window !== 'undefined') {
+          window.location.href = '/login';
+        }
+      }, 800);
     } catch (err) {
       console.error('[Logout error]', err);
       setShowLoading(false);

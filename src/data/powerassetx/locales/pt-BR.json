@@ -43,6 +43,8 @@
       "buttons": {
         "button": "Criar conta",
         "buttonLogin": "Entrar",
+        "buttonHome": "Home",
+        "buttonProfile": "Perfil",
         "buttonLogout": "sair"
       }
     },
@@ -344,7 +346,7 @@
     "welcome-box": {
       "name": "Antônio",
       "title": "Bem-vindo (a) à Slab!",
-      "description": "Conheça os projetos que foram tokenizados, investa com segurança e tenha o controle total do seu patrimônio na palma da sua mão.",
+      "description": "Conheça os projetos que foram tokenizados, \ninvesta com segurança e tenha o controle total do seu patrimônio na palma da sua mão.",
       "link": "Ver detalhes",
       "tokens-title": "Seus Tokens:",
       "tokens": ["#TBIO", "#TBIO2"]
@@ -387,6 +389,11 @@
       "buttons": {
         "buy": "Comprar",
         "sell": "Vender"
+      },
+      "messages": {
+        "no-tokens": "Nenhum token encontrado na sua carteira",
+        "sample-data": "Dados de exemplo não têm saldos reais",
+        "buy-to-start": "Compre tokens para começar a investir"
       }
     }
   },
@@ -496,6 +503,157 @@
         "alt": "Demonstração do fluxo Didit"
       }
 
+    }
+  },
+  "profile": {
+    "page-title": "Perfil",
+    "menu": {
+      "configurations": "Configurações",
+      "settings": "Cadastro",
+      "password-update": "Atualizar senha",
+      "verify-account": "Verificar conta",
+      "verify-certificate": "Validar CERT(KYC)",
+      "close-account": "Encerrar conta",
+      "security": "Segurança",
+      "enable-2fa": "Ativar 2FA",
+      "verify-two-step": "Verificar em duas etapas",
+      "connected-devices": "Dispositivos conectados",
+      "preferences": "Preferências",
+      "language": "Idioma",
+      "notifications": "Notificações"
+    },
+    "close-account": {
+      "title": "Encerrar conta",
+      "warning-title": "Atenção",
+      "warning-message": "Encerrar sua é uma ação permanente.Todos seus dados serão excluídos e não poderão ser recuperados.Certifique-se de que deseja realmente prosseguir com a exclusão.",
+      "email-label": "Motivo da exclusão(opcional)",
+      "email-placeholder": "Nos diga por que está encerrando sua conta",
+      "button-cancel": "Cancelar",
+      "button-confirm": "Encerrar conta",
+      "success-message": "Conta encerrada com sucesso",
+      "error-message": "Erro ao encerrar conta. Tente novamente."
+    }
+  },
+  "certificateEmission": {
+    "page-title": "Emissão de certificado",
+    "page-subtitle": "Registre sua compensação ambiental e receba seu certificado digital com selo de verificação.",
+    "token-label": "Token a ser utilizado",
+    "quantity-label": "Quantidade de tokens compensados",
+    "quantity-placeholder": "0-1500",
+    "balance-available": "Saldo disponível: {balance} tokens",
+    "button-emit": "Emitir certificado",
+    "button-emitting": "Emitindo...",
+    "button-emitted": "Certificado Emitido",
+    "button-resend": "Solicitar Reenvio",
+    "success-message": "Seu certificado foi emitido. Acompanhe o andamento da análise e verifique regularmente seu e-mail para futuras atualizações.",
+    "error-message": "A emissão do seu certificado não foi concluída. Verifique se há saldo suficiente em tokens e tente novamente",
+    "error-card-not-found": "Token não encontrado",
+    "error-card-id-missing": "ID do card não fornecido",
+    "error-loading": "Erro ao carregar dados do token",
+    "history-title": "Histórico de certificados",
+    "history-loading": "Carregando histórico...",
+    "history-empty": "Nenhum certificado encontrado",
+    "filter-year": "Ano:",
+    "filter-token": "Token:",
+    "filter-status": "Status:",
+    "status-emitido": "Emitido",
+    "status-pendente": "Em validação",
+    "status-falha": "Falha na validação",
+    "button-pending": "Pendente",
+    "button-reemit": "Reemitir",
+    "emitted-at": "Emitido em:",
+    "certificate-id": "ID:",
+    "quantity-used": "Quantidade usada:"
+  },
+  "dashboard": {
+    "welcome-box": {
+      "title": "Bem-vindo(a) à PowerAssetX",
+      "subtitle": "Conheça os projetos que foram tokenizados, \ninvista com segurança e tenha o controle total \ndo seu patrimônio.",
+      "description": "Conheça os projetos que foram tokenizados, \ninvista com segurança e tenha o controle total \ndo seu patrimônio.",
+      "buttons": {
+        "copy": "Copiar",
+        "copied": "Copiado!",
+        "explore-tokens": "Explorar Tokens Disponíveis",
+        "complete-kyc": "Complete sua Verificação KYC",
+        "check-kyc": "Verificar Status do KYC"
+      }
+    },
+    "balances-table": {
+      "title": "Sua carteira",
+      "highlight": "PowerAssetX",
+      "columns": {
+        "project": "Projeto",
+        "unit-value": "Valor unitário",
+        "total-value": "Valor Total",
+        "actions": "Ações"
+      },
+      "actions": {
+        "buy": "Comprar",
+        "sell": "Vender"
+      },
+      "pagination": {
+        "previous": "Anterior",
+        "next": "Próximo",
+        "page-info": "Página {current} de {total}"
+      },
+      "messages": {
+        "login-required": "Faça login para ver seus balances.",
+        "loading": "Carregando seus tokens...",
+        "no-tokens": "Você ainda não possui tokens na sua carteira."
+      }
+    },
+    "chart-box": {
+      "wallet-balance": "Saldo da Carteira",
+      "recent-transactions": "transações recentes",
+      "loading": "Carregando dados da carteira...",
+      "try-again": "Tentar novamente",
+      "actions": {
+        "buy-tokens": "Comprar Tokens",
+        "documents": "Documentos",
+        "wallet": "Carteira",
+        "profile": "Perfil",
+        "kyc": "Verificação KYC"
+      }
+    },
+    "token-circle": {
+      "no-tokens": "Nenhum token encontrado",
+      "buy-tokens": "Compre tokens para ver",
+      "portfolio-here": "seu portfólio aqui",
+      "total-invested": "Total Investido",
+      "total-tokens": "Total de Tokens"
+    },
+    "token-metrics": {
+      "title": "Métricas de Tokens (24h)",
+      "refresh": "Atualizar métricas",
+      "loading": "Carregando métricas...",
+      "error": "Erro ao Carregar Métricas",
+      "try-again": "Tentar Novamente",
+      "no-data": "Métricas de Tokens",
+      "no-data-message": "Nenhum dado de métricas disponível ainda. As métricas começarão a ser coletadas após você adquirir tokens.",
+      "total-tokens": "Total de Tokens",
+      "total-value": "Valor Total",
+      "growth-rate": "Crescimento Médio por Hora",
+      "best-performance": "Melhor Performance:",
+      "worst-performance": "Pior Performance:",
+      "average-performance": "Performance Média:",
+      "performance-suffix": "nas últimas 24h"
+    },
+    "carousel": {
+      "message": "Faça a verificação KYC e desbloqueie todas as funcionalidades da plataforma.",
+      "button": "Verificação KYC"
+    },
+    "asset-list": {
+      "title": "Sua carteira",
+      "highlight": "PowerAssetX",
+      "columns": {
+        "project": "Projeto",
+        "unit-value": "Valor unitário",
+        "total-value": "Valor Total"
+      },
+      "buttons": {
+        "buy": "Comprar",
+        "sell": "Vender"
+      }
     }
   }
 }
