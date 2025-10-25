@@ -61,7 +61,12 @@ export default function CertificateEmission() {
   }, [cardId])
 
   // Buscar saldo do usuário
-  const userBalance = user?.balances?.find((b: any) => b.id === cardId)?.balance || 0
+  const balanceData = user?.balances?.find((b: any) => b.id === cardId)
+  const userBalance = balanceData?.balance || 0
+
+  console.log('[CertificateEmission] cardId:', cardId)
+  console.log('[CertificateEmission] user.balances:', user?.balances)
+  console.log('[CertificateEmission] balanceData found:', balanceData)
 
   const pageBg = colors?.certificateEmission?.background?.page || '#FFFFFF'
   const titleColor = colors?.certificateEmission?.colors?.title || '#1F2937'
@@ -111,6 +116,7 @@ export default function CertificateEmission() {
             <EmissionCard
               card={card}
               userBalance={userBalance}
+              balanceData={balanceData}
               onSuccess={() => {
                 // Recarregar histórico
                 window.location.reload()
