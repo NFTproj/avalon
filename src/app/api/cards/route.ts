@@ -3,24 +3,23 @@ import { NextRequest, NextResponse } from 'next/server'
 export async function GET(req: NextRequest) {
   try {
     const apiUrl = process.env.BLOXIFY_URL_BASE
-    const apiKey = process.env.BLOXIFY_API_KEY
     const clientId = process.env.CLIENT_ID
 
-    const accessToken = req.cookies.get('accessToken')?.value
-
-    if (!apiUrl || !apiKey || !clientId || !accessToken) {
-      return NextResponse.json({ error: 'Configuração ou token ausente' }, { status: 500 })
+    if (!apiUrl || !clientId) {
+      return NextResponse.json({ error: 'Configuração ausente (BLOXIFY_URL_BASE ou CLIENT_ID)' }, { status: 500 })
     }
 
-    const response = await fetch(`${apiUrl}/card?clientId=${clientId}`, {
-      method: 'GET',
-      headers: {
-        'x-api-key': apiKey,
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    })
+    const { searchParams } = new URL(req.url)
+    const pageRaw = searchParams.get('page') ?? '1'
+    const limitRaw = searchParams.get('limit') ?? '20'
 
+    const page = Math.max(1, Number.isFinite(+pageRaw) ? parseInt(pageRaw, 10) : 1)
+    const limit = Math.max(1, Number.isFinite(+limitRaw) ? parseInt(limitRaw, 10) : 20)
+
+    // monta a URL com clientId automático
+    const url = `${apiUrl}/card?clientId=${encodeURIComponent(clientId)}&page=${page}&limit=${limit}`
+
+    const response = await fetch(url, { method: 'GET' })
     const data = await response.json()
 
     if (!response.ok) {
