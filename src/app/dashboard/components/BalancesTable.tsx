@@ -111,12 +111,13 @@ export default function BalancesTable({ className = "" }: { className?: string }
 
       {/* Wrapper com rolagem horizontal para evitar quebra/overlay em telas pequenas */}
       <div className="w-full overflow-x-auto rounded-b-[15px] border-x border-b border-gray-200">
-        <table className="min-w-[720px] w-full table-fixed">
+        <table className="min-w-[900px] w-full table-fixed">
           <thead style={{ background: tableHeaderBg, color: headerTextColor }}>
             <tr>
-              <th className="w-[45%] pl-0 pr-6 py-3 text-left font-semibold">{balancesTexts?.columns?.project ?? 'Projeto'}</th>
+              <th className="w-[35%] pl-0 pr-6 py-3 text-left font-semibold">{balancesTexts?.columns?.project ?? 'Projeto'}</th>
+              <th className="w-[15%] px-6 py-3 text-left font-semibold">{balancesTexts?.columns?.quantity ?? 'Quantidade'}</th>
               <th className="w-[20%] px-6 py-3 text-left font-semibold">{balancesTexts?.columns?.['unit-value'] ?? 'Valor unitário'}</th>
-              <th className="w-[25%] px-6 py-3 text-left font-semibold">{balancesTexts?.columns?.['total-value'] ?? 'Valor Total'}</th>
+              <th className="w-[20%] px-6 py-3 text-left font-semibold">{balancesTexts?.columns?.['invested-value'] ?? 'Valor Investido'}</th>
               <th className="w-[10%] px-6 py-3 text-right font-semibold">{balancesTexts?.columns?.actions ?? 'Ações'}</th>
             </tr>
           </thead>
@@ -147,10 +148,15 @@ export default function BalancesTable({ className = "" }: { className?: string }
                     </div>
                   </td>
 
+                  {/* Quantidade */}
+                  <td className="px-6 py-4 text-gray-700 whitespace-nowrap">
+                    {b.balance.toLocaleString('pt-BR', { maximumFractionDigits: 2 })} tokens
+                  </td>
+
                   {/* Valor unitário */}
                   <td className="px-6 py-4 text-gray-700 whitespace-nowrap">{formatUSD(price)}</td>
 
-                  {/* Valor Total */}
+                  {/* Valor Investido */}
                   <td className="px-6 py-4 text-gray-700 whitespace-nowrap">{formatUSD(total)}</td>
 
                   {/* Ações */}
@@ -168,7 +174,7 @@ export default function BalancesTable({ className = "" }: { className?: string }
                         style={{ color: tableTextColor }}
                         onClick={() => window.location.href = `/certificate-emission?cardId=${b.id}`}
                       >
-                        {(balancesTexts as any)?.actions?.sell || 'Vender'}
+                        {(balancesTexts as any)?.actions?.benefits || 'Benefícios'}
                       </button>
                     </div>
                   </td>

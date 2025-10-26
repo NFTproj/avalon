@@ -9,10 +9,12 @@ import { ConfigContext } from '@/contexts/ConfigContext'
 import { useAuth } from '@/contexts/AuthContext'
 import LoadingOverlay from '@/components/common/LoadingOverlay'
 import TokenList, { TokenItem } from './ui/TokenList'
+import TokenCarousel from './ui/TokenCarousel'
 import BuyPanel from './ui/BuyPanel'
 import { useCards } from '@/lib/hooks/useCards'
 import TabsBar, { TabKey } from './ui/TabsBar'
 import ProgressBar from './ui/ProgressBar'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 /* ————————————————— helpers ————————————————— */
 const toNum = (v: any): number => {
@@ -90,22 +92,22 @@ export default function BuyTokens() {
       string,
       { chainId?: number; saleAddress?: `0x${string}`; raw?: any }
     >()
-    ;(cards ?? []).forEach((c: any) => {
-      const chainId =
-        typeof c?.CardBlockchainData?.tokenChainId === 'number'
-          ? c.CardBlockchainData.tokenChainId
-          : (c?.blockchainPlatform?.toLowerCase?.() === 'polygon'
+      ; (cards ?? []).forEach((c: any) => {
+        const chainId =
+          typeof c?.CardBlockchainData?.tokenChainId === 'number'
+            ? c.CardBlockchainData.tokenChainId
+            : (c?.blockchainPlatform?.toLowerCase?.() === 'polygon'
               ? 137
               : undefined)
 
-      const saleAddress = normalizeAddress(
-        c?.CardBlockchainData?.intermediaryContractAddress ??
-        c?.intermediaryContractAddress ??
-        c?.saleContractAddress
-      )
+        const saleAddress = normalizeAddress(
+          c?.CardBlockchainData?.intermediaryContractAddress ??
+          c?.intermediaryContractAddress ??
+          c?.saleContractAddress
+        )
 
-      map.set(c.id, { chainId, saleAddress, raw: c })
-    })
+        map.set(c.id, { chainId, saleAddress, raw: c })
+      })
     return map
   }, [cards])
 
@@ -161,13 +163,33 @@ export default function BuyTokens() {
   // abas
   const [tab, setTab] = useState<TabKey>('buy')
 
+  // carrossel
+  const carouselRef = useRef<HTMLDivElement | null>(null)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(false)
+
+  const scrollCarousel = (direction: 'left' | 'right') => {
+    const container = carouselRef.current
+    if (!container) return
+
+    const scrollAmount = 280
+    const newScrollLeft = direction === 'left'
+      ? container.scrollLeft - scrollAmount
+      : container.scrollLeft + scrollAmount
+
+    container.scrollTo({
+      left: newScrollLeft,
+      behavior: 'smooth'
+    })
+  }
+
   // header
   const headerTitle = selected?.titleFromCard ?? t('page-title-fallback', 'Comprar Tokens')
 
   // progresso (só mostra se houver dados)
   const progressValue = useMemo(() => {
     const total = toNum(selected?.initialSupply)
-    const sold  = toNum(selected?.purchasedQuantity)
+    const sold = toNum(selected?.purchasedQuantity)
     if (total <= 0 || sold <= 0) return null
     return Math.max(0, Math.min(100, (sold / total) * 100))
   }, [selected?.initialSupply, selected?.purchasedQuantity])
@@ -219,30 +241,74 @@ export default function BuyTokens() {
               />
             </div>
 
-            {/* esquerda: lista */}
-            <section className="lg:col-span-6" id="panel-buy" role="tabpanel" aria-labelledby="tab-buy">
-              <h2 className="text-lg font-semibold mb-4">
-                {t('available-tokens', 'Tokens disponíveis')}
-              </h2>
+            {/* esquerda: carrossel */}
+            <section className="lg:col-span-6 relative" id="panel-buy" role="tabpanel" aria-labelledby="tab-buy">
+              {error ? (
+                <div>
+                  <h2 className="text-lg font-semibold mb-4">
+                    {t('available-tokens', 'Tokens disponíveis')}
+                  </h2>
+                  <div className="rounded-2xl border-2 bg-white p-5 shadow-lg" style={{ borderColor: accent }}>
+                    <p className="text-sm text-red-600">
+                      {t('load-error', 'Falha ao carregar tokens.')}
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  {/* Setas de navegação externas */}
+                  {tokens.length > 1 && canScrollLeft && (
+                    <button
+                      onClick={() => scrollCarousel('left')}
+                      className="absolute -left-6 z-30 w-12 h-12 rounded-full bg-white shadow-xl border-2 flex items-center justify-center hover:bg-gray-50 transition-all duration-200 hover:scale-110"
+                      style={{
+                        borderColor: accent,
+                        backgroundColor: 'white',
+                        top: 'calc(50% + 20px)' // Posição fixa em relação ao container
+                      }}
+                      aria-label="Rolar para esquerda"
+                    >
+                      <ChevronLeft className="w-6 h-6" style={{ color: accent }} />
+                    </button>
+                  )}
 
-              <div className="rounded-2xl border-2 bg-white p-4" style={{ borderColor: accent }}>
-                {error ? (
-                  <p className="text-sm text-red-600">
-                    {t('load-error', 'Falha ao carregar tokens.')}
-                  </p>
-                ) : (
-                  <TokenList
-                    items={tokens}
-                    selectedId={selectedId}
-                    onSelect={handleSelect}
-                    accentColor={accent}
-                    neutralBorderColor={neutralItemBorder}
-                    visibleRows={2}
-                    showProject={false}
-                    showPrice={false}
-                  />
-                )}
-              </div>
+                  {tokens.length > 1 && canScrollRight && (
+                    <button
+                      onClick={() => scrollCarousel('right')}
+                      className="absolute -right-6 z-30 w-12 h-12 rounded-full bg-white shadow-xl border-2 flex items-center justify-center hover:bg-gray-50 transition-all duration-200 hover:scale-110"
+                      style={{
+                        borderColor: accent,
+                        backgroundColor: 'white',
+                        top: 'calc(50% + 20px)' // Posição fixa em relação ao container
+                      }}
+                      aria-label="Rolar para direita"
+                    >
+                      <ChevronRight className="w-6 h-6" style={{ color: accent }} />
+                    </button>
+                  )}
+
+                  <div className="rounded-2xl border-2 bg-white shadow-lg" style={{ borderColor: accent }}>
+                    <div className="p-5 pb-3">
+                      <h2 className="text-lg font-semibold mb-4">
+                        {t('available-tokens', 'Tokens disponíveis')}
+                      </h2>
+                    </div>
+                    <div className="px-5 pb-5">
+                      <TokenCarousel
+                        items={tokens}
+                        selectedId={selectedId}
+                        onSelect={handleSelect}
+                        accentColor={accent}
+                        scrollRef={carouselRef}
+                        onScrollStateChange={(canLeft: boolean, canRight: boolean) => {
+                          setCanScrollLeft(canLeft)
+                          setCanScrollRight(canRight)
+                        }}
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
             </section>
 
             {/* direita: painel de compra */}

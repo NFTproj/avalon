@@ -477,6 +477,31 @@
         "error": "Error loading transactions"
       }
     },
+    "balances-table": {
+      "title": "Your wallet",
+      "highlight": "Slab",
+      "columns": {
+        "project": "Project",
+        "quantity": "Quantity",
+        "unit-value": "Unit value",
+        "invested-value": "Invested Value",
+        "actions": "Actions"
+      },
+      "actions": {
+        "buy": "Buy",
+        "benefits": "Benefits"
+      },
+      "pagination": {
+        "previous": "Previous",
+        "next": "Next",
+        "page-info": "Page {current} of {total}"
+      },
+      "messages": {
+        "login-required": "Please log in to view your balances.",
+        "loading": "Loading your tokens...",
+        "no-tokens": "You don't have any tokens in your wallet yet."
+      }
+    },
     "asset-list": {
       "title": "Your Wallet",
       "highlight": "Slab",

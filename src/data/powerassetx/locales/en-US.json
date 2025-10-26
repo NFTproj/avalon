@@ -489,13 +489,14 @@
     "highlight": "PowerAssetX",
     "columns": {
       "project": "Project",
+      "quantity": "Quantity",
       "unit-value": "Unit value",
-      "total-value": "Total Value",
+      "invested-value": "Invested Value",
       "actions": "Actions"
     },
     "actions": {
       "buy": "Buy",
-      "sell": "Sell"
+      "benefits": "Benefits"
     },
     "pagination": {
       "previous": "Previous",

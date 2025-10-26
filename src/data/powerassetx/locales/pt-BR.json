@@ -583,13 +583,14 @@
       "highlight": "PowerAssetX",
       "columns": {
         "project": "Projeto",
+        "quantity": "Quantidade",
         "unit-value": "Valor unitário",
-        "total-value": "Valor Total",
+        "invested-value": "Valor Investido",
         "actions": "Ações"
       },
       "actions": {
         "buy": "Comprar",
-        "sell": "Vender"
+        "benefits": "Benefícios"
       },
       "pagination": {
         "previous": "Anterior",

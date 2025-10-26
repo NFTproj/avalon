@@ -101,7 +101,7 @@ export default function ChartBox() {
   const actionButtons = useMemo(() => [
     { id: 1, name: chartTexts?.buttons?.buy || 'Comprar', icon: <MdShoppingCart size={22} color={iconColor} /> },
     { id: 2, name: chartTexts?.buttons?.earnings || 'Rendimentos', icon: <AiFillFileText size={22} color={iconColor} /> },
-    { id: 3, name: chartTexts?.buttons?.withdraw || 'Sacar', icon: <AiFillWallet size={22} color={iconColor} /> },
+    // { id: 3, name: chartTexts?.buttons?.withdraw || 'Sacar', icon: <AiFillWallet size={22} color={iconColor} /> },
     { id: 4, name: chartTexts?.buttons?.statements || 'Extratos', icon: <AiFillProfile size={22} color={iconColor} /> },
     { id: 5, name: chartTexts?.buttons?.['verify-identity'] || 'Verificar Identidade', icon: <AiFillCheckCircle size={22} color={iconColor} /> },
   ], [chartTexts, iconColor])

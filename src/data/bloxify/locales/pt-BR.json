@@ -554,6 +554,31 @@
         "error": "Erro ao carregar transações"
       }
     },
+    "balances-table": {
+      "title": "Sua carteira",
+      "highlight": "Slab",
+      "columns": {
+        "project": "Projeto",
+        "quantity": "Quantidade",
+        "unit-value": "Valor unitário",
+        "invested-value": "Valor Investido",
+        "actions": "Ações"
+      },
+      "actions": {
+        "buy": "Comprar",
+        "benefits": "Benefícios"
+      },
+      "pagination": {
+        "previous": "Anterior",
+        "next": "Próximo",
+        "page-info": "Página {current} de {total}"
+      },
+      "messages": {
+        "login-required": "Faça login para ver seus balances.",
+        "loading": "Carregando seus tokens...",
+        "no-tokens": "Você ainda não possui tokens na sua carteira."
+      }
+    },
     "asset-list": {
       "title": "Sua carteira",
       "highlight": "Slab",

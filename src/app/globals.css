@@ -177,3 +177,13 @@ body {
     width: 280px !important;
   }
 }
+/* Hide scrollbar for webkit browsers */
+.overflow-x-auto::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE and Edge */
+.overflow-x-auto {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
