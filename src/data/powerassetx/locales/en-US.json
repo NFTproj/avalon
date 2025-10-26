@@ -509,9 +509,21 @@
     }
   },
   "chart-box": {
-    "wallet-balance": "Wallet Balance",
+    "title": "Wallet Balance",
     "recent-transactions": "recent transactions",
-    "loading": "Loading wallet data...",
+    "buttons": {
+      "buy": "Buy",
+      "earnings": "Earnings",
+      "withdraw": "Withdraw",
+      "statements": "Statements",
+      "verify-identity": "Verify Identity",
+      "retry": "Try again"
+    },
+    "messages": {
+      "loading": "Loading wallet data...",
+      "error": "Error loading transactions"
+    },
+    "wallet-balance": "Wallet Balance",
     "try-again": "Try again",
     "actions": {
       "buy-tokens": "Buy Tokens",

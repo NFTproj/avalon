@@ -538,6 +538,22 @@
         "icon": ""
       }
     ],
+    "chart-box": {
+      "title": "Saldo da Carteira",
+      "recent-transactions": "transações recentes",
+      "buttons": {
+        "buy": "Comprar",
+        "earnings": "Rendimentos",
+        "withdraw": "Sacar",
+        "statements": "Extratos",
+        "verify-identity": "Verificar Identidade",
+        "retry": "Tentar novamente"
+      },
+      "messages": {
+        "loading": "Carregando dados da carteira...",
+        "error": "Erro ao carregar transações"
+      }
+    },
     "asset-list": {
       "title": "Sua carteira",
       "highlight": "Slab",

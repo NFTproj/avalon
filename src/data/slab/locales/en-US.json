@@ -642,6 +642,22 @@
     "message": "Complete KYC verification and unlock all platform features.",
     "button": "KYC Verification"
   },
+  "chart-box": {
+    "title": "Wallet Balance",
+    "recent-transactions": "recent transactions",
+    "buttons": {
+      "buy": "Buy",
+      "earnings": "Earnings",
+      "withdraw": "Withdraw",
+      "statements": "Statements",
+      "verify-identity": "Verify Identity",
+      "retry": "Try again"
+    },
+    "messages": {
+      "loading": "Loading wallet data...",
+      "error": "Error loading transactions"
+    }
+  },
   "asset-list": {
     "title": "Your wallet",
     "highlight": "Slab",

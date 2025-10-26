@@ -603,9 +603,21 @@
       }
     },
     "chart-box": {
-      "wallet-balance": "Saldo da Carteira",
+      "title": "Saldo da Carteira",
       "recent-transactions": "transações recentes",
-      "loading": "Carregando dados da carteira...",
+      "buttons": {
+        "buy": "Comprar",
+        "earnings": "Rendimentos",
+        "withdraw": "Sacar",
+        "statements": "Extratos",
+        "verify-identity": "Verificar Identidade",
+        "retry": "Tentar novamente"
+      },
+      "messages": {
+        "loading": "Carregando dados da carteira...",
+        "error": "Erro ao carregar transações"
+      },
+      "wallet-balance": "Saldo da Carteira",
       "try-again": "Tentar novamente",
       "actions": {
         "buy-tokens": "Comprar Tokens",
