@@ -10,6 +10,7 @@ import LoadingOverlay from '@/components/common/LoadingOverlay'
 import { apiFetch } from '@/lib/api/fetcher'
 import EmissionCard from './EmissionCard'
 import CertificateHistory from './CertificateHistory'
+import TokenSelector from './TokenSelector'
 
 export default function CertificateEmission() {
   const { colors, texts } = useContext(ConfigContext)
@@ -24,10 +25,7 @@ export default function CertificateEmission() {
   // Buscar dados do card
   useEffect(() => {
     if (!cardId) {
-      setError(
-        texts?.certificateEmission?.['error-card-id-missing'] ??
-          'ID do card não fornecido'
-      )
+      // Sem cardId, mostrar seletor de token
       setLoading(false)
       return
     }
@@ -59,6 +57,11 @@ export default function CertificateEmission() {
 
     fetchCard()
   }, [cardId])
+
+  const handleTokenSelect = (selectedCardId: string) => {
+    // Redirecionar para a mesma página com o cardId selecionado
+    window.location.href = `/certificate-emission?cardId=${selectedCardId}`
+  }
 
   // Buscar saldo do usuário
   const balanceData = user?.balances?.find((b: any) => b.id === cardId)
@@ -101,7 +104,7 @@ export default function CertificateEmission() {
             </p>
           </div>
 
-          {/* Card de Emissão */}
+          {/* Card de Emissão ou Seletor de Token */}
           {error ? (
             <div 
               className="border-2 rounded-2xl p-6 text-center shadow-md"
@@ -122,12 +125,16 @@ export default function CertificateEmission() {
                 window.location.reload()
               }}
             />
+          ) : !cardId ? (
+            <TokenSelector onTokenSelect={handleTokenSelect} />
           ) : null}
 
-          {/* Histórico de Certificados */}
-          <div className="mt-12">
-            <CertificateHistory cardId={cardId} />
-          </div>
+          {/* Histórico de Certificados - só mostra se há cardId */}
+          {cardId && (
+            <div className="mt-12">
+              <CertificateHistory cardId={cardId} />
+            </div>
+          )}
         </div>
       </main>
 

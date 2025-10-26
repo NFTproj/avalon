@@ -111,6 +111,12 @@ export default function ChartBox() {
       case 1:
         router.push('/tokens')
         break
+      case 2:
+        router.push('/certificate-emission')
+        break
+      case 4:
+        router.push('/buy-tokens/orders')
+        break
       case 5:
         router.push('/kyc')
         break
