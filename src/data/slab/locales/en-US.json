@@ -197,6 +197,27 @@
       ]
     }
   },
+  "reset-password": {
+    "title": "Reset Password",
+    "description": "Enter your email to receive a password recovery link.",
+    "email-label": "Email",
+    "email-placeholder": "your@email.com",
+    "forgot-password": "Forgot password?",
+    "buttons": {
+      "cancel": "Cancel",
+      "send": "Send Link",
+      "sending": "Sending...",
+      "close": "Close"
+    },
+    "success": {
+      "title": "Email Sent!",
+      "message": "We sent a recovery link to {email}. Check your inbox and spam folder."
+    },
+    "errors": {
+      "email-required": "Email is required",
+      "generic": "Error sending recovery email"
+    }
+  },
   "register": {
     "image": "images/login/creating-account.svg",
     "alt": "Person holding access key",

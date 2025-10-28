@@ -14,6 +14,7 @@ import LoadingOverlay from '../../components/common/LoadingOverlay'
 import { loginUser, registerWithMetamask } from '@/lib/api/auth'
 import { mutateUser } from '@/contexts/AuthContext'
 import metamaskLogo from '@/assets/icons/common/metamask-logo.png'
+import ResetPasswordModal from './components/ResetPasswordModal'
 
 export default function LoginForm() {
   const { colors, texts } = useContext(ConfigContext)
@@ -34,6 +35,7 @@ export default function LoginForm() {
   const [sLoading, setSLoad] = useState(false)
   const [pendingSign, setPendingSign] = useState(false) // assinar após conectar
   const [error, setError] = useState<string | null>(null)
+  const [showResetModal, setShowResetModal] = useState(false)
   const router = useRouter()
 
   const handleSubmit = async (e: FormEvent) => {
@@ -155,6 +157,18 @@ export default function LoginForm() {
           }
         />
 
+        {/* Link esqueceu a senha */}
+        <div className="text-right">
+          <button
+            type="button"
+            onClick={() => setShowResetModal(true)}
+            className="text-sm hover:underline"
+            style={{ color: colors?.colors?.['color-primary'] }}
+          >
+            {(texts as any)?.['reset-password']?.['forgot-password'] || 'Esqueceu a senha?'}
+          </button>
+        </div>
+
         {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
 
         {/* Botão login tradicional */}
@@ -204,6 +218,12 @@ export default function LoginForm() {
           </span>
         </button>
       </form>
+
+      {/* Modal de Reset de Senha */}
+      <ResetPasswordModal
+        isOpen={showResetModal}
+        onClose={() => setShowResetModal(false)}
+      />
     </div>
   )
 }

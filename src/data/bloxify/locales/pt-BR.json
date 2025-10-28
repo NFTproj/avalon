@@ -356,6 +356,27 @@
       ]
     }
   },
+  "reset-password": {
+    "title": "Recuperar Senha",
+    "description": "Digite seu e-mail para receber um link de recuperação de senha.",
+    "email-label": "E-mail",
+    "email-placeholder": "seu@email.com",
+    "forgot-password": "Esqueceu a senha?",
+    "buttons": {
+      "cancel": "Cancelar",
+      "send": "Enviar Link",
+      "sending": "Enviando...",
+      "close": "Fechar"
+    },
+    "success": {
+      "title": "E-mail Enviado!",
+      "message": "Enviamos um link de recuperação para {email}. Verifique sua caixa de entrada e spam."
+    },
+    "errors": {
+      "email-required": "E-mail é obrigatório",
+      "generic": "Erro ao enviar e-mail de recuperação"
+    }
+  },
   "register": {
     "image": "images/login/creating-account.svg",
     "alt": "Pessoa segurando chave de acesso",
