@@ -19,6 +19,7 @@ export async function GET(req: NextRequest) {
     // monta a URL com clientId automático
     const url = `${apiUrl}/card?clientId=${encodeURIComponent(clientId)}&page=${page}&limit=${limit}`
 
+
     const response = await fetch(url, { method: 'GET' })
     const data = await response.json()
 
