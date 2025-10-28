@@ -1,58 +1,43 @@
 // eslint.config.mjs
 import js from '@eslint/js'
 import tseslint from 'typescript-eslint'
-import next from '@next/eslint-plugin-next'
+import nextPlugin from '@next/eslint-plugin-next'
 import prettierConfig from 'eslint-config-prettier'
 import prettierPlugin from 'eslint-plugin-prettier'
 import reactHooks from 'eslint-plugin-react-hooks'
+import globals from 'globals'
+import { FlatCompat } from '@eslint/eslintrc'
+
+const compat = new FlatCompat({ baseDirectory: import.meta.dirname })
 
 export default tseslint.config(
-  // 1) ignores globais (equivalente ao "ignorePatterns")
-  {
-    ignores: [
-      '**/temp.js',
-      'config/*',
-      '.next/*',
-      'public/*',
-      'node_modules/*',
-      'data/*',
-      '.next',
-    ],
-  },
+  { ignores: ['**/temp.js','config/*','.next/*','public/*','node_modules/*','data/*','dist/*'] },
 
-  // 2) Regras base JS
   js.configs.recommended,
-
-  // 3) Regras TS (sem type-check — mais rápido no Vercel)
   ...tseslint.configs.recommended,
 
-  // 4) Regras Next (equivalente a "next/core-web-vitals" + recommended)
-  next.configs['recommended'],
-  next.configs['core-web-vitals'],
+  // Converte os presets do Next (que dão o erro) para Flat
+  ...compat.extends('plugin:@next/next/recommended'),
+  ...compat.extends('plugin:@next/next/core-web-vitals'),
 
-  // 5) Prettier: desliga conflitos
   prettierConfig,
 
-  // 6) Seu bloco de projeto (plugins/rules extras)
   {
     plugins: {
-      '@next/next': next,
+      '@next/next': nextPlugin,
       prettier: prettierPlugin,
       'react-hooks': reactHooks,
     },
     languageOptions: {
-      // se quiser type-checked, troque para project:true + tsconfigRootDir
       parserOptions: {
-        // project: true,
+        // Se quiser type-check lint, descomente e garanta tsconfig ok:
+        // project: ['./tsconfig.json'],
         // tsconfigRootDir: import.meta.dirname,
       },
+      globals: { ...globals.browser, ...globals.node },
     },
     rules: {
-      // mantém suas regras
-      'prettier/prettier': [
-        'error',
-        { singleQuote: true, parser: 'flow' },
-      ],
+      'prettier/prettier': ['error', { singleQuote: true }],
       '@typescript-eslint/no-unused-vars': [
         'error',
         {
@@ -75,8 +60,6 @@ export default tseslint.config(
       '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
       '@typescript-eslint/no-unsafe-function-type': 'off',
       '@typescript-eslint/no-unused-expressions': 'off',
-
-      // opcional porque o Next já aplica via core-web-vitals, mas você queria como warn:
       'react-hooks/exhaustive-deps': 'warn',
       'react-hooks/rules-of-hooks': 'warn',
     },

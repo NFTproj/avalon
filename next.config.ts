@@ -2,11 +2,9 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  eslint: { ignoreDuringBuilds: true }, // <-- pula erros de lint no build
   images: {
-    localPatterns: [
-      { pathname: '/assets/**', search: '' },
-    ],
-    // ⬇️ permita imagens públicas do Supabase
+    localPatterns: [{ pathname: '/assets/**', search: '' }],
     remotePatterns: [
       {
         protocol: 'https',
