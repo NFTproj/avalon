@@ -286,6 +286,14 @@
     "email-label": "Email",
     "email-placeholder": "your@email.com",
     "forgot-password": "Forgot password?",
+    "new-password-title": "New Password",
+    "new-password-description": "Enter the code sent to your email and your new password.",
+    "otp-label": "Verification Code",
+    "otp-placeholder": "123456",
+    "new-password-label": "New Password",
+    "new-password-placeholder": "••••••••",
+    "confirm-password-label": "Confirm New Password",
+    "confirm-password-placeholder": "••••••••",
     "buttons": {
       "cancel": "Cancel",
       "send": "Send Link",
@@ -298,7 +306,9 @@
     },
     "errors": {
       "email-required": "Email is required",
-      "generic": "Error sending recovery email"
+      "generic": "Error sending recovery email",
+      "passwords-dont-match": "Passwords do not match",
+      "invalid-otp": "Code must have 6 digits"
     }
   },
   "register": {
