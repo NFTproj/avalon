@@ -774,5 +774,24 @@
     "button-pending": "Pending",
     "button-reemit": "Reissue",
     "button-resend": "Request Resend"
+  },
+  "under-development": {
+    "title": "Feature Under Development",
+    "subtitle": "We're working hard to bring this feature to you!",
+    "coming-soon": "Coming Soon!",
+    "description": "Our team is developing this feature with great care to offer the best possible experience. Soon you'll have access to amazing resources!",
+    "features": {
+      "intuitive-interface": "Intuitive Interface",
+      "maximum-security": "Maximum Security",
+      "optimized-performance": "Optimized Performance"
+    },
+    "buttons": {
+      "go-back": "← Go Back",
+      "go-to-dashboard": "Go to Dashboard"
+    },
+    "tip": {
+      "title": "Tip:",
+      "message": "Stay tuned for updates! We'll notify you as soon as this feature is available."
+    }
   }
 }

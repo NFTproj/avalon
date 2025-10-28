@@ -766,5 +766,24 @@
         "sell": "Vender"
       }
     }
+  },
+  "under-development": {
+    "title": "Funcionalidade em Desenvolvimento",
+    "subtitle": "Estamos trabalhando duro para trazer esta funcionalidade para você!",
+    "coming-soon": "Em Breve!",
+    "description": "Nossa equipe está desenvolvendo esta funcionalidade com muito cuidado para oferecer a melhor experiência possível. Em breve você terá acesso a recursos incríveis!",
+    "features": {
+      "intuitive-interface": "Interface Intuitiva",
+      "maximum-security": "Segurança Máxima",
+      "optimized-performance": "Performance Otimizada"
+    },
+    "buttons": {
+      "go-back": "← Voltar",
+      "go-to-dashboard": "Ir para Dashboard"
+    },
+    "tip": {
+      "title": "Dica:",
+      "message": "Fique atento às atualizações! Notificaremos você assim que esta funcionalidade estiver disponível."
+    }
   }
 }

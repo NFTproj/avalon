@@ -7,11 +7,12 @@ import Footer from '@/components/common/footer'
 import { ConfigContext } from '@/contexts/ConfigContext'
 
 export default function UnderDevelopmentPage() {
-  const { colors } = useContext(ConfigContext)
+  const { colors, texts } = useContext(ConfigContext)
   const router = useRouter()
 
   const pageBg = colors?.background?.['background-primary'] || '#f0fcff'
   const accentColor = colors?.colors?.['color-primary'] || '#19C3F0'
+  const underDev = texts?.['under-development']
 
   return (
     <div className="min-h-dvh flex flex-col" style={{ backgroundColor: pageBg }}>
@@ -50,12 +51,12 @@ export default function UnderDevelopmentPage() {
 
           {/* Título principal */}
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Funcionalidade em Desenvolvimento
+            {underDev?.title || 'Funcionalidade em Desenvolvimento'}
           </h1>
 
           {/* Subtítulo */}
           <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-            Estamos trabalhando duro para trazer esta funcionalidade para você!
+            {underDev?.subtitle || 'Estamos trabalhando duro para trazer esta funcionalidade para você!'}
           </p>
 
           {/* Descrição */}
@@ -75,12 +76,13 @@ export default function UnderDevelopmentPage() {
                   d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" 
                 />
               </svg>
-              <h2 className="text-2xl font-semibold text-gray-900">Em Breve!</h2>
+              <h2 className="text-2xl font-semibold text-gray-900">
+                {underDev?.['coming-soon'] || 'Em Breve!'}
+              </h2>
             </div>
             
             <p className="text-gray-700 text-lg leading-relaxed mb-6">
-              Nossa equipe está desenvolvendo esta funcionalidade com muito cuidado para oferecer 
-              a melhor experiência possível. Em breve você terá acesso a recursos incríveis!
+              {underDev?.description || 'Nossa equipe está desenvolvendo esta funcionalidade com muito cuidado para oferecer a melhor experiência possível. Em breve você terá acesso a recursos incríveis!'}
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-600">
@@ -88,19 +90,19 @@ export default function UnderDevelopmentPage() {
                 <svg className="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
-                Interface Intuitiva
+                {underDev?.features?.['intuitive-interface'] || 'Interface Intuitiva'}
               </div>
               <div className="flex items-center justify-center p-3 bg-gray-50 rounded-lg">
                 <svg className="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
-                Segurança Máxima
+                {underDev?.features?.['maximum-security'] || 'Segurança Máxima'}
               </div>
               <div className="flex items-center justify-center p-3 bg-gray-50 rounded-lg">
                 <svg className="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
-                Performance Otimizada
+                {underDev?.features?.['optimized-performance'] || 'Performance Otimizada'}
               </div>
             </div>
           </div>
@@ -112,7 +114,7 @@ export default function UnderDevelopmentPage() {
               className="px-8 py-3 bg-white border-2 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-all duration-200 shadow-md"
               style={{ borderColor: accentColor }}
             >
-              ← Voltar
+              {underDev?.buttons?.['go-back'] || '← Voltar'}
             </button>
             
             <button
@@ -120,14 +122,14 @@ export default function UnderDevelopmentPage() {
               className="px-8 py-3 text-white rounded-xl font-semibold hover:opacity-90 transition-all duration-200 shadow-md"
               style={{ backgroundColor: accentColor }}
             >
-              Ir para Dashboard
+              {underDev?.buttons?.['go-to-dashboard'] || 'Ir para Dashboard'}
             </button>
           </div>
 
           {/* Informação adicional */}
           <div className="mt-12 p-6 bg-gray-50 rounded-xl">
             <p className="text-gray-600 text-sm">
-              <strong>Dica:</strong> Fique atento às atualizações! Notificaremos você assim que esta funcionalidade estiver disponível.
+              <strong>{underDev?.tip?.title || 'Dica:'}</strong> {underDev?.tip?.message || 'Fique atento às atualizações! Notificaremos você assim que esta funcionalidade estiver disponível.'}
             </p>
           </div>
         </div>

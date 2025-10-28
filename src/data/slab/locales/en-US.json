@@ -1,16 +1,16 @@
 {
   "images": {
     "logos": {
-      "main-logo": "logos/slab/slab-logo.svg"
+      "main-logo": "logos/bloxify/bloxify-logo.png"
     }
   },
   "landing-page": {
     "header": {
       "alts": {
-        "main-logo": "Slab Logo"
+        "main-logo": "Bloxify Logo"
       },
       "navigations": {
-        "navOne": "About Slab",
+        "navOne": "About Bloxify",
         "navTwo": [
           {
             "title": "Products",
@@ -28,7 +28,7 @@
               {
                 "title": "Portuguese",
                 "image": "icons/bloxify/br.png",
-                "alt": "Brazilian Flag"
+                "alt": "Brazil Flag"
               },
               {
                 "title": "English",
@@ -48,46 +48,187 @@
       }
     },
     "hero": {
-      "title": "Sustainability, Biodiversity and Security",
-      "subtitle": "SlaB Assets tokenizes biodiversity assets, transforming CO2 into digital investments with security and transparency.",
+      "title": "Tokenization of physical and digital assets",
+      "subtitle": "Offer asset tokenization through blockchain technology, from deployment to sale, with your own branding.",
       "image": "images/bloxify/homen-negro-tablet.png",
-      "alt": "Image of a black man holding a tablet."
+      "alt": "Image of a Black man holding a tablet."
     },
     "tokenization-steps": {
-      "title": "Start in just three steps",
+      "title": "Get started in just three steps",
       "background": "backgrounds/bloxify/flow-image.svg",
       "steps": [
         {
-          "title": "Create an account",
-          "description": "Create your account with email or Metamask.",
+          "title": "Get in touch",
+          "description": "Receive your API key and choose your tokenization plan.",
           "step": "Step 1",
-          "icon": "icons/common/create-account.svg"
+          "icon": "icons/bloxify/contact-with-border-blue.svg"
         },
         {
-          "title": "Complete KYC verification",
-          "description": "Complete KYC verification for purchases above R$ 10.",
+          "title": "Choose a template",
+          "description": "Select a template tailored to your project.",
           "step": "Step 2",
-          "icon": "icons/common/verify-kyc.svg"
+          "icon": "icons/bloxify/template-blue.svg"
         },
         {
-          "title": "Make your first purchase",
-          "description": "Acquire your first Biodiversity Token with Pix or card.",
+          "title": "Tokenize assets",
+          "description": "Start offering assets in tokenized format.",
           "step": "Step 3",
-          "icon": "icons/common/buy-token.svg"
+          "icon": "icons/bloxify/graph-bar-increase-blue.svg"
+        }
+      ]
+    },
+    "features-showcase": {
+      "title": "All Bloxify Features",
+      "features": [
+        {
+          "id": 1,
+          "title": "Web3 users in a Web2 interface",
+          "subtitle": "Sign in",
+          "description": "Provide blockchain features with email/password login, social media, or magic link.",
+          "attributes": {
+            "image": "images/bloxify/social-media.svg",
+            "alt": "Social media icons: Google, Apple, Twitter, Facebook",
+            "title": "Use your social login",
+            "span": "or email",
+            "email": "hello@world.com.br",
+            "continue-email": "Continue with email"
+          }
+        },
+        {
+          "id": 2,
+          "title": "Token and contract deployment",
+          "subtitle": "Admin Panel",
+          "description": "Create, manage and trade tokens linked to physical and digital assets easily.",
+          "attributes": {
+            "title": "Deploy on the following networks:",
+            "cryptos": [
+              {
+                "id": 1,
+                "name": "POLYGON",
+                "icon": "icons/bloxify/crypto-polygon.svg",
+                "alt": "Polygon icon"
+              },
+              {
+                "id": 2,
+                "name": "BASE",
+                "icon": "icons/bloxify/crypto-base.svg",
+                "alt": "Base icon"
+              },
+              {
+                "id": 3,
+                "name": "ETHEREUM",
+                "icon": "icons/bloxify/cryptor-ethereum.svg",
+                "alt": "Ethereum icon"
+              }
+            ]
+          }
+        },
+        {
+          "id": 3,
+          "title": "Simplified token sales",
+          "subtitle": "Checkout",
+          "description": "Sell tokens easily and securely, with Pix in Brazil or credit card worldwide.",
+          "attributes": {
+            "title": "Choose the payment method:",
+            "text-pix": "Payments via Pix (BR)",
+            "text-credit-card": "Payments via credit card (Global)",
+            "image-pix": "icons/bloxify/pix.svg",
+            "alt-pix": "Pix icon",
+            "image-credit-card": "icons/bloxify/credit-card.svg",
+            "alt-credit-card": "Credit card icon"
+          }
+        },
+        {
+          "id": 4,
+          "title": "User verification (KYC)",
+          "subtitle": "KYC",
+          "description": "Choose mandatory KYC or free access, according to your strategy.",
+          "attributes": {
+            "title": "Identity verification (KYC)",
+            "image": "icons/bloxify/kyc.svg",
+            "alt": "KYC icon"
+          }
+        },
+        {
+          "id": 5,
+          "title": "Tokenization",
+          "subtitle": "Tokenization",
+          "description": "Tokenize physical and digital assets on multiple networks, from deployment to sale.",
+          "attributes": {
+            "title": "Simplified tokenization",
+            "image": "icons/bloxify/tokenization.svg",
+            "alt": "Icon representing tokenization. A data structure linked to hardware",
+            "cryptos": [
+              {
+                "id": 1,
+                "name": "POLYGON",
+                "icon": "icons/bloxify/crypto-polygon.svg",
+                "alt": "Polygon icon"
+              },
+              {
+                "id": 2,
+                "name": "BASE",
+                "icon": "icons/bloxify/crypto-base.svg",
+                "alt": "Base icon"
+              },
+              {
+                "id": 3,
+                "name": "ETHEREUM",
+                "icon": "icons/bloxify/cryptor-ethereum.svg",
+                "alt": "Ethereum icon"
+              }
+            ]
+          }
+        },
+        {
+          "id": 6,
+          "title": "API as a service",
+          "subtitle": "API",
+          "description": "Integrate tokenization into your site with our API. Contact us for documentation.",
+          "attributes": {
+            "title": "API AS A SERVICE",
+            "image": "images/bloxify/code-image.png",
+            "alt": "Icon representing a code snippet.",
+            "languages": [
+              {
+                "image": "icons/bloxify/typescript.svg",
+                "alt": "TypeScript icon"
+              },
+              {
+                "image": "icons/bloxify/react.svg",
+                "alt": "React icon"
+              },
+              {
+                "image": "icons/bloxify/node.svg",
+                "alt": "NodeJS icon"
+              }
+            ]
+          }
+        },
+        {
+          "id": 7,
+          "title": "White-Label Template",
+          "subtitle": "Template",
+          "description": "Choose a template and customize it with your brand.",
+          "attributes": {
+            "title": "White-Label Template",
+            "image": "icons/bloxify/template-white-label.svg",
+            "alt": "Icon representing white label"
+          }
         }
       ]
     },
     "forms-contact": {
-      "title": "Come find out!",
+      "title": "Come check it out!",
       "support": {
         "title": "Support Center",
-        "description": "We're here to help! Our customer support team is highly trained and ready to assist you.",
+        "description": "We're here to help! Our support team is highly qualified and ready to meet your needs.",
         "email": "contato@blocklize.io",
         "image": "images/bloxify/banner-support.png",
-        "alt": "Contact banner image."
+        "alt": "Image of a contact banner."
       },
       "form": {
-        "title": "Come find out!",
+        "title": "Come check it out!",
         "name": {
           "label": "Full name (required)",
           "placeholder": "Enter your name"
@@ -98,101 +239,43 @@
         },
         "phone": {
           "label": "Phone/WhatsApp",
-          "placeholder": "Enter your phone number"
+          "placeholder": "Enter your phone"
         },
         "message": {
-          "label": "Tell us about your company and how Slab can help you:",
+          "label": "Tell us a bit about your company and how Bloxify can help:",
           "placeholder": "Write your message"
         },
-        "submit": "Submit"
+        "submit": "Send"
       }
     },
     "faq": {
-      "title": "Still have questions?",
+      "title": "Frequently Asked Questions",
+      "subtitle": "Get answers to your main questions about Bloxify",
       "questions": [
         {
           "id": 1,
-          "question": "What does Slab do?",
-          "answer": "SlaB Assets pioneers biodiversity asset tokenization, promoting environmental conservation. Biodiversity assets use CO2 as a metric unit, the tCO2eq. (ton of carbon dioxide equivalent), among other greenhouse gases present in all biomass, plus other ecosystem determinants from subsoil to atmosphere. We offer a secure and transparent Web3 platform for those who want to invest in the planet's future, preserving our ecosystems and generating positive impact."
+          "question": "What is Bloxify?",
+          "answer": "Bloxify is a pioneering platform for tokenizing physical and digital assets, promoting investment democratization. Our services include token deployment, simplified commercialization, and complete management of tokenized assets, all facilitated by an intuitive and secure interface."
         },
         {
           "id": 2,
-          "question": "What is TBIO?",
-          "answer": "We use cutting-edge technology to tokenize biodiversity assets, ensuring secure and traceable trading on the blockchain. This innovation creates fractionalized digital units, facilitating global trading with full transparency, security, and tracking of each investment's positive impact."
+          "question": "What is tokenization?",
+          "answer": "Tokenization is the process of converting physical or digital assets into blockchain tokens. These tokens digitally represent ownership or rights over the asset, allowing for enhanced divisibility, transferability, and liquidity in the digital environment."
         },
         {
           "id": 3,
-          "question": "How do we do it?",
-          "answer": "Biodiversity asset generation is conducted with maximum security and transparency. The entire process, from inventory to certification, is handled by specialists and audited by third parties, ensuring traceability and immutability on the blockchain. Assets backed by CPR-Verde value 27 ecosystem services, including carbon capture, ensuring legal and financial security."
+          "question": "How does the platform work?",
+          "answer": "Our platform works in three simple steps: 1) Contact us and receive your API key, 2) Choose a customized template for your project, 3) Start tokenizing and commercializing your assets. We offer complete support throughout the entire process."
         },
         {
           "id": 4,
-          "question": "Why do we do it?",
-          "answer": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+          "question": "What is the tokenization process?",
+          "answer": "The process involves asset analysis, legal structuring, creation of customized smart contracts, deployment on the chosen blockchain, and configuration of the commercialization platform. Everything is done with specialized technical support."
         },
         {
           "id": 5,
-          "question": "Who are we?",
-          "answer": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-        }
-      ]
-    },
-    "tokens": {
-      "title": "Track available tokens",
-      "list": [
-        {
-          "id": 1,
-          "name": "TOKEN TBIO",
-          "subtitle": "Fazenda Eliane Mato Grosso",
-          "price": "15",
-          "launchDate": "July 31, 2024",
-          "tokensAvailable": "1019820.10",
-          "code": "TBIO",
-          "identifierCode": "TBIO",
-          "image": "icons/bloxify/man-similing.png",
-          "sold": 516820,
-          "total": 1000000,
-          "labels": [
-            { "name": "CPR" },
-            { "name": "CARBON" },
-            { "name": "GREEN" }
-          ]
-        },
-        {
-          "id": 2,
-          "name": "TOKEN TBIO",
-          "subtitle": "Fazenda Eliane Mato Grosso",
-          "price": "15",
-          "launchDate": "July 31, 2024",
-          "tokensAvailable": "1019820.00",
-          "code": "TBIO",
-          "identifierCode": "TBIO",
-          "image": "icons/bloxify/man-similing.png",
-          "sold": 516820,
-          "total": 1000000,
-          "labels": [
-            { "name": "CPR" },
-            { "name": "CARBON" },
-            { "name": "GREEN" }
-          ]
-        },
-        {
-          "id": 3,
-          "name": "TOKEN TBIO",
-          "subtitle": "Fazenda Eliane Mato Grosso",
-          "price": "15",
-          "launchDate": "July 31, 2024",
-          "tokensAvailable": "1019820.00",
-          "code": "TBIO",
-          "identifierCode": "TBIO",
-          "image": "icons/bloxify/man-similing.png",
-          "sold": 1000000,
-          "total": 1000000,
-          "labels": [
-            { "name": "CPR" },
-            { "name": "CARBON" },
-            { "name": "GREEN" }
-          ]
+          "question": "Who can use Bloxify?",
+          "answer": "Bloxify serves companies of all sizes that want to tokenize their assets, from startups to large corporations. Our clients include companies from agribusiness, real estate, art, music, and various other sectors seeking innovation and investment democratization."
         }
       ]
     }
@@ -220,52 +303,81 @@
   },
   "register": {
     "image": "images/login/creating-account.svg",
-    "alt": "Person holding access key",
+    "alt": "Person holding an access key",
     "step-zero": {
       "title": "Welcome to Slab!",
-      "description": "Create your account in 2 minutes and trade tokens quickly and reliably.",
-      "button-email": "Create with Email",
-      "button-metamask": "Create with Metamask",
+      "description": "Create your account in 2 minutes and trade tokens quickly and securely.",
+      "button-email": "Sign up with Email",
+      "button-metamask": "Sign up with Metamask",
       "already-have-account": "Already have an account?",
       "login-link": "Login",
       "fase": "Step"
     },
     "step-one": {
-      "counter": { "current": "01", "total": "of 04" },
+      "counter": {
+        "current": "01",
+        "total": "of 04"
+      },
       "title": "Choose an email",
-      "description": "If this is your first time here, start the registration process by entering your email.",
-      "labels": { "emailLabel": "Your email:" },
-      "placeholders": { "email": "email@email.com" },
+      "description": "If this is your first time here, start the registration by entering your email.",
+      "labels": {
+        "emailLabel": "Your email:"
+      },
+      "placeholders": {
+        "email": "email@email.com"
+      },
       "button-next": "Next",
       "already-have-account": "Already have an account?",
       "login-link": "Login"
     },
     "step-two": {
-      "counter": { "current": "02", "total": "of 04" },
+      "counter": {
+        "current": "02",
+        "total": "of 04"
+      },
       "title": "Now choose a password",
       "description": "Use letters, numbers and special characters.",
       "labels": {
         "password": "Enter a password",
         "confirmPassword": "Repeat your password"
       },
-      "disclaimer": "By continuing you accept Slab Assets' Terms of Use and Privacy Policy and declare you are not a US person.",
+      "disclaimer": "By continuing you accept Slab Assets' Terms of Use and Privacy Policy and declare you are not a U.S. person.",
       "button-continue": "Continue",
       "button-back": "Back"
     },
     "step-three": {
-      "counter": { "current": "03", "total": "of 04" },
+      "counter": {
+        "current": "03",
+        "total": "of 04"
+      },
       "title": "Verify your email!",
       "description": "Enter the code that was sent to your email.",
-      "labels": { "code": "Enter the code" },
-      "placeholders": { "code": "123456" },
-      "button-verify": "Verify"
+      "labels": {
+        "code": "Enter the code"
+      },
+      "placeholders": {
+        "code": "123456"
+      },
+      "button-verify": "Verify",
+      "resend": {
+        "button": "Resend code",
+        "success": "Code resent successfully!",
+        "error": "Error resending code.",
+        "cooldown": "Available again in {seconds}s"
+      }
     },
     "step-four": {
-      "counter": { "current": "04", "total": "of 04" },
+      "counter": {
+        "current": "04",
+        "total": "of 04"
+      },
       "title": "Access your account",
       "paragraphEmail": "Your email",
       "paragraphPassword": "Enter your password",
-      "labels": { "email": "", "password": "" },
+      "labels": {
+        "email": "",
+        "password": ""
+      },
       "placeholders": {
         "email": "email@email.com",
         "password": "••••••••"
@@ -281,29 +393,29 @@
       }
     },
     "metamask-register-login": {
-    "counter": {
-      "first": "01",
-      "second": "2",
-      "total": "of 2"
-    },
-    "fase": "Step",
-    "title": "Connect your wallet",
-    "paragraph-Wallet": "Select the digital wallet you want to use.",
-    "button-Wallet-choose": "Choose wallet",
+      "counter": {
+        "first": "01",
+        "second": "2",
+        "total": "of 2"
+      },
+      "fase": "Step",
+      "title": "Connect your wallet",
+      "paragraph-Wallet": "Select the digital wallet you want to use.",
+      "button-Wallet-choose": "Choose wallet",
 
-    "signature": {
-  "title": "Create your account",
-  "paragraph-register": "Just one more step! Click below to sign and confirm the creation of your account with this wallet.",
-  "button-register-wallet": "Create account"
-}
-  }
+      "signature": {
+        "title": "Create your account",
+        "paragraph-register": "Just one more step! Click below to sign and confirm the creation of your account with this wallet.",
+        "button-register-wallet": "Create account"
+      }
+    }
   },
   "footer": {
-    "alt-logo": "Slab Logo",
+    "alt-logo": "Bloxify Logo",
     "columns": [
       {
-        "title": "About Slab",
-        "items": ["About Slab", "Our Projects"]
+        "title": "About Bloxify",
+        "items": ["Get to Know Bloxify", "Our Projects"]
       },
       {
         "title": "Legal",
@@ -324,32 +436,100 @@
   },
   "common": {
     "loadingOverlay": {
-      "message": "Loading.."
+      "message": "Loading..."
     }
   },
   "dashboard": {
     "welcome-box": {
       "name": "Antônio",
       "title": "Welcome to Slab!",
-      "description": "Discover tokenized projects, invest securely, and have full control of your assets in the palm of your hand.",
+      "description": "Explore tokenized projects, invest securely, and keep full control of your assets in the palm of your hand.",
       "link": "View details",
       "tokens-title": "Your Tokens:",
-      "tokens": ["#TBIO", "#TBIO2"]
+      "tokens": ["#TBIO", "#TBIO2"],
+      "buttons": {
+        "copy": "Copy",
+        "copied": "Copied!",
+        "explore-tokens": "Explore Available Tokens",
+        "complete-kyc": "Complete your KYC Verification",
+        "check-kyc": "Check KYC Status"
+      }
     },
     "action-buttons": [
-      { "id": 1, "name": "Buy", "icon": "" },
-      { "id": 2, "name": "Issue Certificate", "icon": "" },
-      { "id": 3, "name": "Withdraw", "icon": "" },
-      { "id": 4, "name": "History", "icon": "" },
-      { "id": 5, "name": "KYC Verifications", "icon": "" }
+      {
+        "id": 1,
+        "name": "Buy",
+        "icon": ""
+      },
+      {
+        "id": 2,
+        "name": "Issue Certificate",
+        "icon": ""
+      },
+      {
+        "id": 3,
+        "name": "Withdraw",
+        "icon": ""
+      },
+      {
+        "id": 4,
+        "name": "History",
+        "icon": ""
+      },
+      {
+        "id": 5,
+        "name": "KYC Verifications",
+        "icon": ""
+      }
     ],
+    "chart-box": {
+      "title": "Wallet Balance",
+      "recent-transactions": "recent transactions",
+      "buttons": {
+        "buy": "Buy",
+        "earnings": "Earnings", 
+        "withdraw": "Withdraw",
+        "statements": "Statements",
+        "verify-identity": "Verify Identity",
+        "retry": "Try again"
+      },
+      "messages": {
+        "loading": "Loading wallet data...",
+        "error": "Error loading transactions"
+      }
+    },
+    "balances-table": {
+      "title": "Your wallet",
+      "highlight": "Slab",
+      "columns": {
+        "project": "Project",
+        "quantity": "Quantity",
+        "unit-value": "Unit value",
+        "invested-value": "Invested Value",
+        "actions": "Actions"
+      },
+      "actions": {
+        "buy": "Buy",
+        "benefits": "Benefits"
+      },
+      "pagination": {
+        "previous": "Previous",
+        "next": "Next",
+        "page-info": "Page {current} of {total}"
+      },
+      "messages": {
+        "login-required": "Please log in to view your balances.",
+        "loading": "Loading your tokens...",
+        "no-tokens": "You don't have any tokens in your wallet yet."
+      }
+    },
     "asset-list": {
       "title": "Your Wallet",
       "highlight": "Slab",
       "columns": {
         "project": "Project",
-        "unit-value": "Unit Value",
-        "total-value": "Total Value"
+        "unit-value": "Unit value",
+        "total-value": "Total value"
       },
       "buttons": {
         "buy": "Buy",
@@ -401,302 +581,217 @@
         "title": "Token Info"
       },
       "docs": {
-        "title": "Documents",
-        "link1": "Twitter",
-        "link2": "Instagram",
-        "link3": "Termos de Uso ",
-        "link4": "Documentos",
-        "link5": "Politica de privacidade",
-        "link6": "Odr"
+        "title": "Documents"
       },
       "benefits": {
         "title": "Benefits",
-        "cta": {
-          "type": "certificate",
-          "label": "Emitir certificado"
-        }
+        "rights": "Rights",
+        "risks": "Risks"
       }
     }
   },
- "kyc":{
-    "kyc-step-one-title": "Complete your KYC verification!",
-    "kyc-step-one-paragraph": "Your account is not verified yet. Complete your data verification to ensure secure transactions.",
-    "kyc-step-one-button": "Start verification",
+  "kyc": {
+  "kyc-step-one-title": "Complete your KYC Verification!",
+  "kyc-step-one-paragraph": "Your account has not been verified yet. Complete your data verification to ensure transactions are processed securely.",
+  "kyc-step-one-button": "Start verification",
 
-    "kyc-step-two-title": "Enter your details",
-    "label-name": "Full name",
-    "label-cpf": "Id",
-    "label-cnpj": "Company Id",
-    "label-is-legal-person": "Do you represent a legal entity?",
-    "placeholder-name": "Enter your full name",
-    "placeholder-cpf": "Ex: 000.000.000-00",
-    "placeholder-cnpj": "Ex: 00.000.000/0001-00",
-    "checkbox-is-legal-person": "Yes",
+  "kyc-step-two-title": "Enter your information",
+  "label-name": "Full name",
+  "label-cpf": "CPF",
+  "label-cnpj": "CNPJ",
+  "label-is-legal-person": "Are you representing a legal entity?",
+  "placeholder-name": "Enter your full name",
+  "placeholder-cpf": "Ex: 000.000.000-00",
+  "placeholder-cnpj": "Ex: 00.000.000/0001-00",
+  "checkbox-is-legal-person": "Yes",
 
-    "button-back": "Back",
-    "button-next": "Continue",
+  "button-back": "Back",
+  "button-next": "Continue",
 
-    "error-name-required": "Name is required.",
-    "error-cpf-required": "Id is required .",
+  "error-name-required": "Name is required.",
+  "error-cpf-required": "CPF is required.",
 
-    "kyc-step-three-title": "Enter your address",
-    "label-country": "Select your country",
-    "placeholder-country": "Choose your country of origin",
-    "label-cep": "Enter your ZIP code",
-    "placeholder-cep": "e.g., 12345-678",
-    "label-street": "Street",
-    "placeholder-street": "Street name",
-    "label-number": "Number",
-    "placeholder-number": "123",
-    "label-city": "City",
-    "placeholder-city": "Enter your city",
-    "label-state": "State",
-    "placeholder-state": "e.g., NY",
-    "upload-instructions": "Upload the documents below:",
-    "label-contract-file": "Company Registration Document (PDF)",
-    "label-proof-file": "Proof of Address (PDF)",
-    "upload-file": "Upload PDF",
-    "upload-complete": "Upload complete",
-    "start-verification": {
-      "title": "Verificação Didit",
-      "description": "Você será redirecionado para um site externo para concluir sua verificação de identidade (KYC).",
-      "button-continue": "Continuar",
+  "kyc-step-three-title": "Enter your address",
+  "label-country": "Select your country",
+  "placeholder-country": "Enter your country of origin",
+  "label-cep": "Enter your ZIP code",
+  "placeholder-cep": "Ex: 12345-678",
+  "label-street": "Street",
+  "placeholder-street": "Street name",
+  "label-number": "Number",
+  "label-city": "City",
+  "placeholder-city": "Enter your city",
+  "label-state": "State",
+  "placeholder-state": "State abbreviation",
+  "upload-instructions": "Upload the documents below:",
+  "label-contract-file": "Articles of Incorporation (PDF)",
+  "label-proof-file": "Proof of Address (PDF)",
+  "upload-file": "Upload PDF",
+  "upload-complete": "Upload complete",
 
-      "logo": {
-        "src": "images/login/diditi-logo.svg",
-        "alt": "Logo Didit"
-      },
-      "demo": {
-        "src": "images/login/kyc-video-placeholder.png",
-        "alt": "Demonstração do fluxo Didit"
-      }
+  "start-verification": {
+    "title": "Didit Verification",
+    "description": "You will be redirected to an external website to complete your identity verification (KYC).",
+    "button-continue": "Continue",
 
+    "logo": {
+      "src": "images/login/diditi-logo.svg",
+      "alt": "Didit Logo"
+    },
+    "demo": {
+      "src": "images/login/kyc-video-placeholder.png",
+      "alt": "Didit Flow Demonstration"
     }
   },
-  "buyTokens": {
-  "page-title-fallback": "Buy Tokens",
-  "tab-buy": "Buy",
-  "tab-benefits": "Benefits",
-  "tab-orders": "Orders",
-  "available-tokens": "Available Tokens",
-  "load-error": "Failed to load tokens.",
-  "progress-zero": "0% sold",
-  "progress-empty": ""
-},
-"buyPanel": {
-  "title": "Buy {token}",
-  "unit-price-label": "Unit price",
-  "invest-label": "How much do you want to invest ({currency})",
-  "invest-placeholder": "Ex.: {min}",
-  "estimated-qty": "Estimated quantity",
-  "total": "Total",
+
+  "didit-logo-src": "images/kyc/didit-logo.svg",
+  "didit-logo-alt": "Didit Logo",
+  "didit-video-src": "images/kyc/verification-demo.png",
+  "didit-video-alt": "KYC Process Demonstration",
+  "title-didit-verification": "Didit Verification",
+  "didit-description": "You will be redirected to an external website to complete your identity verification (KYC).",
   "button-continue": "Continue",
-  "button-processing": "Processing…",
-  "limits": "Min.: {min} · Max.: {max}",
-  "error-min": "Minimum value is {min}",
-  "error-max": "Maximum value is {max}",
-  "unit-suffix": "unit",
-  "label-pay": "Pay",
-  "label-receive": "Receive",
-  "payment-method": "Payment method",
-  "pay-with-pix": "Buy with PIX",
-  "pay-with-usdc": "Buy with USDC",
-  "quote-prefix-pix": "You will pay (PIX):",
-  "quote-prefix-usdc": "You will pay (USDC):",
-  "cta-pix": "Buy with PIX",
-  "cta-usdc": "Buy with USDC",
-  "back": "Back",
-  "pix-copia-cola": "PIX copy and paste",
-  "pix-copy": "Copy code",
-  "pix-copied": "Copied!",
-  "value-label": "Amount",
-  "pix-amount-to-pay": "Amount to pay",
-  "pix-expires-in": "Expires in {mm}:{ss}",
-  "pix-expired": "Expired",
-  "pix-verify": "I’ve paid, check",
-  "pix-verifying": "Checking…",
-  "pix-wait-to-check": "Please wait {s}s to check.",
-  "error-no-session": "Missing sessionId to verify.",
-  "error-fetch-status": "Failed to query ({status})",
-  "error-generic": "Could not verify the payment.",
-  "qty-label": "Quantity (tokens)"
+
+  "status-title": "Verification Status",
+  "status-view-details": "View details",
+  "status-success-headline": "Your account has been successfully verified",
+  "status-success-description": "Your account has been successfully verified",
+  "status-success-cta": "Back to home",
+  "status-pending-headline": "Your account verification is in progress",
+  "status-pending-description": "Track the progress of your KYC verification process.",
+  "status-pending-cta": "Cancel",
+  "status-error-headline": "Your account verification has failed",
+  "status-error-description": "Your account verification has failed",
+  "status-error-cta": "Try again"
 },
-"tokenList": {
-  "empty": "No tokens available at the moment.",
-  "unit-suffix": "unit"
-},
-"profile": {
-  "page-title": "Profile",
-  "menu": {
-    "configurations": "Configurations",
-    "settings": "Settings",
-    "password-update": "Update password",
-    "verify-account": "Verify account",
-    "verify-certificate": "Validate CERT(KYC)",
-    "close-account": "Close account",
-    "security": "Security",
-    "enable-2fa": "Enable 2FA",
-    "verify-two-step": "Two-step verification",
-    "connected-devices": "Connected devices",
-    "preferences": "Preferences",
-    "language": "Language",
-    "notifications": "Notifications"
+"buyTokens": {
+    "page-title-fallback": "Buy Tokens",
+    "tab-buy": "Buy",
+    "tab-benefits": "Benefits",
+    "tab-orders": "Orders",
+    "available-tokens": "Available tokens",
+    "load-error": "Failed to load tokens.",
+    "progress-zero": "0% sold",
+    "progress-empty": ""
   },
-  "close-account": {
-    "title": "Close account",
-    "warning-title": "Warning",
-    "warning-message": "Closing your account is permanent. All your data will be deleted from our systems (excluding RX CERTIFICATES of your passage through the platform). This process cannot be undone. Use with caution!",
-    "email-label": "Enter your email address to validate account closure",
-    "email-placeholder": "Type your email to confirm",
-    "button-cancel": "Cancel",
-    "button-confirm": "Close account",
-    "email-mismatch": "The email entered does not match the account email",
-    "success-message": "Account closed successfully",
-    "error-message": "Error closing account. Please try again."
-  }
-},
-"certificateEmission": {
-  "page-title": "Certificate Issuance",
-  "page-subtitle": "Record your environmental offset and receive your digital certificate with a verification seal.",
-  "token-label": "Token to be used",
-  "quantity-label": "Quantity of compensated tokens",
-  "quantity-placeholder": "0-1500",
-  "balance-available": "Available balance: {balance} tokens",
-  "button-emit": "Issue certificate",
-  "button-emitting": "Issuing...",
-  "button-emitted": "Certificate Issued",
-  "success-message": "Your certificate has been issued. Track the analysis progress and check your email regularly for updates.",
-  "error-message": "Your certificate issuance was not completed. Check if you have enough token balance and try again",
-  "error-card-not-found": "Token not found",
-  "error-card-id-missing": "Card ID not provided",
-  "error-loading": "Error loading token data",
-  "history-title": "Certificate history",
-  "history-loading": "Loading history...",
-  "history-empty": "No certificates found",
-  "filter-year": "Year:",
-  "filter-token": "Token:",
-  "filter-status": "Status:",
-  "status-emitido": "Issued",
-  "status-pendente": "Under review",
-  "status-falha": "Validation failed",
-  "emitted-at": "Issued on:",
-  "certificate-id": "ID:",
-  "quantity-used": "Quantity used:",
-  "button-pending": "Pending",
-  "button-reemit": "Reissue",
-  "button-resend": "Request Resend"
-},
-"dashboard": {
-  "welcome-box": {
-    "title": "Welcome to Slab",
-    "subtitle": "Discover tokenized projects, invest safely and have full control of your assets.",
-    "description": "Discover tokenized projects, invest safely and have full control of your assets.",
-    "buttons": {
-      "copy": "Copy",
-      "copied": "Copied!",
-      "explore-tokens": "Explore Available Tokens",
-      "complete-kyc": "Complete your KYC Verification",
-      "check-kyc": "Check KYC Status"
+  "buyPanel": {
+    "title": "Buy {token}",
+    "unit-price-label": "Unit price",
+    "invest-label": "How much do you want to invest ({currency})",
+    "invest-placeholder": "E.g., {min}",
+    "estimated-qty": "Estimated quantity",
+    "total": "Total",
+    "button-continue": "Continue",
+    "button-processing": "Processing…",
+    "limits": "Min: {min} · Max: {max}",
+    "error-min": "Minimum amount is {min}",
+    "error-max": "Maximum amount is {max}",
+    "unit-suffix": "units",
+    "payment-method": "Payment method",
+    "pay-with-pix": "Buy with PIX",
+    "pay-with-usdc": "Buy with USDC",
+    "quote-prefix-pix": "You will pay (PIX):",
+    "quote-prefix-usdc": "You will pay (USDC):",
+    "cta-pix": "Buy with PIX",
+    "cta-usdc": "Buy with USDC",
+    "back": "Back",
+    "pix-copia-cola": "PIX copy and paste",
+    "pix-copy": "Copy code",
+    "pix-copied": "Copied!",
+    "value-label": "Amount",
+    "pix-amount-to-pay": "Amount to pay",
+    "pix-expires-in": "Expires in {mm}:{ss}",
+    "pix-expired": "Expired",
+    "pix-verify": "I’ve paid, check",
+    "pix-verifying": "Checking…",
+    "pix-wait-to-check": "Please wait {s}s to check.",
+    "error-no-session": "Missing sessionId to verify.",
+    "error-fetch-status": "Failed to query ({status})",
+    "error-generic": "Could not verify the payment.",
+    "qty-label": "Quantity (tokens)"
+  },
+  "tokenList": {
+    "empty": "No tokens available at the moment.",
+    "unit-suffix": "units"
+  },
+  "profile": {
+    "page-title": "Profile",
+    "menu": {
+      "configurations": "Configurations",
+      "settings": "Settings",
+      "password-update": "Update password",
+      "verify-account": "Verify account",
+      "verify-certificate": "Validate CERT(KYC)",
+      "close-account": "Close account",
+      "security": "Security",
+      "enable-2fa": "Enable 2FA",
+      "verify-two-step": "Two-step verification",
+      "connected-devices": "Connected devices",
+      "preferences": "Preferences",
+      "language": "Language",
+      "notifications": "Notifications"
+    },
+    "close-account": {
+      "title": "Close account",
+      "warning-title": "Warning",
+      "warning-message": "Closing your account is permanent. All your data will be deleted from our systems (excluding RX CERTIFICATES of your passage through the platform). This process cannot be undone. Use with caution!",
+      "email-label": "Enter your email address to validate account closure",
+      "email-placeholder": "Type your email to confirm",
+      "button-cancel": "Cancel",
+      "button-confirm": "Close account",
+      "email-mismatch": "The email entered does not match the account email",
+      "success-message": "Account closed successfully",
+      "error-message": "Error closing account. Please try again."
     }
   },
-  "balances-table": {
-    "title": "Your wallet",
-    "highlight": "Slab",
-    "columns": {
-      "project": "Project",
-      "quantity": "Quantity",
-      "unit-value": "Unit value",
-      "invested-value": "Invested Value",
-      "actions": "Actions"
-    },
-    "actions": {
-      "buy": "Buy",
-      "benefits": "Benefits"
-    },
-    "pagination": {
-      "previous": "Previous",
-      "next": "Next",
-      "page-info": "Page {current} of {total}"
-    },
-    "messages": {
-      "login-required": "Please log in to view your balances.",
-      "loading": "Loading your tokens...",
-      "no-tokens": "You don't have any tokens in your wallet yet."
-    }
+  "certificateEmission": {
+    "page-title": "Certificate Issuance",
+    "page-subtitle": "Record your environmental offset and receive your digital certificate with a verification seal.",
+    "token-label": "Token to be used",
+    "quantity-label": "Quantity of compensated tokens",
+    "quantity-placeholder": "0-1500",
+    "balance-available": "Available balance: {balance} tokens",
+    "button-emit": "Issue certificate",
+    "button-emitting": "Issuing...",
+    "button-emitted": "Certificate Issued",
+    "success-message": "Your certificate has been issued. Track the analysis progress and check your email regularly for updates.",
+    "error-message": "Your certificate issuance was not completed. Check if you have enough token balance and try again",
+    "error-card-not-found": "Token not found",
+    "error-card-id-missing": "Card ID not provided",
+    "error-loading": "Error loading token data",
+    "history-title": "Certificate history",
+    "history-loading": "Loading history...",
+    "history-empty": "No certificates found",
+    "filter-year": "Year:",
+    "filter-token": "Token:",
+    "filter-status": "Status:",
+    "status-emitido": "Issued",
+    "status-pendente": "Under review",
+    "status-falha": "Validation failed",
+    "emitted-at": "Issued on:",
+    "certificate-id": "ID:",
+    "quantity-used": "Quantity used:",
+    "button-pending": "Pending",
+    "button-reemit": "Reissue",
+    "button-resend": "Request Resend"
   },
-  "chart-box": {
-    "wallet-balance": "Wallet Balance",
-    "recent-transactions": "recent transactions",
-    "loading": "Loading wallet data...",
-    "try-again": "Try again",
-    "actions": {
-      "buy-tokens": "Buy Tokens",
-      "documents": "Documents",
-      "wallet": "Wallet",
-      "profile": "Profile",
-      "kyc": "KYC Verification"
-    }
-  },
-  "token-circle": {
-    "no-tokens": "No tokens found",
-    "buy-tokens": "Buy tokens to see",
-    "portfolio-here": "your portfolio here",
-    "total-invested": "Total Invested",
-    "total-tokens": "Total Tokens"
-  },
-  "token-metrics": {
-    "title": "Token Metrics (24h)",
-    "refresh": "Refresh metrics",
-    "loading": "Loading metrics...",
-    "error": "Error Loading Metrics",
-    "try-again": "Try Again",
-    "no-data": "Token Metrics",
-    "no-data-message": "No metrics data available yet. Metrics will start being collected after you acquire tokens.",
-    "total-tokens": "Total Tokens",
-    "total-value": "Total Value",
-    "growth-rate": "Average Growth per Hour",
-    "best-performance": "Best Performance:",
-    "worst-performance": "Worst Performance:",
-    "average-performance": "Average Performance:",
-    "performance-suffix": "in the last 24h"
-  },
-  "carousel": {
-    "message": "Complete KYC verification and unlock all platform features.",
-    "button": "KYC Verification"
-  },
-  "chart-box": {
-    "title": "Wallet Balance",
-    "recent-transactions": "recent transactions",
-    "buttons": {
-      "buy": "Buy",
-      "earnings": "Earnings",
-      "withdraw": "Withdraw",
-      "statements": "Statements",
-      "verify-identity": "Verify Identity",
-      "retry": "Try again"
-    },
-    "messages": {
-      "loading": "Loading wallet data...",
-      "error": "Error loading transactions"
-    }
-  },
-  "asset-list": {
-    "title": "Your wallet",
-    "highlight": "Slab",
-    "columns": {
-      "project": "Project",
-      "unit-value": "Unit value",
-      "total-value": "Total Value"
+  "under-development": {
+    "title": "Feature Under Development",
+    "subtitle": "We're working hard to bring this feature to you!",
+    "coming-soon": "Coming Soon!",
+    "description": "Our team is developing this feature with great care to offer the best possible experience. Soon you'll have access to amazing resources!",
+    "features": {
+      "intuitive-interface": "Intuitive Interface",
+      "maximum-security": "Maximum Security",
+      "optimized-performance": "Optimized Performance"
     },
     "buttons": {
-      "buy": "Buy",
-      "sell": "Sell"
+      "go-back": "← Go Back",
+      "go-to-dashboard": "Go to Dashboard"
     },
-    "messages": {
-      "no-tokens": "No tokens found in your wallet",
-      "sample-data": "Sample data does not have real balances",
-      "buy-to-start": "Buy tokens to start investing"
+    "tip": {
+      "title": "Tip:",
+      "message": "Stay tuned for updates! We'll notify you as soon as this feature is available."
     }
   }
-}
 }
