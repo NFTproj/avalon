@@ -1,12 +1,16 @@
 'use client'
 
 import { useContext, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import { useAuth } from '@/contexts/AuthContext'
 import MainLayout from '@/components/layout/MainLayout'
 import CloseAccountSection from './components/CloseAccountSection'
+import CustomInput from '@/components/core/Inputs/CustomInput'
+import CustomButton from '@/components/core/Buttons/CustomButton'
+import { AlertTriangle } from 'lucide-react'
 
-type MenuSection = 'close-account' | 'settings' | 'password' | 'verify' | '2fa' | 'devices' | 'language' | 'notifications'
+type MenuSection = 'close-account' | 'change-password'
 
 // SVG Icon Components
 const AccountCogIcon = ({ color, size = 18 }: { color: string; size?: number }) => (
@@ -29,8 +33,10 @@ const PreferencesIcon = ({ color, size = 18 }: { color: string; size?: number })
 
 export default function PerfilPage() {
   const { colors, texts } = useContext(ConfigContext)
-  const { user } = useAuth()
+  const { user, logout } = useAuth()
+  const router = useRouter()
   const [activeSection, setActiveSection] = useState<MenuSection>('close-account')
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
 
   const profileTexts = texts?.profile
   const accentColor = colors?.border?.['border-primary'] || '#08CEFF'
@@ -38,70 +44,216 @@ export default function PerfilPage() {
   const textColor = colors?.colors?.['color-primary'] || '#1F2937'
   const secondaryTextColor = colors?.colors?.['color-secondary'] || '#6B7280'
 
+  const handleLogout = async () => {
+    setIsLoggingOut(true)
+    try {
+      await logout()
+    } catch (error) {
+      console.error('Erro ao fazer logout:', error)
+      setIsLoggingOut(false)
+    }
+  }
+
+  const handleNavigation = (path: string) => {
+    router.push(path)
+  }
+
   const menuItems = [
     {
-      section: 'configurations',
-      label: profileTexts?.menu?.configurations || 'Configurações',
+      section: 'quick-access',
+      label: 'Acesso Rápido',
       IconComponent: AccountCogIcon,
       items: [
-        { id: 'settings', label: profileTexts?.menu?.settings || 'Cadastro' },
-        { id: 'password', label: profileTexts?.menu?.['password-update'] || 'Atualizar senha' },
-        { id: 'verify', label: profileTexts?.menu?.['verify-account'] || 'Verificar conta' },
-        { id: 'close-account', label: profileTexts?.menu?.['close-account'] || 'Encerrar conta' },
+        { id: 'buy', label: 'Comprar Tokens', path: '/tokens' },
+        { id: 'kyc', label: 'Verificar Identidade', path: '/kyc' },
+        { id: 'orders', label: 'Meus Pedidos', path: '/buy-tokens/orders' },
+        { id: 'certificates', label: 'Emitir Certificado', path: '/certificate-emission' },
       ]
     },
     {
-      section: 'security',
-      label: profileTexts?.menu?.security || 'Segurança',
+      section: 'account',
+      label: 'Conta',
       IconComponent: AccountKeyIcon,
       items: [
-        { id: '2fa', label: profileTexts?.menu?.['enable-2fa'] || 'Ativar 2FA' },
-        { id: 'devices', label: profileTexts?.menu?.['connected-devices'] || 'Dispositivos conectados' },
-      ]
-    },
-    {
-      section: 'preferences',
-      label: profileTexts?.menu?.preferences || 'Preferências',
-      IconComponent: PreferencesIcon,
-      items: [
-        { id: 'language', label: profileTexts?.menu?.language || 'Idioma' },
-        { id: 'notifications', label: profileTexts?.menu?.notifications || 'Notificações' },
+        { id: 'change-password', label: profileTexts?.menu?.['password-update'] || 'Atualizar senha' },
+        { id: 'close-account', label: profileTexts?.menu?.['close-account'] || 'Encerrar conta' },
+        { id: 'logout', label: 'Sair', isLogout: true },
       ]
     },
   ]
 
   const renderContent = () => {
     switch (activeSection) {
+      case 'change-password':
+        return <ChangePasswordContent />
       case 'close-account':
         return <CloseAccountSection userEmail={user?.email || ''} />
-      case 'settings':
-        return (
-          <div className="p-6">
-            <h2 className="text-2xl font-bold mb-4" style={{ color: textColor }}>
-              {profileTexts?.menu?.settings || 'Cadastro'}
-            </h2>
-            <p style={{ color: secondaryTextColor }}>Em desenvolvimento...</p>
-          </div>
-        )
-      case 'password':
-        return (
-          <div className="p-6">
-            <h2 className="text-2xl font-bold mb-4" style={{ color: textColor }}>
-              {profileTexts?.menu?.['password-update'] || 'Atualizar senha'}
-            </h2>
-            <p style={{ color: secondaryTextColor }}>Em desenvolvimento...</p>
-          </div>
-        )
       default:
-        return (
-          <div className="p-6">
-            <h2 className="text-2xl font-bold mb-4" style={{ color: textColor }}>
-              Seção em desenvolvimento
-            </h2>
-            <p style={{ color: secondaryTextColor }}>Esta funcionalidade estará disponível em breve.</p>
-          </div>
-        )
+        return <CloseAccountSection userEmail={user?.email || ''} />
     }
+  }
+
+  // Componente inline para atualizar senha
+  const ChangePasswordContent = () => {
+    const [newPassword, setNewPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+    const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
+    const [success, setSuccess] = useState(false)
+
+    const handleChangePassword = async () => {
+      setError('')
+      
+      if (!newPassword || !confirmPassword) {
+        setError('Todos os campos são obrigatórios')
+        return
+      }
+
+      if (newPassword.length < 6) {
+        setError('A senha deve ter pelo menos 6 caracteres')
+        return
+      }
+
+      if (newPassword !== confirmPassword) {
+        setError('As senhas não conferem')
+        return
+      }
+
+      setLoading(true)
+      
+      try {
+        const response = await fetch('/api/auth/change-password', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ newPassword }),
+        })
+
+        const data = await response.json()
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Erro ao atualizar senha')
+        }
+
+        setSuccess(true)
+        setNewPassword('')
+        setConfirmPassword('')
+        
+        setTimeout(() => {
+          setSuccess(false)
+        }, 3000)
+      } catch (err: any) {
+        setError(err.message || 'Erro ao atualizar senha. Tente novamente.')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    if (success) {
+      return (
+        <div className="p-6 md:p-8 text-center">
+          <div 
+            className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center"
+            style={{ backgroundColor: accentColor + '20' }}
+          >
+            <svg 
+              className="w-8 h-8" 
+              style={{ color: accentColor }}
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          
+          <h2 className="text-2xl font-bold mb-2" style={{ color: textColor }}>
+            Senha atualizada!
+          </h2>
+          
+          <p style={{ color: secondaryTextColor }}>
+            Sua senha foi atualizada com sucesso.
+          </p>
+        </div>
+      )
+    }
+
+    return (
+      <div className="p-6 md:p-8">
+        <h2 className="text-2xl md:text-3xl font-bold mb-6" style={{ color: textColor }}>
+          {profileTexts?.menu?.['password-update'] || 'Atualizar senha'}
+        </h2>
+
+        <div 
+          className="border rounded-lg p-4 mb-6 flex gap-3"
+          style={{ 
+            backgroundColor: '#EFF6FF',
+            borderColor: '#BFDBFE'
+          }}
+        >
+          <AlertTriangle size={20} className="flex-shrink-0 text-blue-600 mt-0.5" />
+          <div>
+            <p className="text-sm text-gray-700 leading-relaxed">
+              Escolha uma senha forte com pelo menos 6 caracteres.
+            </p>
+          </div>
+        </div>
+
+        <div className="space-y-4 mb-6">
+          <div>
+            <label 
+              htmlFor="new-password" 
+              className="block text-sm font-medium mb-2"
+              style={{ color: textColor }}
+            >
+              Nova senha
+            </label>
+            <CustomInput
+              id="new-password"
+              type="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              placeholder="••••••••"
+              className="w-full"
+            />
+          </div>
+
+          <div>
+            <label 
+              htmlFor="confirm-password" 
+              className="block text-sm font-medium mb-2"
+              style={{ color: textColor }}
+            >
+              Confirmar nova senha
+            </label>
+            <CustomInput
+              id="confirm-password"
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="••••••••"
+              className="w-full"
+            />
+          </div>
+        </div>
+
+        {error && (
+          <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200">
+            <p className="text-sm text-red-600">{error}</p>
+          </div>
+        )}
+
+        <div className="flex gap-3">
+          <CustomButton
+            text={loading ? 'Salvando...' : 'Salvar senha'}
+            onClick={handleChangePassword}
+            disabled={loading}
+            className="flex-1"
+          />
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -119,38 +271,47 @@ export default function PerfilPage() {
               {/* Sidebar */}
               <aside className="w-full md:w-64 flex-shrink-0 border-r border-gray-200">
                 <nav className="p-6">
-                {menuItems.map((section) => (
-                  <div key={section.section} className="mb-6 last:mb-0">
-                    <div className="flex items-center gap-2 mb-3 px-2">
-                      <section.IconComponent color={accentColor} size={18} />
-                      <h3 className="text-sm font-bold uppercase tracking-wider" style={{ color: textColor }}>
-                        {section.label}
-                      </h3>
+                  {menuItems.map((section) => (
+                    <div key={section.section} className="mb-6 last:mb-0">
+                      <div className="flex items-center gap-2 mb-3 px-2">
+                        <section.IconComponent color={accentColor} size={18} />
+                        <h3 className="text-sm font-bold uppercase tracking-wider" style={{ color: textColor }}>
+                          {section.label}
+                        </h3>
+                      </div>
+                      <ul className="space-y-1">
+                        {section.items.map((item: any) => (
+                          <li key={item.id}>
+                            <button
+                              onClick={() => {
+                                if (item.isLogout) {
+                                  handleLogout()
+                                } else if (item.path) {
+                                  handleNavigation(item.path)
+                                } else {
+                                  setActiveSection(item.id as MenuSection)
+                                }
+                              }}
+                              disabled={item.isLogout && isLoggingOut}
+                              className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all disabled:opacity-50 ${
+                                activeSection === item.id
+                                  ? 'font-semibold'
+                                  : item.isLogout ? 'hover:bg-red-50' : 'hover:bg-gray-50'
+                              }`}
+                              style={{
+                                color: item.isLogout ? '#DC2626' : (activeSection === item.id ? accentColor : secondaryTextColor),
+                                backgroundColor: activeSection === item.id ? `${accentColor}10` : 'transparent',
+                              }}
+                            >
+                              {item.isLogout && isLoggingOut ? 'Saindo...' : item.label}
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                    <ul className="space-y-1">
-                      {section.items.map((item) => (
-                        <li key={item.id}>
-                          <button
-                            onClick={() => setActiveSection(item.id as MenuSection)}
-                            className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all ${
-                              activeSection === item.id
-                                ? 'font-semibold'
-                                : 'hover:bg-gray-50'
-                            }`}
-                            style={{
-                              color: activeSection === item.id ? accentColor : secondaryTextColor,
-                              backgroundColor: activeSection === item.id ? `${accentColor}10` : 'transparent',
-                            }}
-                          >
-                            {item.label}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </nav>
-            </aside>
+                  ))}
+                </nav>
+              </aside>
 
               {/* Main Content */}
               <main className="flex-1">
