@@ -102,21 +102,21 @@ export default function AssetList() {
         setLoading(true)
         setError(null)
         setUsingFallback(false)
-        
+
         console.log('🔍 Iniciando busca de cards da API...')
         const response = await getAllCards()
         console.log('📡 API Response completa:', response)
-        
+
         if (response.data && Array.isArray(response.data)) {
           console.log('✅ Dados da API são um array válido')
-          
+
           // Converter cards da API para o formato interno, filtrando inválidos
           const convertedCards = response.data
             .map(convertApiCardToCard)
             .filter((card): card is Card => card !== null)
-          
+
           console.log('🔄 Cards convertidos:', convertedCards)
-          
+
           if (convertedCards.length > 0) {
             setCards(convertedCards)
             console.log('🎯 Cards definidos com sucesso')
@@ -179,8 +179,8 @@ export default function AssetList() {
               Mostrando dados de exemplo enquanto a API não está disponível
             </p>
           )}
-          <button 
-            onClick={() => window.location.reload()} 
+          <button
+            onClick={() => window.location.reload()}
             className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
           >
             Tentar novamente
@@ -211,91 +211,91 @@ export default function AssetList() {
       </div>
     )
   }
-/* 
-  if (assets.length === 0) {
-    const assetTexts = texts?.dashboard?.['asset-list'] as any
+  /* 
+    if (assets.length === 0) {
+      const assetTexts = texts?.dashboard?.['asset-list'] as any
+      return (
+        <div className="w-full mt-8 rounded-t-lg overflow-hidden">
+          <div className="p-8 text-center">
+            <p className="text-gray-600">{assetTexts?.messages?.['no-tokens'] || 'Nenhum token encontrado na sua carteira'}</p>
+            <p className="text-sm text-gray-500 mt-1">
+              {usingFallback 
+                ? (assetTexts?.messages?.['sample-data'] || 'Dados de exemplo não têm saldos reais')
+                : (assetTexts?.messages?.['buy-to-start'] || 'Compre tokens para começar a investir')
+              }
+            </p>
+          </div>
+        </div>
+      )
+    } */
+  /* 
     return (
       <div className="w-full mt-8 rounded-t-lg overflow-hidden">
-        <div className="p-8 text-center">
-          <p className="text-gray-600">{assetTexts?.messages?.['no-tokens'] || 'Nenhum token encontrado na sua carteira'}</p>
-          <p className="text-sm text-gray-500 mt-1">
-            {usingFallback 
-              ? (assetTexts?.messages?.['sample-data'] || 'Dados de exemplo não têm saldos reais')
-              : (assetTexts?.messages?.['buy-to-start'] || 'Compre tokens para começar a investir')
-            }
-          </p>
+       
+        <div className="p-4" style={{ backgroundColor: headerBgColor }}>
+          <h2
+            className="text-xl font-bold flex items-center"
+            style={{ color: headerTextColor }}
+          >
+            {assetListTexts?.title ?? 'Sua carteira'}{' '}
+            <span style={{ color: highlightColor }}>
+              {assetListTexts?.highlight ?? 'Slab'}
+            </span>
+          </h2>
+          {totalBalance > 0 && (
+            <p className="text-sm mt-1" style={{ color: headerTextColor }}>
+              Valor total: R$ {totalBalance.toFixed(2)}
+            </p>
+          )}
+          {usingFallback && (
+            <p className="text-xs mt-1 text-yellow-300">
+              ⚠️ Dados de exemplo - API indisponível
+            </p>
+          )}
+        </div>
+  
+        {}
+        <div
+          className="grid"
+          style={{
+            backgroundColor: tableHeaderBgColor,
+            color: tableTextColor,
+            gridTemplateColumns: '30% 30% 40%',
+          }}
+        >
+          <div className="py-3 pl-6 font-medium">
+            {assetListTexts?.columns?.project ?? 'Projeto'}
+          </div>
+          <div className="py-3 font-medium text-center">
+            {assetListTexts?.columns?.['unit-value'] ?? 'Valor unitário'}
+          </div>
+          <div className="py-3 pl-6 font-medium">
+            {assetListTexts?.columns?.['total-value'] ?? 'Valor Total'}
+          </div>
+        </div>
+  
+        <div style={{ backgroundColor: tableBodyBgColor }}>
+          {assets.map((asset, index) => {
+            const balance = Number(asset.balanceRaw) / Math.pow(10, asset.decimals)
+            const unitValue = parseFloat(asset.card?.CardBlockchainData?.tokenPrice || '1.00')
+            const totalValue = balance * unitValue
+  
+            return (
+              <AssetCard
+                key={`${asset.card.id}-${index}`}
+                name={asset.card.name || 'Token'}
+                symbol={asset.symbol || 'TKN'}
+                unitValue={unitValue}
+                totalValue={totalValue}
+                buyText={assetListTexts?.buttons?.buy ?? 'Comprar'}
+                sellText={assetListTexts?.buttons?.sell ?? 'Vender'}
+              />
+            )
+          })}
+          <div className="border-t border-gray-300"></div>
         </div>
       </div>
     )
-  } */
-/* 
-  return (
-    <div className="w-full mt-8 rounded-t-lg overflow-hidden">
-     
-      <div className="p-4" style={{ backgroundColor: headerBgColor }}>
-        <h2
-          className="text-xl font-bold flex items-center"
-          style={{ color: headerTextColor }}
-        >
-          {assetListTexts?.title ?? 'Sua carteira'}{' '}
-          <span style={{ color: highlightColor }}>
-            {assetListTexts?.highlight ?? 'Slab'}
-          </span>
-        </h2>
-        {totalBalance > 0 && (
-          <p className="text-sm mt-1" style={{ color: headerTextColor }}>
-            Valor total: R$ {totalBalance.toFixed(2)}
-          </p>
-        )}
-        {usingFallback && (
-          <p className="text-xs mt-1 text-yellow-300">
-            ⚠️ Dados de exemplo - API indisponível
-          </p>
-        )}
-      </div>
-
-      {}
-      <div
-        className="grid"
-        style={{
-          backgroundColor: tableHeaderBgColor,
-          color: tableTextColor,
-          gridTemplateColumns: '30% 30% 40%',
-        }}
-      >
-        <div className="py-3 pl-6 font-medium">
-          {assetListTexts?.columns?.project ?? 'Projeto'}
-        </div>
-        <div className="py-3 font-medium text-center">
-          {assetListTexts?.columns?.['unit-value'] ?? 'Valor unitário'}
-        </div>
-        <div className="py-3 pl-6 font-medium">
-          {assetListTexts?.columns?.['total-value'] ?? 'Valor Total'}
-        </div>
-      </div>
-
-      <div style={{ backgroundColor: tableBodyBgColor }}>
-        {assets.map((asset, index) => {
-          const balance = Number(asset.balanceRaw) / Math.pow(10, asset.decimals)
-          const unitValue = parseFloat(asset.card?.CardBlockchainData?.tokenPrice || '1.00')
-          const totalValue = balance * unitValue
-
-          return (
-            <AssetCard
-              key={`${asset.card.id}-${index}`}
-              name={asset.card.name || 'Token'}
-              symbol={asset.symbol || 'TKN'}
-              unitValue={unitValue}
-              totalValue={totalValue}
-              buyText={assetListTexts?.buttons?.buy ?? 'Comprar'}
-              sellText={assetListTexts?.buttons?.sell ?? 'Vender'}
-            />
-          )
-        })}
-        <div className="border-t border-gray-300"></div>
-      </div>
-    </div>
-  )
-
-*/
+  
+  */
 }

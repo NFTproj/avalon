@@ -216,6 +216,27 @@
       ]
     }
   },
+  "reset-password": {
+    "title": "Recuperar Senha",
+    "description": "Digite seu e-mail para receber um link de recuperação de senha.",
+    "email-label": "E-mail",
+    "email-placeholder": "seu@email.com",
+    "forgot-password": "Esqueceu a senha?",
+    "buttons": {
+      "cancel": "Cancelar",
+      "send": "Enviar Link",
+      "sending": "Enviando...",
+      "close": "Fechar"
+    },
+    "success": {
+      "title": "E-mail Enviado!",
+      "message": "Enviamos um link de recuperação para {email}. Verifique sua caixa de entrada e spam."
+    },
+    "errors": {
+      "email-required": "E-mail é obrigatório",
+      "generic": "Erro ao enviar e-mail de recuperação"
+    }
+  },
   "register": {
     "image": "images/login/creating-account.svg",
     "alt": "Pessoa segurando chave de acesso",
@@ -583,13 +604,14 @@
       "highlight": "PowerAssetX",
       "columns": {
         "project": "Projeto",
+        "quantity": "Quantidade",
         "unit-value": "Valor unitário",
-        "total-value": "Valor Total",
+        "invested-value": "Valor Investido",
         "actions": "Ações"
       },
       "actions": {
         "buy": "Comprar",
-        "sell": "Vender"
+        "benefits": "Benefícios"
       },
       "pagination": {
         "previous": "Anterior",
@@ -603,9 +625,21 @@
       }
     },
     "chart-box": {
-      "wallet-balance": "Saldo da Carteira",
+      "title": "Saldo da Carteira",
       "recent-transactions": "transações recentes",
-      "loading": "Carregando dados da carteira...",
+      "buttons": {
+        "buy": "Comprar",
+        "earnings": "Rendimentos",
+        "withdraw": "Sacar",
+        "statements": "Extratos",
+        "verify-identity": "Verificar Identidade",
+        "retry": "Tentar novamente"
+      },
+      "messages": {
+        "loading": "Carregando dados da carteira...",
+        "error": "Erro ao carregar transações"
+      },
+      "wallet-balance": "Saldo da Carteira",
       "try-again": "Tentar novamente",
       "actions": {
         "buy-tokens": "Comprar Tokens",
@@ -654,6 +688,25 @@
         "buy": "Comprar",
         "sell": "Vender"
       }
+    }
+  },
+  "under-development": {
+    "title": "Funcionalidade em Desenvolvimento",
+    "subtitle": "Estamos trabalhando duro para trazer esta funcionalidade para você!",
+    "coming-soon": "Em Breve!",
+    "description": "Nossa equipe está desenvolvendo esta funcionalidade com muito cuidado para oferecer a melhor experiência possível. Em breve você terá acesso a recursos incríveis!",
+    "features": {
+      "intuitive-interface": "Interface Intuitiva",
+      "maximum-security": "Segurança Máxima",
+      "optimized-performance": "Performance Otimizada"
+    },
+    "buttons": {
+      "go-back": "← Voltar",
+      "go-to-dashboard": "Ir para Dashboard"
+    },
+    "tip": {
+      "title": "Dica:",
+      "message": "Fique atento às atualizações! Notificaremos você assim que esta funcionalidade estiver disponível."
     }
   }
 }

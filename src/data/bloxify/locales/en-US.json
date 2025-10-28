@@ -280,6 +280,27 @@
       ]
     }
   },
+  "reset-password": {
+    "title": "Reset Password",
+    "description": "Enter your email to receive a password recovery link.",
+    "email-label": "Email",
+    "email-placeholder": "your@email.com",
+    "forgot-password": "Forgot password?",
+    "buttons": {
+      "cancel": "Cancel",
+      "send": "Send Link",
+      "sending": "Sending...",
+      "close": "Close"
+    },
+    "success": {
+      "title": "Email Sent!",
+      "message": "We sent a recovery link to {email}. Check your inbox and spam folder."
+    },
+    "errors": {
+      "email-required": "Email is required",
+      "generic": "Error sending recovery email"
+    }
+  },
   "register": {
     "image": "images/login/creating-account.svg",
     "alt": "Person holding an access key",
@@ -461,6 +482,47 @@
         "icon": ""
       }
     ],
+    "chart-box": {
+      "title": "Wallet Balance",
+      "recent-transactions": "recent transactions",
+      "buttons": {
+        "buy": "Buy",
+        "earnings": "Earnings", 
+        "withdraw": "Withdraw",
+        "statements": "Statements",
+        "verify-identity": "Verify Identity",
+        "retry": "Try again"
+      },
+      "messages": {
+        "loading": "Loading wallet data...",
+        "error": "Error loading transactions"
+      }
+    },
+    "balances-table": {
+      "title": "Your wallet",
+      "highlight": "Slab",
+      "columns": {
+        "project": "Project",
+        "quantity": "Quantity",
+        "unit-value": "Unit value",
+        "invested-value": "Invested Value",
+        "actions": "Actions"
+      },
+      "actions": {
+        "buy": "Buy",
+        "benefits": "Benefits"
+      },
+      "pagination": {
+        "previous": "Previous",
+        "next": "Next",
+        "page-info": "Page {current} of {total}"
+      },
+      "messages": {
+        "login-required": "Please log in to view your balances.",
+        "loading": "Loading your tokens...",
+        "no-tokens": "You don't have any tokens in your wallet yet."
+      }
+    },
     "asset-list": {
       "title": "Your Wallet",
       "highlight": "Slab",
@@ -712,5 +774,24 @@
     "button-pending": "Pending",
     "button-reemit": "Reissue",
     "button-resend": "Request Resend"
+  },
+  "under-development": {
+    "title": "Feature Under Development",
+    "subtitle": "We're working hard to bring this feature to you!",
+    "coming-soon": "Coming Soon!",
+    "description": "Our team is developing this feature with great care to offer the best possible experience. Soon you'll have access to amazing resources!",
+    "features": {
+      "intuitive-interface": "Intuitive Interface",
+      "maximum-security": "Maximum Security",
+      "optimized-performance": "Optimized Performance"
+    },
+    "buttons": {
+      "go-back": "← Go Back",
+      "go-to-dashboard": "Go to Dashboard"
+    },
+    "tip": {
+      "title": "Tip:",
+      "message": "Stay tuned for updates! We'll notify you as soon as this feature is available."
+    }
   }
 }
