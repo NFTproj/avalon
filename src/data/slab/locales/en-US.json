@@ -652,6 +652,7 @@
   "didit-description": "You will be redirected to an external website to complete your identity verification (KYC).",
   "button-continue": "Continue",
 
+
   "status-title": "Verification Status",
   "status-view-details": "View details",
   "status-success-headline": "Your account has been successfully verified",
@@ -663,6 +664,40 @@
   "status-error-headline": "Your account verification has failed",
   "status-error-description": "Your account verification has failed",
   "status-error-cta": "Try again"
+
+  "button-processing": "Processing…",
+  "limits": "Min.: {min} · Max.: {max}",
+  "error-min": "Minimum value is {min}",
+  "error-max": "Maximum value is {max}",
+  "unit-suffix": "unit",
+  "label-pay": "Pay",
+  "label-receive": "Receive",
+  "payment-method": "Payment method",
+  "pay-with-pix": "Buy with PIX",
+  "pay-with-usdc": "Buy with USDC",
+  "quote-prefix-pix": "You will pay (PIX):",
+  "quote-prefix-usdc": "You will pay (USDC):",
+  "cta-pix": "Buy with PIX",
+  "cta-usdc": "Buy with USDC",
+  "back": "Back",
+  "pix-copia-cola": "PIX copy and paste",
+  "pix-copy": "Copy code",
+  "pix-copied": "Copied!",
+  "value-label": "Amount",
+  "pix-amount-to-pay": "Amount to pay",
+  "pix-expires-in": "Expires in {mm}:{ss}",
+  "pix-expired": "Expired",
+  "pix-verify": "I’ve paid, check",
+  "pix-verifying": "Checking…",
+  "pix-wait-to-check": "Please wait {s}s to check.",
+  "error-no-session": "Missing sessionId to verify.",
+  "error-fetch-status": "Failed to query ({status})",
+  "error-generic": "Could not verify the payment.",
+  "qty-label": "Quantity (tokens)"
+},
+"tokenList": {
+  "empty": "No tokens available at the moment.",
+  "unit-suffix": "unit"
 },
 "buyTokens": {
     "page-title-fallback": "Buy Tokens",
