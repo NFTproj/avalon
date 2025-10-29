@@ -57,8 +57,8 @@ export default function ResetPasswordModal({ isOpen, onClose }: ResetPasswordMod
     setError(null)
 
     // Validar código OTP
-    if (!otpCode || otpCode.length !== 6) {
-      setError(resetTexts?.errors?.['invalid-otp'] || 'Código deve ter 6 dígitos')
+    if (!otpCode || otpCode.length < 6) {
+      setError(resetTexts?.errors?.['invalid-otp'] || 'Código deve ter pelo menos 6 caracteres')
       return
     }
 
@@ -233,10 +233,10 @@ export default function ResetPasswordModal({ isOpen, onClose }: ResetPasswordMod
                 <CustomInput
                   type="text"
                   value={otpCode}
-                  onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                  placeholder={resetTexts?.['otp-placeholder'] || '123456'}
+                  onChange={(e) => setOtpCode(e.target.value.slice(0, 6))}
+                  placeholder={resetTexts?.['otp-placeholder'] || 'ABC123'}
                   required
-                  maxLength={6}
+                  //maxLength={6}
                   className="w-full border-gray-300 rounded-xl focus:outline-none focus:ring-2"
                 />
               </div>
