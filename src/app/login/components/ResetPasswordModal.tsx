@@ -82,10 +82,10 @@ export default function ResetPasswordModal({ isOpen, onClose }: ResetPasswordMod
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           email,
           otpCode,
-          newPassword 
+          newPassword
         })
       })
 
@@ -130,30 +130,30 @@ export default function ResetPasswordModal({ isOpen, onClose }: ResetPasswordMod
         {success ? (
           /* Tela de sucesso */
           <div className="text-center py-4">
-            <div 
+            <div
               className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center"
               style={{ backgroundColor: colors?.colors?.['color-primary'] + '20' }}
             >
-              <svg 
-                className="w-8 h-8" 
+              <svg
+                className="w-8 h-8"
                 style={{ color: colors?.colors?.['color-primary'] }}
-                fill="none" 
-                stroke="currentColor" 
+                fill="none"
+                stroke="currentColor"
                 viewBox="0 0 24 24"
               >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            
+
             <h2 className="text-xl font-bold text-gray-900 mb-2">
               {resetTexts?.success?.['password-changed-title'] || 'Senha Alterada!'}
             </h2>
-            
+
             <p className="text-gray-600 mb-6">
-              {resetTexts?.success?.['password-changed-message'] || 
-               'Sua senha foi alterada com sucesso. Você já pode fazer login com sua nova senha.'}
+              {resetTexts?.success?.['password-changed-message'] ||
+                'Sua senha foi alterada com sucesso. Você já pode fazer login com sua nova senha.'}
             </p>
-            
+
             <CustomButton
               text={resetTexts?.buttons?.close || 'Fechar'}
               onClick={handleClose}
@@ -168,7 +168,7 @@ export default function ResetPasswordModal({ isOpen, onClose }: ResetPasswordMod
             <h2 className="text-xl font-bold text-gray-900 mb-2">
               {resetTexts?.title || 'Recuperar Senha'}
             </h2>
-            
+
             <p className="text-gray-600 mb-6">
               {resetTexts?.description || 'Digite seu e-mail para iniciar a recuperação de senha.'}
             </p>
@@ -202,7 +202,7 @@ export default function ResetPasswordModal({ isOpen, onClose }: ResetPasswordMod
                 >
                   {resetTexts?.buttons?.cancel || 'Cancelar'}
                 </button>
-                
+
                 <CustomButton
                   text={loading ? (resetTexts?.buttons?.sending || 'Enviando...') : (resetTexts?.buttons?.send || 'Continuar')}
                   type="submit"
@@ -220,7 +220,7 @@ export default function ResetPasswordModal({ isOpen, onClose }: ResetPasswordMod
             <h2 className="text-xl font-bold text-gray-900 mb-2">
               {resetTexts?.['new-password-title'] || 'Nova Senha'}
             </h2>
-            
+
             <p className="text-gray-600 mb-6">
               {resetTexts?.['new-password-description'] || 'Digite o código enviado para seu e-mail e sua nova senha.'}
             </p>
@@ -233,7 +233,7 @@ export default function ResetPasswordModal({ isOpen, onClose }: ResetPasswordMod
                 <CustomInput
                   type="text"
                   value={otpCode}
-                  onChange={(e) => setOtpCode(e.target.value.slice(0, 6))}
+                  onChange={(e) => setOtpCode(e.target.value)}
                   placeholder={resetTexts?.['otp-placeholder'] || 'ABC123'}
                   required
                   //maxLength={6}
@@ -285,7 +285,7 @@ export default function ResetPasswordModal({ isOpen, onClose }: ResetPasswordMod
                 >
                   {resetTexts?.buttons?.back || 'Voltar'}
                 </button>
-                
+
                 <CustomButton
                   text={loading ? (resetTexts?.buttons?.saving || 'Salvando...') : (resetTexts?.buttons?.save || 'Salvar Senha')}
                   type="submit"
