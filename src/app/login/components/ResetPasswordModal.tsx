@@ -15,11 +15,15 @@ export default function ResetPasswordModal({ isOpen, onClose }: ResetPasswordMod
   const { colors, texts } = useContext(ConfigContext)
   const resetTexts = (texts as any)?.['reset-password']
   const [email, setEmail] = useState('')
+  const [otpCode, setOtpCode] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const [step, setStep] = useState<'email' | 'newPassword'>('email')
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
     setLoading(true)
@@ -39,7 +43,8 @@ export default function ResetPasswordModal({ isOpen, onClose }: ResetPasswordMod
         throw new Error(data.error || 'Erro ao enviar e-mail de recuperação')
       }
 
-      setSuccess(true)
+      // Avança para o próximo passo
+      setStep('newPassword')
     } catch (err: any) {
       setError(err.message || resetTexts?.errors?.generic || 'Erro ao enviar e-mail de recuperação')
     } finally {
@@ -47,10 +52,65 @@ export default function ResetPasswordModal({ isOpen, onClose }: ResetPasswordMod
     }
   }
 
+  const handlePasswordSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError(null)
+
+    // Validar código OTP
+    if (!otpCode || otpCode.length < 6) {
+      setError(resetTexts?.errors?.['invalid-otp'] || 'Código deve ter pelo menos 6 caracteres')
+      return
+    }
+
+    // Validar se as senhas conferem
+    if (newPassword !== confirmPassword) {
+      setError(resetTexts?.errors?.['passwords-dont-match'] || 'As senhas não conferem')
+      return
+    }
+
+    // Validar tamanho mínimo da senha
+    if (newPassword.length < 6) {
+      setError('A senha deve ter pelo menos 6 caracteres')
+      return
+    }
+
+    setLoading(true)
+
+    try {
+      const response = await fetch('/api/auth/verify-reset-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          email,
+          otpCode,
+          newPassword 
+        })
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Erro ao alterar a senha')
+      }
+
+      setSuccess(true)
+    } catch (err: any) {
+      setError(err.message || 'Erro ao alterar a senha')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const handleClose = () => {
     setEmail('')
+    setOtpCode('')
+    setNewPassword('')
+    setConfirmPassword('')
     setError(null)
     setSuccess(false)
+    setStep('email')
     onClose()
   }
 
@@ -86,12 +146,12 @@ export default function ResetPasswordModal({ isOpen, onClose }: ResetPasswordMod
             </div>
             
             <h2 className="text-xl font-bold text-gray-900 mb-2">
-              {resetTexts?.success?.title || 'E-mail Enviado!'}
+              {resetTexts?.success?.['password-changed-title'] || 'Senha Alterada!'}
             </h2>
             
             <p className="text-gray-600 mb-6">
-              {resetTexts?.success?.message?.replace('{email}', email) || 
-               `Enviamos um link de recuperação para ${email}. Verifique sua caixa de entrada e spam.`}
+              {resetTexts?.success?.['password-changed-message'] || 
+               'Sua senha foi alterada com sucesso. Você já pode fazer login com sua nova senha.'}
             </p>
             
             <CustomButton
@@ -102,18 +162,18 @@ export default function ResetPasswordModal({ isOpen, onClose }: ResetPasswordMod
               textColor={colors?.colors?.['color-primary']}
             />
           </div>
-        ) : (
-          /* Formulário */
+        ) : step === 'email' ? (
+          /* Formulário de E-mail */
           <div>
             <h2 className="text-xl font-bold text-gray-900 mb-2">
               {resetTexts?.title || 'Recuperar Senha'}
             </h2>
             
             <p className="text-gray-600 mb-6">
-              {resetTexts?.description || 'Digite seu e-mail para receber um link de recuperação de senha.'}
+              {resetTexts?.description || 'Digite seu e-mail para iniciar a recuperação de senha.'}
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleEmailSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   {resetTexts?.['email-label'] || 'E-mail'}
@@ -144,9 +204,92 @@ export default function ResetPasswordModal({ isOpen, onClose }: ResetPasswordMod
                 </button>
                 
                 <CustomButton
-                  text={loading ? (resetTexts?.buttons?.sending || 'Enviando...') : (resetTexts?.buttons?.send || 'Enviar Link')}
+                  text={loading ? (resetTexts?.buttons?.sending || 'Enviando...') : (resetTexts?.buttons?.send || 'Continuar')}
                   type="submit"
                   disabled={loading || !email}
+                  className="flex-1"
+                  borderColor={colors?.border?.['border-primary']}
+                  textColor={colors?.colors?.['color-primary']}
+                />
+              </div>
+            </form>
+          </div>
+        ) : (
+          /* Formulário de Nova Senha */
+          <div>
+            <h2 className="text-xl font-bold text-gray-900 mb-2">
+              {resetTexts?.['new-password-title'] || 'Nova Senha'}
+            </h2>
+            
+            <p className="text-gray-600 mb-6">
+              {resetTexts?.['new-password-description'] || 'Digite o código enviado para seu e-mail e sua nova senha.'}
+            </p>
+
+            <form onSubmit={handlePasswordSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  {resetTexts?.['otp-label'] || 'Código de Verificação'}
+                </label>
+                <CustomInput
+                  type="text"
+                  value={otpCode}
+                  onChange={(e) => setOtpCode(e.target.value.slice(0, 6))}
+                  placeholder={resetTexts?.['otp-placeholder'] || 'ABC123'}
+                  required
+                  //maxLength={6}
+                  className="w-full border-gray-300 rounded-xl focus:outline-none focus:ring-2"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  {resetTexts?.['new-password-label'] || 'Nova Senha'}
+                </label>
+                <CustomInput
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder={resetTexts?.['new-password-placeholder'] || '••••••••'}
+                  required
+                  minLength={6}
+                  className="w-full border-gray-300 rounded-xl focus:outline-none focus:ring-2"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  {resetTexts?.['confirm-password-label'] || 'Confirmar Nova Senha'}
+                </label>
+                <CustomInput
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder={resetTexts?.['confirm-password-placeholder'] || '••••••••'}
+                  required
+                  minLength={6}
+                  className="w-full border-gray-300 rounded-xl focus:outline-none focus:ring-2"
+                />
+              </div>
+
+              {error && (
+                <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+                  <p className="text-sm text-red-600">{error}</p>
+                </div>
+              )}
+
+              <div className="flex gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setStep('email')}
+                  className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors"
+                >
+                  {resetTexts?.buttons?.back || 'Voltar'}
+                </button>
+                
+                <CustomButton
+                  text={loading ? (resetTexts?.buttons?.saving || 'Salvando...') : (resetTexts?.buttons?.save || 'Salvar Senha')}
+                  type="submit"
+                  disabled={loading || !newPassword || !confirmPassword}
                   className="flex-1"
                   borderColor={colors?.border?.['border-primary']}
                   textColor={colors?.colors?.['color-primary']}

@@ -3,6 +3,7 @@
 import { useContext, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ConfigContext } from '@/contexts/ConfigContext'
+import { useAuth } from '@/contexts/AuthContext'
 import { AlertTriangle } from 'lucide-react'
 
 interface CloseAccountSectionProps {
@@ -11,10 +12,12 @@ interface CloseAccountSectionProps {
 
 export default function CloseAccountSection({ userEmail }: CloseAccountSectionProps) {
   const { colors, texts } = useContext(ConfigContext)
+  const { user } = useAuth()
   const router = useRouter()
   const [reason, setReason] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
 
   const profileTexts = texts?.profile?.['close-account']
   const accentColor = colors?.border?.['border-primary'] || '#08CEFF'
@@ -23,27 +26,72 @@ export default function CloseAccountSection({ userEmail }: CloseAccountSectionPr
   const bgColor = colors?.background?.['background-primary'] || '#FFFFFF'
 
   const handleCloseAccount = async () => {
+    if (!user?.id) {
+      setError('Usuário não identificado')
+      return
+    }
+
     setError('')
     setLoading(true)
     
     try {
-      // TODO: Implementar API de encerramento de conta
-      // const response = await apiFetch('/api/user/close-account', {
-      //   method: 'POST',
-      //   body: JSON.stringify({ reason })
-      // })
+      const response = await fetch(`/api/user/${user.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ reason: reason || 'Sem motivo especificado' }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Erro ao encerrar conta')
+      }
+
+      // Mostrar mensagem de sucesso
+      setSuccess(true)
       
-      // Simular delay
-      await new Promise(resolve => setTimeout(resolve, 1500))
-      
-      // Redirecionar para home após sucesso
-      alert(profileTexts?.['success-message'] || 'Conta encerrada com sucesso')
-      router.push('/')
-    } catch (err) {
-      setError(profileTexts?.['error-message'] || 'Erro ao encerrar conta. Tente novamente.')
+      // Aguardar 2 segundos e fazer logout
+      setTimeout(async () => {
+        // Limpar cookies e redirecionar
+        await fetch('/api/auth/logout', { method: 'POST' })
+        window.location.href = '/login'
+      }, 2000)
+    } catch (err: any) {
+      setError(err.message || profileTexts?.['error-message'] || 'Erro ao encerrar conta. Tente novamente.')
     } finally {
       setLoading(false)
     }
+  }
+
+  if (success) {
+    return (
+      <div className="p-6 md:p-8 text-center">
+        <div 
+          className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center"
+          style={{ backgroundColor: accentColor + '20' }}
+        >
+          <svg 
+            className="w-8 h-8" 
+            style={{ color: accentColor }}
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        
+        <h2 className="text-2xl font-bold mb-2" style={{ color: textColor }}>
+          {profileTexts?.['success-message'] || 'Conta encerrada com sucesso'}
+        </h2>
+        
+        <p style={{ color: secondaryTextColor }}>
+          Você será redirecionado em instantes...
+        </p>
+      </div>
+    )
   }
 
   return (
