@@ -6,8 +6,6 @@ import CustomButton from '@/components/core/Buttons/CustomButton'
 import CustomInput from '@/components/core/Inputs/CustomInput'
 import LoadingOverlay from '@/components/common/LoadingOverlay'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
-import { loginUser } from '@/lib/api/auth'
-import { mutateUser } from '@/contexts/AuthContext'
 import { useRouter } from 'next/navigation'
 import ImageFromJSON from '@/components/core/ImageFromJSON'
 import Header from '@/components/landingPage/Header'
@@ -40,43 +38,24 @@ export default function LoginComponent() {
     setLoading(true)
 
     try {
-      // Verificação especial para credenciais admin
-      if (email === 'admin@admin' && password === 'admin') {
-        // CÓDIGO ANTIGO (removido - causava loading infinito):
-        // await new Promise(resolve => setTimeout(resolve, 1000)) // Delay artificial removido
-        // sessionStorage.setItem('adminUser', JSON.stringify(adminUser)) // Não funcionava com AuthContext
-        // sessionStorage.setItem('accessToken', 'admin-token') // Cookie não era criado
-        
-        // NOVA IMPLEMENTAÇÃO: Chamar API para criar cookies HTTP-only do admin
-        const res = await fetch('/api/auth/admin-login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include', // garante envio/recebimento de cookies
-          body: JSON.stringify({ email, password }),
-        })
+      const res = await fetch('/api/auth/admin-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ email, password }),
+      })
 
-        if (!res.ok) {
-          throw new Error('Falha ao fazer login admin')
-        }
-
-        // Atualizar o contexto de autenticação (busca /api/auth/me que agora reconhece admin-token)
-        await mutateUser()
-        
-        // IMPORTANTE: Desabilitar loading antes do redirect para evitar loading infinito
-        setLoading(false)
-        
-        // Redirecionar para admin dashboard
-        router.push('/admin?page=dashboard')
-        return
+      if (!res.ok) {
+        throw new Error('Credenciais inválidas')
       }
 
-      // Tentar login normal se não for admin
-      await loginUser({ email, password })
-      await mutateUser()
-      
-      // Desabilitar loading antes do redirect
+      // Marcar no sessionStorage que é admin mock (para desenvolvimento)
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem('adminMock', 'true')
+      }
+
+      // Não chama mutateUser() - usa mock local na página admin
       setLoading(false)
-      
       router.push('/admin?page=dashboard')
     } catch (err) {
       console.error('[LOGIN ERROR]', err)
@@ -149,6 +128,13 @@ export default function LoginComponent() {
                     required
                   />
                 </div>
+
+                {/* Mensagem de erro */}
+                {error && (
+                  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">
+                    {error}
+                  </div>
+                )}
 
                 {/* Botão de login */}
                 <CustomButton

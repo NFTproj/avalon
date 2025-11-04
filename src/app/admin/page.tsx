@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { ConfigProvider } from '@/contexts/ConfigContext'
 import { AuthProvider } from '@/contexts/AuthContext'
 import { useAuth } from '@/contexts/AuthContext'
@@ -18,8 +19,36 @@ function AdminContent() {
   const searchParams = useSearchParams()
   const page = searchParams.get('page')
 
+  // Mock de usuário admin para desenvolvimento (verifica sessionStorage)
+  // Usar useState para evitar problemas de hidratação
+  const [isAdminMock, setIsAdminMock] = React.useState(false)
+  const [mounted, setMounted] = React.useState(false)
+  
+  React.useEffect(() => {
+    setMounted(true)
+    if (typeof window !== 'undefined') {
+      const adminMockValue = sessionStorage.getItem('adminMock') === 'true'
+      setIsAdminMock(adminMockValue)
+    }
+  }, [])
+  
+  const adminMockUser = isAdminMock && mounted ? {
+    id: 'admin-1',
+    userId: 'admin-1',
+    name: 'Administrador',
+    email: 'admin@admin',
+    walletAddress: '0x0000000000000000000000000000000000000000' as `0x${string}`,
+    kycStatus: 'approved' as const,
+    kycStatusCode: 200,
+    permissions: ['admin', 'create_tokens', 'manage_users'],
+    balances: [],
+  } : null
+
+  // Usar mock admin se disponível, senão usar user do AuthContext
+  const currentUser = adminMockUser || user
+
   // Se não há usuário logado, mostrar login
-  if (!user) {
+  if (!currentUser) {
     return <LoginComponent />
   }
 
