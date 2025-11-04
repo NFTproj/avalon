@@ -106,8 +106,8 @@ function Header() {
                       'main-logo'
                     ] /* JSON-EN: landing-page.header.alts.main-logo */
                   }
-                  width={120}
-                  height={40}
+                  width={160}
+                  height={60}
                 />
               </button>
             </div>
@@ -212,8 +212,8 @@ function Header() {
             <ImageFromJSON
               src={texts?.images.logos['main-logo']}
               alt={lpHeader?.alts['main-logo']}
-              width={120}
-              height={40}
+              width={150}
+              height={50}
             />
           </button>
 

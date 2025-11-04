@@ -17,12 +17,12 @@ export default function Footer() {
       <div className="max-w-[1455px] mx-auto grid grid-cols-1 md:grid-cols-5 gap-8 items-start">
         {/* LOGO */}
         <div className="col-span-1 flex justify-center md:justify-start mb-6 md:mb-0">
-          <div className="w-32 md:w-40">
+          <div className="w-40 md:w-48">
             <ImageFromJSON
               src={texts?.images?.logos?.['main-logo']}
               alt={footerData?.['alt-logo']}
-              width={300}
-              height={200}
+              width={350}
+              height={220}
             />
           </div>
         </div>
@@ -64,9 +64,9 @@ export default function Footer() {
           <ImageFromJSON
             src={texts?.images?.logos?.['main-logo']}
             alt={footerData?.['alt-logo']}
-            width={100}
-            height={50}
-            className="h-5 md:h-6"
+            width={120}
+            height={60}
+            className="h-6 md:h-8"
           />
         </div>
       </div>
