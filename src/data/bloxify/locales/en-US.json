@@ -7,10 +7,10 @@
   "landing-page": {
     "header": {
       "alts": {
-        "main-logo": "Bloxify Logo"
+        "main-logo": "TokenGrid Logo"
       },
       "navigations": {
-        "navOne": "About Bloxify",
+        "navOne": "About TokenGrid",
         "navTwo": [
           {
             "title": "Products",
@@ -78,7 +78,7 @@
       ]
     },
     "features-showcase": {
-      "title": "All Bloxify Features",
+      "title": "All TokenGrid Features",
       "features": [
         {
           "id": 1,
@@ -224,7 +224,7 @@
         "title": "Support Center",
         "description": "We're here to help! Our support team is highly qualified and ready to meet your needs.",
         "email": "contato@blocklize.io",
-        "image": "images/bloxify/banner-support.png",
+        "image": "images/bloxify/banner-support-tokengrid.png",
         "alt": "Image of a contact banner."
       },
       "form": {
@@ -242,7 +242,7 @@
           "placeholder": "Enter your phone"
         },
         "message": {
-          "label": "Tell us a bit about your company and how Bloxify can help:",
+          "label": "Tell us a bit about your company and how TokenGrid can help:",
           "placeholder": "Write your message"
         },
         "submit": "Send"
@@ -250,12 +250,12 @@
     },
     "faq": {
       "title": "Frequently Asked Questions",
-      "subtitle": "Get answers to your main questions about Bloxify",
+      "subtitle": "Get answers to your main questions about TokenGrid",
       "questions": [
         {
           "id": 1,
-          "question": "What is Bloxify?",
-          "answer": "Bloxify is a pioneering platform for tokenizing physical and digital assets, promoting investment democratization. Our services include token deployment, simplified commercialization, and complete management of tokenized assets, all facilitated by an intuitive and secure interface."
+          "question": "What is TokenGrid?",
+          "answer": "TokenGrid is a pioneering platform for tokenizing physical and digital assets, promoting investment democratization. Our services include token deployment, simplified commercialization, and complete management of tokenized assets, all facilitated by an intuitive and secure interface."
         },
         {
           "id": 2,
@@ -274,8 +274,8 @@
         },
         {
           "id": 5,
-          "question": "Who can use Bloxify?",
-          "answer": "Bloxify serves companies of all sizes that want to tokenize their assets, from startups to large corporations. Our clients include companies from agribusiness, real estate, art, music, and various other sectors seeking innovation and investment democratization."
+          "question": "Who can use TokenGrid?",
+          "answer": "TokenGrid serves companies of all sizes that want to tokenize their assets, from startups to large corporations. Our clients include companies from agribusiness, real estate, art, music, and various other sectors seeking innovation and investment democratization."
         }
       ]
     }
@@ -305,7 +305,7 @@
     "image": "images/login/creating-account.svg",
     "alt": "Person holding an access key",
     "step-zero": {
-      "title": "Welcome to Slab!",
+      "title": "Welcome to TokenGrid!",
       "description": "Create your account in 2 minutes and trade tokens quickly and securely.",
       "button-email": "Sign up with Email",
       "button-metamask": "Sign up with Metamask",
@@ -341,7 +341,7 @@
         "password": "Enter a password",
         "confirmPassword": "Repeat your password"
       },
-      "disclaimer": "By continuing you accept Slab Assets' Terms of Use and Privacy Policy and declare you are not a U.S. person.",
+      "disclaimer": "By continuing you accept TokenGrid Terms of Use and Privacy Policy and declare you are not a U.S. person.",
       "button-continue": "Continue",
       "button-back": "Back"
     },
@@ -411,11 +411,11 @@
     }
   },
   "footer": {
-    "alt-logo": "Bloxify Logo",
+    "alt-logo": "TokenGrid Logo",
     "columns": [
       {
-        "title": "About Bloxify",
-        "items": ["Get to Know Bloxify", "Our Projects"]
+        "title": "About TokenGrid",
+        "items": ["Get to Know TokenGrid", "Our Projects"]
       },
       {
         "title": "Legal",
@@ -442,7 +442,7 @@
   "dashboard": {
     "welcome-box": {
       "name": "Antônio",
-      "title": "Welcome to Slab!",
+      "title": "Welcome to TokenGrid!",
       "description": "Explore tokenized projects, invest securely, and keep full control of your assets in the palm of your hand.",
       "link": "View details",
       "tokens-title": "Your Tokens:",
@@ -459,27 +459,27 @@
       {
         "id": 1,
         "name": "Buy",
-        "icon": ""
+        "icon": "🛒"
       },
       {
         "id": 2,
         "name": "Issue Certificate",
-        "icon": ""
+        "icon": "📜"
       },
       {
         "id": 3,
         "name": "Withdraw",
-        "icon": ""
+        "icon": "💵"
       },
       {
         "id": 4,
         "name": "History",
-        "icon": ""
+        "icon": "📊"
       },
       {
         "id": 5,
         "name": "KYC Verifications",
-        "icon": ""
+        "icon": "🔍"
       }
     ],
     "chart-box": {
@@ -500,7 +500,7 @@
     },
     "balances-table": {
       "title": "Your wallet",
-      "highlight": "Slab",
+      "highlight": "TokenGrid",
       "columns": {
         "project": "Project",
         "quantity": "Quantity",
@@ -525,7 +525,7 @@
     },
     "asset-list": {
       "title": "Your Wallet",
-      "highlight": "Slab",
+      "highlight": "TokenGrid",
       "columns": {
         "project": "Project",
         "unit-value": "Unit value",
@@ -792,6 +792,168 @@
     "tip": {
       "title": "Tip:",
       "message": "Stay tuned for updates! We'll notify you as soon as this feature is available."
+    }
+  },
+  "admin": {
+    "login": {
+      "title": "Access your account",
+      "email-label": "Your email:",
+      "password-label": "Your password:",
+      "email-placeholder": "Enter your email",
+      "password-placeholder": "Enter your password",
+      "login-button": "Login",
+      "error-invalid-credentials": "Invalid credentials. Check your data and try again."
+    },
+    "dashboard": {
+      "title": "Administrator Area",
+      "metrics": {
+        "total-tokens": "Total Tokens",
+        "pending-kyc": "Pending KYC",
+        "active-users": "Active Users"
+      },
+      "recent-kycs": {
+        "title": "Recent KYCs",
+        "view-all": "View All"
+      },
+      "recent-tokens": {
+        "title": "Recent Tokens",
+        "view-all": "View All"
+      },
+      
+      "create-token-button": "+ Create New Token",
+      "token-status": {
+        "active": "Active",
+        "pending": "Pending",
+        "inactive": "Inactive"
+      },
+      "kyc-status": {
+        "approved": "Approved"
+      }
+    },
+    "create-token": {
+      "title": "Create Token",
+      "description": "Here you can create a new token to represent assets or rights, facilitating tokenization and management.",
+      "back-button": "Back",
+      "start-button": "Start",
+      "step-one": {
+        "counter": {
+          "current": "01",
+          "total": "of 04"
+        },
+        "title": "Main Data",
+        "fields": {
+          "card-name": {
+            "label": "Card Name",
+            "placeholder": "Ex: Bloxify Token"
+          },
+          "short-description": {
+            "label": "Short Description",
+            "placeholder": "Ex: Bloxify utility token"
+          },
+          "long-description": {
+            "label": "Long Description",
+            "placeholder": "Add a detailed description of the token"
+          }
+        },
+        "buttons": {
+          "back": "Back",
+          "continue": "Continue"
+        }
+      },
+      "step-two": {
+        "counter": {
+          "current": "02",
+          "total": "of 04"
+        },
+        "title": "Advanced Settings",
+        "fields": {
+          "ticker": {
+            "label": "Ticker (Symbol)",
+            "placeholder": "Ex: Bloxify Token"
+          },
+          "initial-quantity": {
+            "label": "Initial Quantity",
+            "placeholder": "Ex: 120.550,000"
+          },
+          "tags": {
+            "label": "Tags",
+            "placeholder": "Add tag and press Enter"
+          },
+          "twitter": {
+            "label": "Twitter",
+            "placeholder": "Ex: https://twitter.com"
+          },
+          "discord": {
+            "label": "Discord",
+            "placeholder": "Ex: https://discord.com"
+          },
+          "official-website": {
+            "label": "Official Website",
+            "placeholder": "Ex: https://example.com"
+          }
+        },
+        "buttons": {
+          "back": "Back",
+          "continue": "Continue"
+        }
+      },
+      "step-three": {
+        "counter": {
+          "current": "03",
+          "total": "of 04"
+        },
+        "title": "Blockchain and Images",
+        "fields": {
+          "blockchain": {
+            "label": "Blockchain",
+            "placeholder": "Select the Blockchain"
+          },
+          "release-date": {
+            "label": "Release Date",
+            "placeholder": "Enter the Release Date"
+          }
+        },
+        "uploads": {
+          "logo": {
+            "label": "Logo",
+            "placeholder": "Upload image",
+            "file-types": "png.jpg.jpeg"
+          },
+          "background": {
+            "label": "Background",
+            "placeholder": "Upload image",
+            "file-types": "png.jpg.jpeg"
+          }
+        },
+        "buttons": {
+          "back": "Back",
+          "continue": "Continue"
+        }
+      },
+      "step-four": {
+        "counter": {
+          "current": "04",
+          "total": "of 04"
+        },
+        "title": "Review and Creation",
+        "fields": {
+          "ticker": "Ticker",
+          "short-description": "Short Description",
+          "long-description": "Long Description",
+          "initial-quantity": "Initial Quantity",
+          "tags": "Tags",
+          "site": "Site",
+          "discord": "Discord",
+          "twitter": "Twitter",
+          "blockchain": "Blockchain",
+          "release-date": "Release Date"
+        },
+        "buttons": {
+          "edit": "Edit Data",
+          "create": "Create Token",
+          "creating": "Creating..."
+        }
+      }
     }
   }
 }
