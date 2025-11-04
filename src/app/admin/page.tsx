@@ -12,6 +12,7 @@ import CreateStep1Component from './components/createtoken/CreateStep1'
 import CreateStep2Component from './components/createtoken/CreateStep2'
 import CreateStep3Component from './components/createtoken/CreateStep3'
 import CreateStep4Component from './components/createtoken/CreateStep4'
+import CreateSuccessComponent from './components/createtoken/CreateSuccess'
 import MainLayout from '@/components/layout/MainLayout'
 
 function AdminContent() {
@@ -64,6 +65,8 @@ function AdminContent() {
       return <CreateStep3Component />
     case 'createstep4':
       return <CreateStep4Component />
+    case 'success':
+      return <CreateSuccessComponent />
     case 'dashboard':
     default:
       return (

@@ -56,7 +56,9 @@ export default function LoginComponent() {
 
       // Não chama mutateUser() - usa mock local na página admin
       setLoading(false)
-      router.push('/admin?page=dashboard')
+      
+      // Usar window.location para forçar reload e garantir que o sessionStorage seja lido
+      window.location.href = '/admin?page=dashboard'
     } catch (err) {
       console.error('[LOGIN ERROR]', err)
       setError(getAdminText('login.error-invalid-credentials', 'Credenciais inválidas. Verifique seus dados e tente novamente.'))

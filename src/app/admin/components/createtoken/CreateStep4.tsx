@@ -82,8 +82,8 @@ export default function CreateStep4() {
       localStorage.removeItem('createToken_step2')
       localStorage.removeItem('createToken_step3')
       
-      // Redirecionar para dashboard ou página de sucesso
-      router.push('/admin?page=dashboard')
+      // Redirecionar para página de sucesso
+      router.push('/admin?page=success')
     } catch (error) {
       console.error('Erro ao criar token:', error)
       alert('Erro ao criar token. Tente novamente.')
