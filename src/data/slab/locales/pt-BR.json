@@ -48,8 +48,8 @@
       }
     },
     "hero": {
-      "title": "Sustentabilidade, Biodiversidade e Blindagem",
-      "subtitle": "A SlaB Assets tokeniza ativos de biodiversidade, transformando CO2 em investimentos digitais com segurança e transparência.",
+      "title": "Descarbonização, compensação e Impacto verificável.",
+      "subtitle": "A Slab Assets transforma estoques de carbono e biodiversidade em tokens rastreáveis, usados por empresas e investidores para atingir o Net Zero com segurança e transparência.",
       "image": "images/bloxify/homen-negro-tablet.png",
       "alt": "Imagem de um homem negro segurando um tablet."
     },
@@ -113,27 +113,27 @@
         {
           "id": 1,
           "question": "O que a Slab faz?",
-          "answer": "A SlaB Assets é pioneira na tokenização de ativos de biodiversidade, promovendo a conservação ambiental . Os ativos de biodiversidade, tem como unidade métrica o CO2, o tCO2eq. (tonelada de dióxido de carbono equivalente),dentre outros gases do efeito estufa presentes em toda biomassa, além de outros fatores determinantes de um ecossistema, do subsolo a atmosfera. Oferecemos uma plataforma em Web3 segura e transparente para aqueles que desejam investir no futuro do planeta, preservando nossos ecossistemas e gerando impacto positivo."
+          "answer": "Após o registro da CPR-Verde na B3, o Estoque de Carbono e os Ativos de Biodiversidade são formalmente transferidos para a SLAB ASSETS, que atua como agente tecnológico responsável pela tokenização e governança digital desses ativos. A partir daí, a SLAB realiza um processo tecnológico completo que transforma esses ativos em tokens TBIO — unidades digitais únicas, rastreáveis e com lastro real. Esse processo inclui: Registro em blockchain, criação de smart contracts, emissão dos tokens TBIO, Integração Web3 e ESG, governança e transparência, Aposentadoria de tokens através do painel de transparência, onde é possível acompanhar toda a trajetória de cada TBIO — desde a emissão até o offset final."
         },
         {
           "id": 2,
           "question": "O que é o TBIO?",
-          "answer": "Utilizamos tecnologia de ponta para tokenizar ativos de biodiversidade, garantindo negociação segura e rastreável no blockchain. Essa inovação permite criar unidades digitais fracionadas, facilitando sua comercialização global com total transparência, segurança e rastreamento do impacto positivo de cada investimento."
+          "answer": "O TBIO representam uma nova fronteira na integração entre conservação florestal, mercado financeiro e tecnologias descentralizadas. Com base em regulações claras, instrumentos auditáveis e segurança jurídica, o ecossistema TBIO estabelece as bases para uma nova economia verde tokenizada e digital com foco na rastreabilidade e compliance."
         },
         {
           "id": 3,
           "question": "Como fazemos?",
-          "answer": "A geração de ativos de biodiversidade é realizada com máxima segurança e transparência. Todo processo, do inventário até a certificação, é conduzido por especialistas e auditado por Terceira parte, garantindo rastreabilidade e imutabilidade no blockchain. Os ativos lastreados em CPR-Verde, valorizam 27 serviços ecossistêmicos, incluindo captura de carbono, garantindo segurança jurídica e financeira."
+          "answer": "A geração de estoque de carbono + ativos de biodiversidade é realizada pela Certificadora Forest Brazil, homologada pela B3 (Brasil, Bolsa, Balcão), com máxima segurança e transparência. Todo processo, do inventário, certificação e tokenização, é conduzido por especialistas e auditado por Terceira parte, garantindo rastreabilidade e imutabilidade no blockchain. Após a utilização do TBIO com objetivo de Offset, o token é aposentado no painel de transparência da plataforma. Governança e Compliance de ponta a ponta."
         },
         {
           "id": 4,
           "question": "Por que fazemos?",
-          "answer": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+          "answer": "Comprometidos com a integridade e a transparência, criamos soluções inovadoras que conectam capital ao propósito de preservar o meio ambiente, gerando ações socioeconômicas e garantindo governança para investidores, comunidades e para o planeta."
         },
         {
           "id": 5,
           "question": "Quem somos? ",
-          "answer": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+          "answer": "A Slab Assets é uma plataforma de tokenização que conecta ativos do mundo real (RWA – Real World Assets) à economia digital. Atuando no setor de finanças regenerativas (ReFi), transformamos mata em pé em commodities do agro. Com foco em estoque de carbono, biodiversidade e serviços ecossistêmicos, oferecemos ativos com lastro real, transparência, segurança regulatória e impacto positivo mensurável. “A ponte entre a preservação da natureza e o capital global.”"
         }
       ]
     },
@@ -742,7 +742,7 @@
       "recent-transactions": "transações recentes",
       "buttons": {
         "buy": "Comprar",
-        "earnings": "Rendimentos",
+        "earnings": "Certificado",
         "withdraw": "Sacar",
         "statements": "Extratos",
         "verify-identity": "Verificar Identidade",
