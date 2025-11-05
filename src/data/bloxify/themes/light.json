@@ -4,7 +4,7 @@
   },
   "buttons": {
     "button-primary": "#1DA1F2",
-    "button-secondary": "#F0F9FF",
+    "button-secondary": "#F4F6F8",
     "button-third": "#C0FEFF"
   },
   "border": {
@@ -19,7 +19,7 @@
   },
   "colors-base": {
     "color-primary": "#1DA1F2",
-    "color-secondary": "#F0F9FF",
+    "color-secondary": "#F4F6F8",
     "color-tertiary": "#0284C7",
     "color-quaternary": "#7DD3FC"
   },
@@ -49,7 +49,7 @@
     "buttons": {
       "action-border": "#1DA1F2",
       "table-button-text": "#1F2937",
-      "table-button-bg": "#F0F9FF"
+      "table-button-bg": "#F4F6F8"
     }
   },
   "token": {
