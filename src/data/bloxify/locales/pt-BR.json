@@ -560,7 +560,7 @@
       }
     ],
     "chart-box": {
-      "title": "Saldo da Carteira",
+      "title": "Saldo da Carteira ",
       "recent-transactions": "transações recentes",
       "buttons": {
         "buy": "Comprar",
