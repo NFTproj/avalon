@@ -369,14 +369,21 @@
       "message": "Carregando.."
     }
   },
-  "dashboard": {
+    "dashboard": {
     "welcome-box": {
       "name": "Antônio",
       "title": "Bem-vindo (a) à Slab!",
-      "description": "Conheça os projetos que foram tokenizados, \ninvesta com segurança e tenha o controle total do seu patrimônio na palma da sua mão.",
+      "description": "Conheça os projetos e biomas, \nbrasileiros tokenizados, adquira o token\nTBIO e zere sua pegada de carbono.",
       "link": "Ver detalhes",
       "tokens-title": "Seus Tokens:",
-      "tokens": ["#TBIO", "#TBIO2"]
+      "tokens": ["#TBIO", "#TBIO2"],
+      "buttons": {
+        "copy": "Copiar",
+        "copied": "Copiado!",
+        "explore-tokens": "Explorar Tokens Disponíveis",
+        "complete-kyc": "Complete sua Verificação KYC",
+        "check-kyc": "Verificar Status do KYC"
+      }
     },
     "action-buttons": [
       {
@@ -662,7 +669,7 @@
   "dashboard": {
     "welcome-box": {
       "title": "Bem-vindo(a) à Slab!",
-      "subtitle": "Conheça os projetos que foram tokenizados, \ninvista com segurança e tenha o controle total do seu patrimônio.",
+      "subtitle": "Conheça os projetos e biomas, \nbrasileiros tokenizados, adquira o token\nTBIO e zere sua pegada de carbono.",
       "description": "Conheça os projetos que foram tokenizados, invista com segurança e tenha o controle total do seu patrimônio.",
       "buttons": {
         "copy": "Copiar",
@@ -695,19 +702,6 @@
         "login-required": "Faça login para ver seus balances.",
         "loading": "Carregando seus tokens...",
         "no-tokens": "Você ainda não possui tokens na sua carteira."
-      }
-    },
-    "chart-box": {
-      "wallet-balance": "Saldo da Carteira",
-      "recent-transactions": "transações recentes",
-      "loading": "Carregando dados da carteira...",
-      "try-again": "Tentar novamente",
-      "actions": {
-        "buy-tokens": "Comprar Tokens",
-        "documents": "Documentos",
-        "wallet": "Carteira",
-        "profile": "Perfil",
-        "kyc": "Verificação KYC"
       }
     },
     "token-circle": {

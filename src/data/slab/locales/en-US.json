@@ -694,19 +694,6 @@
         "no-tokens": "You don’t have any tokens in your wallet yet."
       }
     },
-    "chart-box": {
-      "wallet-balance": "Wallet Balance",
-      "recent-transactions": "Recent transactions",
-      "loading": "Loading wallet data...",
-      "try-again": "Try again",
-      "actions": {
-        "buy-tokens": "Buy Tokens",
-        "documents": "Documents",
-        "wallet": "Wallet",
-        "profile": "Profile",
-        "kyc": "KYC Verification"
-      }
-    },
     "token-circle": {
       "no-tokens": "No tokens found",
       "buy-tokens": "Buy tokens to see",

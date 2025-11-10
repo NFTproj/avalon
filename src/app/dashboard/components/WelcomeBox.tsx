@@ -13,23 +13,41 @@ export default function WelcomeBox() {
   const [copied, setCopied] = useState(false)
 
   const welcomeTexts = (texts?.dashboard as any)?.['welcome-box']
+  const brand = (texts as any)?.brand?.name ?? 'Slab'
+
   const textColor = '#FFFFFF'
   const linkColor = '#08CEFF'
   const backgroundColor = 'linear-gradient(135deg, #1F2937 0%, #374151 100%)'
 
-  // Usar nome real do usuário ou fallback
-  const userName = user?.name || user?.email?.split('@')[0] || welcomeTexts?.name || 'Usuário'
-  
-  // Formatar endereço da wallet
-  const formatWalletAddress = (address: string) => {
-    if (!address) return ''
-    return `${address.slice(0, 6)}...${address.slice(-4)}`
-  }
+  // nome do usuário
+  const userName =
+    user?.name ||
+    user?.email?.split('@')[0] ||
+    welcomeTexts?.name ||
+    'Usuário'
 
-  // Copiar endereço da wallet para área de transferência
+  // título e subtítulo/descrição com fallbacks
+  const resolvedTitle =
+    (welcomeTexts?.title && welcomeTexts.title.trim().length > 0)
+      ? welcomeTexts.title
+      : `Bem-vindo(a) à ${brand}, ${userName}!`
+
+  const resolvedSub =
+    (welcomeTexts?.subtitle && String(welcomeTexts.subtitle).trim()) ||
+    (welcomeTexts?.description && String(welcomeTexts.description).trim()) ||
+    'Conheça os projetos que foram tokenizados, invista com segurança e tenha o controle total do seu patrimônio.'
+
+  const resolvedDesc =
+    (welcomeTexts?.description && String(welcomeTexts.description).trim()) ||
+    'Gerencie seus investimentos em tokens de forma fácil e segura.'
+
+  // formatar wallet curta
+  const formatWalletAddress = (address: string) =>
+    address ? `${address.slice(0, 6)}...${address.slice(-4)}` : ''
+
+  // copiar wallet
   const copyToClipboard = async () => {
     if (!user?.walletAddress) return
-    
     try {
       await navigator.clipboard.writeText(user.walletAddress)
       setCopied(true)
@@ -39,17 +57,15 @@ export default function WelcomeBox() {
     }
   }
 
-  // Obter informações do status KYC usando o enum
+  // info KYC
   const kycInfo = useMemo(() => {
-    const status = user?.kycStatusCode ?? user?.kycStatus;
-    if (typeof status === 'number') {
-      return getKycStatusInfo(status);
-    }
+    const status = user?.kycStatusCode ?? user?.kycStatus
+    if (typeof status === 'number') return getKycStatusInfo(status)
     if (typeof status === 'string') {
-      return getKycStatusInfo(Number(status) || KycStatusCode.NOT_STARTED);
+      return getKycStatusInfo(Number(status) || KycStatusCode.NOT_STARTED)
     }
-    return null;
-  }, [user]);
+    return null
+  }, [user])
 
   return (
     <div className="relative w-full flex justify-center items-center">
@@ -62,20 +78,18 @@ export default function WelcomeBox() {
           lg:pr-[52%]
           text-center lg:text-left
         "
-        style={{
-          background: backgroundColor,
-          color: textColor,
-        }}
+        style={{ background: backgroundColor, color: textColor }}
       >
         <div className="flex-1 min-w-[300px] z-20 w-full">
           <div className="mb-4">
             <h1 className="text-2xl font-bold mb-2 break-words">
-              {welcomeTexts?.title?.replace('Slab', 'Bloxify') || `Bem-vindo(a) à Bloxify, ${userName}!`}
+              {resolvedTitle}
             </h1>
+
             <h2 className="text-xl font-semibold mb-2 break-words whitespace-pre-line">
-              {welcomeTexts?.subtitle || 'Conheça os projetos que foram tokenizados, invista com segurança e tenha o controle total do seu patrimônio.'}
+              {resolvedSub}
             </h2>
-            
+
             {/* Informações do usuário */}
             <div className="space-y-2 text-sm opacity-90 mb-4">
               {user?.email && (
@@ -84,7 +98,7 @@ export default function WelcomeBox() {
                   <span>{user.email}</span>
                 </p>
               )}
-              
+
               {user?.walletAddress && (
                 <p className="flex items-center gap-2">
                   <span className="opacity-70">Wallet:</span>
@@ -94,22 +108,22 @@ export default function WelcomeBox() {
                     className="text-xs px-2 py-1 rounded hover:bg-white/10 transition-all"
                     style={{ color: linkColor }}
                   >
-                    {copied 
-                      ? (welcomeTexts?.buttons?.copied || 'Copiado!') 
+                    {copied
+                      ? (welcomeTexts?.buttons?.copied || 'Copiado!')
                       : (welcomeTexts?.buttons?.copy || 'Copiar')}
                   </button>
                 </p>
               )}
-              
+
               {kycInfo && (
                 <p className="flex items-center gap-2">
                   <span className="opacity-70">Status:</span>
-                  <span 
+                  <span
                     className="px-2 py-1 rounded-full text-xs font-medium"
-                    style={{ 
+                    style={{
                       backgroundColor: `${kycInfo.color}20`,
                       color: kycInfo.color,
-                      border: `1px solid ${kycInfo.color}40`
+                      border: `1px solid ${kycInfo.color}40`,
                     }}
                   >
                     {kycInfo.label}
@@ -118,12 +132,10 @@ export default function WelcomeBox() {
               )}
             </div>
           </div>
-          
-          <p className="text-base mb-6 whitespace-pre-line break-words lg:w-[400px] text-left opacity-90">
-            {welcomeTexts?.description || 'Gerencie seus investimentos em tokens de forma fácil e segura.'}
-          </p>
-          
-          {/* Links de ação baseados no status do usuário */}
+
+         
+
+          {/* Ações */}
           <div className="flex flex-col gap-3">
             {kycInfo && kycInfo.code !== KycStatusCode.APPROVED && (
               <Link
@@ -136,7 +148,7 @@ export default function WelcomeBox() {
                   : welcomeTexts?.buttons?.['complete-kyc'] || 'Complete sua Verificação KYC'}
               </Link>
             )}
-            
+
             <Link
               href="/tokens"
               className="inline-block text-sm font-semibold underline break-words hover:opacity-80 transition-opacity"
