@@ -452,7 +452,12 @@
       "sold": "Vendidos",
       "available": "Disponíveis"
     },
-    "disclaimer": "Não invista antes de saber todas as informações essenciais sobre a oferta"
+    "disclaimer": "Não invista antes de saber todas as informações essenciais sobre a oferta",
+    "login-required-title": "Login Necessário",
+    "login-required-message": "Você precisa estar logado para comprar tokens. Faça login para continuar.",
+    "cancel": "Cancelar",
+    "go-to-login": "Ir para Login",
+    "processing": "Processando..."
   },
   "tokensPage": {
     "title": "Descubra hoje as [[melhores oportunidades]] de tokens digitais",
