@@ -105,7 +105,7 @@ export default function Token({
 
   const Card = (
     <div
-      className="rounded-xl shadow-lg border transition-all duration-300 hover:shadow-xl hover:scale-[1.02] h-full"
+      className="rounded-xl shadow-lg border transition-all duration-300 hover:shadow-xl hover:scale-[1.02] h-full flex flex-col"
       style={{
         backgroundColor: colors?.token['background'] ?? '#FFFFFF',
         borderColor: colors?.token['border'] ?? '#E5E5E5',
@@ -118,8 +118,8 @@ export default function Token({
         style={{ backgroundColor: colors?.token['header'] ?? '#FBFBFB' }}
       >
         <div className="flex justify-between gap-3 w-full">
-          <div className="flex flex-col justify-end gap-2">
-            <h3 className="font-bold text-lg leading-tight" style={{ color: colors?.token['text'] ?? '#000' }}>
+          <div className="flex flex-col justify-end gap-2 flex-1 min-w-0">
+            <h3 className="font-bold text-lg leading-tight min-h-[3.5rem] line-clamp-3" style={{ color: colors?.token['text'] ?? '#000' }}>
               {name}
             </h3>
             <p className="font-bold text-sm leading-relaxed" style={{ color: colors?.token['text'] ?? '#000' }}>
@@ -141,7 +141,7 @@ export default function Token({
             )}
           </div>
 
-          <div className="w-20">
+          <div className="w-20 flex-shrink-0">
             {imgSrc ? (
               <img
                 src={imgSrc}
@@ -160,7 +160,7 @@ export default function Token({
       </div>
 
       {/* Infos */}
-      <div className="flex flex-col gap-6 p-6">
+      <div className="flex flex-col gap-6 p-6 flex-1">
         <div className="flex justify-between items-center">
           <span className="text-sm font-medium" style={{ color: colors?.colors?.['color-tertiary'] ?? '#555859' }}>
             {token?.['token-price']}
@@ -204,7 +204,7 @@ export default function Token({
         )}
       </div>
 
-      <div className="w-full h-px" style={{ backgroundColor: colors?.colors?.['color-quintenary'] ?? '#e5e3e3' }} />
+      <div className="w-full h-px mt-auto" style={{ backgroundColor: colors?.colors?.['color-quintenary'] ?? '#e5e3e3' }} />
 
       <div className="flex flex-col gap-2 p-6 text-black">
         {sold > 0 ? (
