@@ -207,18 +207,35 @@ export default function Token({
       <div className="w-full h-px" style={{ backgroundColor: colors?.colors?.['color-quintenary'] ?? '#e5e3e3' }} />
 
       <div className="flex flex-col gap-2 p-6 text-black">
-        <div className="flex justify-between items-center">
-          <span className="text-sm font-black" style={{ color: colors?.colors?.['color-tertiary'] ?? '#555859' }}>
-            <span className="font-bold ">{token?.['progress-bar']['sold']}:</span>{' '}
-            <span className="font-bold text-sm text-black">{sold}</span>
-          </span>
-        </div>
-        <ProgressBar sold={sold} total={total} />
-        <div className="flex justify-between items-center">
-          <span className="text-sm font-bold" style={{ color: colors?.colors?.['color-tertiary'] ?? '#555859' }}>
-            {token?.['progress-bar']['available']}: <span className="font-bold text-sm text-black">{total - sold}</span>
-          </span>
-        </div>
+        {sold > 0 ? (
+          <>
+            <div className="flex justify-between items-center">
+              <span className="text-sm font-black" style={{ color: colors?.colors?.['color-tertiary'] ?? '#555859' }}>
+                <span className="font-bold ">{token?.['progress-bar']['sold']}:</span>{' '}
+                <span className="font-bold text-sm text-black">{sold}</span>
+              </span>
+            </div>
+            <ProgressBar sold={sold} total={total} />
+            <div className="flex justify-between items-center">
+              <span className="text-sm font-bold" style={{ color: colors?.colors?.['color-tertiary'] ?? '#555859' }}>
+                {token?.['progress-bar']['available']}: <span className="font-bold text-sm text-black">{total - sold}</span>
+              </span>
+            </div>
+          </>
+        ) : (
+          <>
+            {/* Espaço reservado invisível para manter altura do card */}
+            <div className="flex justify-between items-center invisible">
+              <span className="text-sm font-black">&nbsp;</span>
+            </div>
+            <div className="h-2.5 invisible" />
+            <div className="flex justify-between items-center">
+              <span className="text-sm font-bold" style={{ color: colors?.colors?.['color-tertiary'] ?? '#555859' }}>
+                {token?.['progress-bar']['available']}: <span className="font-bold text-sm text-black">{total}</span>
+              </span>
+            </div>
+          </>
+        )}
       </div>
     </div>
   )
