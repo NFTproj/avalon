@@ -10,7 +10,7 @@
         "main-logo": "Logo da TokenGrid"
       },
       "navigations": {
-        "navOne": "A TokenGrid",
+        "navOne": [],
         "navTwo": [
           {
             "title": "Produtos",
@@ -560,7 +560,7 @@
       }
     ],
     "chart-box": {
-      "title": "Saldo da Carteira",
+      "title": "Saldo da Carteira ",
       "recent-transactions": "transações recentes",
       "buttons": {
         "buy": "Comprar",
