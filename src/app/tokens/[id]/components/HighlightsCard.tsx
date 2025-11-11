@@ -19,7 +19,7 @@ export default function HighlightsCard({
 }: HighlightsCardProps) {
   const { colors, texts } = useContext(ConfigContext)
 
-  const i18n = texts?.['token-details']?.highlights ?? {}
+  const i18n = (texts?.['token-details']?.highlights ?? {}) as Record<string, string>
 
   const links = useMemo<BtnLink[]>(() => {
     if (!socialLinks) return []
