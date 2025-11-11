@@ -19,8 +19,8 @@ const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin']
 const poppins   = Poppins({ variable: '--font-poppins', subsets: ['latin'], weight: '400' })
 
 export const metadata: Metadata = {
-  title: 'Bloxify',
-  description: 'Powered by Blocklize',
+  title: 'TokenGrid',
+  description: 'Powered by TokenGrid',
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
