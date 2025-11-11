@@ -10,7 +10,17 @@
         "main-logo": "Logo da Slabs"
       },
       "navigations": {
-        "navOne": "A Slab",
+        "navOne": [
+          {
+            "title": "A Slab",
+            "items": [
+              {
+                "title": "Calculadora",
+                "link": "https://somasustentabilidade.com.br/calculadora/"
+              }
+            ]
+          }
+        ],
         "navTwo": [
           {
             "title": "Produtos",
@@ -477,8 +487,8 @@
       "docs": {
         "title": "Documents",
         "link1": "Docs",
-        "link2": "Info",
-        "link3": "Termos de Uso ",
+        "link2": "Mais informações",
+        "link3": "Instagram ",
         "link4": "Documentos",
         "link5": "Politica de privacidade",
         "link6": "Odr"
