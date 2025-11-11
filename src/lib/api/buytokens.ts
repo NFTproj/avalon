@@ -5,7 +5,7 @@ import { apiFetch } from './fetcher'
 /** Payload que vamos enviar para a rota interna /api/payments/pix */
 export interface PixPaymentPayload {
   cardId: string;            // id do card
-  tokenQuantity: number;     // inteiro >= 1
+  tokenQuantity: number;     // quantidade de tokens (aceita valores decimais)
   buyerAddress: string;      // carteira EVM do comprador (vinda do /auth/me no CLIENT)
   /** opcional — se não vier, a rota tenta inferir a partir do card */
   network?: string;          // ex.: 'polygon', 'amoy', 'sepolia'
@@ -28,7 +28,7 @@ export interface PixPaymentResponse {
 export async function buyWithPix(payload: PixPaymentPayload): Promise<PixPaymentResponse> {
   const body = {
     cardId: payload.cardId,
-    tokenQuantity: Math.max(1, Math.floor(Number(payload.tokenQuantity || 0))),
+    tokenQuantity: Number(payload.tokenQuantity || 0),
     buyerAddress: (payload.buyerAddress || '').trim(),   // ← garante sem espaços
     ...(payload.network ? { network: payload.network } : {}),
   };
