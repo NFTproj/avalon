@@ -10,7 +10,7 @@
         "main-logo": "TokenGrid Logo"
       },
       "navigations": {
-        "navOne": "About TokenGrid",
+        "navOne": [],
         "navTwo": [
           {
             "title": "Products",

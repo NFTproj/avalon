@@ -123,7 +123,7 @@ function Header() {
             {/* navegação mobile */}
             <nav className="flex flex-col items-center gap-4 mt-16 w-full">
               {/* navOne - About */}
-              {nav?.navOne?.[0] && (
+              {nav?.navOne?.[0]?.title && (
                 <details ref={aboutRef} className="group w-full">
                   <summary className="flex items-center justify-center cursor-pointer px-4 py-2">
                     <ChevronRight className="w-4 h-4 mr-2 transition group-open:rotate-90" />
@@ -154,7 +154,7 @@ function Header() {
               )}
 
               {/* navTwo - Products */}
-              {nav?.navTwo?.[0] && (
+              {nav?.navTwo?.[0]?.title && (
                 <details className="group w-full">
                   <summary className="flex items-center justify-center cursor-pointer px-4 py-2">
                     <ChevronRight className="w-4 h-4 mr-2 transition group-open:rotate-90" />
@@ -184,7 +184,7 @@ function Header() {
               )}
 
               {/* navThree - Language */}
-              {nav?.navThree?.[0] && (
+              {nav?.navThree?.[0]?.title && (
                 <details className="group w-full">
                   <summary className="flex items-center justify-center cursor-pointer px-4 py-2 mr-5">
                     <ChevronRight className="w-4 h-4 mr-2 transition group-open:rotate-90" />
@@ -264,7 +264,7 @@ function Header() {
             }}
           >
             {/* navOne - About */}
-            {nav?.navOne?.[0] && (
+            {nav?.navOne?.[0]?.title && (
               <details ref={aboutRef} className="group relative">
                 <summary className="flex items-center cursor-pointer">
                   {nav.navOne[0].title}
@@ -296,7 +296,7 @@ function Header() {
             )}
 
             {/* navTwo - Products */}
-            {nav?.navTwo?.[0] && (
+            {nav?.navTwo?.[0]?.title && (
               <details ref={productsRef} className="group relative">
                 <summary className="flex items-center cursor-pointer">
                   {nav.navTwo[0].title}
@@ -328,7 +328,7 @@ function Header() {
             )}
 
             {/* navThree - Language */}
-            {nav?.navThree?.[0] && (
+            {nav?.navThree?.[0]?.title && (
               <details ref={langRef} className="group relative">
                 <summary className="flex items-center cursor-pointer">
                   {nav.navThree[0].title}
