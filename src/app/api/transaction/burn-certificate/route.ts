@@ -55,12 +55,12 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    const { clientId: clientIdFromBody, cardId, tokenAddress, amount, network } = body
+    const { cardId, tokenAddress, amount, network } = body
 
     // Validações básicas
-    if (!clientIdFromBody || !cardId || !tokenAddress || !amount) {
+    if (!cardId || !tokenAddress || !amount) {
       return NextResponse.json(
-        { error: 'Campos obrigatórios ausentes: clientId, cardId, tokenAddress, amount.' },
+        { error: 'Campos obrigatórios ausentes: cardId, tokenAddress, amount.' },
         { status: 400 }
       )
     }

@@ -2,7 +2,6 @@
 
 import { useState, useContext, useMemo, useEffect, useCallback, useRef } from 'react'
 import { ConfigContext } from '@/contexts/ConfigContext'
-import { useAuth } from '@/contexts/AuthContext'
 import { apiFetch } from '@/lib/api/fetcher'
 
 interface EmissionCardProps {
@@ -14,7 +13,6 @@ interface EmissionCardProps {
 
 export default function EmissionCard({ card, userBalance, balanceData, onSuccess }: EmissionCardProps) {
   const { colors, texts, locale } = useContext(ConfigContext)
-  const { user } = useAuth()
   
   const [quantity, setQuantity] = useState<number>(0)
   const [loading, setLoading] = useState(false)
@@ -23,6 +21,7 @@ export default function EmissionCard({ card, userBalance, balanceData, onSuccess
 
   const successTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const errorTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const isSubmittingRef = useRef(false)
 
   const handleSuccessDismiss = useCallback(() => {
     if (successTimeoutRef.current) {
@@ -120,7 +119,6 @@ export default function EmissionCard({ card, userBalance, balanceData, onSuccess
   const hasBalance = maxQuantity > 0
 
   // Cores dinâmicas do tema
-  const accentColor = colors?.certificateEmission?.colors?.accent || '#08CEFF'
   const cardBg = colors?.certificateEmission?.background?.card || '#FFFFFF'
   const cardBorder = colors?.certificateEmission?.border?.card || '#E5E7EB'
   const inputBorder = colors?.certificateEmission?.border?.input || '#08CEFF'
@@ -140,6 +138,12 @@ export default function EmissionCard({ card, userBalance, balanceData, onSuccess
   const t = (key: string, fallback: string) => ceTexts?.[key] ?? fallback
 
   const handleEmit = async () => {
+    // Previne múltiplas chamadas simultâneas
+    if (isSubmittingRef.current || loading || success) {
+      console.log('[handleEmit] Chamada bloqueada - já está processando')
+      return
+    }
+
     if (quantity <= 0 || quantity > maxQuantity) {
       setError(
         t(
@@ -151,6 +155,7 @@ export default function EmissionCard({ card, userBalance, balanceData, onSuccess
     }
 
     try {
+      isSubmittingRef.current = true
       setLoading(true)
       setError(null)
 
@@ -158,6 +163,7 @@ export default function EmissionCard({ card, userBalance, balanceData, onSuccess
       const tokenAddress = balanceData?.CardBlockchainData?.tokenAddress || card?.tokenAddress
       const network = 'polygon' // Hardcoded to polygon as requested
 
+      console.log('[handleEmit] Iniciando emissão...')
       console.log('[handleEmit] balanceData:', balanceData)
       console.log('[handleEmit] tokenAddress extracted:', tokenAddress)
       console.log('[handleEmit] card data:', card)
@@ -165,7 +171,6 @@ export default function EmissionCard({ card, userBalance, balanceData, onSuccess
       await apiFetch('/api/transaction/burn-certificate', {
         method: 'POST',
         body: JSON.stringify({
-          clientId: user?.id,
           cardId: card.id,
           tokenAddress,
           amount: quantity.toString(),
@@ -173,12 +178,13 @@ export default function EmissionCard({ card, userBalance, balanceData, onSuccess
         }),
       })
 
+      console.log('[handleEmit] Emissão concluída com sucesso')
       setSuccess(true)
       setTimeout(() => {
         onSuccess()
       }, 3000)
     } catch (err: any) {
-      console.error('Erro ao emitir certificado:', err)
+      console.error('[handleEmit] Erro ao emitir certificado:', err)
       setError(
         t(
           'error-message',
@@ -187,6 +193,7 @@ export default function EmissionCard({ card, userBalance, balanceData, onSuccess
       )
     } finally {
       setLoading(false)
+      isSubmittingRef.current = false
     }
   }
 
