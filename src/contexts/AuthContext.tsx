@@ -71,9 +71,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const [showLoading, setShowLoading] = useState(false);
 
-  // Verificar se está na página de login/register para não tentar autenticar
+  // Verificar se está em uma página que precisa de autenticação
   const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
-  const isPublicPage = pathname === '/login' || pathname === '/register' || pathname === '/register-metamask';
+  const needsAuth = pathname.startsWith('/dashboard') || 
+                   pathname.startsWith('/profile') || 
+                   pathname.startsWith('/kyc') ||
+                   pathname.startsWith('/certificate-emission') ||
+                   pathname.startsWith('/buy-tokens');
+
+  // Para páginas públicas, verificar se há token nos cookies para mostrar info do usuário
+  const hasToken = typeof document !== 'undefined' ? 
+    document.cookie.includes('accessToken=') : false;
+
+  // Decidir se deve fazer a chamada da API
+  const shouldFetch = needsAuth || hasToken;
 
   /** 4.1 ▸ SWR para consultar /api/auth/me */
   const {
@@ -81,7 +92,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     isLoading,
     mutate,
   } = useSWR<MeResponse>(
-    isPublicPage ? null : '/api/auth/me', // Desabilita SWR em páginas públicas
+    shouldFetch ? '/api/auth/me' : null,
     url => apiFetch<MeResponse>(url),
     { 
       revalidateOnFocus: false,
@@ -122,7 +133,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   /* 4.4 ▸ Valor exportado */
   const value: AuthValue = {
     user: data?.user ?? null,
-    loading: isLoading,
+    loading: shouldFetch ? isLoading : false, // Só mostra loading se estiver fazendo fetch
     logout,
     mutate,
   };

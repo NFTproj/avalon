@@ -1,11 +1,15 @@
 // app/buy-tokens/page.tsx
+'use client'
+
+import { useSearchParams } from 'next/navigation'
 import BuyTokens from "./buytokens/index"
 
-export const metadata = { title: 'Comprar Tokens' }
-
 export default function Page() {
-  // se quiser SSR de catálogo, você pode buscar aqui e passar como prop
-  return <BuyTokens />
+  const searchParams = useSearchParams()
+  const tokenParam = searchParams.get('token') || ''
+  
+  // Usar o parâmetro token como key para forçar remontagem quando muda
+  return <BuyTokens key={tokenParam} />
 }
 
 

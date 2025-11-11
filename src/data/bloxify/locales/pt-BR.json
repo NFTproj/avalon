@@ -1,16 +1,16 @@
 {
   "images": {
     "logos": {
-      "main-logo": "logos/bloxify/bloxify-logo.png"
+      "main-logo": "logos/bloxify/tokengrid-transp.png"
     }
   },
   "landing-page": {
     "header": {
       "alts": {
-        "main-logo": "Logo da Bloxify"
+        "main-logo": "Logo da TokenGrid"
       },
       "navigations": {
-        "navOne": "A Bloxify",
+        "navOne": [],
         "navTwo": [
           {
             "title": "Produtos",
@@ -78,7 +78,7 @@
       ]
     },
     "features-showcase": {
-      "title": "Todos os recursos Bloxify",
+      "title": "Todos os recursos TokenGrid",
       "features": [
         {
           "id": 1,
@@ -224,7 +224,7 @@
         "title": "Central de Suporte",
         "description": "Estamos aqui para ajudar! Nossa equipe de suporte ao cliente é altamente capacitada e está pronta para atender às suas necessidades.",
         "email": "contato@blocklize.io",
-        "image": "images/bloxify/banner-support.png",
+        "image": "images/bloxify/banner-support-tokengrid.png",
         "alt": "Imagem de um banner de contato."
       },
       "form": {
@@ -242,7 +242,7 @@
           "placeholder": "Digite seu telefone"
         },
         "message": {
-          "label": "Conte um pouco sobre a sua empresa e como a Bloxify pode te ajudar:",
+          "label": "Conte um pouco sobre a sua empresa e como a TokenGrid pode te ajudar:",
           "placeholder": "Escreva sua mensagem"
         },
         "submit": "Enviar"
@@ -253,8 +253,8 @@
       "questions": [
         {
           "id": 1,
-          "question": "O que é a Bloxify?",
-          "answer": "A Bloxify é uma plataforma pioneira na tokenização de ativos físicos e digitais, promovendo a democratização de investimentos. Nossos serviços incluem o deploy de tokens, comercialização simplificada e gestão completa de ativos tokenizados, tudo isso facilitado por uma interface intuitiva e segura."
+          "question": "O que é a TokenGrid?",
+          "answer": "A TokenGrid é uma plataforma pioneira na tokenização de ativos físicos e digitais, promovendo a democratização de investimentos. Nossos serviços incluem o deploy de tokens, comercialização simplificada e gestão completa de ativos tokenizados, tudo isso facilitado por uma interface intuitiva e segura."
         },
         {
           "id": 2,
@@ -273,8 +273,8 @@
         },
         {
           "id": 5,
-          "question": "Quem pode usar a Bloxify?",
-          "answer": "A Bloxify atende empresas de todos os portes que desejam tokenizar seus ativos, desde startups até grandes corporações. Nossos clientes incluem empresas do agronegócio, imobiliário, arte, música e diversos outros setores que buscam inovação e democratização de investimentos."
+          "question": "Quem pode usar a TokenGrid?",
+          "answer": "A TokenGrid atende empresas de todos os portes que desejam tokenizar seus ativos, desde startups até grandes corporações. Nossos clientes incluem empresas do agronegócio, imobiliário, arte, música e diversos outros setores que buscam inovação e democratização de investimentos."
         }
       ]
     },
@@ -381,7 +381,7 @@
     "image": "images/login/creating-account.svg",
     "alt": "Pessoa segurando chave de acesso",
     "step-zero": {
-      "title": "Bem-vindo(a) à Slab!",
+      "title": "Bem-vindo(a) à TokeGrid!",
       "description": "Crie a sua conta em 2 minutos e negocie tokens de forma rápida e confiável.",
       "button-email": "Criar com E-mail",
       "button-metamask": "Criar com Metamask",
@@ -417,7 +417,7 @@
         "password": "Digite uma senha",
         "confirmPassword": "Repita sua senha"
       },
-      "disclaimer": "Ao continuar você aceita os Termos de uso e a Política de Privacidade da Slab Assets e declara não ser uma pessoa dos Estados Unidos.",
+      "disclaimer": "Ao continuar você aceita os Termos de uso e a Política de Privacidade da TokenGrid e declara não ser uma pessoa dos Estados Unidos.",
       "button-continue": "Continuar",
       "button-back": "Voltar"
     },
@@ -460,7 +460,7 @@
       },
       "button-back": "Voltar",
       "button-login": "Entrar",
-      "Login-Option":"Ou acesse com",
+      "Login-Option": "Ou acesse com",
       "walletButton": {
         "signing": "Assinando...",
         "connecting": "Conectando...",
@@ -487,11 +487,11 @@
     }
   },
   "footer": {
-    "alt-logo": "Logo da Bloxify",
+    "alt-logo": "Logo da TokenGrid",
     "columns": [
       {
-        "title": "Sobre a Bloxify",
-        "items": ["Conheça a Bloxify", "Nossos Projetos"]
+        "title": "Sobre a TokenGrid",
+        "items": ["Conheça a TokenGrid", "Nossos Projetos"]
       },
       {
         "title": "Jurídico",
@@ -519,7 +519,7 @@
   "dashboard": {
     "welcome-box": {
       "name": "Antônio",
-      "title": "Bem-vindo (a) à Slab!",
+      "title": "Bem-vindo (a) à TokenGrid!",
       "description": "Conheça os projetos que foram tokenizados, \ninvista com segurança e tenha o controle total do seu patrimônio na palma da sua mão.",
       "link": "Ver detalhes",
       "tokens-title": "Seus Tokens:",
@@ -560,7 +560,7 @@
       }
     ],
     "chart-box": {
-      "title": "Saldo da Carteira",
+      "title": "Saldo da Carteira ",
       "recent-transactions": "transações recentes",
       "buttons": {
         "buy": "Comprar",
@@ -577,7 +577,7 @@
     },
     "balances-table": {
       "title": "Sua carteira",
-      "highlight": "Slab",
+      "highlight": "TokenGrid",
       "columns": {
         "project": "Projeto",
         "quantity": "Quantidade",
@@ -602,7 +602,7 @@
     },
     "asset-list": {
       "title": "Sua carteira",
-      "highlight": "Slab",
+      "highlight": "TokenGrid",
       "columns": {
         "project": "Projeto",
         "unit-value": "Valor unitário",
@@ -748,25 +748,24 @@
         "src": "images/login/kyc-video-placeholder.png",
         "alt": "Demonstração do fluxo Didit"
       }
-
     },
-    "didit-logo-src":  "images/kyc/didit-logo.svg",
-    "didit-logo-alt":  "Logo da Didit",
+    "didit-logo-src": "images/kyc/didit-logo.svg",
+    "didit-logo-alt": "Logo da Didit",
     "didit-video-src": "images/kyc/verification-demo.png",
     "didit-video-alt": "Demonstração do processo KYC",
     "title-didit-verification": "Verificação Didit",
     "didit-description": "Você será redirecionado para um site externo para concluir sua verificação de identidade (KYC).",
     "button-continue": "Continuar",
-    "status-title": "Status de verificação", 
-    "status-view-details": "Ver detalhes", 
-    "status-success-headline": "Sua conta foi verificada com sucesso", 
-    "status-success-description": "Sua conta foi verificada com sucesso", 
-    "status-success-cta": "Voltar ao início", 
-    "status-pending-headline": "Sua conta está com a verificação em processamento", 
-    "status-pending-description": "Acompanhe como vai seu processo de verificação KYC.", 
-    "status-pending-cta": "Cancelar", 
-    "status-error-headline": "A verificação da sua conta falhou", 
-    "status-error-description": "A verificação da sua conta falhou", 
+    "status-title": "Status de verificação",
+    "status-view-details": "Ver detalhes",
+    "status-success-headline": "Sua conta foi verificada com sucesso",
+    "status-success-description": "Sua conta foi verificada com sucesso",
+    "status-success-cta": "Voltar ao início",
+    "status-pending-headline": "Sua conta está com a verificação em processamento",
+    "status-pending-description": "Acompanhe como vai seu processo de verificação KYC.",
+    "status-pending-cta": "Cancelar",
+    "status-error-headline": "A verificação da sua conta falhou",
+    "status-error-description": "A verificação da sua conta falhou",
     "status-error-cta": "Tentar novamente"
   },
   "buyTokens": {
@@ -799,7 +798,7 @@
     "quote-prefix-usdc": "Você pagará (USDC):",
     "cta-pix": "Comprar com PIX",
     "cta-usdc": "Comprar com USDC",
-      "pix-copia-cola": "PIX copia e cola",
+    "pix-copia-cola": "PIX copia e cola",
     "pix-copy": "Copiar código",
     "pix-copied": "Copiado!",
     "value-label": "Valor",
@@ -813,7 +812,6 @@
     "error-fetch-status": "Falha ao consultar ({status})",
     "error-generic": "Não foi possível verificar o pagamento.",
     "qty-label": "Quantidade (tokens)"
-
   },
   "tokenList": {
     "empty": "Nenhum token disponível no momento.",
@@ -897,6 +895,166 @@
       "title": "Dica:",
       "message": "Fique atento às atualizações! Notificaremos você assim que esta funcionalidade estiver disponível."
     }
+  },
+  "admin": {
+    "login": {
+      "title": "Acesse sua conta",
+      "email-label": "Seu e-mail:",
+      "password-label": "Sua senha:",
+      "email-placeholder": "Digite seu e-mail",
+      "password-placeholder": "Digite sua senha",
+      "login-button": "Entrar",
+      "error-invalid-credentials": "Credenciais inválidas. Verifique seus dados e tente novamente."
+    },
+    "dashboard": {
+      "title": "Área do Administrador",
+      "metrics": {
+        "total-tokens": "Total de Tokens",
+        "pending-kyc": "KYCs Pendentes",
+        "active-users": "Usuários Ativos"
+      },
+      "recent-kycs": {
+        "title": "KYCs Recentes",
+        "view-all": "Ver Todos"
+      },
+      "recent-tokens": {
+        "title": "Tokens Recentes",
+        "view-all": "Ver Todos"
+      },
+      "create-token-button": "+ Criar Novo Token",
+      "token-status": {
+        "active": "Ativo",
+        "pending": "Pendente",
+        "inactive": "Inativo"
+      },
+      "kyc-status": {
+        "approved": "Aprovado"
+      }
+    },
+    "create-token": {
+      "title": "Criar Token",
+      "description": "Aqui você poderá criar um novo token para representar ativos ou direitos, facilitando a tokenização e a gestão dos mesmos.",
+      "back-button": "Voltar",
+      "start-button": "Começar",
+      "step-one": {
+        "counter": {
+          "current": "01",
+          "total": "de 04"
+        },
+        "title": "Dados Principais",
+        "fields": {
+          "card-name": {
+            "label": "Nome do Card",
+            "placeholder": "Ex: Bloxify Token"
+          },
+          "short-description": {
+            "label": "Descrição Curta",
+            "placeholder": "Ex: Token utilitário da Bloxify"
+          },
+          "long-description": {
+            "label": "Descrição Longa",
+            "placeholder": "Adicione uma descrição detalhada do token"
+          }
+        },
+        "buttons": {
+          "back": "Voltar",
+          "continue": "Continuar"
+        }
+      },
+      "step-two": {
+        "counter": {
+          "current": "02",
+          "total": "de 04"
+        },
+        "title": "Configurações Avançadas",
+        "fields": {
+          "ticker": {
+            "label": "Ticker (Símbolo)",
+            "placeholder": "Ex: Bloxify Token"
+          },
+          "initial-quantity": {
+            "label": "Quantidade Inicial",
+            "placeholder": "Ex: 120.550,000"
+          },
+          "tags": {
+            "label": "Tags",
+            "placeholder": "Adicione a tag e pressione Enter"
+          },
+          "twitter": {
+            "label": "Twitter",
+            "placeholder": "Ex: https://twitter.com"
+          },
+          "discord": {
+            "label": "Discord",
+            "placeholder": "Ex: https://discord.com"
+          },
+          "official-website": {
+            "label": "Site Oficial",
+            "placeholder": "Ex: https://exemplo.com"
+          }
+        },
+        "buttons": {
+          "back": "Voltar",
+          "continue": "Continuar"
+        }
+      },
+      "step-three": {
+        "counter": {
+          "current": "03",
+          "total": "de 04"
+        },
+        "title": "Blockchain e Imagens",
+        "fields": {
+          "blockchain": {
+            "label": "Blockchain",
+            "placeholder": "Selecione a Blockchain"
+          },
+          "release-date": {
+            "label": "Data de Lançamento",
+            "placeholder": "Digite a Data de Lançamento"
+          }
+        },
+        "uploads": {
+          "logo": {
+            "label": "Logotipo",
+            "placeholder": "Upload da imagem",
+            "file-types": "png.jpg.jpeg"
+          },
+          "background": {
+            "label": "Plano de fundo",
+            "placeholder": "Upload da imagem",
+            "file-types": "png.jpg.jpeg"
+          }
+        },
+        "buttons": {
+          "back": "Voltar",
+          "continue": "Continuar"
+        }
+      },
+      "step-four": {
+        "counter": {
+          "current": "04",
+          "total": "de 04"
+        },
+        "title": "Revisão e Criação",
+        "fields": {
+          "ticker": "Ticker",
+          "short-description": "Descrição Curta",
+          "long-description": "Descrição Longa",
+          "initial-quantity": "Quantidade inicial",
+          "tags": "Tags",
+          "site": "Site",
+          "discord": "Discord",
+          "twitter": "Twitter",
+          "blockchain": "Blockchain",
+          "release-date": "Data de Lançamento"
+        },
+        "buttons": {
+          "edit": "Editar Dados",
+          "create": "Criar Token",
+          "creating": "Criando..."
+        }
+      }
+    }
   }
-  
 }

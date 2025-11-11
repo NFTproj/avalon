@@ -9,13 +9,23 @@ import LoadingOverlay from '@/components/common/LoadingOverlay'
 
 export default function DashboardPage() {
   const router = useRouter()
-  const { user, loading } = useAuth()
+  const { user, loading, mutate } = useAuth()
+
 
   useEffect(() => {
     if (!loading && !user) {
       router.replace('/login')
     }
   }, [loading, user, router])
+
+  // Recarregar saldos sempre que o dashboard for acessado de outra rota
+  useEffect(() => {
+    if (user && !loading) {
+      // Sempre recarrega quando o componente é montado (vindo de outra rota)
+      console.log('Dashboard acessado - recarregando saldos...')
+      mutate() // Revalida os dados do usuário (incluindo saldos)
+    }
+  }, [user, loading, mutate])
 
 
   if (loading || (!user && typeof window !== 'undefined')) {

@@ -39,8 +39,7 @@ export default function BuyTokens() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()                                  // ⬅️ add
-  const urlTokenKey = (searchParams.get('token') || '').toLowerCase()
-  const didInitFromUrl = useRef(false)
+  const urlTokenKey = searchParams.get('token') || ''
 
   const T: any = (texts as any)?.buyTokens ?? {}
   const t = (k: string, fb: string) => T?.[k] ?? fb
@@ -86,6 +85,8 @@ export default function BuyTokens() {
     })
   }, [cards])
 
+
+
   // índice on-chain por id (chainId + saleAddress)
   const onchainById = useMemo(() => {
     const map = new Map<
@@ -116,34 +117,27 @@ export default function BuyTokens() {
 
   // ⬇️ inicializa a seleção a partir da URL (id OU ticker) e garante fallback pro primeiro token
   useEffect(() => {
-    if (!tokens.length) { setSelectedId(null); return }
-
-    if (!didInitFromUrl.current) {
-      const pre =
-        urlTokenKey &&
-        tokens.find(
-          t =>
-            t.id.toLowerCase() === urlTokenKey ||
-            (t.ticker && t.ticker.toLowerCase() === urlTokenKey)
-        )
-      setSelectedId(pre ? pre.id : tokens[0].id)
-      didInitFromUrl.current = true
-
-      // se não tinha ?token=, escreve o primeiro na URL
-      if (!urlTokenKey) {
-        const qs = new URLSearchParams(searchParams.toString())
-        qs.set('token', (pre ? pre.id : tokens[0].id))
-        router.replace(`${pathname}?${qs.toString()}`)          // ⬅️ 1 arg
-      }
-      return
+    if (!tokens.length) { 
+      setSelectedId(null)
+      return 
     }
+      
+    const pre = urlTokenKey ? tokens.find(t => {
+      const idMatch = t.id === urlTokenKey
+      const tickerMatch = t.ticker && t.ticker.toLowerCase() === urlTokenKey.toLowerCase()
+      return idMatch || tickerMatch
+    }) : null
+    
+    const newSelectedId = pre ? pre.id : tokens[0].id
+    setSelectedId(newSelectedId)
 
-    // tokens mudaram: mantém seleção válida
-    if (!selectedId || !tokens.find(t => t.id === selectedId)) {
-      setSelectedId(tokens[0].id)
+    // se não tinha ?token=, escreve o primeiro na URL
+    if (!urlTokenKey && tokens.length > 0) {
+      const qs = new URLSearchParams(searchParams.toString())
+      qs.set('token', newSelectedId)
+      router.replace(`${pathname}?${qs.toString()}`)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tokens, urlTokenKey])
+  }, [tokens, urlTokenKey, searchParams, pathname, router])
 
   // sincroniza URL quando o usuário seleciona outro token
   const handleSelect = (it: TokenItem) => {

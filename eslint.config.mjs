@@ -1,27 +1,43 @@
-import eslint from '@eslint/js'
+// eslint.config.mjs
+import js from '@eslint/js'
 import tseslint from 'typescript-eslint'
+import nextPlugin from '@next/eslint-plugin-next'
+import prettierConfig from 'eslint-config-prettier'
+import prettierPlugin from 'eslint-plugin-prettier'
+import reactHooks from 'eslint-plugin-react-hooks'
+import globals from 'globals'
+import { FlatCompat } from '@eslint/eslintrc'
+
+const compat = new FlatCompat({ baseDirectory: import.meta.dirname })
 
 export default tseslint.config(
-  eslint.configs.recommended,
-  tseslint.configs.recommended,
+  { ignores: ['**/temp.js','config/*','.next/*','public/*','node_modules/*','data/*','dist/*'] },
+
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+
+  // Converte os presets do Next (que dão o erro) para Flat
+  ...compat.extends('plugin:@next/next/recommended'),
+  ...compat.extends('plugin:@next/next/core-web-vitals'),
+
+  prettierConfig,
+
   {
-    extends: [
-      'next/core-web-vitals',
-      'next/typescript',
-      'eslint:recommended',
-      'plugin:@typescript-eslint/recommended',
-      'plugin:@typescript-eslint/recommended-requiring-type-checking',
-      'plugin:@next/next/recommended',
-      'plugin:prettier/recommended',
-    ],
+    plugins: {
+      '@next/next': nextPlugin,
+      prettier: prettierPlugin,
+      'react-hooks': reactHooks,
+    },
+    languageOptions: {
+      parserOptions: {
+        // Se quiser type-check lint, descomente e garanta tsconfig ok:
+        // project: ['./tsconfig.json'],
+        // tsconfigRootDir: import.meta.dirname,
+      },
+      globals: { ...globals.browser, ...globals.node },
+    },
     rules: {
-      'prettier/prettier': [
-        'error',
-        {
-          singleQuote: true,
-          parser: 'flow',
-        },
-      ],
+      'prettier/prettier': ['error', { singleQuote: true }],
       '@typescript-eslint/no-unused-vars': [
         'error',
         {
@@ -47,14 +63,5 @@ export default tseslint.config(
       'react-hooks/exhaustive-deps': 'warn',
       'react-hooks/rules-of-hooks': 'warn',
     },
-    ignores: [
-      '**/temp.js',
-      'config/*',
-      '.next/*',
-      'public/*',
-      'node_modules/*',
-      'data/*',
-      '.next',
-    ],
   },
 )

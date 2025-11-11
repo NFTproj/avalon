@@ -1,14 +1,12 @@
 'use client'
 
 import { FormEvent, useContext, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import CustomButton from '@/components/core/Buttons/CustomButton'
 import CustomInput from '@/components/core/Inputs/CustomInput'
 import LoadingOverlay from '@/components/common/LoadingOverlay'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { loginUser } from '@/lib/api/auth'
-import { mutateUser } from '@/contexts/AuthContext'
 
 interface StepFourProps {
   nextStep: () => void
@@ -17,7 +15,6 @@ interface StepFourProps {
 
 export default function StepFour({ nextStep, prevStep }: StepFourProps) {
   const { colors, texts } = useContext(ConfigContext)
-  const router = useRouter()
 
   const stepZeroTexts = texts?.register?.['step-zero']
   const stepFourTexts = texts?.register?.['step-four']
@@ -34,18 +31,14 @@ export default function StepFour({ nextStep, prevStep }: StepFourProps) {
 
     setLoading(true)
     try {
-      const result = await loginUser({ email, password })
-      console.log('[LOGIN OK]', result)
+      await loginUser({ email, password })
+      console.log('[LOGIN OK] Redirecionando para dashboard...')
 
-      // Atualiza o contexto de autenticação para refletir o login
-      mutateUser()
-
-      await new Promise((resolve) => setTimeout(resolve, 800)) // delay para UX suave
-      router.push('/dashboard')
+      // Usar window.location para forçar reload e recarregar o AuthContext
+      window.location.href = '/dashboard'
     } catch (err) {
       console.error('[LOGIN ERROR]', err)
       setError('E-mail ou senha inválidos. Tente novamente.')
-    } finally {
       setLoading(false)
     }
   }
