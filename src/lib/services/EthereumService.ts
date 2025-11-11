@@ -86,7 +86,6 @@ export class EthereumService extends BlockchainService {
         totalValueUSD,
       }
     } catch (error) {
-      console.error('[EthereumService] Error getting wallet balance:', error)
       throw new Error(`Failed to get Ethereum wallet balance: ${error}`)
     }
   }
@@ -114,7 +113,6 @@ export class EthereumService extends BlockchainService {
           }
         } catch (error) {
           // Token pode não existir ou ter erro - continuar com o próximo
-          console.warn(`[EthereumService] Error getting ${tokenConfig.symbol} balance:`, error)
         }
       }
 
@@ -123,7 +121,6 @@ export class EthereumService extends BlockchainService {
 
       return tokenBalances
     } catch (error) {
-      console.error('[EthereumService] Error getting token balances:', error)
       throw new Error(`Failed to get Ethereum token balances: ${error}`)
     }
   }
@@ -142,7 +139,6 @@ export class EthereumService extends BlockchainService {
       // Caso contrário, buscar apenas transações recentes via provider
       return await this.getRecentTransactions(address, limit)
     } catch (error) {
-      console.error('[EthereumService] Error getting transaction history:', error)
       throw new Error(`Failed to get Ethereum transaction history: ${error}`)
     }
   }
@@ -158,7 +154,6 @@ export class EthereumService extends BlockchainService {
 
       return await this.provider.estimateGas(txRequest)
     } catch (error) {
-      console.error('[EthereumService] Error estimating gas:', error)
       throw new Error(`Failed to estimate gas: ${error}`)
     }
   }
@@ -196,7 +191,6 @@ export class EthereumService extends BlockchainService {
         confirmations: 0, // Será calculado separadamente se necessário
       }))
     } catch (error) {
-      console.error('[EthereumService] Error fetching from Etherscan:', error)
       // Fallback para método local
       return await this.getRecentTransactions(address, limit)
     }
@@ -244,7 +238,6 @@ export class EthereumService extends BlockchainService {
                   })
                 }
               } catch (error) {
-                console.warn(`[EthereumService] Error getting transaction details for ${tx}:`, error)
                 continue
               }
             } else if (tx && typeof tx === 'object' && 'from' in tx && 'to' in tx && 'hash' in tx) {
@@ -272,14 +265,12 @@ export class EthereumService extends BlockchainService {
             }
           }
         } catch (error) {
-          console.warn(`[EthereumService] Error processing block ${blockNumber}:`, error)
           continue
         }
       }
 
       return transactions
     } catch (error) {
-      console.error('[EthereumService] Error getting recent transactions:', error)
       return []
     }
   }
@@ -301,7 +292,6 @@ export class EthereumService extends BlockchainService {
       // Por enquanto, retornar 0
       return 0
     } catch (error) {
-      console.error('[EthereumService] Error getting ETH price:', error)
       return 0
     }
   }
@@ -363,7 +353,6 @@ export class EthereumService extends BlockchainService {
         decimals,
       }
     } catch (error) {
-      console.error('[EthereumService] Error getting ERC20 info:', error)
       return null
     }
   }

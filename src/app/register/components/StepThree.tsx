@@ -78,7 +78,6 @@ export default function StepThree({
       await new Promise((resolve) => setTimeout(resolve, 800))
       nextStep()
     } catch (err) {
-      console.error('[StepThree] Código inválido:', err)
       setError('Código inválido ou expirado.')
     } finally {
       setLoading(false)

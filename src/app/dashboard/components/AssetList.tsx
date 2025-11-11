@@ -52,7 +52,6 @@ const fallbackCards: Card[] = [
 const convertApiCardToCard = (apiCard: ApiCard): Card | null => {
   // Validar se tem dados blockchain
   if (!apiCard.cardBlockchainData?.tokenAddress) {
-    console.warn(`Card ${apiCard.id} não tem tokenAddress válido:`, apiCard.cardBlockchainData)
     return null
   }
 
@@ -103,35 +102,26 @@ export default function AssetList() {
         setError(null)
         setUsingFallback(false)
 
-        console.log('🔍 Iniciando busca de cards da API...')
         const response = await getAllCards()
-        console.log('📡 API Response completa:', response)
 
         if (response.data && Array.isArray(response.data)) {
-          console.log('✅ Dados da API são um array válido')
 
           // Converter cards da API para o formato interno, filtrando inválidos
           const convertedCards = response.data
             .map(convertApiCardToCard)
             .filter((card): card is Card => card !== null)
 
-          console.log('🔄 Cards convertidos:', convertedCards)
-
           if (convertedCards.length > 0) {
             setCards(convertedCards)
-            console.log('🎯 Cards definidos com sucesso')
           } else {
-            console.warn('⚠️ Nenhum card válido da API, usando dados de exemplo')
             setCards(fallbackCards)
             setUsingFallback(true)
           }
         } else {
-          console.warn('⚠️ API não retornou dados válidos, usando dados de exemplo')
           setCards(fallbackCards)
           setUsingFallback(true)
         }
       } catch (error) {
-        console.error('❌ Erro ao buscar cards da API, usando dados de exemplo:', error)
         setCards(fallbackCards)
         setUsingFallback(true)
         setError('API indisponível - mostrando dados de exemplo')

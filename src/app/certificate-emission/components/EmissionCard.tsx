@@ -140,7 +140,6 @@ export default function EmissionCard({ card, userBalance, balanceData, onSuccess
   const handleEmit = async () => {
     // Previne múltiplas chamadas simultâneas
     if (isSubmittingRef.current || loading || success) {
-      console.log('[handleEmit] Chamada bloqueada - já está processando')
       return
     }
 
@@ -163,11 +162,6 @@ export default function EmissionCard({ card, userBalance, balanceData, onSuccess
       const tokenAddress = balanceData?.CardBlockchainData?.tokenAddress || card?.tokenAddress
       const network = 'polygon' // Hardcoded to polygon as requested
 
-      console.log('[handleEmit] Iniciando emissão...')
-      console.log('[handleEmit] balanceData:', balanceData)
-      console.log('[handleEmit] tokenAddress extracted:', tokenAddress)
-      console.log('[handleEmit] card data:', card)
-
       await apiFetch('/api/transaction/burn-certificate', {
         method: 'POST',
         body: JSON.stringify({
@@ -178,13 +172,11 @@ export default function EmissionCard({ card, userBalance, balanceData, onSuccess
         }),
       })
 
-      console.log('[handleEmit] Emissão concluída com sucesso')
       setSuccess(true)
       setTimeout(() => {
         onSuccess()
       }, 3000)
     } catch (err: any) {
-      console.error('[handleEmit] Erro ao emitir certificado:', err)
       setError(
         t(
           'error-message',

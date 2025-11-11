@@ -36,7 +36,6 @@ export async function POST(req: NextRequest) {
       { status: 401 }
     )
   } catch (error) {
-    console.error('[ADMIN LOGIN API ERROR]', error)
     return NextResponse.json(
       { error: 'Erro no servidor de login admin' },
       { status: 500 }

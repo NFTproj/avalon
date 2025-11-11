@@ -106,7 +106,6 @@ export class TransactionService {
       }
 
     } catch (error) {
-      console.error('[TransactionService] Error getting transaction history:', error)
       return {
         success: false,
         data: {
@@ -155,7 +154,6 @@ export class TransactionService {
       }
 
     } catch (error) {
-      console.error('[TransactionService] Error getting transactions by type:', error)
       return {
         success: false,
         data: {
@@ -222,7 +220,6 @@ export class TransactionService {
       }
 
     } catch (error) {
-      console.error('[TransactionService] Error getting transactions by date range:', error)
       return {
         success: false,
         data: {
@@ -291,7 +288,6 @@ export class TransactionService {
       }
 
     } catch (error) {
-      console.error('[TransactionService] Error getting transaction details:', error)
       return {
         success: false,
         data: null,
@@ -357,7 +353,6 @@ export class TransactionService {
         }
       }
       
-      console.warn('[TransactionService] API failed, using mock data:', error)
       // Fallback para dados mock apenas para erros reais
       return this.getMockTransactions(address, limit, page)
     }

@@ -54,12 +54,6 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
 
         const response = await apiFetch<any>(url)
 
-        console.log('[CertificateHistory] URL:', url)
-        console.log('[CertificateHistory] Transactions count:', response.transactions?.length)
-        console.log('[CertificateHistory] Total:', response.total)
-        console.log('[CertificateHistory] Page:', response.page)
-        console.log('[CertificateHistory] Limit:', response.limit)
-
         if (!response.transactions || response.transactions.length === 0) {
           setCertificates([])
           setLoading(false)
@@ -106,7 +100,6 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
         setCertificates(mappedCertificates)
         setTotal(response.total || 0)
       } catch (err) {
-        console.error('Erro ao buscar histórico:', err)
         setCertificates([])
         setTotal(0)
       } finally {
@@ -154,13 +147,11 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
 
   const handleDownload = (cert: Certificate) => {
     // TODO: Implementar download real
-    console.log('Download certificado:', cert.id)
     alert('Download do certificado em desenvolvimento')
   }
 
   const handleReemit = (cert: Certificate) => {
     // TODO: Implementar reemissão
-    console.log('Reemitir certificado:', cert.id)
     alert('Reemissão em desenvolvimento')
   }
 

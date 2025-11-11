@@ -123,7 +123,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
       }, 800);
     } catch (err) {
-      console.error('[Logout error]', err);
       setShowLoading(false);
     }
   };

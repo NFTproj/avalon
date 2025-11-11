@@ -48,7 +48,6 @@ export async function GET(req: NextRequest) {
     }).toString()
 
     const upstreamUrl = `${apiBase}/transaction?${queryString}`
-    console.log('[transactions] URL do backend:', upstreamUrl)
 
     const upstream = await fetch(upstreamUrl, {
       method: 'GET',
@@ -63,7 +62,6 @@ export async function GET(req: NextRequest) {
     const status = upstream.status
     const contentType = upstream.headers.get('content-type') || ''
 
-    console.log('[transactions] Status do backend:', status)
 
     if (contentType.includes('application/json')) {
       const json = await upstream.json().catch(() => ({}))
@@ -72,13 +70,11 @@ export async function GET(req: NextRequest) {
 
     // Resposta não-JSON
     const text = await upstream.text()
-    console.log('[transactions] Resposta não-JSON do backend:', text.slice(0, 400))
     return NextResponse.json(
       { error: 'Resposta não-JSON do backend', raw: text.slice(0, 400) },
       { status }
     )
   } catch (err) {
-    console.error('[transactions] erro', err)
     return NextResponse.json(
       { error: 'Erro interno ao buscar transações.' },
       { status: 500 }

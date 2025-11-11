@@ -72,7 +72,6 @@ export default function CreateStep4() {
       // TODO: Implementar chamada à API para criar o token
       // const response = await createTokenAPI(formData)
       
-      console.log('Dados completos do token:', formData)
       
       // Simular criação (remover após implementar API)
       await new Promise(resolve => setTimeout(resolve, 2000))
@@ -85,7 +84,6 @@ export default function CreateStep4() {
       // Redirecionar para página de sucesso
       router.push('/admin?page=success')
     } catch (error) {
-      console.error('Erro ao criar token:', error)
       alert('Erro ao criar token. Tente novamente.')
     } finally {
       setLoading(false)

@@ -37,7 +37,6 @@ export default function CreateStep1() {
         const parsed = JSON.parse(savedData)
         setFormData(prev => ({ ...prev, ...parsed }))
       } catch (error) {
-        console.error('Erro ao carregar dados do step 1:', error)
       }
     }
   }, [])
@@ -55,7 +54,6 @@ export default function CreateStep1() {
 
   const handleContinue = () => {
     // Aqui você pode adicionar validação se necessário
-    console.log('Dados do formulário:', formData)
     // Salvar no localStorage
     localStorage.setItem('createToken_step1', JSON.stringify(formData))
     // Navegar para o próximo passo

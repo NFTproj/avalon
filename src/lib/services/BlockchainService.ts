@@ -51,7 +51,6 @@ export abstract class BlockchainService {
       const balance = await this.provider.getBalance(address)
       return ethers.formatEther(balance)
     } catch (error) {
-      console.error(`[BlockchainService] Error getting native balance:`, error)
       throw new Error(`Failed to get native balance: ${error}`)
     }
   }
@@ -94,7 +93,6 @@ export abstract class BlockchainService {
         network: this.network,
       }
     } catch (error) {
-      console.error(`[BlockchainService] Error getting token balance:`, error)
       throw new Error(`Failed to get token balance: ${error}`)
     }
   }
@@ -103,7 +101,6 @@ export abstract class BlockchainService {
     try {
       return await this.provider.getTransactionReceipt(hash)
     } catch (error) {
-      console.error(`[BlockchainService] Error getting transaction receipt:`, error)
       return null
     }
   }
@@ -112,7 +109,6 @@ export abstract class BlockchainService {
     try {
       return await this.provider.getBlockNumber()
     } catch (error) {
-      console.error(`[BlockchainService] Error getting block number:`, error)
       throw new Error(`Failed to get block number: ${error}`)
     }
   }
@@ -121,7 +117,6 @@ export abstract class BlockchainService {
     try {
       return await this.provider.getFeeData().then(data => data.gasPrice || BigInt(0))
     } catch (error) {
-      console.error(`[BlockchainService] Error getting gas price:`, error)
       throw new Error(`Failed to get gas price: ${error}`)
     }
   }
@@ -201,7 +196,6 @@ export abstract class BlockchainService {
       const block = await this.provider.getBlock(blockNumber)
       return block?.timestamp || 0
     } catch (error) {
-      console.error(`[BlockchainService] Error getting block timestamp:`, error)
       return 0
     }
   }
@@ -215,7 +209,6 @@ export abstract class BlockchainService {
       const currentBlock = await this.getBlockNumber()
       return currentBlock - receipt.blockNumber + 1
     } catch (error) {
-      console.error(`[BlockchainService] Error getting confirmations:`, error)
       return 0
     }
   }
@@ -226,7 +219,6 @@ export abstract class BlockchainService {
       const currentConfirmations = await this.getTransactionConfirmations(hash)
       return currentConfirmations >= confirmations
     } catch (error) {
-      console.error(`[BlockchainService] Error checking confirmation:`, error)
       return false
     }
   }
@@ -243,7 +235,6 @@ export abstract class BlockchainService {
         return 'failed'
       }
     } catch (error) {
-      console.error(`[BlockchainService] Error getting transaction status:`, error)
       return 'pending'
     }
   }

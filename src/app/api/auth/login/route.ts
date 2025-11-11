@@ -16,9 +16,6 @@ export async function POST(req: NextRequest) {
 
     const payload = { email, password, clientId }
 
-    console.log('[LOGIN API] Making request to:', `${apiUrl}/auth/login`)
-    console.log('[LOGIN API] Payload:', { email, clientId }) // Don't log password
-    
     const response = await fetch(`${apiUrl}/auth/login`, {
       method: 'POST',
       headers: {
@@ -27,14 +24,10 @@ export async function POST(req: NextRequest) {
       },
       body: JSON.stringify(payload),
     })
-
-    console.log('[LOGIN API] Response status:', response.status)
     
     const data = await response.json()
-    console.log('[LOGIN API] Response data:', data)
     
     if (!response.ok) {
-      console.error('[LOGIN API] External API error:', data)
       return NextResponse.json(data, { status: response.status })
     }
 
@@ -56,13 +49,7 @@ export async function POST(req: NextRequest) {
 
     return res
   } catch (error) {
-    console.error('[LOGIN API ERROR]', error)
-    console.error('[LOGIN API ERROR - Details]', {
-      apiUrl,
-      hasApiKey: !!apiKey,
-      hasClientId: !!clientId,
-      errorMessage: error instanceof Error ? error.message : 'Unknown error'
-    })
+    
     return NextResponse.json({ error: 'Erro no servidor de login' }, { status: 500 })
   }
 }

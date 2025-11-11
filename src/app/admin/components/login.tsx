@@ -60,7 +60,6 @@ export default function LoginComponent() {
       // Usar window.location para forçar reload e garantir que o sessionStorage seja lido
       window.location.href = '/admin?page=dashboard'
     } catch (err) {
-      console.error('[LOGIN ERROR]', err)
       setError(getAdminText('login.error-invalid-credentials', 'Credenciais inválidas. Verifique seus dados e tente novamente.'))
       setLoading(false)
     }
