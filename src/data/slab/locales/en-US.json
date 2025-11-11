@@ -468,7 +468,7 @@
       },
       "docs": {
         "title": "Documents",
-        "link1": "Twitter",
+        "link1": "Docs",
         "link2": "Instagram",
         "link3": "Terms of Use",
         "link4": "Documents",
@@ -747,7 +747,7 @@
       },
       "buttons": {
         "buy": "Buy",
-        "sell": "Sell"
+        "sell": "Sell "
       }
     }
   },
