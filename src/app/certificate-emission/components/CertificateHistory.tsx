@@ -23,6 +23,9 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
   const { texts, locale, colors } = useContext(ConfigContext)
   const [certificates, setCertificates] = useState<Certificate[]>([])
   const [loading, setLoading] = useState(true)
+  const [page, setPage] = useState(1)
+  const [total, setTotal] = useState(0)
+  const [limit] = useState(10)
   const [filters, setFilters] = useState({
     year: 'all',
     token: 'all',
@@ -43,73 +46,71 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
     const fetchCertificates = async () => {
       try {
         setLoading(true)
-        // TODO: Implementar API real
-        // const response = await apiFetch('/api/certificates/history')
-        
-        // Mock data por enquanto - dados mais variados para testar filtros
-        const mockData: Certificate[] = [
-          {
-            id: '1',
-            cardId: cardId || 'mock-id',
-            cardName: 'Fazenda Eliane - Mato Grosso (TBIO1)',
-            cardLogoUrl: 'https://picsum.photos/200',
-            quantity: 1299,
-            status: 'emitido',
-            certificateId: 'CARD-2023-0012387',
-            emittedAt: '15/03/2025 às 20:34:45',
-          },
-          {
-            id: '2',
-            cardId: cardId || 'mock-id',
-            cardName: 'Fazenda Eliane - Mato Grosso (TBIO1)',
-            cardLogoUrl: 'https://picsum.photos/200',
-            quantity: 800,
-            status: 'pendente',
-            certificateId: 'CARD-2023-0012387',
-            emittedAt: '15/03/2025 às 20:34:45',
-          },
-          {
-            id: '3',
-            cardId: cardId || 'mock-id',
-            cardName: 'Fazenda Eliane - Mato Grosso (TBIO1)',
-            cardLogoUrl: 'https://picsum.photos/200',
-            quantity: 500,
-            status: 'falha',
-            certificateId: 'CARD-2023-0012387',
-            emittedAt: '15/03/2025 às 20:34:45',
-          },
-          {
-            id: '4',
-            cardId: cardId || 'mock-id',
-            cardName: 'Fazenda Solar - São Paulo (TBIO2)',
-            cardLogoUrl: 'https://picsum.photos/201',
-            quantity: 1500,
-            status: 'emitido',
-            certificateId: 'CARD-2024-0015432',
-            emittedAt: '10/02/2024 às 14:20:30',
-          },
-          {
-            id: '5',
-            cardId: cardId || 'mock-id',
-            cardName: 'Projeto Amazônia - Amazonas (TBIO1)',
-            cardLogoUrl: 'https://picsum.photos/202',
-            quantity: 950,
-            status: 'pendente',
-            certificateId: 'CARD-2023-0009876',
-            emittedAt: '05/12/2023 às 09:15:22',
-          },
-        ]
-        
-        setCertificates(mockData)
+
+        // Buscar transações do tipo 500 (burn/certificado) com paginação
+        const url = cardId
+          ? `/api/transactions?cardId=${cardId}&transactionType=500&page=${page}&limit=${limit}`
+          : `/api/transactions?transactionType=500&page=${page}&limit=${limit}`
+
+        const response = await apiFetch<any>(url)
+
+        if (!response.transactions || response.transactions.length === 0) {
+          setCertificates([])
+          setLoading(false)
+          return
+        }
+
+        // Buscar dados de todos os cards únicos
+        const uniqueCardIds = [...new Set(response.transactions.map((t: any) => t.cardId))]
+        const cardsResponse = await apiFetch<any>('/api/cards')
+        const cardsMap = new Map(cardsResponse.data?.map((c: any) => [c.id, c]) || [])
+
+        // Mapear transações para certificados
+        const mappedCertificates: Certificate[] = response.transactions.map((tx: any) => {
+          const card = cardsMap.get(tx.cardId) as any
+
+          // Mapear status: 200 = emitido, 100 = pendente, outros = falha
+          let status: 'emitido' | 'pendente' | 'falha' = 'falha'
+          if (tx.status === 200) status = 'emitido'
+          else if (tx.status === 100) status = 'pendente'
+
+          // Formatar data
+          const date = new Date(tx.createdAt)
+          const emittedAt = date.toLocaleString(locale || 'pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+          })
+
+          return {
+            id: tx.id,
+            cardId: tx.cardId,
+            cardName: card?.name || 'Token desconhecido',
+            cardLogoUrl: card?.logoUrl,
+            quantity: parseFloat(tx.tokenAmount) || 0,
+            status,
+            certificateId: tx.txHash || tx.sessionId,
+            emittedAt,
+          }
+        })
+
+        setCertificates(mappedCertificates)
+        setTotal(response.total || 0)
       } catch (err) {
-        console.error('Erro ao buscar histórico:', err)
+        setCertificates([])
+        setTotal(0)
       } finally {
         setLoading(false)
       }
     }
 
     fetchCertificates()
-  }, [cardId])
+  }, [cardId, locale, page, limit])
+
+
 
   // Evita erro de indexação tipada em objetos gerados a partir de JSON
   const ceTexts = texts?.certificateEmission as Record<string, string> | undefined
@@ -146,21 +147,25 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
 
   const handleDownload = (cert: Certificate) => {
     // TODO: Implementar download real
-    console.log('Download certificado:', cert.id)
     alert('Download do certificado em desenvolvimento')
   }
 
   const handleReemit = (cert: Certificate) => {
     // TODO: Implementar reemissão
-    console.log('Reemitir certificado:', cert.id)
     alert('Reemissão em desenvolvimento')
   }
 
+  // Reset página quando filtros mudarem
+  useEffect(() => {
+    setPage(1)
+  }, [filters.year, filters.token, filters.status])
+
   // Filtrar certificados
   const filteredCertificates = certificates.filter((cert) => {
-    // Filtro por ano
+    // Filtro por ano - ajustado para formato brasileiro
     if (filters.year !== 'all') {
-      const certYear = cert.emittedAt.split('/')[2]?.split(' ')[0]
+      const dateMatch = cert.emittedAt.match(/(\d{2})\/(\d{2})\/(\d{4})/)
+      const certYear = dateMatch ? dateMatch[3] : null
       if (certYear !== filters.year) return false
     }
 
@@ -464,6 +469,41 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
           })
         )}
       </div>
+
+      {/* Paginação */}
+      {total > limit && (
+        <div className="mt-8 flex items-center justify-center gap-2">
+          <button
+            onClick={() => setPage(p => Math.max(1, p - 1))}
+            disabled={page === 1}
+            className="px-4 py-2 rounded-lg border-2 font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            style={{
+              borderColor: accentColor,
+              color: page === 1 ? '#9CA3AF' : accentColor,
+              backgroundColor: 'transparent'
+            }}
+          >
+            {t('pagination-previous', 'Anterior')}
+          </button>
+
+          <span className="px-4 py-2 text-sm font-medium" style={{ color: subtitleColor }}>
+            {t('pagination-page', 'Página')} {page} {t('pagination-of', 'de')} {Math.ceil(total / limit)}
+          </span>
+
+          <button
+            onClick={() => setPage(p => Math.min(Math.ceil(total / limit), p + 1))}
+            disabled={page >= Math.ceil(total / limit)}
+            className="px-4 py-2 rounded-lg border-2 font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            style={{
+              borderColor: accentColor,
+              color: page >= Math.ceil(total / limit) ? '#9CA3AF' : accentColor,
+              backgroundColor: 'transparent'
+            }}
+          >
+            {t('pagination-next', 'Próxima')}
+          </button>
+        </div>
+      )}
     </div>
   )
 }

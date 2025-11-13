@@ -13,7 +13,12 @@ export default function ProgressBar({
   const { colors } = useContext(ConfigContext)
   const progressBarColor = colors?.['progress-bar']?.['foreground'] ?? '#08CEFF'
 
-  const soldPercentage = total > 0 ? Math.round((sold / total) * 100) : 0
+  let soldPercentage = total > 0 ? Math.round((sold / total) * 100) : 0
+  
+  // Se tem tokens vendidos, garantir no mínimo 5% de preenchimento
+  if (sold > 0 && soldPercentage < 5) {
+    soldPercentage = 5
+  }
 
   return (
     <div className="w-full bg-gray-200 rounded-full h-2.5">

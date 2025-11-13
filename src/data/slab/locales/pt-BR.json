@@ -10,16 +10,19 @@
         "main-logo": "Logo da Slabs"
       },
       "navigations": {
-        "navOne": "A Slab",
-        "navTwo": [
+        "navOne": [
           {
-            "title": "Produtos",
+            "title": "A Slab",
             "items": [
               {
-                "title": "Token TBIO"
+                "title": "Calculadora",
+                "link": "https://somasustentabilidade.com.br/calculadora/"
               }
             ]
           }
+        ],
+        "navTwo": [
+          
         ],
         "navThree": [
           {
@@ -49,7 +52,7 @@
     },
     "hero": {
       "title": "Descarbonização, compensação e Impacto verificável.",
-      "subtitle": "A Slab Assets transforma estoques de carbono e biodiversidade em tokens rastreáveis, usados por empresas e investidores para atingir o Net Zero com segurança e transparência.",
+      "subtitle": "Uma solução tecnológica para empresas que desejam neutralizar emissões e investir na conservação e manutenção dos biomas brasileiros, gerando impacto ambiental positivo e duradouro.",
       "image": "images/bloxify/homen-negro-tablet.png",
       "alt": "Imagem de um homem negro segurando um tablet."
     },
@@ -123,12 +126,12 @@
         {
           "id": 3,
           "question": "Como fazemos?",
-          "answer": "A geração de estoque de carbono + ativos de biodiversidade é realizada pela Certificadora Forest Brazil, homologada pela B3 (Brasil, Bolsa, Balcão), com máxima segurança e transparência. Todo processo, do inventário, certificação e tokenização, é conduzido por especialistas e auditado por Terceira parte, garantindo rastreabilidade e imutabilidade no blockchain. Após a utilização do TBIO com objetivo de Offset, o token é aposentado no painel de transparência da plataforma. Governança e Compliance de ponta a ponta."
+          "answer": "A geração de estoque de carbono + ativos de biodiversidade é realizada pela Certificadora Forest Brazil, líder no mercado de CPRVs,  homologada pela B3 (Brasil, Bolsa, Balcão), com máxima segurança e transparência. Todo processo, do inventário, certificação e tokenização, é conduzido por especialistas e auditado por Terceira parte, garantindo rastreabilidade e imutabilidade no blockchain. Após a utilização do TBIO com objetivo de Offset, o token é aposentado no painel de transparência da plataforma. Governança e Compliance de ponta a ponta."
         },
         {
           "id": 4,
           "question": "Por que fazemos?",
-          "answer": "Comprometidos com a integridade e a transparência, criamos soluções inovadoras que conectam capital ao propósito de preservar o meio ambiente, gerando ações socioeconômicas e garantindo governança para investidores, comunidades e para o planeta."
+          "answer": "Comprometidos com a construção de um futuro sustentável, íntegro e transparente, criamos soluções inovadoras que conectam o comprador a ações socioeconômicas sustentáveis de pequenos, médios e grandes proprietários rurais, fortalecendo a economia verde e a conservação dos biomas brasileiros. Alinhada às agendas climáticas globais e aos compromissos debatidos na COP30, nossa iniciativa reforça o papel do Brasil como protagonista na transição para uma economia de baixo carbono. O projeto contribui diretamente para os Objetivos de Desenvolvimento Sustentável (ODS) da ONU, incluindo Fome Zero (ODS 2), Educação de Qualidade (ODS 4), Trabalho Decente e Crescimento Econômico (ODS 8), Indústria, Inovação e Infraestrutura (ODS 9), Vida na Água (ODS 14), Vida Terrestre (ODS 15) e Parcerias e Meios de Implementação (ODS 17) — promovendo impacto ambiental, social, econômico e tecnológico de forma integrada, mensurável e duradoura."
         },
         {
           "id": 5,
@@ -442,7 +445,12 @@
       "sold": "Vendidos",
       "available": "Disponíveis"
     },
-    "disclaimer": "Não invista antes de saber todas as informações essenciais sobre a oferta"
+    "disclaimer": "Não invista antes de saber todas as informações essenciais sobre a oferta",
+    "login-required-title": "Login Necessário",
+    "login-required-message": "Você precisa estar logado para comprar tokens. Faça login para continuar.",
+    "cancel": "Cancelar",
+    "go-to-login": "Ir para Login",
+    "processing": "Processando..."
   },
   "tokensPage": {
     "title": "Descubra hoje as [[melhores oportunidades]] de tokens digitais",
@@ -476,9 +484,9 @@
       },
       "docs": {
         "title": "Documents",
-        "link1": "Twitter",
-        "link2": "Instagram",
-        "link3": "Termos de Uso ",
+        "link1": "Docs",
+        "link2": "Mais informações",
+        "link3": "Instagram ",
         "link4": "Documentos",
         "link5": "Politica de privacidade",
         "link6": "Odr"

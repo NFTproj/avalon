@@ -45,7 +45,6 @@ export function useUserTokenBalances(
                 rows.push({ card, balanceRaw: balance, decimals, symbol })
               }
             } catch (err) {
-              console.warn('Erro lendo token', tokenAddress, err)
             }
           }),
         )
@@ -54,7 +53,6 @@ export function useUserTokenBalances(
           setAssets(rows)
         }
       } catch (error) {
-        console.error('Erro ao buscar saldos:', error)
         if (!cancelled) {
           setAssets([])
         }

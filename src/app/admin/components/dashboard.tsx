@@ -25,10 +25,6 @@ export default function DashboardComponent() {
   }
   
 
-  
-  // Debug: verificar se as traduções estão carregando
-  console.log('Admin texts:', adminTexts)
-  console.log('All texts:', texts)
 
   // Dados mockados para o dashboard
   const dashboardData = {
@@ -72,7 +68,6 @@ export default function DashboardComponent() {
             <CustomButton
               text={getAdminText('dashboard.create-token-button', '+ Criar Novo Token')}
               onClick={() => {
-                console.log('Criar novo token')
                 router.push('/admin?page=criartokens')
               }}
               className="w-full h-16 text-lg font-semibold hover:opacity-90 transition-opacity duration-200"
@@ -89,7 +84,7 @@ export default function DashboardComponent() {
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-lg font-bold text-black">{getAdminText('dashboard.kycs-tokens.title', 'Tokens Recentes')}</h3>
               <button 
-                onClick={() => console.log('Ver todos os tokens')}
+                  onClick={() => console.log('Ver todos os tokens')}
                 className="flex items-center gap-2 text-gray-500 hover:text-gray-700 text-sm transition-colors duration-200"
               >
                 <FaEye className="w-4 h-4" />

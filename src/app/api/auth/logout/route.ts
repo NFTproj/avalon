@@ -17,7 +17,6 @@ export async function POST(req: NextRequest) {
           },
         })
       } catch (error) {
-        console.error('[LOGOUT] Erro ao chamar servidor externo:', error)
         // Continua mesmo se falhar no servidor externo
       }
     }
@@ -31,7 +30,6 @@ export async function POST(req: NextRequest) {
     res.cookies.set('refreshToken', '', { path: '/', maxAge: 0 })
     return res
   } catch (error) {
-    console.error('[LOGOUT ERROR]', error)
     // Mesmo com erro, limpa os cookies
     const res = NextResponse.json({ 
       success: true,

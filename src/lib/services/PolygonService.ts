@@ -92,7 +92,6 @@ export class PolygonService extends BlockchainService {
         totalValueUSD,
       }
     } catch (error) {
-      console.error('[PolygonService] Error getting wallet balance:', error)
       throw new Error(`Failed to get Polygon wallet balance: ${error}`)
     }
   }
@@ -120,7 +119,6 @@ export class PolygonService extends BlockchainService {
           }
         } catch (error) {
           // Token pode não existir ou ter erro - continuar com o próximo
-          console.warn(`[PolygonService] Error getting ${tokenConfig.symbol} balance:`, error)
         }
       }
 
@@ -129,7 +127,6 @@ export class PolygonService extends BlockchainService {
 
       return tokenBalances
     } catch (error) {
-      console.error('[PolygonService] Error getting token balances:', error)
       throw new Error(`Failed to get Polygon token balances: ${error}`)
     }
   }
@@ -148,7 +145,6 @@ export class PolygonService extends BlockchainService {
       // Caso contrário, buscar apenas transações recentes via provider
       return await this.getRecentTransactions(address, limit)
     } catch (error) {
-      console.error('[PolygonService] Error getting transaction history:', error)
       throw new Error(`Failed to get Polygon transaction history: ${error}`)
     }
   }
@@ -164,7 +160,6 @@ export class PolygonService extends BlockchainService {
 
       return await this.provider.estimateGas(txRequest)
     } catch (error) {
-      console.error('[PolygonService] Error estimating gas:', error)
       throw new Error(`Failed to estimate gas: ${error}`)
     }
   }
@@ -202,7 +197,6 @@ export class PolygonService extends BlockchainService {
         confirmations: 0, // Será calculado separadamente se necessário
       }))
     } catch (error) {
-      console.error('[PolygonService] Error fetching from Polygonscan:', error)
       // Fallback para método local
       return await this.getRecentTransactions(address, limit)
     }
@@ -250,7 +244,6 @@ export class PolygonService extends BlockchainService {
                   })
                 }
               } catch (error) {
-                console.warn(`[PolygonService] Error getting transaction details for ${tx}:`, error)
                 continue
               }
             } else if (tx && typeof tx === 'object' && 'from' in tx && 'to' in tx && 'hash' in tx) {
@@ -278,14 +271,12 @@ export class PolygonService extends BlockchainService {
             }
           }
         } catch (error) {
-          console.warn(`[PolygonService] Error processing block ${blockNumber}:`, error)
           continue
         }
       }
 
       return transactions
     } catch (error) {
-      console.error('[PolygonService] Error getting recent transactions:', error)
       return []
     }
   }
@@ -307,7 +298,6 @@ export class PolygonService extends BlockchainService {
       // Por enquanto, retornar 0
       return 0
     } catch (error) {
-      console.error('[PolygonService] Error getting MATIC price:', error)
       return 0
     }
   }
@@ -369,7 +359,6 @@ export class PolygonService extends BlockchainService {
         decimals,
       }
     } catch (error) {
-      console.error('[PolygonService] Error getting ERC20 info:', error)
       return null
     }
   }
@@ -411,7 +400,6 @@ export class PolygonService extends BlockchainService {
         confirmations: 0,
       }))
     } catch (error) {
-      console.error('[PolygonService] Error getting token transfers:', error)
       return []
     }
   }
@@ -431,7 +419,6 @@ export class PolygonService extends BlockchainService {
         maxPriorityFeePerGas: feeData.maxPriorityFeePerGas || BigInt(0),
       }
     } catch (error) {
-      console.error('[PolygonService] Error getting gas info:', error)
       throw new Error(`Failed to get gas info: ${error}`)
     }
   }

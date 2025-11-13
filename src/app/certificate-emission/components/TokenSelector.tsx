@@ -24,7 +24,6 @@ export default function TokenSelector({ onTokenSelect }: TokenSelectorProps) {
         const response = await apiFetch<any>('/api/cards')
         setCards(response.data || [])
       } catch (error) {
-        console.error('Erro ao buscar tokens:', error)
       } finally {
         setLoading(false)
       }

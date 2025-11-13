@@ -22,7 +22,6 @@ export default function DashboardPage() {
   useEffect(() => {
     if (user && !loading) {
       // Sempre recarrega quando o componente é montado (vindo de outra rota)
-      console.log('Dashboard acessado - recarregando saldos...')
       mutate() // Revalida os dados do usuário (incluindo saldos)
     }
   }, [user, loading, mutate])

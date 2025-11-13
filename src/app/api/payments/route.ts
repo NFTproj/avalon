@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
     if (!cardId) return NextResponse.json({ error: 'cardId é obrigatório' }, { status: 400 })
     if (!buyerFromBody) return NextResponse.json({ error: 'buyerAddress é obrigatório' }, { status: 400 })
 
-    const qty = Math.max(1, Math.floor(Number(tokenQuantity || 0)))
+    const qty = Number(tokenQuantity || 0)
     if (!Number.isFinite(qty) || qty <= 0) {
       return NextResponse.json({ error: 'tokenQuantity inválido' }, { status: 400 })
     }
@@ -56,10 +56,8 @@ export async function POST(req: NextRequest) {
           const card: CardResponse = await cardRes.json()
           net = normalizeNetwork(card?.CardBlockchainData?.tokenNetwork, card?.CardBlockchainData?.tokenChainId) || net
         } else {
-          console.warn('[PIX] Falha ao obter card p/ inferir network:', await cardRes.text())
         }
       } catch (e) {
-        console.warn('[PIX] Erro ao consultar card:', e)
       }
     }
     if (!net) net = 'polygon'
@@ -90,7 +88,6 @@ export async function POST(req: NextRequest) {
     }
     return NextResponse.json(data, { status: 200 })
   } catch (err) {
-    console.error('[PIX route] erro inesperado', err)
     return NextResponse.json({ error: 'Erro interno ao gerar PIX' }, { status: 500 })
   }
 }

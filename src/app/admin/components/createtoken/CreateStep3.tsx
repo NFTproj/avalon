@@ -37,7 +37,6 @@ export default function CreateStep3() {
         const parsed = JSON.parse(savedData)
         setFormData(prev => ({ ...prev, ...parsed }))
       } catch (error) {
-        console.error('Erro ao carregar dados do step 3:', error)
       }
     }
   }, [])
@@ -61,7 +60,6 @@ export default function CreateStep3() {
   }
 
   const handleContinue = () => {
-    console.log('Dados do formulário Step 3:', formData)
     // Salvar no localStorage (sem os arquivos, apenas metadados)
     const dataToSave = {
       blockchain: formData.blockchain,

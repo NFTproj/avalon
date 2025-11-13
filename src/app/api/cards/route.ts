@@ -29,7 +29,6 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(data)
   } catch (error) {
-    console.error('[GET CARDS ERROR]', error)
     return NextResponse.json({ error: 'Erro ao buscar cards' }, { status: 500 })
   }
 }

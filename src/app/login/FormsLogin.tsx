@@ -47,7 +47,6 @@ export default function LoginForm() {
       // Usar window.location para forçar reload e recarregar o AuthContext
       window.location.href = '/dashboard'
     } catch (err) {
-      console.error('[LOGIN ERROR]', err)
       setError('E-mail ou senha inválidos. Tente novamente.')
       setLoad(false)
     }
@@ -64,7 +63,6 @@ export default function LoginForm() {
       // Usar window.location para forçar reload e recarregar o AuthContext
       window.location.href = '/dashboard'
     } catch (err: any) {
-      console.error('[SIGN & LOGIN ERROR]', err)
       setError(err?.message ?? 'Erro ao autenticar com a carteira.')
     } finally {
       setSLoad(false)
@@ -84,7 +82,6 @@ export default function LoginForm() {
       }
       await signAndLogin()
     } catch (err: any) {
-      console.error('[WALLET BUTTON ERROR]', err)
       setError(err?.message ?? 'Erro ao autenticar com a carteira.')
       setPendingSign(false)
     } finally {

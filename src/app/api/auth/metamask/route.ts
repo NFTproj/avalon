@@ -57,7 +57,6 @@ export async function POST(req: NextRequest) {
 
     return res
   } catch (error) {
-    console.error('[API ERROR] /auth/metamask:', error)
     return NextResponse.json(
       { error: 'Erro ao processar requisição no servidor.' },
       { status: 500 }
