@@ -55,12 +55,12 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    const { clientId: clientIdFromBody, cardId, tokenAddress, amount, network } = body
+    const { cardId, tokenAddress, amount, network } = body
 
     // Validações básicas
-    if (!clientIdFromBody || !cardId || !tokenAddress || !amount) {
+    if (!cardId || !tokenAddress || !amount) {
       return NextResponse.json(
-        { error: 'Campos obrigatórios ausentes: clientId, cardId, tokenAddress, amount.' },
+        { error: 'Campos obrigatórios ausentes: cardId, tokenAddress, amount.' },
         { status: 400 }
       )
     }
@@ -77,11 +77,9 @@ export async function POST(req: NextRequest) {
       payload.network = network
     }
 
-    console.log('[burn-certificate] Payload enviado ao backend:', JSON.stringify(payload, null, 2))
 
     // Chama o backend
     const upstreamUrl = `${apiBase}/transaction/burn-certificate`
-    console.log('[burn-certificate] URL do backend:', upstreamUrl)
     const upstream = await fetch(upstreamUrl, {
       method: 'POST',
       headers: {
@@ -96,24 +94,19 @@ export async function POST(req: NextRequest) {
     const status = upstream.status
     const contentType = upstream.headers.get('content-type') || ''
 
-    console.log('[burn-certificate] Status do backend:', status)
-    console.log('[burn-certificate] Content-Type:', contentType)
 
     if (contentType.includes('application/json')) {
       const json = await upstream.json().catch(() => ({}))
-      console.log('[burn-certificate] Resposta JSON do backend:', JSON.stringify(json, null, 2))
       return NextResponse.json(json, { status })
     }
 
     // Resposta não-JSON
     const text = await upstream.text()
-    console.log('[burn-certificate] Resposta não-JSON do backend:', text.slice(0, 400))
     return NextResponse.json(
       { error: 'Resposta não-JSON do backend', raw: text.slice(0, 400) },
       { status }
     )
   } catch (err) {
-    console.error('[burn-certificate] erro', err)
     return NextResponse.json(
       { error: 'Erro interno ao processar burn-certificate.' },
       { status: 500 }

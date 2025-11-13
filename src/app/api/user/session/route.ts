@@ -26,7 +26,6 @@ export async function POST (req: NextRequest) {
 
     if (!diditRes.ok) {
       const txt = await diditRes.text()
-      console.error('[Didit] erro ▶︎', txt)
       return NextResponse.json({ error: txt }, { status: diditRes.status })
     }
 
@@ -34,7 +33,6 @@ export async function POST (req: NextRequest) {
     return NextResponse.json(data)
 
   } catch (e) {
-    console.error('[KYC SESSION ERROR]', e)
     return NextResponse.json({ error: 'Erro interno' }, { status: 500 })
   }
 }

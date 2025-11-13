@@ -37,7 +37,6 @@ export async function POST(req: NextRequest) {
     const data = await res.json()
     return NextResponse.json(data, { status: res.status })
   } catch (err) {
-    console.error('[API ERROR] /auth/code/resend:', err)
     return NextResponse.json({ error: 'Erro ao reenviar código' }, { status: 500 })
   }
 }

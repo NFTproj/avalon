@@ -33,7 +33,6 @@ export default function TokenGrid({
         const response = await getAllCards()
         setCards(response.data || [])
       } catch (error) {
-        console.error('Erro ao buscar cards:', error)
         setCards([])
       } finally {
         setLoading(false)

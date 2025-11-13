@@ -10,16 +10,19 @@
         "main-logo": "Slabs Logo"
       },
       "navigations": {
-        "navOne": "Slab",
-        "navTwo": [
+        "navOne": [
           {
-            "title": "Products",
+            "title": "Slab",
             "items": [
               {
-                "title": "TBIO Token"
+                "title": "Calculator",
+                "link": "https://somasustentabilidade.com.br/calculadora/"
               }
             ]
           }
+        ],
+        "navTwo": [
+          
         ],
         "navThree": [
           {
@@ -48,8 +51,8 @@
       }
     },
     "hero": {
-      "title": "Sustainability, Biodiversity and Protection",
-      "subtitle": "SlaB Assets tokenizes biodiversity assets, transforming CO2 into digital investments with security and transparency.",
+      "title": "Decarbonization, Compensation, and Verifiable Impact.",
+      "subtitle": "Slab Assets transforms carbon and biodiversity stocks into traceable tokens, used by companies and investors to achieve Net Zero with security and transparency.",
       "image": "images/bloxify/homen-negro-tablet.png",
       "alt": "Image of a black man holding a tablet."
     },
@@ -108,35 +111,35 @@
       }
     },
     "faq": {
-      "title": "Still have questions?",
-      "questions": [
-        {
-          "id": 1,
-          "question": "What does Slab do?",
-          "answer": "SlaB Assets is a pioneer in biodiversity asset tokenization, promoting environmental conservation. Biodiversity assets use CO2 as their metric unit — the tCO2eq (ton of carbon dioxide equivalent) — among other greenhouse gases present in all biomass, as well as other key ecosystem factors, from the subsoil to the atmosphere. We offer a secure and transparent Web3 platform for those who wish to invest in the planet’s future, preserving ecosystems and generating positive impact."
-        },
-        {
-          "id": 2,
-          "question": "What is TBIO?",
-          "answer": "We use cutting-edge technology to tokenize biodiversity assets, ensuring secure and traceable trading on the blockchain. This innovation allows the creation of fractional digital units, facilitating their global commercialization with full transparency, security, and tracking of each investment’s positive impact."
-        },
-        {
-          "id": 3,
-          "question": "How do we do it?",
-          "answer": "The generation of biodiversity assets is carried out with maximum security and transparency. The entire process — from inventory to certification — is conducted by experts and audited by third parties, ensuring traceability and immutability on the blockchain. The assets are backed by Green CPRs, valuing 27 ecosystem services, including carbon capture, and providing legal and financial security."
-        },
-        {
-          "id": 4,
-          "question": "Why do we do it?",
-          "answer": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-        },
-        {
-          "id": 5,
-          "question": "Who are we?",
-          "answer": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-        }
-      ]
+  "title": "Still have questions?",
+  "questions": [
+    {
+      "id": 1,
+      "question": "What does Slab do?",
+      "answer": "After the registration of the Green CPR on B3, the Carbon Stock and Biodiversity Assets are formally transferred to SLAB ASSETS, which acts as the technological agent responsible for the tokenization and digital governance of these assets. From that point, SLAB carries out a complete technological process that transforms these assets into TBIO tokens — unique, traceable digital units backed by real assets. This process includes: Blockchain registration, smart contract creation, TBIO token issuance, Web3 and ESG integration, governance and transparency, and token retirement through the transparency dashboard, where it is possible to track the full journey of each TBIO — from issuance to final offset."
     },
+    {
+      "id": 2,
+      "question": "What is TBIO?",
+      "answer": "TBIO represents a new frontier in the integration of forest conservation, financial markets, and decentralized technologies. Based on clear regulations, auditable instruments, and legal security, the TBIO ecosystem establishes the foundations for a new, tokenized, and digital green economy focused on traceability and compliance."
+    },
+    {
+      "id": 3,
+      "question": "How do we do it?",
+      "answer": "The generation of carbon stock and biodiversity assets is carried out by Forest Brazil Certifier, accredited by B3 (Brasil, Bolsa, Balcão), ensuring maximum security and transparency. The entire process — from inventory and certification to tokenization — is conducted by specialists and audited by a third party, guaranteeing traceability and immutability on the blockchain. After the TBIO is used for offsetting purposes, the token is retired on the platform’s transparency dashboard, ensuring full governance and compliance."
+    },
+    {
+      "id": 4,
+      "question": "Why do we do it?",
+      "answer": "Committed to integrity and transparency, we create innovative solutions that connect capital with the purpose of preserving the environment, generating socioeconomic impact, and ensuring governance for investors, communities, and the planet."
+    },
+    {
+      "id": 5,
+      "question": "Who are we?",
+      "answer": "Slab Assets is a tokenization platform that connects real-world assets (RWA – Real World Assets) to the digital economy. Operating in the regenerative finance (ReFi) sector, we transform standing forests into agro-based commodities. With a focus on carbon stock, biodiversity, and ecosystem services, we offer real-backed assets with transparency, regulatory security, and measurable positive impact. “The bridge between nature preservation and global capital.”"
+    }
+  ]
+},
     "tokens": {
       "title": "Follow the available tokens",
       "list": [
@@ -434,7 +437,12 @@
       "sold": "Sold",
       "available": "Available"
     },
-    "disclaimer": "Do not invest before knowing all essential information about the offer"
+    "disclaimer": "Do not invest before knowing all essential information about the offer",
+    "login-required-title": "Login Required",
+    "login-required-message": "You need to be logged in to buy tokens. Please log in to continue.",
+    "cancel": "Cancel",
+    "go-to-login": "Go to Login",
+    "processing": "Processing..."
   },
   "tokensPage": {
     "title": "Discover today the [[best opportunities]] in digital tokens",
@@ -468,7 +476,7 @@
       },
       "docs": {
         "title": "Documents",
-        "link1": "Twitter",
+        "link1": "Docs",
         "link2": "Instagram",
         "link3": "Terms of Use",
         "link4": "Documents",
@@ -681,7 +689,7 @@
       },
       "actions": {
         "buy": "Buy",
-        "benefits": "Benefits"
+        "benefits": "Certificate"
       },
       "pagination": {
         "previous": "Previous",
@@ -692,19 +700,6 @@
         "login-required": "Please log in to view your balances.",
         "loading": "Loading your tokens...",
         "no-tokens": "You don’t have any tokens in your wallet yet."
-      }
-    },
-    "chart-box": {
-      "wallet-balance": "Wallet Balance",
-      "recent-transactions": "Recent transactions",
-      "loading": "Loading wallet data...",
-      "try-again": "Try again",
-      "actions": {
-        "buy-tokens": "Buy Tokens",
-        "documents": "Documents",
-        "wallet": "Wallet",
-        "profile": "Profile",
-        "kyc": "KYC Verification"
       }
     },
     "token-circle": {
@@ -739,7 +734,7 @@
       "recent-transactions": "Recent transactions",
       "buttons": {
         "buy": "Buy",
-        "earnings": "Earnings",
+        "earnings": "Certificate",
         "withdraw": "Withdraw",
         "statements": "Statements",
         "verify-identity": "Verify Identity",
@@ -760,7 +755,7 @@
       },
       "buttons": {
         "buy": "Buy",
-        "sell": "Sell"
+        "sell": "Sell "
       }
     }
   },

@@ -11,8 +11,7 @@ type Props = {
   tokenDetails?: any
 }
 
-type LinkKey = 'link1' | 'link2' | 'link3' | 'link4' | 'link5' | 'link6'
-type DocItem = { id: LinkKey; href: string; label: string }
+type DocItem = { id: string; href: string; label: string }
 
 export default function DocumentsTab({ token, tokenDetails }: Props) {
   const { colors } = useContext(ConfigContext)
@@ -20,14 +19,16 @@ export default function DocumentsTab({ token, tokenDetails }: Props) {
   const docs = useMemo<DocItem[]>(() => {
     const sl = (token?.socialLinks ?? {}) as Record<string, unknown>
     const i18n = (tokenDetails?.tabs?.docs ?? {}) as Record<string, string>
-    const keys: LinkKey[] = ['link1','link2','link3','link4','link5','link6']
 
-    return keys
-      .map((k, i) => {
-        const href = typeof sl[k] === 'string' ? (sl[k] as string) : ''
+    return Object.entries(sl)
+      .map(([key, value]) => {
+        const href = typeof value === 'string' ? value : ''
         if (!href.trim()) return null
-        const label = i18n[k] ?? `Documento ${i + 1}`
-        return { id: k, href, label }
+        
+        // Usa i18n se existir, senão formata a chave (ex: "docs" → "Docs", "whitepaper" → "Whitepaper")
+        const label = i18n[key] ?? key.charAt(0).toUpperCase() + key.slice(1)
+        
+        return { id: key, href, label }
       })
       .filter((x): x is DocItem => Boolean(x))
   }, [token, tokenDetails])

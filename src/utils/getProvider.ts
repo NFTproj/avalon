@@ -12,7 +12,6 @@ export function getProvider(chainId: number): JsonRpcProvider {
       return new JsonRpcProvider(process.env.NEXT_PUBLIC_SEPOLIA_RPC_URL || process.env.SEPOLIA_RPC_URL || 'https://rpc.sepolia.org');
     default:
       // Fallback para Polygon se não reconhecer a rede
-      console.warn(`RPC não configurado para chain ${chainId}, usando Polygon como fallback`);
       return new JsonRpcProvider(process.env.NEXT_PUBLIC_POLYGON_RPC_URL || process.env.POLYGON_RPC_URL || 'https://polygon-rpc.com');
   }
 }

@@ -21,11 +21,6 @@ export async function POST(req: NextRequest) {
       email,
     }
 
-    console.log('[RESET PASSWORD] Enviando requisição para:', `${apiUrl}/auth/reset-password`)
-    console.log('[RESET PASSWORD] Payload:', payload)
-    console.log('[RESET PASSWORD] Payload stringified:', JSON.stringify(payload))
-
-    // Fazer a requisição para a API externa
     const response = await fetch(`${apiUrl}/auth/reset-password`, {
       method: 'POST',
       headers: {
@@ -35,9 +30,6 @@ export async function POST(req: NextRequest) {
     })
 
     const data = await response.json()
-    console.log('[RESET PASSWORD] Response status:', response.status)
-    console.log('[RESET PASSWORD] Response headers:', Object.fromEntries(response.headers.entries()))
-    console.log('[RESET PASSWORD] Response data:', JSON.stringify(data, null, 2))
 
     if (!response.ok) {
       // Traduzir mensagens de erro do servidor para mensagens amigáveis
@@ -60,7 +52,6 @@ export async function POST(req: NextRequest) {
       ...data
     })
   } catch (error: any) {
-    console.error('[RESET PASSWORD ERROR]', error)
     
     // Tratar erros de timeout e conexão
     let errorMessage = 'Erro interno do servidor'

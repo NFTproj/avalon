@@ -157,7 +157,6 @@ export default function KycStepAddress({
       proofOfAddressFile: proofFile,
     })
   } catch (err) {
-    console.error('Erro ao enviar dados de KYC:', err)
     alert('Falha ao salvar seus dados. Tente novamente.')
   } finally {
     if (!navigated) setLoading(false)
