@@ -36,7 +36,6 @@ export async function GET(req: NextRequest) {
     const txt = await upstream.text()
     return NextResponse.json({ error: 'Resposta não-JSON do backend', status, raw: txt.slice(0, 400) }, { status })
   } catch (err) {
-    console.error('[payments/status] erro', err)
     return NextResponse.json({ error: 'Erro interno' }, { status: 500 })
   }
 }

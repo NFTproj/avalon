@@ -8,26 +8,15 @@ export async function GET(req: NextRequest) {
 
     // Verificar se há token de autenticação disponível
     const accessToken = req.cookies.get('accessToken')?.value
-    
-    console.log(' DEBUG - Variáveis de ambiente:', {
-      apiUrl: apiUrl ? 'PRESENTE' : 'AUSENTE',
-      apiKey: apiKey ? `PRESENTE (${apiKey.substring(0, 8)}...)` : 'AUSENTE', 
-      clientId: clientId ? `PRESENTE (${clientId.substring(0, 8)}...)` : 'AUSENTE',
-      accessToken: accessToken ? `PRESENTE (${accessToken.substring(0, 8)}...)` : 'AUSENTE'
-    })
 
     if (!apiUrl || !apiKey || !clientId) {
       return NextResponse.json({ error: 'Configuração da API ausente' }, { status: 500 })
     }
 
-    console.log(' Public Cards API: Buscando dados reais da API de produção')
-
     let response;
     
     if (accessToken) {
-      // Se usuário está logado, usar o token existente
-      console.log(' Usuário logado - usando token existente');
-      response = await fetch(`${apiUrl}/card?limit=50`, {
+        response = await fetch(`${apiUrl}/card?limit=50`, {
         method: 'GET',
         headers: {
           'x-api-key': apiKey,
@@ -37,9 +26,6 @@ export async function GET(req: NextRequest) {
         },
       });
     } else {
-      // Usuário não logado - tentar login de sistema temporário
-      console.log(' Usuário não logado - tentando login de sistema para acesso público');
-      
       let systemToken;
       
       try {
@@ -48,7 +34,6 @@ export async function GET(req: NextRequest) {
           password: process.env.SERVICE_USER_PASSWORD || 'BloxifyPublic2024!' 
         };
         
-        console.log(` Tentando login de sistema com: ${systemCredentials.email}`);
         const loginResponse = await fetch(`${apiUrl}/auth/login`, {
           method: 'POST',
           headers: {
@@ -65,17 +50,13 @@ export async function GET(req: NextRequest) {
         if (loginResponse.ok) {
           const loginData = await loginResponse.json();
           systemToken = loginData.accessToken;
-          console.log(` Login de sistema bem-sucedido`);
         } else {
           const errorData = await loginResponse.json();
-          console.log(` Falha no login de sistema:`, errorData.message);
         }
       } catch (error) {
-        console.log(' Erro durante login de sistema:', error);
       }
       
       if (systemToken) {
-        console.log(' Usando token de sistema');
         response = await fetch(`${apiUrl}/card?limit=50`, {
           method: 'GET',
           headers: {
@@ -86,9 +67,6 @@ export async function GET(req: NextRequest) {
           },
         });
       } else {
-        console.log(' Não foi possível obter token - usando dados de fallback realísticos');
-        
-        // Fallback com dados realísticos para contexto público
         const fallbackData = {
           data: [
             {
@@ -135,8 +113,7 @@ export async function GET(req: NextRequest) {
             totalPages: 1
           }
         };
-        
-        console.log(' Retornando dados de fallback para demonstração');
+
         return NextResponse.json(fallbackData);
       }
     }
@@ -144,17 +121,14 @@ export async function GET(req: NextRequest) {
     const data = await response.json()
 
     if (!response.ok) {
-      console.error('Erro da API Bloxify:', data)
       return NextResponse.json({ 
         error: 'Erro ao buscar dados da API', 
         details: data 
       }, { status: response.status })
     }
 
-    console.log(' Dados reais obtidos da API Bloxify')
     return NextResponse.json(data)
   } catch (error) {
-    console.error('[GET PUBLIC CARDS ERROR]', error)
     return NextResponse.json({ 
       error: 'Erro ao conectar com a API Bloxify',
       details: error instanceof Error ? error.message : String(error)

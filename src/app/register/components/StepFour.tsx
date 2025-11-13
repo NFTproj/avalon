@@ -32,12 +32,10 @@ export default function StepFour({ nextStep, prevStep }: StepFourProps) {
     setLoading(true)
     try {
       await loginUser({ email, password })
-      console.log('[LOGIN OK] Redirecionando para dashboard...')
 
       // Usar window.location para forçar reload e recarregar o AuthContext
       window.location.href = '/dashboard'
     } catch (err) {
-      console.error('[LOGIN ERROR]', err)
       setError('E-mail ou senha inválidos. Tente novamente.')
       setLoading(false)
     }

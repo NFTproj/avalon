@@ -49,7 +49,6 @@ export default function PerfilPage() {
     try {
       await logout()
     } catch (error) {
-      console.error('Erro ao fazer logout:', error)
       setIsLoggingOut(false)
     }
   }

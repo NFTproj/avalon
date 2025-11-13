@@ -30,7 +30,6 @@ export async function getClientToken() {
     throw new Error('Failed to fetch client token');
   }
 
-  console.log('response', response);
   const tokenData = await response.json();
 
   cachedToken = tokenData.access_token;

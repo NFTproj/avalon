@@ -28,12 +28,9 @@ export default function useRegister() {
 
       try {
         const result = await registerUser(formData as RegisterPayload)
-        console.log('[useRegister] Registro OK:', result)
         setStep((prev) => prev + 1)
       } catch (err: any) {
         const msg = err?.response?.data?.message ?? 'Erro ao registrar usuário'
-        console.error('[useRegister] Erro ao registrar:', msg)
-
         setRegistrationError(msg)
 
         //volta para StepTwo (step 3) se for erro de usuário existente
@@ -62,7 +59,6 @@ export default function useRegister() {
       return { success: true }
     } catch (err: any) {
       const msg = err?.response?.data?.message ?? 'Erro ao reenviar código'
-      console.error('[useRegister] Erro ao reenviar código:', msg)
       return { success: false, message: msg }
     }
   }

@@ -66,7 +66,6 @@ export async function GET(req: NextRequest) {
       { status }
     )
   } catch (err) {
-    console.error('[orders] erro', err)
     return NextResponse.json({ error: 'Erro interno' }, { status: 500 })
   }
 }

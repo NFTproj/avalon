@@ -56,10 +56,8 @@ export async function POST(req: NextRequest) {
           const card: CardResponse = await cardRes.json()
           net = normalizeNetwork(card?.CardBlockchainData?.tokenNetwork, card?.CardBlockchainData?.tokenChainId) || net
         } else {
-          console.warn('[PIX] Falha ao obter card p/ inferir network:', await cardRes.text())
         }
       } catch (e) {
-        console.warn('[PIX] Erro ao consultar card:', e)
       }
     }
     if (!net) net = 'polygon'
@@ -90,7 +88,6 @@ export async function POST(req: NextRequest) {
     }
     return NextResponse.json(data, { status: 200 })
   } catch (err) {
-    console.error('[PIX route] erro inesperado', err)
     return NextResponse.json({ error: 'Erro interno ao gerar PIX' }, { status: 500 })
   }
 }

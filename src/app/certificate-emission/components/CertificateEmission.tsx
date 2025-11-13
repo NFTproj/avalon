@@ -45,7 +45,6 @@ export default function CertificateEmission() {
           setCard(foundCard)
         }
       } catch (err) {
-        console.error('Erro ao buscar card:', err)
         setError(
           texts?.certificateEmission?.['error-loading'] ??
             'Erro ao carregar dados do token'
@@ -66,10 +65,6 @@ export default function CertificateEmission() {
   // Buscar saldo do usuário
   const balanceData = user?.balances?.find((b: any) => b.id === cardId)
   const userBalance = balanceData?.balance || 0
-
-  console.log('[CertificateEmission] cardId:', cardId)
-  console.log('[CertificateEmission] user.balances:', user?.balances)
-  console.log('[CertificateEmission] balanceData found:', balanceData)
 
   const pageBg = colors?.certificateEmission?.background?.page || '#FFFFFF'
   const titleColor = colors?.certificateEmission?.colors?.title || '#1F2937'
