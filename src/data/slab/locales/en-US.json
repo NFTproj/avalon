@@ -296,7 +296,13 @@
       "placeholders": {
         "code": "123456"
       },
-      "button-verify": "Verify"
+      "button-verify": "Verify and sign in",
+      "resend": {
+        "button": "Resend code",
+        "success": "Code resent successfully!",
+        "error": "Error resending code.",
+        "cooldown": "Available again in {seconds}s"
+      }
     },
     "step-four": {
       "counter": {

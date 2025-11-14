@@ -27,7 +27,7 @@ export default function StepZero({ nextStep, updateField }: StepZeroProps) {
 
       <p className="mb-6 text-gray-600">{stepOneTexts?.description}</p>
 
-      <div className="flex flex-wrap gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row gap-4 mb-6 w-full">
         <CustomButton
           text={stepOneTexts?.['button-email'] || 'Criar com E-mail'}
           onClick={() => {
@@ -36,7 +36,7 @@ export default function StepZero({ nextStep, updateField }: StepZeroProps) {
           }}
           textColor={colors?.colors['color-primary']}
           borderColor={colors?.border['border-primary']}
-          className="shrink-0 w-[210px] h-[52px] font-bold"
+          className="w-full sm:flex-1 h-[52px] font-bold text-sm sm:text-base px-4"
         />
 
         <CustomButton
@@ -44,7 +44,7 @@ export default function StepZero({ nextStep, updateField }: StepZeroProps) {
           color={colors?.buttons['button-third']}
           textColor={colors?.colors['color-primary']}
           borderColor={colors?.border['border-primary']}
-          className="shrink-0 w-[210px] h-[52px] font-bold"
+          className="w-full sm:flex-1 h-[52px] font-bold text-sm sm:text-base px-4"
           onClick={() => router.push('/register-metamask')} 
         /> 
       </div>

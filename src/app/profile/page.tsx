@@ -9,6 +9,8 @@ import CloseAccountSection from './components/CloseAccountSection'
 import CustomInput from '@/components/core/Inputs/CustomInput'
 import CustomButton from '@/components/core/Buttons/CustomButton'
 import { AlertTriangle } from 'lucide-react'
+import PasswordStrengthIndicator from '@/components/auth/PasswordStrengthIndicator'
+import { validatePassword } from '@/utils/passwordValidation'
 
 type MenuSection = 'close-account' | 'change-password'
 
@@ -108,8 +110,10 @@ export default function PerfilPage() {
         return
       }
 
-      if (newPassword.length < 6) {
-        setError('A senha deve ter pelo menos 6 caracteres')
+      // Validar força da senha
+      const { isValid } = validatePassword(newPassword)
+      if (!isValid) {
+        setError('A senha não atende aos requisitos mínimos de segurança')
         return
       }
 
@@ -194,7 +198,7 @@ export default function PerfilPage() {
           <AlertTriangle size={20} className="flex-shrink-0 text-blue-600 mt-0.5" />
           <div>
             <p className="text-sm text-gray-700 leading-relaxed">
-              Escolha uma senha forte com pelo menos 6 caracteres.
+              Escolha uma senha forte que atenda aos requisitos de segurança.
             </p>
           </div>
         </div>
@@ -216,6 +220,11 @@ export default function PerfilPage() {
               placeholder="••••••••"
               className="w-full"
             />
+            {newPassword && (
+              <div className="mt-3">
+                <PasswordStrengthIndicator password={newPassword} />
+              </div>
+            )}
           </div>
 
           <div>
