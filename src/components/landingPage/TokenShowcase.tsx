@@ -5,10 +5,13 @@ import { useRouter } from 'next/navigation'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import { useCards } from '@/lib/hooks/useCards'
 import Token from '@/components/common/Token'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, A11y } from 'swiper/modules'
-import 'swiper/css'
-import 'swiper/css/navigation'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel'
 
 const toNum = (v: any): number => {
   if (v === null || v === undefined) return 0
@@ -149,40 +152,54 @@ export default function TokenShowcase() {
         )}
 
         {!isLoading && tokens.length > 3 && isMounted && (
-          <div className="mb-16 max-w-6xl mx-auto px-4 overflow-hidden">
-            <Swiper
-              modules={[Navigation, A11y]}
-              spaceBetween={24}
-              navigation
-              slidesPerView={1}
-              breakpoints={{
-                640: { slidesPerView: 2, spaceBetween: 24 },
-                1024: { slidesPerView: 3, spaceBetween: 32 },
+          <div className="mb-16 max-w-6xl mx-auto px-4">
+            <Carousel
+              opts={{
+                align: 'start',
+                loop: true,
               }}
-              className="pb-6 tokens-swiper"
+              className="w-full"
             >
-              {tokens.map((token: any) => (
-                <SwiperSlide key={token.id}>
-                  <div className="flex justify-center">
-                    <div className="w-full max-w-sm">
-                      <Token
-                        name={token.name}
-                        subtitle={token.subtitle}
-                        price={token.price}
-                        launchDate={token.launchDate}
-                        tokensAvailable={token.tokensAvailable}
-                        identifierCode={token.identifierCode}
-                        image={token.image}
-                        href={`/tokens/${token.id}`}
-                        labels={token.labels}
-                        sold={token.sold}
-                        total={token.total}
-                      />
+              <CarouselContent className="-ml-4">
+                {tokens.map((token: any) => (
+                  <CarouselItem key={token.id} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                    <div className="flex justify-center">
+                      <div className="w-full max-w-sm">
+                        <Token
+                          name={token.name}
+                          subtitle={token.subtitle}
+                          price={token.price}
+                          launchDate={token.launchDate}
+                          tokensAvailable={token.tokensAvailable}
+                          identifierCode={token.identifierCode}
+                          image={token.image}
+                          href={`/tokens/${token.id}`}
+                          labels={token.labels}
+                          sold={token.sold}
+                          total={token.total}
+                        />
+                      </div>
                     </div>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious 
+                className="-left-12 h-14 w-14 border bg-white shadow-md hover:shadow-lg transition-all hover:scale-105 disabled:opacity-30"
+                style={{ 
+                  color: colors?.border['border-primary'] ?? '#08CEFF', 
+                  borderColor: colors?.border['border-primary'] ?? '#08CEFF',
+                  borderWidth: '1.5px'
+                }}
+              />
+              <CarouselNext 
+                className="-right-12 h-14 w-14 border bg-white shadow-md hover:shadow-lg transition-all hover:scale-105 disabled:opacity-30"
+                style={{ 
+                  color: colors?.border['border-primary'] ?? '#08CEFF', 
+                  borderColor: colors?.border['border-primary'] ?? '#08CEFF',
+                  borderWidth: '1.5px'
+                }}
+              />
+            </Carousel>
           </div>
         )}
 
