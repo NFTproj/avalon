@@ -36,7 +36,7 @@ export default function StepZero({ nextStep, updateField }: StepZeroProps) {
           }}
           textColor={colors?.colors['color-primary']}
           borderColor={colors?.border['border-primary']}
-          className="w-full sm:flex-1 h-[52px] font-bold text-sm sm:text-base px-4"
+          className="w-full sm:flex-1 min-h-[52px] font-bold text-xs sm:text-sm px-2 sm:px-3 py-3"
         />
 
         <CustomButton
@@ -44,7 +44,7 @@ export default function StepZero({ nextStep, updateField }: StepZeroProps) {
           color={colors?.buttons['button-third']}
           textColor={colors?.colors['color-primary']}
           borderColor={colors?.border['border-primary']}
-          className="w-full sm:flex-1 h-[52px] font-bold text-sm sm:text-base px-4"
+          className="w-full sm:flex-1 min-h-[52px] font-bold text-xs sm:text-sm px-2 sm:px-3 py-3"
           onClick={() => router.push('/register-metamask')} 
         /> 
       </div>

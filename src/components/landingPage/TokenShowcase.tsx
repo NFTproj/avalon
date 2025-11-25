@@ -6,8 +6,9 @@ import { ConfigContext } from '@/contexts/ConfigContext'
 import { useCards } from '@/lib/hooks/useCards'
 import Token from '@/components/common/Token'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { A11y } from 'swiper/modules'
+import { Navigation, A11y } from 'swiper/modules'
 import 'swiper/css'
+import 'swiper/css/navigation'
 
 const toNum = (v: any): number => {
   if (v === null || v === undefined) return 0
@@ -40,7 +41,11 @@ export default function TokenShowcase() {
   const router = useRouter()
   const landingTexts = texts?.['landing-page']?.tokens
   const [isMounted, setIsMounted] = useState(false)
-  const [swiperInstance, setSwiperInstance] = useState<any>(null)
+
+  // Garantir que o Swiper só renderize no cliente
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   // Mapear cards da API para o formato Token
   const tokens = useMemo(() => {
@@ -70,12 +75,6 @@ export default function TokenShowcase() {
         }
       })
   }, [cards])
-
-  // Garantir que o Swiper só renderize no cliente
-  useEffect(() => {
-    setIsMounted(true)
-    console.log('TokenShowcase mounted, tokens count:', tokens.length)
-  }, [tokens.length])
 
   if (error) {
     return null // Não mostrar nada se houver erro
@@ -150,80 +149,40 @@ export default function TokenShowcase() {
         )}
 
         {!isLoading && tokens.length > 3 && isMounted && (
-          <div className="mb-16 relative max-w-6xl mx-auto px-4 sm:px-8 md:px-10 overflow-hidden">
-            {/* Botões de navegação customizados */}
-            <button
-              onClick={() => swiperInstance?.slidePrev()}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-14 h-14 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-50 transition-all hover:scale-110 disabled:opacity-35 disabled:cursor-not-allowed"
-              style={{ color: colors?.border['border-primary'] ?? '#08CEFF' }}
-              disabled={!swiperInstance}
-              aria-label="Previous slide"
+          <div className="mb-16 max-w-6xl mx-auto px-4 overflow-hidden">
+            <Swiper
+              modules={[Navigation, A11y]}
+              spaceBetween={24}
+              navigation
+              slidesPerView={1}
+              breakpoints={{
+                640: { slidesPerView: 2, spaceBetween: 24 },
+                1024: { slidesPerView: 3, spaceBetween: 32 },
+              }}
+              className="pb-6 tokens-swiper"
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="15 18 9 12 15 6"></polyline>
-              </svg>
-            </button>
-
-            <button
-              onClick={() => swiperInstance?.slideNext()}
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-14 h-14 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-50 transition-all hover:scale-110 disabled:opacity-35 disabled:cursor-not-allowed"
-              style={{ color: colors?.border['border-primary'] ?? '#08CEFF' }}
-              disabled={!swiperInstance}
-              aria-label="Next slide"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </button>
-
-            <div className="overflow-hidden">
-              <Swiper
-                modules={[A11y]}
-                spaceBetween={24}
-                slidesPerView={1}
-                centeredSlides={true}
-                centeredSlidesBounds={true}
-                breakpoints={{
-                  640: { 
-                    slidesPerView: 2, 
-                    spaceBetween: 24,
-                    centeredSlides: true,
-                    centeredSlidesBounds: true,
-                  },
-                  1024: { 
-                    slidesPerView: 3, 
-                    spaceBetween: 32,
-                    centeredSlides: true,
-                    centeredSlidesBounds: true,
-                  },
-                }}
-                className="pb-6 tokens-swiper"
-                onSwiper={setSwiperInstance}
-                onInit={() => console.log('Swiper initialized')}
-              >
-                {tokens.map((token: any) => (
-                  <SwiperSlide key={token.id}>
-                    <div className="flex justify-center">
-                      <div className="w-full max-w-sm">
-                        <Token
-                          name={token.name}
-                          subtitle={token.subtitle}
-                          price={token.price}
-                          launchDate={token.launchDate}
-                          tokensAvailable={token.tokensAvailable}
-                          identifierCode={token.identifierCode}
-                          image={token.image}
-                          href={`/tokens/${token.id}`}
-                          labels={token.labels}
-                          sold={token.sold}
-                          total={token.total}
-                        />
-                      </div>
+              {tokens.map((token: any) => (
+                <SwiperSlide key={token.id}>
+                  <div className="flex justify-center">
+                    <div className="w-full max-w-sm">
+                      <Token
+                        name={token.name}
+                        subtitle={token.subtitle}
+                        price={token.price}
+                        launchDate={token.launchDate}
+                        tokensAvailable={token.tokensAvailable}
+                        identifierCode={token.identifierCode}
+                        image={token.image}
+                        href={`/tokens/${token.id}`}
+                        labels={token.labels}
+                        sold={token.sold}
+                        total={token.total}
+                      />
                     </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
         )}
 
