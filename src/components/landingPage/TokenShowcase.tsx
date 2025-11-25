@@ -176,40 +176,54 @@ export default function TokenShowcase() {
               </svg>
             </button>
 
-            <Swiper
-              modules={[A11y]}
-              spaceBetween={24}
-              slidesPerView={1}
-              breakpoints={{
-                640: { slidesPerView: 2, spaceBetween: 24 },
-                1024: { slidesPerView: 3, spaceBetween: 32 },
-              }}
-              className="pb-6 tokens-swiper"
-              onSwiper={setSwiperInstance}
-              onInit={() => console.log('Swiper initialized')}
-            >
-              {tokens.map((token: any) => (
-                <SwiperSlide key={token.id}>
-                  <div className="flex justify-center">
-                    <div className="w-full max-w-sm">
-                      <Token
-                        name={token.name}
-                        subtitle={token.subtitle}
-                        price={token.price}
-                        launchDate={token.launchDate}
-                        tokensAvailable={token.tokensAvailable}
-                        identifierCode={token.identifierCode}
-                        image={token.image}
-                        href={`/tokens/${token.id}`}
-                        labels={token.labels}
-                        sold={token.sold}
-                        total={token.total}
-                      />
+            <div className="overflow-hidden">
+              <Swiper
+                modules={[A11y]}
+                spaceBetween={24}
+                slidesPerView={1}
+                centeredSlides={true}
+                centeredSlidesBounds={true}
+                breakpoints={{
+                  640: { 
+                    slidesPerView: 2, 
+                    spaceBetween: 24,
+                    centeredSlides: true,
+                    centeredSlidesBounds: true,
+                  },
+                  1024: { 
+                    slidesPerView: 3, 
+                    spaceBetween: 32,
+                    centeredSlides: true,
+                    centeredSlidesBounds: true,
+                  },
+                }}
+                className="pb-6 tokens-swiper"
+                onSwiper={setSwiperInstance}
+                onInit={() => console.log('Swiper initialized')}
+              >
+                {tokens.map((token: any) => (
+                  <SwiperSlide key={token.id}>
+                    <div className="flex justify-center">
+                      <div className="w-full max-w-sm">
+                        <Token
+                          name={token.name}
+                          subtitle={token.subtitle}
+                          price={token.price}
+                          launchDate={token.launchDate}
+                          tokensAvailable={token.tokensAvailable}
+                          identifierCode={token.identifierCode}
+                          image={token.image}
+                          href={`/tokens/${token.id}`}
+                          labels={token.labels}
+                          sold={token.sold}
+                          total={token.total}
+                        />
+                      </div>
                     </div>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
           </div>
         )}
 
