@@ -133,8 +133,12 @@ body {
 
 /* Escopo do carousel de tokens */
 .tokens-swiper {
-  overflow: visible !important;
-    position: relative !important;
+  overflow: hidden !important;
+  position: relative !important;
+}
+
+.tokens-swiper .swiper-wrapper {
+  overflow: hidden !important;
 }
 
 .tokens-swiper .swiper-button-next {
