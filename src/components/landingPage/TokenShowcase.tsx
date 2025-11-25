@@ -150,7 +150,7 @@ export default function TokenShowcase() {
         )}
 
         {!isLoading && tokens.length > 3 && isMounted && (
-          <div className="mb-16 relative px-8 md:px-12 lg:px-16">
+          <div className="mb-16 relative max-w-6xl mx-auto px-4 sm:px-8 md:px-10 overflow-hidden">
             {/* Botões de navegação customizados */}
             <button
               onClick={() => swiperInstance?.slidePrev()}
