@@ -152,7 +152,7 @@ export default function TokenShowcase() {
         )}
 
         {!isLoading && tokens.length > 3 && isMounted && (
-          <div className="mb-16 max-w-6xl mx-auto px-4">
+          <div className="mb-16 max-w-7xl mx-auto px-16">
             <Carousel
               opts={{
                 align: 'start',
@@ -160,43 +160,39 @@ export default function TokenShowcase() {
               }}
               className="w-full"
             >
-              <CarouselContent className="-ml-4">
+              <CarouselContent className="-ml-6">
                 {tokens.map((token: any) => (
-                  <CarouselItem key={token.id} className="pl-4 md:basis-1/2 lg:basis-1/3">
-                    <div className="flex justify-center">
-                      <div className="w-full max-w-sm">
-                        <Token
-                          name={token.name}
-                          subtitle={token.subtitle}
-                          price={token.price}
-                          launchDate={token.launchDate}
-                          tokensAvailable={token.tokensAvailable}
-                          identifierCode={token.identifierCode}
-                          image={token.image}
-                          href={`/tokens/${token.id}`}
-                          labels={token.labels}
-                          sold={token.sold}
-                          total={token.total}
-                        />
-                      </div>
+                  <CarouselItem key={token.id} className="pl-6 basis-auto">
+                    <div className="w-[384px]">
+                      <Token
+                        name={token.name}
+                        subtitle={token.subtitle}
+                        price={token.price}
+                        launchDate={token.launchDate}
+                        tokensAvailable={token.tokensAvailable}
+                        identifierCode={token.identifierCode}
+                        image={token.image}
+                        href={`/tokens/${token.id}`}
+                        labels={token.labels}
+                        sold={token.sold}
+                        total={token.total}
+                      />
                     </div>
                   </CarouselItem>
                 ))}
               </CarouselContent>
               <CarouselPrevious 
-                className="-left-12 h-14 w-14 border bg-white shadow-md hover:shadow-lg transition-all hover:scale-105 disabled:opacity-30"
+                className="-left-12 h-14 w-14 border-2 bg-white shadow-lg hover:shadow-xl transition-all hover:scale-110 disabled:opacity-30"
                 style={{ 
                   color: colors?.border['border-primary'] ?? '#08CEFF', 
-                  borderColor: colors?.border['border-primary'] ?? '#08CEFF',
-                  borderWidth: '1.5px'
+                  borderColor: colors?.border['border-primary'] ?? '#08CEFF'
                 }}
               />
               <CarouselNext 
-                className="-right-12 h-14 w-14 border bg-white shadow-md hover:shadow-lg transition-all hover:scale-105 disabled:opacity-30"
+                className="-right-12 h-14 w-14 border-2 bg-white shadow-lg hover:shadow-xl transition-all hover:scale-110 disabled:opacity-30"
                 style={{ 
                   color: colors?.border['border-primary'] ?? '#08CEFF', 
-                  borderColor: colors?.border['border-primary'] ?? '#08CEFF',
-                  borderWidth: '1.5px'
+                  borderColor: colors?.border['border-primary'] ?? '#08CEFF'
                 }}
               />
             </Carousel>
