@@ -751,7 +751,7 @@
     "page-subtitle": "Record your environmental offset and receive your digital certificate with a verification seal.",
     "token-label": "Token to be used",
     "quantity-label": "Quantity of compensated tokens",
-    "quantity-placeholder": "0-1500",
+    "quantity-placeholder": "Enter quantity",
     "balance-available": "Available balance: {balance} tokens",
     "button-emit": "Issue certificate",
     "button-emitting": "Issuing...",
