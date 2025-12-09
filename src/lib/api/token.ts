@@ -63,7 +63,7 @@ export async function createToken(payload: CreateTokenPayload) {
   }
 
   // NÃO usar apiFetch com FormData - usar fetch direto
-  const res = await fetch('/api/card', {
+  const res = await fetch('/api/token', {
     method: 'POST',
     credentials: 'include',
     body: form,
