@@ -10,7 +10,7 @@
         "main-logo": "Logo da TokenGrid"
       },
       "navigations": {
-        "navOne": "A TokenGrid",
+        "navOne": [],
         "navTwo": [
           {
             "title": "Produtos",
@@ -279,7 +279,7 @@
       ]
     },
     "tokens": {
-      "title": "Acompanhe os tokens disponíveis",
+      "title": "Acompanhe os exemplos de tokens disponiveis",
       "list": [
         {
           "id": 1,
