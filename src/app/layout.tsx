@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin']
 const poppins   = Poppins({ variable: '--font-poppins', subsets: ['latin'], weight: '400' })
 
 export const metadata: Metadata = {
-  title: 'Bloxify',
+  title: 'TokenGrid',
   description: 'Powered by Blocklize',
 }
 
