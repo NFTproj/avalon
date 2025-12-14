@@ -3,24 +3,8 @@ import AssetCard from './AssetCard'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import { useAuth } from '@/contexts/AuthContext'
 import { useUserTokenBalances } from '@/hooks/useUserTokenBalances'
-import { getAllCards } from '@/lib/api/cards'
+import { getAllCards, Card as ApiCard } from '@/lib/api/cards'
 import { Card } from '@/types/card'
-
-// Mapear tipos da API para tipos internos
-interface ApiCard {
-  id: string
-  name: string
-  description: string
-  image: string
-  status: string
-  clientId: string
-  cardBlockchainData?: {
-    tokenName?: string
-    tokenSymbol?: string
-    tokenAddress?: string
-    network?: string
-  }
-}
 
 // Dados de exemplo para quando a API não estiver funcionando
 const fallbackCards: Card[] = [
@@ -51,7 +35,7 @@ const fallbackCards: Card[] = [
 // Converter API Card para Card interno com validação
 const convertApiCardToCard = (apiCard: ApiCard): Card | null => {
   // Validar se tem dados blockchain
-  if (!apiCard.cardBlockchainData?.tokenAddress) {
+  if (!apiCard.CardBlockchainData?.tokenAddress) {
     return null
   }
 
@@ -60,10 +44,10 @@ const convertApiCardToCard = (apiCard: ApiCard): Card | null => {
     name: apiCard.name,
     status: apiCard.status as 'ACTIVE' | 'INACTIVE',
     CardBlockchainData: {
-      tokenAddress: apiCard.cardBlockchainData.tokenAddress as `0x${string}`,
-      tokenNetwork: apiCard.cardBlockchainData.network || 'polygon',
-      tokenChainId: getChainIdFromNetwork(apiCard.cardBlockchainData.network || 'polygon'),
-      tokenPrice: '1.00', // Valor padrão, pode ser ajustado
+      tokenAddress: apiCard.CardBlockchainData.tokenAddress as `0x${string}`,
+      tokenNetwork: apiCard.CardBlockchainData.tokenNetwork || 'polygon',
+      tokenChainId: apiCard.CardBlockchainData.tokenChainId || getChainIdFromNetwork(apiCard.CardBlockchainData.tokenNetwork || 'polygon'),
+      tokenPrice: apiCard.CardBlockchainData.tokenPrice || '1.00',
     }
   }
 }
