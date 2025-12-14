@@ -52,10 +52,9 @@ export default function TokenShowcase() {
     if (!cards) return []
     return cards
       .filter((c: any) => String(c?.status ?? '100') !== '500')
-      .slice(0, 6) // Limite de 6 tokens para a landing
       .map((c: any) => {
         const cbd = c?.CardBlockchainData ?? {}
-        const initialSupply = toNum(cbd.initialSupply)
+        const depositedSupply = toNum(cbd.depositedSupply)
         const purchasedQuantity = toNum(cbd.purchasedQuantity)
         const tokenPriceMicros = toNum(cbd.tokenPrice)
         const price = tokenPriceMicros / 1_000_000
@@ -67,11 +66,11 @@ export default function TokenShowcase() {
           labels: (c.tags ?? []).map((name: string) => ({ name })),
           price: String(price),
           launchDate: c.launchDate ?? '',
-          tokensAvailable: String(initialSupply),
+          tokensAvailable: String(depositedSupply),
           identifierCode: c.ticker ?? '',
           image: c.logoUrl ?? '/images/tokens/default.png',
           sold: purchasedQuantity,
-          total: initialSupply,
+          total: depositedSupply,
         }
       })
   }, [cards])
