@@ -37,7 +37,8 @@ function SkeletonCard() {
 
 export default function TokenShowcase() {
   const { colors, texts } = useContext(ConfigContext)
-  const { cards, isLoading, error } = useCards()
+  const [currentPage, setCurrentPage] = useState(1)
+  const { cards, pagination, isLoading, error } = useCards(currentPage)
   const router = useRouter()
   const landingTexts = texts?.['landing-page']?.tokens
   const [isMounted, setIsMounted] = useState(false)
@@ -230,6 +231,41 @@ export default function TokenShowcase() {
           </div>
         )}
 
+        {/* Paginação */}
+        {!isLoading && pagination && pagination.totalPages > 1 && (
+          <div className="flex items-center justify-center gap-4 mt-8">
+            <button
+              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+              disabled={currentPage <= 1}
+              className="px-6 py-2 rounded-lg font-medium transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+              style={{
+                backgroundColor: currentPage <= 1 ? colors?.colors?.['color-quaternary'] ?? '#E5E5E5' : colors?.colors?.['color-primary'] ?? '#202020',
+                color: currentPage <= 1 ? colors?.colors?.['color-tertiary'] ?? '#555859' : '#FFFFFF',
+              }}
+            >
+              ← Anterior
+            </button>
+
+            <span
+              className="text-sm font-medium"
+              style={{ color: colors?.colors?.['color-primary'] ?? '#202020' }}
+            >
+              Página {currentPage} de {pagination.totalPages}
+            </span>
+
+            <button
+              onClick={() => setCurrentPage(p => Math.min(pagination.totalPages, p + 1))}
+              disabled={currentPage >= pagination.totalPages}
+              className="px-6 py-2 rounded-lg font-medium transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+              style={{
+                backgroundColor: currentPage >= pagination.totalPages ? colors?.colors?.['color-quaternary'] ?? '#E5E5E5' : colors?.colors?.['color-primary'] ?? '#202020',
+                color: currentPage >= pagination.totalPages ? colors?.colors?.['color-tertiary'] ?? '#555859' : '#FFFFFF',
+              }}
+            >
+              Próximo →
+            </button>
+          </div>
+        )}
        
       </div>
     </section>

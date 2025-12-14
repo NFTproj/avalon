@@ -60,7 +60,7 @@ export interface GetCardsResponse {
   pagination: Pagination
 }
 
-export async function getAllCards(): Promise<GetCardsResponse> {
-  return apiFetch<GetCardsResponse>('/api/cards')
+export async function getAllCards(page: number = 1): Promise<GetCardsResponse> {
+  return apiFetch<GetCardsResponse>(`/api/cards?page=${page}`)
 }
   
