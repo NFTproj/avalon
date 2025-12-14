@@ -119,7 +119,7 @@ export default function Token({
       >
         <div className="flex justify-between gap-3 w-full">
           <div className="flex flex-col justify-end gap-2">
-            <h3 className="font-bold text-lg leading-tight" style={{ color: colors?.token['text'] ?? '#000' }}>
+            <h3 className="font-bold text-lg leading-tight min-h-[3.5rem] line-clamp-2" style={{ color: colors?.token['text'] ?? '#000' }}>
               {name}
             </h3>
             <p className="font-bold text-sm leading-relaxed" style={{ color: colors?.token['text'] ?? '#000' }}>

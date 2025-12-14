@@ -149,7 +149,7 @@ export default function TokenShowcase() {
         )}
 
         {!isLoading && tokens.length > 3 && isMounted && (
-          <div className="mb-16">
+          <div className="mb-16 relative px-16">
             <Swiper
               modules={[Navigation, A11y]}
               spaceBetween={24}
@@ -159,12 +159,12 @@ export default function TokenShowcase() {
                 640: { slidesPerView: 2, spaceBetween: 24 },
                 1024: { slidesPerView: 3, spaceBetween: 32 },
               }}
-              className="pb-6 tokens-swiper"
+              className="pb-6 tokens-swiper-showcase"
             >
               {tokens.map((token: any) => (
                 <SwiperSlide key={token.id}>
                   <div className="flex justify-center">
-                    <div className="w-full max-w-sm">
+                    <div className="w-full max-w-[384px]">
                       <Token
                         name={token.name}
                         subtitle={token.subtitle}
@@ -183,6 +183,51 @@ export default function TokenShowcase() {
                 </SwiperSlide>
               ))}
             </Swiper>
+
+            <style jsx global>{`
+              .tokens-swiper-showcase .swiper-button-next,
+              .tokens-swiper-showcase .swiper-button-prev {
+                background: rgba(255, 255, 255, 0.98);
+                width: 56px;
+                height: 56px;
+                border-radius: 50%;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+                transition: all 0.3s ease;
+                border: 2px solid ${colors?.border['border-primary'] ?? '#08CEFF'};
+              }
+              
+              .tokens-swiper-showcase .swiper-button-next:after,
+              .tokens-swiper-showcase .swiper-button-prev:after {
+                font-size: 24px;
+                font-weight: bold;
+                color: ${colors?.border['border-primary'] ?? '#08CEFF'};
+              }
+              
+              .tokens-swiper-showcase .swiper-button-next:hover,
+              .tokens-swiper-showcase .swiper-button-prev:hover {
+                background: rgba(255, 255, 255, 1);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+                transform: scale(1.1);
+                border-width: 3px;
+              }
+              
+              .tokens-swiper-showcase .swiper-button-disabled {
+                opacity: 0.4;
+              }
+              
+              @media (max-width: 640px) {
+                .tokens-swiper-showcase .swiper-button-next,
+                .tokens-swiper-showcase .swiper-button-prev {
+                  width: 44px;
+                  height: 44px;
+                }
+                
+                .tokens-swiper-showcase .swiper-button-next:after,
+                .tokens-swiper-showcase .swiper-button-prev:after {
+                  font-size: 20px;
+                }
+              }
+            `}</style>
           </div>
         )}
 
