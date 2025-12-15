@@ -31,17 +31,27 @@ export default function CreateSuccess() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-1 bg-blue-50 py-8 px-4">
-        <div className="max-w-5xl mx-auto">
+      <main className="flex-1 bg-blue-50 py-8 px-4 flex items-center justify-center">
+        <div className="max-w-4xl w-full mx-auto">
           <div className="bg-white rounded-xl shadow-lg p-12 relative">
             {/* Mensagem de sucesso no topo direito */}
-            <div className="absolute top-4 right-4 flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-green-500 bg-green-50">
-              <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              <span className="text-sm font-medium text-green-700">
-                {getAdminText('create-token.success.message', 'Seu Token foi criado com sucesso!')}
-              </span>
+            <div className="absolute top-4 right-4">
+              <div 
+                className="flex items-center gap-2 px-4 py-2 rounded-lg border-2 shadow-sm"
+                style={{ 
+                  backgroundColor: '#F0FDF4',
+                  borderColor: '#22C55E'
+                }}
+              >
+                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center">
+                  <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <span className="text-sm font-medium text-gray-600">
+                  {getAdminText('create-token.success.message', 'Seu Token foi criado com sucesso!')}
+                </span>
+              </div>
             </div>
             
             <div className="flex flex-col lg:flex-row items-center gap-12">

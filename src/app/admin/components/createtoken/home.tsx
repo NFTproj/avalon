@@ -12,7 +12,7 @@ import Button from '@/components/core/Buttons/Button'
 export default function CriarTokensPage() {
   const { colors, texts } = useContext(ConfigContext)
   const router = useRouter()
-  
+
   const adminTexts = (texts as any)?.admin
   const getAdminText = (key: string, fallback: string) => {
     const keys = key.split('.')
@@ -34,8 +34,8 @@ export default function CriarTokensPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-1 bg-blue-50 py-8 px-4">
-        <div className="max-w-5xl mx-auto">
+      <main className="flex-1 bg-blue-50 py-8 px-4 flex items-center justify-center">
+        <div className="max-w-4xl w-full mx-auto">
           <div className="bg-white rounded-xl shadow-lg p-12">
             <div className="flex flex-col lg:flex-row items-center gap-12">
               {/* Lado esquerdo - Ilustração */}
@@ -58,7 +58,10 @@ export default function CriarTokensPage() {
                 </h1>
 
                 <p className="text-gray-600 text-xl mb-12 leading-relaxed">
-                  {getAdminText('create-token.description', 'Aqui você poderá criar um novo token para representar ativos ou direitos, facilitando a tokenização e a gestão dos mesmos.')}
+                  {getAdminText(
+                    'create-token.description',
+                    'Aqui você poderá criar um novo token para representar ativos ou direitos, facilitando a tokenização e a gestão dos mesmos.',
+                  )}
                 </p>
 
                 <div className="flex flex-row gap-10 justify-center lg:justify-start">

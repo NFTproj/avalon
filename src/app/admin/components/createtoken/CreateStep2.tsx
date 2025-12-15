@@ -87,7 +87,7 @@ export default function CreateStep2() {
     <div className="flex flex-col min-h-screen">
       <Header />
       <main className="flex-1 bg-blue-50 py-8 px-4">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-xl mx-auto w-full">
           <div className="bg-white rounded-xl shadow-lg p-8">
             
             {/* Indicador de progresso */}
