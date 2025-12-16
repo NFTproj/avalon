@@ -84,7 +84,9 @@ export default function CreateStep4() {
       // Redirecionar para página de sucesso
       router.push('/admin?page=success')
     } catch (error) {
-      alert('Erro ao criar token. Tente novamente.')
+      console.error('Erro ao criar token:', error)
+      // Redirecionar para página de erro
+      router.push('/admin?page=error')
     } finally {
       setLoading(false)
     }
