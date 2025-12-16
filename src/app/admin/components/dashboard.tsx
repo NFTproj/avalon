@@ -9,6 +9,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { getAllCards, Card } from '@/lib/api/cards'
 import Header from '@/components/landingPage/Header'
 import Footer from '@/components/common/footer'
+import AllTokensModal from './AllTokensModal'
 
 export default function DashboardComponent() {
   const { colors, texts } = useContext(ConfigContext)
@@ -30,6 +31,7 @@ export default function DashboardComponent() {
   const [tokens, setTokens] = useState<Card[]>([])
   const [loading, setLoading] = useState(true)
   const [totalTokens, setTotalTokens] = useState(0)
+  const [isAllTokensModalOpen, setIsAllTokensModalOpen] = useState(false)
 
   // Função para buscar tokens (reutilizável)
   const fetchTokens = useCallback(async () => {
@@ -150,7 +152,7 @@ export default function DashboardComponent() {
                   <button
                     onClick={() => fetchTokens()}
                     disabled={loading}
-                    className="flex items-center gap-2 text-gray-500 hover:text-gray-700 text-sm transition-colors duration-200 disabled:opacity-50"
+                    className="flex items-center gap-2 text-gray-500 hover:text-gray-700 text-sm transition-colors duration-200 disabled:opacity-50 cursor-pointer"
                     title="Atualizar lista"
                   >
                     <FaSync
@@ -158,8 +160,8 @@ export default function DashboardComponent() {
                     />
                   </button>
                   <button
-                    onClick={() => console.log('Ver todos os tokens')}
-                    className="flex items-center gap-2 text-gray-500 hover:text-gray-700 text-sm transition-colors duration-200"
+                    onClick={() => setIsAllTokensModalOpen(true)}
+                    className="flex items-center gap-2 text-gray-500 hover:text-gray-700 text-sm transition-colors duration-200 cursor-pointer"
                   >
                     <FaEye className="w-4 h-4" />
                     {getAdminText(
@@ -215,7 +217,7 @@ export default function DashboardComponent() {
                 </h3>
                 <button
                   onClick={() => console.log('Ver todos os KYCs')}
-                  className="flex items-center gap-2 text-gray-500 hover:text-gray-700 text-sm transition-colors duration-200"
+                  className="flex items-center gap-2 text-gray-500 hover:text-gray-700 text-sm transition-colors duration-200 cursor-pointer"
                 >
                   <FaEye className="w-4 h-4" />
                   {getAdminText('dashboard.recent-kycs.view-all', 'Ver Todos')}
@@ -242,6 +244,12 @@ export default function DashboardComponent() {
         </div>
       </main>
       <Footer />
+
+      {/* Modal de Todos os Tokens */}
+      <AllTokensModal
+        isOpen={isAllTokensModalOpen}
+        onClose={() => setIsAllTokensModalOpen(false)}
+      />
     </div>
   )
 }
