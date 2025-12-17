@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
             clientId,
             email,
             otpCode,
-            password: newPassword,
+            newPassword,
         }
 
         const response = await fetch(`${apiUrl}/auth/verify-reset-password`, {
