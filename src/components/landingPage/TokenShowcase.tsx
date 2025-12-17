@@ -40,7 +40,8 @@ function SkeletonCard() {
 
 export default function TokenShowcase() {
   const { colors, texts } = useContext(ConfigContext)
-  const { cards, isLoading, error } = useCards()
+  const [currentPage, setCurrentPage] = useState(1)
+  const { cards, pagination, isLoading, error } = useCards(currentPage)
   const router = useRouter()
   const landingTexts = texts?.['landing-page']?.tokens
   const [isMounted, setIsMounted] = useState(false)
@@ -55,10 +56,9 @@ export default function TokenShowcase() {
     if (!cards) return []
     return cards
       .filter((c: any) => String(c?.status ?? '100') !== '500')
-      .slice(0, 6) // Limite de 6 tokens para a landing
       .map((c: any) => {
         const cbd = c?.CardBlockchainData ?? {}
-        const initialSupply = toNum(cbd.initialSupply)
+        const depositedSupply = toNum(cbd.depositedSupply)
         const purchasedQuantity = toNum(cbd.purchasedQuantity)
         const tokenPriceMicros = toNum(cbd.tokenPrice)
         const price = tokenPriceMicros / 1_000_000
@@ -70,11 +70,11 @@ export default function TokenShowcase() {
           labels: (c.tags ?? []).map((name: string) => ({ name })),
           price: String(price),
           launchDate: c.launchDate ?? '',
-          tokensAvailable: String(initialSupply),
+          tokensAvailable: String(depositedSupply),
           identifierCode: c.ticker ?? '',
           image: c.logoUrl ?? '/images/tokens/default.png',
           sold: purchasedQuantity,
-          total: initialSupply,
+          total: depositedSupply,
         }
       })
   }, [cards])
@@ -181,17 +181,17 @@ export default function TokenShowcase() {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious 
+              <CarouselPrevious
                 className="-left-12 h-14 w-14 border-2 bg-white shadow-lg hover:shadow-xl transition-all hover:scale-110 disabled:opacity-30"
-                style={{ 
-                  color: colors?.border['border-primary'] ?? '#08CEFF', 
+                style={{
+                  color: colors?.border['border-primary'] ?? '#08CEFF',
                   borderColor: colors?.border['border-primary'] ?? '#08CEFF'
                 }}
               />
-              <CarouselNext 
+              <CarouselNext
                 className="-right-12 h-14 w-14 border-2 bg-white shadow-lg hover:shadow-xl transition-all hover:scale-110 disabled:opacity-30"
-                style={{ 
-                  color: colors?.border['border-primary'] ?? '#08CEFF', 
+                style={{
+                  color: colors?.border['border-primary'] ?? '#08CEFF',
                   borderColor: colors?.border['border-primary'] ?? '#08CEFF'
                 }}
               />
@@ -199,7 +199,42 @@ export default function TokenShowcase() {
           </div>
         )}
 
-       
+        {/* Paginação */}
+        {!isLoading && pagination && pagination.totalPages > 1 && (
+          <div className="flex items-center justify-center gap-4 mt-8">
+            <button
+              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+              disabled={currentPage <= 1}
+              className="px-6 py-2 rounded-lg font-medium transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+              style={{
+                backgroundColor: currentPage <= 1 ? colors?.colors?.['color-quaternary'] ?? '#E5E5E5' : colors?.colors?.['color-primary'] ?? '#202020',
+                color: currentPage <= 1 ? colors?.colors?.['color-tertiary'] ?? '#555859' : '#FFFFFF',
+              }}
+            >
+              ← Anterior
+            </button>
+
+            <span
+              className="text-sm font-medium"
+              style={{ color: colors?.colors?.['color-primary'] ?? '#202020' }}
+            >
+              Página {currentPage} de {pagination.totalPages}
+            </span>
+
+            <button
+              onClick={() => setCurrentPage(p => Math.min(pagination.totalPages, p + 1))}
+              disabled={currentPage >= pagination.totalPages}
+              className="px-6 py-2 rounded-lg font-medium transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+              style={{
+                backgroundColor: currentPage >= pagination.totalPages ? colors?.colors?.['color-quaternary'] ?? '#E5E5E5' : colors?.colors?.['color-primary'] ?? '#202020',
+                color: currentPage >= pagination.totalPages ? colors?.colors?.['color-tertiary'] ?? '#555859' : '#FFFFFF',
+              }}
+            >
+              Próximo →
+            </button>
+          </div>
+        )}
+
       </div>
     </section>
   )

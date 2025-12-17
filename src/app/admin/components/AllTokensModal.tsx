@@ -28,19 +28,23 @@ export default function AllTokensModal({
   const router = useRouter()
 
   // Helper para buscar textos de tradução
-  const adminTexts = (texts as any)?.admin
-  const getAdminText = (key: string, fallback: string) => {
-    if (!adminTexts) return fallback
-    const keys = key.split('.')
-    let value = adminTexts
-    for (const k of keys) {
-      value = value?.[k]
-      if (value === undefined || value === null) {
-        return fallback
+  const getAdminText = useCallback(
+    (key: string, fallback: string) => {
+      const adminTexts = (texts as any)?.admin
+      if (!adminTexts) return fallback
+
+      const keys = key.split('.')
+      let value = adminTexts
+      for (const k of keys) {
+        value = value?.[k]
+        if (value === undefined || value === null) {
+          return fallback
+        }
       }
-    }
-    return value || fallback
-  }
+      return value || fallback
+    },
+    [texts],
+  )
 
   // Estados do componente
   const [tokens, setTokens] = useState<Card[]>([]) // Lista completa de tokens

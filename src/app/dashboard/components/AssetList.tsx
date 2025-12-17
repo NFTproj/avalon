@@ -35,9 +35,12 @@ const fallbackCards: Card[] = [
 // Converter API Card para Card interno com validação
 const convertApiCardToCard = (apiCard: ApiCard): Card | null => {
   // Validar se tem dados blockchain
+  // ApiCard usa cardBlockchainData (c minúsculo)
   if (!apiCard.cardBlockchainData?.tokenAddress) {
     return null
   }
+
+  const blockchainData = apiCard.cardBlockchainData
 
   return {
     id: apiCard.id,
@@ -45,11 +48,12 @@ const convertApiCardToCard = (apiCard: ApiCard): Card | null => {
     status: (apiCard.status === 'ACTIVE' || apiCard.status === 'INACTIVE') 
       ? apiCard.status 
       : 'ACTIVE' as 'ACTIVE' | 'INACTIVE',
+    // Card de @/types/card usa CardBlockchainData (C maiúsculo)
     CardBlockchainData: {
-      tokenAddress: apiCard.cardBlockchainData.tokenAddress as `0x${string}`,
-      tokenNetwork: apiCard.cardBlockchainData.network || 'polygon',
-      tokenChainId: getChainIdFromNetwork(apiCard.cardBlockchainData.network || 'polygon'),
-      tokenPrice: '1.00', // Valor padrão, pode ser ajustado
+      tokenAddress: blockchainData.tokenAddress as `0x${string}`,
+      tokenNetwork: blockchainData.tokenNetwork || 'polygon',
+      tokenChainId: blockchainData.tokenChainId || getChainIdFromNetwork(blockchainData.tokenNetwork || 'polygon'),
+      tokenPrice: blockchainData.tokenPrice || '1.00',
     }
   }
 }

@@ -48,9 +48,9 @@ export default function TokensPage() {
       .filter((c: any) => String(c?.status ?? '100') !== '500')
       .map((c: any) => {
         const cbd = c?.CardBlockchainData ?? {}
-        const initialSupply        = toNum(cbd.initialSupply)           // total supply
+        const depositedSupply = toNum(cbd.depositedSupply)         // deposited supply
         const purchasedQuantity    = toNum(cbd.purchasedQuantity)       // sold
-        const available            = Math.max(0, initialSupply - purchasedQuantity)
+        const available = Math.max(0, depositedSupply - purchasedQuantity)
         const tokenPriceMicros     = toNum(cbd.tokenPrice)              // "1000000"
         const price                = tokenPriceMicros / 1_000_000       // ex.: 1.0
         return {
@@ -60,11 +60,11 @@ export default function TokensPage() {
           labels: (c.tags ?? []).map((name: string) => ({ name })),
           price: String(price),                         // TokenCard espera string
           launchDate: c.launchDate ?? '',               // ISO string
-          tokensAvailable: String(initialSupply),       // ← mostrar TOTAL SUPPLY
+          tokensAvailable: String(depositedSupply),     // ← tokens depositados
           identifierCode: c.ticker ?? '',               // ticker
           image: c.logoUrl ?? '/images/tokens/default.png', // logo real
           sold: purchasedQuantity,                      // vendidos
-          total: initialSupply,                         // total (para barra)
+          total: depositedSupply,                       // total depositado (para barra)
           // (se seu <Token/> também mostra “Disponíveis”, ele calcula via total - sold)
           available,                                    // só se você usar no componente
         }
