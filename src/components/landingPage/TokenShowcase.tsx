@@ -5,10 +5,13 @@ import { useRouter } from 'next/navigation'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import { useCards } from '@/lib/hooks/useCards'
 import Token from '@/components/common/Token'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, A11y } from 'swiper/modules'
-import 'swiper/css'
-import 'swiper/css/navigation'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel'
 
 const toNum = (v: any): number => {
   if (v === null || v === undefined) return 0
@@ -149,22 +152,18 @@ export default function TokenShowcase() {
         )}
 
         {!isLoading && tokens.length > 3 && isMounted && (
-          <div className="mb-16">
-            <Swiper
-              modules={[Navigation, A11y]}
-              spaceBetween={24}
-              navigation
-              slidesPerView={1}
-              breakpoints={{
-                640: { slidesPerView: 2, spaceBetween: 24 },
-                1024: { slidesPerView: 3, spaceBetween: 32 },
+          <div className="mb-16 max-w-7xl mx-auto px-16">
+            <Carousel
+              opts={{
+                align: 'start',
+                loop: true,
               }}
-              className="pb-6 tokens-swiper"
+              className="w-full"
             >
-              {tokens.map((token: any) => (
-                <SwiperSlide key={token.id}>
-                  <div className="flex justify-center">
-                    <div className="w-full max-w-sm">
+              <CarouselContent className="-ml-6">
+                {tokens.map((token: any) => (
+                  <CarouselItem key={token.id} className="pl-6 basis-auto">
+                    <div className="w-[384px]">
                       <Token
                         name={token.name}
                         subtitle={token.subtitle}
@@ -179,10 +178,24 @@ export default function TokenShowcase() {
                         total={token.total}
                       />
                     </div>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious 
+                className="-left-12 h-14 w-14 border-2 bg-white shadow-lg hover:shadow-xl transition-all hover:scale-110 disabled:opacity-30"
+                style={{ 
+                  color: colors?.border['border-primary'] ?? '#08CEFF', 
+                  borderColor: colors?.border['border-primary'] ?? '#08CEFF'
+                }}
+              />
+              <CarouselNext 
+                className="-right-12 h-14 w-14 border-2 bg-white shadow-lg hover:shadow-xl transition-all hover:scale-110 disabled:opacity-30"
+                style={{ 
+                  color: colors?.border['border-primary'] ?? '#08CEFF', 
+                  borderColor: colors?.border['border-primary'] ?? '#08CEFF'
+                }}
+              />
+            </Carousel>
           </div>
         )}
 

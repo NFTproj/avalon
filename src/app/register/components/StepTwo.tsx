@@ -6,6 +6,8 @@ import CustomButton from '@/components/core/Buttons/CustomButton'
 import CustomInput from '@/components/core/Inputs/CustomInput'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { RegisterPayload } from '@/lib/api/auth'
+import PasswordStrengthIndicator from '@/components/auth/PasswordStrengthIndicator'
+import { validatePassword } from '@/utils/passwordValidation'
 
 interface StepTwoProps {
   nextStep: () => void
@@ -40,6 +42,13 @@ export default function StepTwo({
 
     if (!formData.password || formData.password.trim() === '') {
       setPasswordError('Senha não pode ser vazia')
+      return
+    }
+
+    // Validar força da senha
+    const { isValid } = validatePassword(formData.password)
+    if (!isValid) {
+      setPasswordError('A senha não atende aos requisitos mínimos de segurança')
       return
     }
 
@@ -105,6 +114,11 @@ export default function StepTwo({
             </button>
           }
         />
+
+        {/* Indicador de força da senha */}
+        {formData.password && (
+          <PasswordStrengthIndicator password={formData.password} />
+        )}
 
         <CustomInput
           type={showConfirm ? 'text' : 'password'}

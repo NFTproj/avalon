@@ -285,14 +285,30 @@ export default function EmissionCard({ card, userBalance, balanceData, onSuccess
           {t('quantity-label', 'Quantidade de tokens compensados')}
         </label>
         <div className="relative">
-          <select
-            value={quantity}
+          <input
+            type="number"
+            value={quantity || ''}
             onChange={(e) => {
-              setQuantity(Number(e.target.value))
+              const value = e.target.value === '' ? 0 : Number(e.target.value)
+              setQuantity(value)
               setError(null)
               setSuccess(false)
             }}
-            className="w-full px-6 py-4 border-3 rounded-2xl text-lg font-medium focus:outline-none appearance-none cursor-pointer"
+            onBlur={(e) => {
+              // Validar ao sair do campo
+              const value = Number(e.target.value)
+              if (value > maxQuantity) {
+                setQuantity(maxQuantity)
+              } else if (value < 0) {
+                setQuantity(0)
+              }
+            }}
+            min={0}
+            max={maxQuantity}
+            step="any"
+            list="quantity-suggestions"
+            placeholder={hasBalance ? t('quantity-placeholder', 'Digite a quantidade') : t('quantity-unavailable', 'Sem saldo disponível')}
+            className="w-full px-6 py-4 border-3 rounded-2xl text-lg font-medium focus:outline-none"
             style={{ 
               borderColor: inputBorder,
               borderWidth: '3px',
@@ -300,24 +316,12 @@ export default function EmissionCard({ card, userBalance, balanceData, onSuccess
               color: inputTextColor
             }}
             disabled={loading || success || !hasBalance}
-          >
-            <option value={0}>
-              {hasBalance
-                ? `0 - ${formattedMaxQuantity}`
-                : t('quantity-unavailable', 'Sem saldo disponível')}
-            </option>
+          />
+          <datalist id="quantity-suggestions">
             {quantityOptions.map((value) => (
-              <option key={value} value={value}>
-                {value.toLocaleString(locale || 'pt-BR', { maximumFractionDigits: 6 })}
-              </option>
+              <option key={value} value={value} />
             ))}
-          </select>
-          {/* Ícone de seta */}
-          <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none">
-            <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
+          </datalist>
         </div>
         <p className="mt-2 text-sm" style={{ color: inputDisabledColor }}>
           {hasBalance

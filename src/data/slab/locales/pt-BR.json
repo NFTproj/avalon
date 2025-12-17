@@ -296,7 +296,13 @@
       "placeholders": {
         "code": "123456"
       },
-      "button-verify": "Verificar"
+      "button-verify": "Verificar e entrar",
+      "resend": {
+        "button": "Reenviar código",
+        "success": "Código reenviado com sucesso!",
+        "error": "Erro ao reenviar código.",
+        "cooldown": "Disponível novamente em {seconds}s"
+      }
     },
     "step-four": {
       "counter": {
@@ -648,7 +654,10 @@
     "page-subtitle": "Registre sua compensação ambiental e receba seu certificado digital com selo de verificação.",
     "token-label": "Token a ser utilizado",
     "quantity-label": "Quantidade de tokens compensados",
-    "quantity-placeholder": "0-1500",
+    "quantity-placeholder": "Digite a quantidade",
+    "quantity-available": "Saldo disponível: {balance}",
+    "quantity-unavailable": "Sem saldo disponível",
+    "quantity-no-balance": "Você não possui saldo disponível para emissão deste certificado.",
     "balance-available": "Saldo disponível: {balance} tokens",
     "button-emit": "Emitir certificado",
     "button-emitting": "Emitindo...",

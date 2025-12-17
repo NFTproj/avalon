@@ -5,6 +5,8 @@ import { ConfigContext } from '@/contexts/ConfigContext'
 import CustomInput from '@/components/core/Inputs/CustomInput'
 import CustomButton from '@/components/core/Buttons/CustomButton'
 import { X } from 'lucide-react'
+import PasswordStrengthIndicator from '@/components/auth/PasswordStrengthIndicator'
+import { validatePassword } from '@/utils/passwordValidation'
 
 interface ResetPasswordModalProps {
   isOpen: boolean
@@ -62,15 +64,16 @@ export default function ResetPasswordModal({ isOpen, onClose }: ResetPasswordMod
       return
     }
 
-    // Validar se as senhas conferem
-    if (newPassword !== confirmPassword) {
-      setError(resetTexts?.errors?.['passwords-dont-match'] || 'As senhas não conferem')
+    // Validar força da senha
+    const { isValid } = validatePassword(newPassword)
+    if (!isValid) {
+      setError('A senha não atende aos requisitos mínimos de segurança')
       return
     }
 
-    // Validar tamanho mínimo da senha
-    if (newPassword.length < 6) {
-      setError('A senha deve ter pelo menos 6 caracteres')
+    // Validar se as senhas conferem
+    if (newPassword !== confirmPassword) {
+      setError(resetTexts?.errors?.['passwords-dont-match'] || 'As senhas não conferem')
       return
     }
 
@@ -251,9 +254,14 @@ export default function ResetPasswordModal({ isOpen, onClose }: ResetPasswordMod
                   onChange={(e) => setNewPassword(e.target.value)}
                   placeholder={resetTexts?.['new-password-placeholder'] || '••••••••'}
                   required
-                  minLength={6}
+                      minLength={8}
                   className="w-full border-gray-300 rounded-xl focus:outline-none focus:ring-2"
                 />
+                    {newPassword && (
+                      <div className="mt-3">
+                        <PasswordStrengthIndicator password={newPassword} />
+                      </div>
+                    )}
               </div>
 
               <div>
@@ -266,7 +274,7 @@ export default function ResetPasswordModal({ isOpen, onClose }: ResetPasswordMod
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder={resetTexts?.['confirm-password-placeholder'] || '••••••••'}
                   required
-                  minLength={6}
+                      minLength={8}
                   className="w-full border-gray-300 rounded-xl focus:outline-none focus:ring-2"
                 />
               </div>
