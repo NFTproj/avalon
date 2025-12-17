@@ -3,24 +3,8 @@ import AssetCard from './AssetCard'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import { useAuth } from '@/contexts/AuthContext'
 import { useUserTokenBalances } from '@/hooks/useUserTokenBalances'
-import { getAllCards } from '@/lib/api/cards'
+import { getAllCards, Card as ApiCard } from '@/lib/api/cards'
 import { Card } from '@/types/card'
-
-// Mapear tipos da API para tipos internos
-interface ApiCard {
-  id: string
-  name: string
-  description: string
-  image: string
-  status: string
-  clientId: string
-  cardBlockchainData?: {
-    tokenName?: string
-    tokenSymbol?: string
-    tokenAddress?: string
-    network?: string
-  }
-}
 
 // Dados de exemplo para quando a API não estiver funcionando
 const fallbackCards: Card[] = [
@@ -58,7 +42,9 @@ const convertApiCardToCard = (apiCard: ApiCard): Card | null => {
   return {
     id: apiCard.id,
     name: apiCard.name,
-    status: apiCard.status as 'ACTIVE' | 'INACTIVE',
+    status: (apiCard.status === 'ACTIVE' || apiCard.status === 'INACTIVE') 
+      ? apiCard.status 
+      : 'ACTIVE' as 'ACTIVE' | 'INACTIVE',
     CardBlockchainData: {
       tokenAddress: apiCard.cardBlockchainData.tokenAddress as `0x${string}`,
       tokenNetwork: apiCard.cardBlockchainData.network || 'polygon',

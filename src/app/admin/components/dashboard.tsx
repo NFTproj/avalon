@@ -9,6 +9,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { getAllCards, Card } from '@/lib/api/cards'
 import Header from '@/components/landingPage/Header'
 import Footer from '@/components/common/footer'
+import LoadingOverlay from '@/components/common/LoadingOverlay'
 import AllTokensModal from './AllTokensModal'
 
 export default function DashboardComponent() {
@@ -144,7 +145,7 @@ export default function DashboardComponent() {
               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-lg font-bold text-black">
                   {getAdminText(
-                    'dashboard.kycs-tokens.title',
+                    'dashboard.recent-tokens.title',
                     'Tokens Recentes',
                   )}
                 </h3>
@@ -171,10 +172,16 @@ export default function DashboardComponent() {
                   </button>
                 </div>
               </div>
-              <div className="space-y-4">
+              <div className="space-y-4 relative">
                 {loading ? (
-                  <div className="text-center py-8 text-gray-500">
-                    {getAdminText('dashboard.loading', 'Carregando...')}
+                  <div className="relative min-h-[200px]">
+                    <LoadingOverlay
+                      overrideMessage={getAdminText(
+                        'dashboard.loading',
+                        'Carregando...',
+                      )}
+                      showMessage={true}
+                    />
                   </div>
                 ) : tokens.length === 0 ? (
                   <div className="text-center py-8 text-gray-500">

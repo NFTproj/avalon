@@ -787,5 +787,219 @@
       "title": "Dica:",
       "message": "Fiques atento às atualizações! Notificaremos você assim que esta funcionalidade estiver disponível."
     }
+  },
+  "admin": {
+    "login": {
+      "title": "Acesse sua conta",
+      "email-label": "Seu e-mail:",
+      "password-label": "Sua senha:",
+      "email-placeholder": "Digite seu e-mail",
+      "password-placeholder": "Digite sua senha",
+      "login-button": "Entrar",
+      "error-invalid-credentials": "Credenciais inválidas. Verifique seus dados e tente novamente."
+    },
+    "dashboard": {
+      "title": "Área do Administrador",
+      "metrics": {
+        "total-tokens": "Total de Tokens",
+        "pending-kyc": "KYCs Pendentes",
+        "active-users": "Usuários Ativos"
+      },
+      "recent-kycs": {
+        "title": "KYCs Recentes",
+        "view-all": "Ver Todos"
+      },
+      "recent-tokens": {
+        "title": "Tokens Recentes",
+        "view-all": "Ver Todos"
+      },
+      "create-token-button": "+ Criar Novo Token",
+      "token-status": {
+        "active": "Ativo",
+        "pending": "Pendente",
+        "inactive": "Inativo"
+      },
+      "kyc-status": {
+        "approved": "Aprovado"
+      }
+    },
+    "create-token": {
+      "title": "Criar Token",
+      "description": "Aqui você poderá criar um novo token para representar ativos ou direitos, facilitando a tokenização e a gestão dos mesmos.",
+      "back-button": "Voltar",
+      "start-button": "Começar",
+      "step-one": {
+        "counter": {
+          "current": "01",
+          "total": "de 04"
+        },
+        "title": "Dados Principais",
+        "fields": {
+          "card-name": {
+            "label": "Nome do Card",
+            "placeholder": "Ex: Slab Token"
+          },
+          "short-description": {
+            "label": "Descrição Curta",
+            "placeholder": "Ex: Token utilitário da Slab"
+          },
+          "long-description": {
+            "label": "Descrição Longa",
+            "placeholder": "Adicione uma descrição detalhada do token"
+          }
+        },
+        "buttons": {
+          "back": "Voltar",
+          "continue": "Continuar"
+        }
+      },
+      "step-two": {
+        "counter": {
+          "current": "02",
+          "total": "de 04"
+        },
+        "title": "Configurações Avançadas",
+        "fields": {
+          "ticker": {
+            "label": "Ticker (Símbolo)",
+            "placeholder": "Ex: Slab Token"
+          },
+          "initial-quantity": {
+            "label": "Quantidade Inicial",
+            "placeholder": "Ex: 120.550,000"
+          },
+          "tags": {
+            "label": "Tags",
+            "placeholder": "Adicione a tag e pressione Enter"
+          },
+          "twitter": {
+            "label": "Twitter",
+            "placeholder": "Ex: https://twitter.com"
+          },
+          "discord": {
+            "label": "Discord",
+            "placeholder": "Ex: https://discord.com"
+          },
+          "official-website": {
+            "label": "Site Oficial",
+            "placeholder": "Ex: https://exemplo.com"
+          }
+        },
+        "buttons": {
+          "back": "Voltar",
+          "continue": "Continuar"
+        }
+      },
+      "step-three": {
+        "counter": {
+          "current": "03",
+          "total": "de 04"
+        },
+        "title": "Blockchain e Imagens",
+        "fields": {
+          "blockchain": {
+            "label": "Blockchain",
+            "placeholder": "Selecione a Blockchain"
+          },
+          "release-date": {
+            "label": "Data de Lançamento",
+            "placeholder": "Digite a Data de Lançamento"
+          }
+        },
+        "uploads": {
+          "logo": {
+            "label": "Logotipo",
+            "placeholder": "Upload da imagem",
+            "file-types": "png.jpg.jpeg"
+          },
+          "background": {
+            "label": "Plano de fundo",
+            "placeholder": "Upload da imagem",
+            "file-types": "png.jpg.jpeg"
+          }
+        },
+        "buttons": {
+          "back": "Voltar",
+          "continue": "Continuar"
+        }
+      },
+      "step-four": {
+        "counter": {
+          "current": "04",
+          "total": "de 04"
+        },
+        "title": "Revisão e Criação",
+        "fields": {
+          "ticker": "Ticker",
+          "short-description": "Descrição Curta",
+          "long-description": "Descrição Longa",
+          "initial-quantity": "Quantidade inicial",
+          "tags": "Tags",
+          "site": "Site",
+          "discord": "Discord",
+          "twitter": "Twitter",
+          "blockchain": "Blockchain",
+          "release-date": "Data de Lançamento"
+        },
+        "buttons": {
+          "edit": "Editar Dados",
+          "create": "Criar Token",
+          "creating": "Criando..."
+        }
+      }
+    },
+    "edit-token": {
+      "title": "Editar Token",
+      "loading": "Carregando dados...",
+      "back": "Voltar",
+      "success": "Token atualizado com sucesso!",
+      "fields": {
+        "name": {
+          "label": "Nome do Token",
+          "placeholder": "Ex: Slab Token"
+        },
+        "ticker": {
+          "label": "Ticker (Símbolo)",
+          "placeholder": "Ex: SLB"
+        },
+        "description": {
+          "label": "Descrição Curta",
+          "placeholder": "Ex: Token utilitário da Slab"
+        },
+        "long-description": {
+          "label": "Descrição Longa",
+          "placeholder": "Adicione uma descrição detalhada do token"
+        }
+      },
+      "info": {
+        "label": "Nota",
+        "message": "Alguns campos não podem ser editados após a criação do token na blockchain (quantidade, preço, rede, etc)."
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "save": "Salvar Alterações",
+        "saving": "Salvando..."
+      }
+    },
+    "all-tokens": {
+      "title": "Todos os Tokens",
+      "refresh-button": "Atualizar lista",
+      "search-placeholder": "Pesquisar por nome, ticker ou descrição...",
+      "loading-count": "Carregando...",
+      "showing": "Exibindo",
+      "of": "de",
+      "tokens": "tokens",
+      "loading": "Carregando tokens...",
+      "no-results": "Nenhum token encontrado",
+      "no-results-description": "Tente usar termos de pesquisa diferentes",
+      "no-tokens": "Nenhum token criado ainda",
+      "created-at": "Criado em",
+      "status": {
+        "active": "Ativo"
+      },
+      "edit-button": "Editar token",
+      "edit": "Editar",
+      "close-button": "Fechar"
+    }
   }
 }

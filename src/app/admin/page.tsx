@@ -14,6 +14,7 @@ import CreateStep3Component from './components/createtoken/CreateStep3'
 import CreateStep4Component from './components/createtoken/CreateStep4'
 import CreateSuccessComponent from './components/createtoken/CreateSuccess'
 import CreateErrorComponent from './components/createtoken/CreateError'
+import EditTokenComponent from './components/EditToken'
 
 function AdminContent() {
   const { user } = useAuth()
@@ -73,6 +74,8 @@ function AdminContent() {
       return <CreateSuccessComponent />
     case 'error':
       return <CreateErrorComponent />
+    case 'edittoken':
+      return <EditTokenComponent />
     case 'dashboard':
     default:
       return <DashboardComponent />
