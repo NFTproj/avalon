@@ -19,7 +19,7 @@ function Header() {
   // JSON-EN: landing-page.header
   const lpHeader = texts?.['landing-page']?.header
   // JSON-EN: landing-page.header.navigations
-  const nav = lpHeader?.navigations
+  const nav = lpHeader?.navigations as any
   const [hovered, setHovered] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
@@ -122,42 +122,81 @@ function Header() {
 
             {/* navegação mobile */}
             <nav className="flex flex-col items-center gap-4 mt-16 w-full">
-              {/* About Bloxify */}
-              <details ref={aboutRef} className="group">
-                <summary className="flex items-center justify-center cursor-pointer px-4 py-2">
-                  <ChevronRight className="w-4 h-4 mr-2 transition group-open:rotate-90" />
-                  {/* JSON-EN: landing-page.header.navigations.navOne */}
-                  {nav?.navOne}
-                </summary>
-              </details>
+              {/* navOne - About */}
+              {nav?.navOne?.[0]?.title && (
+                <details ref={aboutRef} className="group w-full">
+                  <summary className="flex items-center justify-center cursor-pointer px-4 py-2">
+                    <ChevronRight className="w-4 h-4 mr-2 transition group-open:rotate-90" />
+                    {/* JSON-EN: landing-page.header.navigations.navOne[0].title */}
+                    {nav.navOne[0].title}
+                  </summary>
+                  {nav.navOne[0].items && nav.navOne[0].items.length > 0 && (
+                    <ul className="flex flex-col p-2 space-y-2 w-full items-center ml-7">
+                      {nav.navOne[0].items.map((item: any, idx: number) => (
+                        <li key={idx} className="hover:bg-gray-200 px-2 py-1 rounded w-full text-center">
+                          {item.link ? (
+                            <a
+                              href={item.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block"
+                            >
+                              {item.title}
+                            </a>
+                          ) : (
+                            <span>{item.title}</span>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </details>
+              )}
 
-              {/* Products > TBIO Token */}
-              <details className="group w-full">
-                <summary className="flex items-center justify-center cursor-pointer px-4 py-2">
-                  <ChevronRight className="w-4 h-4 mr-2 transition group-open:rotate-90" />
-                  {/* JSON-EN: landing-page.header.navigations.navTwo[0].title */}
-                  {nav?.navTwo[0].title}
-                </summary>
-                <ul className="flex flex-col p-2 space-y-2 w-full items-center ml-7">
-                  <li className="flex items-center gap-2 hover:bg-gray-200 px-2 py-1 rounded">
-                    {/* JSON-EN: landing-page.header.navigations.navTwo[0].items[0].title */}
-                    {nav?.navTwo[0].items[0].title}
-                  </li>
-                </ul>
-              </details>
+              {/* navTwo - Products */}
+              {nav?.navTwo?.[0]?.title && (
+                <details className="group w-full">
+                  <summary className="flex items-center justify-center cursor-pointer px-4 py-2">
+                    <ChevronRight className="w-4 h-4 mr-2 transition group-open:rotate-90" />
+                    {/* JSON-EN: landing-page.header.navigations.navTwo[0].title */}
+                    {nav.navTwo[0].title}
+                  </summary>
+                  {nav.navTwo[0].items && nav.navTwo[0].items.length > 0 && (
+                    <ul className="flex flex-col p-2 space-y-2 w-full items-center ml-7">
+                      {nav.navTwo[0].items.map((item: any, idx: number) => (
+                        <li key={idx} className="hover:bg-gray-200 px-2 py-1 rounded">
+                          {item.link ? (
+                            <a
+                              href={item.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {item.title}
+                            </a>
+                          ) : (
+                            <span>{item.title}</span>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </details>
+              )}
 
-              {/* Language (lista) */}
-              <details className="group w-full">
-                <summary className="flex items-center justify-center cursor-pointer px-4 py-2 mr-5">
-                  <ChevronRight className="w-4 h-4 mr-2 transition group-open:rotate-90" />
-                  {/* JSON-EN: landing-page.header.navigations.navThree[0].title */}
-                  {nav?.navThree[0].title}
-                </summary>
-                <ul className="flex flex-col p-2 space-y-2 w-full items-center ml-6">
-                  <LangItem idx={0} code="pt-BR" />
-                  <LangItem idx={1} code="en-US" />
-                </ul>
-              </details>
+              {/* navThree - Language */}
+              {nav?.navThree?.[0]?.title && (
+                <details className="group w-full">
+                  <summary className="flex items-center justify-center cursor-pointer px-4 py-2 mr-5">
+                    <ChevronRight className="w-4 h-4 mr-2 transition group-open:rotate-90" />
+                    {/* JSON-EN: landing-page.header.navigations.navThree[0].title */}
+                    {nav.navThree[0].title}
+                  </summary>
+                  <ul className="flex flex-col p-2 space-y-2 w-full items-center ml-6">
+                    <LangItem idx={0} code="pt-BR" />
+                    <LangItem idx={1} code="en-US" />
+                  </ul>
+                </details>
+              )}
             </nav>
 
             {/* area login/signup mobile */}
@@ -224,42 +263,85 @@ function Header() {
               color: colors?.colors['color-primary'],
             }}
           >
-            {/* About Bloxify */}
-            <details ref={aboutRef} className="group">
-              <summary className="flex items-center cursor-pointer">
-                {nav?.navOne}
-                <ChevronDown className="w-4 h-4 ml-2 transition group-open:rotate-180" />
-              </summary>
-            </details>
+            {/* navOne - About */}
+            {nav?.navOne?.[0]?.title && (
+              <details ref={aboutRef} className="group relative">
+                <summary className="flex items-center cursor-pointer">
+                  {nav.navOne[0].title}
+                  <ChevronDown className="w-4 h-4 ml-2 transition group-open:rotate-180" />
+                </summary>
+                {nav.navOne[0].items && nav.navOne[0].items.length > 0 && (
+                  <div className="absolute left-0 mt-2 min-w-[8rem] bg-white shadow-lg rounded-b-lg z-40">
+                    <ul className="flex flex-col p-2 space-y-2">
+                      {nav.navOne[0].items.map((item: any, idx: number) => (
+                        <li key={idx} className="hover:bg-gray-200 px-2 py-1 rounded">
+                          {item.link ? (
+                            <a
+                              href={item.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-2"
+                            >
+                              {item.title}
+                            </a>
+                          ) : (
+                            <span className="flex items-center gap-2">{item.title}</span>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </details>
+            )}
 
-            {/* Products */}
-            <details ref={productsRef} className="group relative">
-              <summary className="flex items-center cursor-pointer">
-                {nav?.navTwo[0].title}
-                <ChevronDown className="w-4 h-4 ml-2 transition group-open:rotate-180" />
-              </summary>
-              <div className="absolute left-0 mt-2 min-w-[8rem] bg-white shadow-lg rounded-b-lg z-40">
-                <ul className="flex flex-col p-2 space-y-2">
-                  <li className="flex items-center gap-2 hover:bg-gray-200 px-2 py-1 rounded">
-                    {nav?.navTwo[0].items[0].title}
-                  </li>
-                </ul>
-              </div>
-            </details>
+            {/* navTwo - Products */}
+            {nav?.navTwo?.[0]?.title && (
+              <details ref={productsRef} className="group relative">
+                <summary className="flex items-center cursor-pointer">
+                  {nav.navTwo[0].title}
+                  <ChevronDown className="w-4 h-4 ml-2 transition group-open:rotate-180" />
+                </summary>
+                {nav.navTwo[0].items && nav.navTwo[0].items.length > 0 && (
+                  <div className="absolute left-0 mt-2 min-w-[8rem] bg-white shadow-lg rounded-b-lg z-40">
+                    <ul className="flex flex-col p-2 space-y-2">
+                      {nav.navTwo[0].items.map((item: any, idx: number) => (
+                        <li key={idx} className="hover:bg-gray-200 px-2 py-1 rounded">
+                          {item.link ? (
+                            <a
+                              href={item.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-2"
+                            >
+                              {item.title}
+                            </a>
+                          ) : (
+                            <span className="flex items-center gap-2">{item.title}</span>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </details>
+            )}
 
-            {/* Language (desktop) */}
-            <details ref={langRef} className="group relative">
-              <summary className="flex items-center cursor-pointer">
-                {nav?.navThree[0].title}
-                <ChevronDown className="w-4 h-4 ml-2 transition group-open:rotate-180" />
-              </summary>
-              <div className="absolute left-0 mt-2 min-w-[8rem] bg-white shadow-lg rounded-b-lg z-40">
-                <ul className="flex flex-col p-2 space-y-2">
-                  <LangItem idx={0} code="pt-BR" />
-                  <LangItem idx={1} code="en-US" />
-                </ul>
-              </div>
-            </details>
+            {/* navThree - Language */}
+            {nav?.navThree?.[0]?.title && (
+              <details ref={langRef} className="group relative">
+                <summary className="flex items-center cursor-pointer">
+                  {nav.navThree[0].title}
+                  <ChevronDown className="w-4 h-4 ml-2 transition group-open:rotate-180" />
+                </summary>
+                <div className="absolute left-0 mt-2 min-w-[8rem] bg-white shadow-lg rounded-b-lg z-40">
+                  <ul className="flex flex-col p-2 space-y-2">
+                    <LangItem idx={0} code="pt-BR" />
+                    <LangItem idx={1} code="en-US" />
+                  </ul>
+                </div>
+              </details>
+            )}
           </nav>
         </div>
         {/* ╰────────────────────────────────────────────────────────────────────╯ */}

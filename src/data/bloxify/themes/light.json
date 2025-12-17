@@ -3,12 +3,12 @@
     "header-primary": "#FFFFFF"
   },
   "buttons": {
-    "button-primary": "#1DA1F2",
+    "button-primary": "#1D6FD6 ",
     "button-secondary": "#F4F6F8",
     "button-third": "#C0FEFF"
   },
   "border": {
-    "border-primary": "#1DA1F2"
+    "border-primary": "#1D6FD6 "
   },
   "colors": {
     "color-primary": "#1F2937",
@@ -18,7 +18,7 @@
     "color-quintenary": "#F3F4F6"
   },
   "colors-base": {
-    "color-primary": "#1DA1F2",
+    "color-primary": "#1D6FD6 ",
     "color-secondary": "#F4F6F8",
     "color-tertiary": "#0284C7",
     "color-quaternary": "#7DD3FC"
@@ -42,12 +42,12 @@
     },
     "colors": {
       "text": "#1F2937",
-      "highlight": "#1DA1F2",
+      "highlight": "#1D6FD6 ",
       "table-text": "#4B5563",
       "token-border": "#E5E7EB"
     },
     "buttons": {
-      "action-border": "#1DA1F2",
+      "action-border": "#1D6FD6 ",
       "table-button-text": "#1F2937",
       "table-button-bg": "#F4F6F8"
     }
@@ -61,7 +61,7 @@
   },
   "progress-bar": {
     "background": "#E5E7EB",
-    "foreground": "#1DA1F2"
+    "foreground": "#1D6FD6 "
   },
   "certificateEmission": {
     "background": {
@@ -72,7 +72,7 @@
     "colors": {
       "title": "#1F2937",
       "subtitle": "#6B7280",
-      "accent": "#1DA1F2",
+      "accent": "#1D6FD6 ",
       "label": "#1F2937",
       "input-text": "#4B5563",
       "input-disabled": "#9CA3AF",
@@ -83,19 +83,19 @@
       "success-text": "#16A34A"
     },
     "border": {
-      "input": "#1DA1F2",
+      "input": "#1D6FD6 ",
       "card": "#E5E7EB",
       "error": "#FCA5A5"
     },
     "button": {
-      "primary-bg": "#1DA1F2",
+      "primary-bg": "#1D6FD6 ",
       "primary-text": "#FFFFFF"
     },
     "history": {
       "card-bg": "#FFFFFF",
       "card-border": "#E5E7EB",
       "filter-bg": "#F3F4F6",
-      "filter-border": "#1DA1F2",
+      "filter-border": "#1D6FD6 ",
       "filter-text": "#4B5563"
     }
   }

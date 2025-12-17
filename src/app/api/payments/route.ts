@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
     if (!cardId) return NextResponse.json({ error: 'cardId é obrigatório' }, { status: 400 })
     if (!buyerFromBody) return NextResponse.json({ error: 'buyerAddress é obrigatório' }, { status: 400 })
 
-    const qty = Math.max(1, Math.floor(Number(tokenQuantity || 0)))
+    const qty = Number(tokenQuantity || 0)
     if (!Number.isFinite(qty) || qty <= 0) {
       return NextResponse.json({ error: 'tokenQuantity inválido' }, { status: 400 })
     }

@@ -170,10 +170,11 @@ export default function BalancesTable({ className = "" }: { className?: string }
                         {(balancesTexts as any)?.actions?.buy || 'Comprar'}
                       </button>
                       <button 
-                        className="text-sm hover:underline" 
-                        style={{ color: tableTextColor }}
-                        onClick={() => window.location.href = `/certificate-emission?cardId=${b.id}`}
-                      >
+                          className="text-sm hover:underline" 
+                          style={{ color: tableTextColor }}
+                          // onClick={() => window.location.href = `/certificate-emission?cardId=${b.id}`}
+                          onClick={() => window.location.href = '/under-development'}
+                        >
                         {(balancesTexts as any)?.actions?.benefits || 'Benefícios'}
                       </button>
                     </div>

@@ -10,16 +10,19 @@
         "main-logo": "Slabs Logo"
       },
       "navigations": {
-        "navOne": "Slab",
-        "navTwo": [
+        "navOne": [
           {
-            "title": "Products",
+            "title": "Slab",
             "items": [
               {
-                "title": "TBIO Token"
+                "title": "Calculator",
+                "link": "https://somasustentabilidade.com.br/calculadora/"
               }
             ]
           }
+        ],
+        "navTwo": [
+          
         ],
         "navThree": [
           {
@@ -293,7 +296,13 @@
       "placeholders": {
         "code": "123456"
       },
-      "button-verify": "Verify"
+      "button-verify": "Verify and sign in",
+      "resend": {
+        "button": "Resend code",
+        "success": "Code resent successfully!",
+        "error": "Error resending code.",
+        "cooldown": "Available again in {seconds}s"
+      }
     },
     "step-four": {
       "counter": {
@@ -434,7 +443,12 @@
       "sold": "Sold",
       "available": "Available"
     },
-    "disclaimer": "Do not invest before knowing all essential information about the offer"
+    "disclaimer": "Do not invest before knowing all essential information about the offer",
+    "login-required-title": "Login Required",
+    "login-required-message": "You need to be logged in to buy tokens. Please log in to continue.",
+    "cancel": "Cancel",
+    "go-to-login": "Go to Login",
+    "processing": "Processing..."
   },
   "tokensPage": {
     "title": "Discover today the [[best opportunities]] in digital tokens",
@@ -468,7 +482,7 @@
       },
       "docs": {
         "title": "Documents",
-        "link1": "Twitter",
+        "link1": "Docs",
         "link2": "Instagram",
         "link3": "Terms of Use",
         "link4": "Documents",
@@ -681,7 +695,7 @@
       },
       "actions": {
         "buy": "Buy",
-        "benefits": "Benefits"
+        "benefits": "Certificate"
       },
       "pagination": {
         "previous": "Previous",
@@ -747,7 +761,7 @@
       },
       "buttons": {
         "buy": "Buy",
-        "sell": "Sell"
+        "sell": "Sell "
       }
     }
   },

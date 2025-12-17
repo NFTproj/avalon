@@ -23,6 +23,17 @@ export async function POST(req: NextRequest) {
         { status: 400 },
       )
     }
+
+    /* ---------- validação de senha forte ---------- */
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/
+    if (!passwordRegex.test(password)) {
+      return NextResponse.json(
+        {
+          error: 'A senha deve ter no mínimo 8 caracteres, incluindo letras maiúsculas, minúsculas, números e caracteres especiais'
+        },
+        { status: 400 },
+      )
+    }
     /* ---------- monta payload completo ---------- */
     const payload: Record<string, any> = { email, password, clientId }
     if (permissions) payload.permissions = permissions.split(',')
