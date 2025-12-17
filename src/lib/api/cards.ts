@@ -43,9 +43,22 @@ export interface GetCardsResponse {
 
 /**
  * Busca todos os cards/tokens
+ * @param page - Número da página (opcional, padrão: 1)
+ * @param limit - Itens por página (opcional, padrão: 20)
  */
-export async function getAllCards(): Promise<GetCardsResponse> {
-  return apiFetch<GetCardsResponse>('/api/cards')
+export async function getAllCards(
+  page?: number,
+  limit?: number,
+): Promise<GetCardsResponse> {
+  const params = new URLSearchParams()
+  if (page) params.append('page', page.toString())
+  if (limit) params.append('limit', limit.toString())
+
+  const url = params.toString()
+    ? `/api/cards?${params.toString()}`
+    : '/api/cards'
+
+  return apiFetch<GetCardsResponse>(url)
 }
 
 /**
