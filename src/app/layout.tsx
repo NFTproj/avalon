@@ -26,11 +26,7 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-<<<<<<< HEAD
   title: 'TokenGrid',
-=======
-  title: 'SlabAssets',
->>>>>>> origin/dev
   description: 'Powered by Blocklize',
 }
 
