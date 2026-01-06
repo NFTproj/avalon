@@ -22,7 +22,7 @@ project-root/
 │   │   ├── clientA/           // Assets (imagens, fontes, etc.) para Cliente A
 │   │   └── clientB/           // Assets para Cliente B
 ├── tailwind.config.js         // Configuração do Tailwind CSS (pode usar temas personalizados)
-├── next.config.js             // Configuração do Next.js (incluindo i18n se necessário)
+├── next.config.js             // Configuração do Next.js (incluindo i18n se necessário).
 └── package.json
 ```
 
