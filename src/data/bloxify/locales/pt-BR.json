@@ -434,7 +434,7 @@
       "placeholders": {
         "code": "123456"
       },
-      "button-verify": "Verificar",
+      "button-verify": "Verificar e entrar",
       "resend": {
         "button": "Reenviar código",
         "success": "Código reenviado com sucesso!",
@@ -1055,6 +1055,59 @@
           "creating": "Criando..."
         }
       }
+    },
+    "edit-token": {
+      "title": "Editar Token",
+      "loading": "Carregando dados...",
+      "back": "Voltar",
+      "success": "Token atualizado com sucesso!",
+      "fields": {
+        "name": {
+          "label": "Nome do Token",
+          "placeholder": "Ex: Bloxify Token"
+        },
+        "ticker": {
+          "label": "Ticker (Símbolo)",
+          "placeholder": "Ex: BLX"
+        },
+        "description": {
+          "label": "Descrição Curta",
+          "placeholder": "Ex: Token utilitário da Bloxify"
+        },
+        "long-description": {
+          "label": "Descrição Longa",
+          "placeholder": "Adicione uma descrição detalhada do token"
+        }
+      },
+      "info": {
+        "label": "Nota",
+        "message": "Alguns campos não podem ser editados após a criação do token na blockchain (quantidade, preço, rede, etc)."
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "save": "Salvar Alterações",
+        "saving": "Salvando..."
+      }
+    },
+    "all-tokens": {
+      "title": "Todos os Tokens",
+      "refresh-button": "Atualizar lista",
+      "search-placeholder": "Pesquisar por nome, ticker ou descrição...",
+      "loading-count": "Carregando...",
+      "showing": "Exibindo",
+      "of": "de",
+      "tokens": "tokens",
+      "loading": "Carregando tokens...",
+      "no-results": "Nenhum token encontrado",
+      "no-results-description": "Tente usar termos de pesquisa diferentes",
+      "no-tokens": "Nenhum token criado ainda",
+      "created-at": "Criado em",
+      "status": {
+        "active": "Ativo"
+      },
+      "edit-button": "Editar token",
+      "edit": "Editar",
+      "close-button": "Fechar"
     }
   }
 }

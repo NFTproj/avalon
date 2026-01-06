@@ -3,24 +3,8 @@ import AssetCard from './AssetCard'
 import { ConfigContext } from '@/contexts/ConfigContext'
 import { useAuth } from '@/contexts/AuthContext'
 import { useUserTokenBalances } from '@/hooks/useUserTokenBalances'
-import { getAllCards } from '@/lib/api/cards'
+import { getAllCards, Card as ApiCard } from '@/lib/api/cards'
 import { Card } from '@/types/card'
-
-// Mapear tipos da API para tipos internos
-interface ApiCard {
-  id: string
-  name: string
-  description: string
-  image: string
-  status: string
-  clientId: string
-  cardBlockchainData?: {
-    tokenName?: string
-    tokenSymbol?: string
-    tokenAddress?: string
-    network?: string
-  }
-}
 
 // Dados de exemplo para quando a API não estiver funcionando
 const fallbackCards: Card[] = [
@@ -51,20 +35,25 @@ const fallbackCards: Card[] = [
 // Converter API Card para Card interno com validação
 const convertApiCardToCard = (apiCard: ApiCard): Card | null => {
   // Validar se tem dados blockchain
+  // ApiCard usa cardBlockchainData (c minúsculo)
   if (!apiCard.cardBlockchainData?.tokenAddress) {
-    console.warn(`Card ${apiCard.id} não tem tokenAddress válido:`, apiCard.cardBlockchainData)
     return null
   }
+
+  const blockchainData = apiCard.cardBlockchainData
 
   return {
     id: apiCard.id,
     name: apiCard.name,
-    status: apiCard.status as 'ACTIVE' | 'INACTIVE',
+    status: (apiCard.status === 'ACTIVE' || apiCard.status === 'INACTIVE') 
+      ? apiCard.status 
+      : 'ACTIVE' as 'ACTIVE' | 'INACTIVE',
+    // Card de @/types/card usa CardBlockchainData (C maiúsculo)
     CardBlockchainData: {
-      tokenAddress: apiCard.cardBlockchainData.tokenAddress as `0x${string}`,
-      tokenNetwork: apiCard.cardBlockchainData.network || 'polygon',
-      tokenChainId: getChainIdFromNetwork(apiCard.cardBlockchainData.network || 'polygon'),
-      tokenPrice: '1.00', // Valor padrão, pode ser ajustado
+      tokenAddress: blockchainData.tokenAddress as `0x${string}`,
+      tokenNetwork: blockchainData.tokenNetwork || 'polygon',
+      tokenChainId: blockchainData.tokenChainId || getChainIdFromNetwork(blockchainData.tokenNetwork || 'polygon'),
+      tokenPrice: blockchainData.tokenPrice || '1.00',
     }
   }
 }
@@ -103,35 +92,26 @@ export default function AssetList() {
         setError(null)
         setUsingFallback(false)
 
-        console.log('🔍 Iniciando busca de cards da API...')
         const response = await getAllCards()
-        console.log('📡 API Response completa:', response)
 
         if (response.data && Array.isArray(response.data)) {
-          console.log('✅ Dados da API são um array válido')
 
           // Converter cards da API para o formato interno, filtrando inválidos
           const convertedCards = response.data
             .map(convertApiCardToCard)
             .filter((card): card is Card => card !== null)
 
-          console.log('🔄 Cards convertidos:', convertedCards)
-
           if (convertedCards.length > 0) {
             setCards(convertedCards)
-            console.log('🎯 Cards definidos com sucesso')
           } else {
-            console.warn('⚠️ Nenhum card válido da API, usando dados de exemplo')
             setCards(fallbackCards)
             setUsingFallback(true)
           }
         } else {
-          console.warn('⚠️ API não retornou dados válidos, usando dados de exemplo')
           setCards(fallbackCards)
           setUsingFallback(true)
         }
       } catch (error) {
-        console.error('❌ Erro ao buscar cards da API, usando dados de exemplo:', error)
         setCards(fallbackCards)
         setUsingFallback(true)
         setError('API indisponível - mostrando dados de exemplo')

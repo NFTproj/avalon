@@ -10,17 +10,18 @@
         "main-logo": "Slabs Logo"
       },
       "navigations": {
-        "navOne": "Slab",
-        "navTwo": [
+        "navOne": [
           {
-            "title": "Products",
+            "title": "Slab",
             "items": [
               {
-                "title": "TBIO Token"
+                "title": "Calculator",
+                "link": "https://somasustentabilidade.com.br/calculadora/"
               }
             ]
           }
         ],
+        "navTwo": [],
         "navThree": [
           {
             "title": "Language",
@@ -108,35 +109,35 @@
       }
     },
     "faq": {
-  "title": "Still have questions?",
-  "questions": [
-    {
-      "id": 1,
-      "question": "What does Slab do?",
-      "answer": "After the registration of the Green CPR on B3, the Carbon Stock and Biodiversity Assets are formally transferred to SLAB ASSETS, which acts as the technological agent responsible for the tokenization and digital governance of these assets. From that point, SLAB carries out a complete technological process that transforms these assets into TBIO tokens — unique, traceable digital units backed by real assets. This process includes: Blockchain registration, smart contract creation, TBIO token issuance, Web3 and ESG integration, governance and transparency, and token retirement through the transparency dashboard, where it is possible to track the full journey of each TBIO — from issuance to final offset."
+      "title": "Still have questions?",
+      "questions": [
+        {
+          "id": 1,
+          "question": "What does Slab do?",
+          "answer": "After the registration of the Green CPR on B3, the Carbon Stock and Biodiversity Assets are formally transferred to SLAB ASSETS, which acts as the technological agent responsible for the tokenization and digital governance of these assets. From that point, SLAB carries out a complete technological process that transforms these assets into TBIO tokens — unique, traceable digital units backed by real assets. This process includes: Blockchain registration, smart contract creation, TBIO token issuance, Web3 and ESG integration, governance and transparency, and token retirement through the transparency dashboard, where it is possible to track the full journey of each TBIO — from issuance to final offset."
+        },
+        {
+          "id": 2,
+          "question": "What is TBIO?",
+          "answer": "TBIO represents a new frontier in the integration of forest conservation, financial markets, and decentralized technologies. Based on clear regulations, auditable instruments, and legal security, the TBIO ecosystem establishes the foundations for a new, tokenized, and digital green economy focused on traceability and compliance."
+        },
+        {
+          "id": 3,
+          "question": "How do we do it?",
+          "answer": "The generation of carbon stock and biodiversity assets is carried out by Forest Brazil Certifier, accredited by B3 (Brasil, Bolsa, Balcão), ensuring maximum security and transparency. The entire process — from inventory and certification to tokenization — is conducted by specialists and audited by a third party, guaranteeing traceability and immutability on the blockchain. After the TBIO is used for offsetting purposes, the token is retired on the platform’s transparency dashboard, ensuring full governance and compliance."
+        },
+        {
+          "id": 4,
+          "question": "Why do we do it?",
+          "answer": "Committed to integrity and transparency, we create innovative solutions that connect capital with the purpose of preserving the environment, generating socioeconomic impact, and ensuring governance for investors, communities, and the planet."
+        },
+        {
+          "id": 5,
+          "question": "Who are we?",
+          "answer": "Slab Assets is a tokenization platform that connects real-world assets (RWA – Real World Assets) to the digital economy. Operating in the regenerative finance (ReFi) sector, we transform standing forests into agro-based commodities. With a focus on carbon stock, biodiversity, and ecosystem services, we offer real-backed assets with transparency, regulatory security, and measurable positive impact. “The bridge between nature preservation and global capital.”"
+        }
+      ]
     },
-    {
-      "id": 2,
-      "question": "What is TBIO?",
-      "answer": "TBIO represents a new frontier in the integration of forest conservation, financial markets, and decentralized technologies. Based on clear regulations, auditable instruments, and legal security, the TBIO ecosystem establishes the foundations for a new, tokenized, and digital green economy focused on traceability and compliance."
-    },
-    {
-      "id": 3,
-      "question": "How do we do it?",
-      "answer": "The generation of carbon stock and biodiversity assets is carried out by Forest Brazil Certifier, accredited by B3 (Brasil, Bolsa, Balcão), ensuring maximum security and transparency. The entire process — from inventory and certification to tokenization — is conducted by specialists and audited by a third party, guaranteeing traceability and immutability on the blockchain. After the TBIO is used for offsetting purposes, the token is retired on the platform’s transparency dashboard, ensuring full governance and compliance."
-    },
-    {
-      "id": 4,
-      "question": "Why do we do it?",
-      "answer": "Committed to integrity and transparency, we create innovative solutions that connect capital with the purpose of preserving the environment, generating socioeconomic impact, and ensuring governance for investors, communities, and the planet."
-    },
-    {
-      "id": 5,
-      "question": "Who are we?",
-      "answer": "Slab Assets is a tokenization platform that connects real-world assets (RWA – Real World Assets) to the digital economy. Operating in the regenerative finance (ReFi) sector, we transform standing forests into agro-based commodities. With a focus on carbon stock, biodiversity, and ecosystem services, we offer real-backed assets with transparency, regulatory security, and measurable positive impact. “The bridge between nature preservation and global capital.”"
-    }
-  ]
-},
     "tokens": {
       "title": "Follow the available tokens",
       "list": [
@@ -293,7 +294,13 @@
       "placeholders": {
         "code": "123456"
       },
-      "button-verify": "Verify"
+      "button-verify": "Verify and sign in",
+      "resend": {
+        "button": "Resend code",
+        "success": "Code resent successfully!",
+        "error": "Error resending code.",
+        "cooldown": "Available again in {seconds}s"
+      }
     },
     "step-four": {
       "counter": {
@@ -434,7 +441,12 @@
       "sold": "Sold",
       "available": "Available"
     },
-    "disclaimer": "Do not invest before knowing all essential information about the offer"
+    "disclaimer": "Do not invest before knowing all essential information about the offer",
+    "login-required-title": "Login Required",
+    "login-required-message": "You need to be logged in to buy tokens. Please log in to continue.",
+    "cancel": "Cancel",
+    "go-to-login": "Go to Login",
+    "processing": "Processing..."
   },
   "tokensPage": {
     "title": "Discover today the [[best opportunities]] in digital tokens",
@@ -468,7 +480,7 @@
       },
       "docs": {
         "title": "Documents",
-        "link1": "Twitter",
+        "link1": "Docs",
         "link2": "Instagram",
         "link3": "Terms of Use",
         "link4": "Documents",
@@ -681,7 +693,7 @@
       },
       "actions": {
         "buy": "Buy",
-        "benefits": "Benefits"
+        "benefits": "Certificate"
       },
       "pagination": {
         "previous": "Previous",
@@ -747,7 +759,7 @@
       },
       "buttons": {
         "buy": "Buy",
-        "sell": "Sell"
+        "sell": "Sell "
       }
     }
   },
@@ -767,7 +779,221 @@
     },
     "tip": {
       "title": "Tip:",
-      "message": "Stay tuned for updates! We’ll notify you as soon as this feature becomes available."
+      "message": "Stay tuned for updates! We'll notify you as soon as this feature becomes available."
+    }
+  },
+  "admin": {
+    "login": {
+      "title": "Access your account",
+      "email-label": "Your email:",
+      "password-label": "Your password:",
+      "email-placeholder": "Enter your email",
+      "password-placeholder": "Enter your password",
+      "login-button": "Login",
+      "error-invalid-credentials": "Invalid credentials. Check your data and try again."
+    },
+    "dashboard": {
+      "title": "Administrator Area",
+      "metrics": {
+        "total-tokens": "Total Tokens",
+        "pending-kyc": "Pending KYC",
+        "active-users": "Active Users"
+      },
+      "recent-kycs": {
+        "title": "Recent KYCs",
+        "view-all": "View All"
+      },
+      "recent-tokens": {
+        "title": "Recent Tokens",
+        "view-all": "View All"
+      },
+      "create-token-button": "+ Create New Token",
+      "token-status": {
+        "active": "Active",
+        "pending": "Pending",
+        "inactive": "Inactive"
+      },
+      "kyc-status": {
+        "approved": "Approved"
+      }
+    },
+    "create-token": {
+      "title": "Create Token",
+      "description": "Here you can create a new token to represent assets or rights, facilitating tokenization and management.",
+      "back-button": "Back",
+      "start-button": "Start",
+      "step-one": {
+        "counter": {
+          "current": "01",
+          "total": "of 04"
+        },
+        "title": "Main Data",
+        "fields": {
+          "card-name": {
+            "label": "Card Name",
+            "placeholder": "Ex: Slab Token"
+          },
+          "short-description": {
+            "label": "Short Description",
+            "placeholder": "Ex: Slab utility token"
+          },
+          "long-description": {
+            "label": "Long Description",
+            "placeholder": "Add a detailed description of the token"
+          }
+        },
+        "buttons": {
+          "back": "Back",
+          "continue": "Continue"
+        }
+      },
+      "step-two": {
+        "counter": {
+          "current": "02",
+          "total": "of 04"
+        },
+        "title": "Advanced Settings",
+        "fields": {
+          "ticker": {
+            "label": "Ticker (Symbol)",
+            "placeholder": "Ex: Slab Token"
+          },
+          "initial-quantity": {
+            "label": "Initial Quantity",
+            "placeholder": "Ex: 120.550,000"
+          },
+          "tags": {
+            "label": "Tags",
+            "placeholder": "Add tag and press Enter"
+          },
+          "twitter": {
+            "label": "Twitter",
+            "placeholder": "Ex: https://twitter.com"
+          },
+          "discord": {
+            "label": "Discord",
+            "placeholder": "Ex: https://discord.com"
+          },
+          "official-website": {
+            "label": "Official Website",
+            "placeholder": "Ex: https://example.com"
+          }
+        },
+        "buttons": {
+          "back": "Back",
+          "continue": "Continue"
+        }
+      },
+      "step-three": {
+        "counter": {
+          "current": "03",
+          "total": "of 04"
+        },
+        "title": "Blockchain and Images",
+        "fields": {
+          "blockchain": {
+            "label": "Blockchain",
+            "placeholder": "Select the Blockchain"
+          },
+          "release-date": {
+            "label": "Release Date",
+            "placeholder": "Enter the Release Date"
+          }
+        },
+        "uploads": {
+          "logo": {
+            "label": "Logo",
+            "placeholder": "Upload image",
+            "file-types": "png.jpg.jpeg"
+          },
+          "background": {
+            "label": "Background",
+            "placeholder": "Upload image",
+            "file-types": "png.jpg.jpeg"
+          }
+        },
+        "buttons": {
+          "back": "Back",
+          "continue": "Continue"
+        }
+      },
+      "step-four": {
+        "counter": {
+          "current": "04",
+          "total": "of 04"
+        },
+        "title": "Review and Creation",
+        "fields": {
+          "ticker": "Ticker",
+          "short-description": "Short Description",
+          "long-description": "Long Description",
+          "initial-quantity": "Initial Quantity",
+          "tags": "Tags",
+          "site": "Site",
+          "discord": "Discord",
+          "twitter": "Twitter",
+          "blockchain": "Blockchain",
+          "release-date": "Release Date"
+        },
+        "buttons": {
+          "edit": "Edit Data",
+          "create": "Create Token",
+          "creating": "Creating..."
+        }
+      }
+    },
+    "edit-token": {
+      "title": "Edit Token",
+      "loading": "Loading data...",
+      "back": "Back",
+      "success": "Token updated successfully!",
+      "fields": {
+        "name": {
+          "label": "Token Name",
+          "placeholder": "Ex: Slab Token"
+        },
+        "ticker": {
+          "label": "Ticker (Symbol)",
+          "placeholder": "Ex: SLB"
+        },
+        "description": {
+          "label": "Short Description",
+          "placeholder": "Ex: Slab utility token"
+        },
+        "long-description": {
+          "label": "Long Description",
+          "placeholder": "Add a detailed description of the token"
+        }
+      },
+      "info": {
+        "label": "Note",
+        "message": "Some fields cannot be edited after the token is created on the blockchain (quantity, price, network, etc)."
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "save": "Save Changes",
+        "saving": "Saving..."
+      }
+    },
+    "all-tokens": {
+      "title": "All Tokens",
+      "refresh-button": "Refresh list",
+      "search-placeholder": "Search by name, ticker or description...",
+      "loading-count": "Loading...",
+      "showing": "Showing",
+      "of": "of",
+      "tokens": "tokens",
+      "loading": "Loading tokens...",
+      "no-results": "No tokens found",
+      "no-results-description": "Try using different search terms",
+      "no-tokens": "No tokens created yet",
+      "created-at": "Created on",
+      "status": {
+        "active": "Active"
+      },
+      "edit-button": "Edit token",
+      "edit": "Edit",
+      "close-button": "Close"
     }
   }
 }

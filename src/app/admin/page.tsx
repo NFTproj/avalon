@@ -13,7 +13,8 @@ import CreateStep2Component from './components/createtoken/CreateStep2'
 import CreateStep3Component from './components/createtoken/CreateStep3'
 import CreateStep4Component from './components/createtoken/CreateStep4'
 import CreateSuccessComponent from './components/createtoken/CreateSuccess'
-import MainLayout from '@/components/layout/MainLayout'
+import CreateErrorComponent from './components/createtoken/CreateError'
+import EditTokenComponent from './components/EditToken'
 
 function AdminContent() {
   const { user } = useAuth()
@@ -24,7 +25,7 @@ function AdminContent() {
   // Usar useState para evitar problemas de hidratação
   const [isAdminMock, setIsAdminMock] = React.useState(false)
   const [mounted, setMounted] = React.useState(false)
-  
+
   React.useEffect(() => {
     setMounted(true)
     if (typeof window !== 'undefined') {
@@ -32,18 +33,22 @@ function AdminContent() {
       setIsAdminMock(adminMockValue)
     }
   }, [])
-  
-  const adminMockUser = isAdminMock && mounted ? {
-    id: 'admin-1',
-    userId: 'admin-1',
-    name: 'Administrador',
-    email: 'admin@admin',
-    walletAddress: '0x0000000000000000000000000000000000000000' as `0x${string}`,
-    kycStatus: 'approved' as const,
-    kycStatusCode: 200,
-    permissions: ['admin', 'create_tokens', 'manage_users'],
-    balances: [],
-  } : null
+
+  const adminMockUser =
+    isAdminMock && mounted
+      ? {
+          id: 'admin-1',
+          userId: 'admin-1',
+          name: 'Administrador',
+          email: 'admin@admin',
+          walletAddress:
+            '0x0000000000000000000000000000000000000000' as `0x${string}`,
+          kycStatus: 'approved' as const,
+          kycStatusCode: 200,
+          permissions: ['admin', 'create_tokens', 'manage_users'],
+          balances: [],
+        }
+      : null
 
   // Usar mock admin se disponível, senão usar user do AuthContext
   const currentUser = adminMockUser || user
@@ -67,13 +72,13 @@ function AdminContent() {
       return <CreateStep4Component />
     case 'success':
       return <CreateSuccessComponent />
+    case 'error':
+      return <CreateErrorComponent />
+    case 'edittoken':
+      return <EditTokenComponent />
     case 'dashboard':
     default:
-      return (
-        <MainLayout>
-          <DashboardComponent />
-        </MainLayout>
-      )
+      return <DashboardComponent />
   }
 }
 

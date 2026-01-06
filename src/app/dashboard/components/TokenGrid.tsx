@@ -33,7 +33,6 @@ export default function TokenGrid({
         const response = await getAllCards()
         setCards(response.data || [])
       } catch (error) {
-        console.error('Erro ao buscar cards:', error)
         setCards([])
       } finally {
         setLoading(false)
@@ -43,23 +42,25 @@ export default function TokenGrid({
     fetchCards()
   }, [])
 
-  // Preparar dados para o hook de balanços
+  // Preparar dados para o hook de balanços (apenas cards com blockchain data válido)
   const cardsForHook = useMemo(() => {
-    return cards.map((card): LocalCard => {
-      const blockchainData = (card as any).CardBlockchainData || (card as any).cardBlockchainData || {}
-      
-      return {
-        id: card.id,
-        name: card.name,
-        status: (card as any).status || 'ACTIVE',
-        CardBlockchainData: {
-          tokenAddress: blockchainData.tokenAddress || null,
-          tokenNetwork: blockchainData.tokenNetwork || 'polygon',
-          tokenChainId: blockchainData.tokenChainId || 137,
-          tokenPrice: String(blockchainData.tokenPrice || '1000000'), // Valor padrão em formato web3
+    return cards
+      .filter(card => card.CardBlockchainData?.tokenAddress)
+      .map((card): LocalCard => {
+        const blockchainData = card.CardBlockchainData!
+
+        return {
+          id: card.id,
+          name: card.name,
+          status: (card.status as "ACTIVE" | "INACTIVE") || 'ACTIVE',
+          CardBlockchainData: {
+            tokenAddress: blockchainData.tokenAddress as `0x${string}`,
+            tokenNetwork: blockchainData.tokenNetwork || 'polygon',
+            tokenChainId: blockchainData.tokenChainId || 137,
+            tokenPrice: String(blockchainData.tokenPrice || '1000000'),
+          }
         }
-      }
-    })
+      })
   }, [cards])
 
   // Usar o hook real para buscar saldos de tokens
@@ -69,7 +70,7 @@ export default function TokenGrid({
   const processedCards = useMemo(() => {
     return cards.map(card => {
       // Verificar se tem dados blockchain válidos
-      const blockchainData = (card as any).CardBlockchainData || (card as any).cardBlockchainData || {}
+      const blockchainData = card.CardBlockchainData
       const hasValidToken = blockchainData && blockchainData.tokenAddress
 
       // Encontrar o asset correspondente baseado no ID do card
@@ -80,16 +81,19 @@ export default function TokenGrid({
         ? Number(asset.balanceRaw) / Math.pow(10, Number(asset.decimals)) 
         : 0
       
-      // Dados do progresso de venda
-      const soldTokens = blockchainData.purchasedQuantity 
+      // Dados do progresso de venda - CORREÇÃO: usar depositedSupply - purchasedQuantity
+      const purchasedTokens = blockchainData?.purchasedQuantity 
         ? Number(blockchainData.purchasedQuantity)
         : 0
-      const totalSupply = blockchainData.initialSupply 
-        ? Number(blockchainData.initialSupply)
-        : 1000000 // valor padrão quando não há dados
-      
-      // Preparar dados de preço - CORREÇÃO PRINCIPAL AQUI
-      const tokenPrice = blockchainData.tokenPrice 
+      const depositedTokens = blockchainData?.depositedSupply
+        ? Number(blockchainData.depositedSupply)
+        : 0
+
+      // Tokens disponíveis = depositedSupply - purchasedQuantity
+      const availableTokens = depositedTokens - purchasedTokens
+
+      // Preparar dados de preço
+      const tokenPrice = blockchainData?.tokenPrice 
         ? parseFloat(blockchainData.tokenPrice) / 1_000_000 // Converter formato web3 para USD
         : 15.00 // preço padrão
 
@@ -101,7 +105,7 @@ export default function TokenGrid({
         'EM DESENVOLVIMENTO': '#FF9800'
       }
 
-      const cardLabels = ((card as any).tags || []).map((tag: string) => ({
+      const cardLabels = (card.tags || []).map((tag: string) => ({
         name: tag.toUpperCase(),
         color: labelMap[tag.toUpperCase()] || undefined
       }))
@@ -109,13 +113,14 @@ export default function TokenGrid({
       return {
           id: card.id,
           name: card.name,
-          image: card.image, // Usar 'image' em vez de 'logoUrl'
+        image: card.logoUrl, // Usar logoUrl da API
           userBalance: tokenBalance,
           profitability: 0, // removendo dados mockados
-          lastPayDate: (card as any).launchDate || new Date().toISOString(),
-          sold: soldTokens,
-          total: totalSupply,
-          unitValue: tokenPrice, // Preço já convertido corretamente
+        lastPayDate: card.launchDate || new Date().toISOString(),
+        sold: purchasedTokens,
+        total: depositedTokens,
+        availableTokens: availableTokens, // Adicionar tokens disponíveis
+        unitValue: tokenPrice,
           totalValue: tokenBalance,
           labels: cardLabels,
           hasValidToken
@@ -150,7 +155,7 @@ export default function TokenGrid({
         {displayCards.map((processedCard) => {
           const { 
             id, name, image, userBalance, profitability, 
-            sold, total, unitValue, totalValue, labels, hasValidToken 
+            sold, total, availableTokens, unitValue, totalValue, labels, hasValidToken 
           } = processedCard
 
           // Encontrar o card original para passar para o TokenCard
@@ -161,9 +166,9 @@ export default function TokenGrid({
               key={id}
               card={originalCard}
               price={hasValidToken && unitValue > 0 ? `$ ${unitValue.toFixed(2)}` : undefined}
-              launchDate={(originalCard as any).launchDate ? new Date((originalCard as any).launchDate).toLocaleDateString('pt-BR') : undefined}
-              tokensAvailable={hasValidToken ? `${(total - sold).toLocaleString('pt-BR')}` : 'Aguardando deploy'}
-              identifierCode={(originalCard as any).ticker || originalCard.id.substring(0, 8).toUpperCase()}
+              launchDate={originalCard.launchDate ? new Date(originalCard.launchDate).toLocaleDateString('pt-BR') : undefined}
+              tokensAvailable={hasValidToken ? `${availableTokens.toLocaleString('pt-BR')}` : 'Aguardando deploy'}
+              identifierCode={originalCard.ticker || originalCard.id.substring(0, 8).toUpperCase()}
               labels={labels}
               sold={sold}
               total={total}

@@ -15,20 +15,39 @@ import Providers from './providers'
 import { BannerSlot } from '@/components/common/GlobalBanner'
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
-const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'] })
-const poppins   = Poppins({ variable: '--font-poppins', subsets: ['latin'], weight: '400' })
+const geistMono = Geist_Mono({
+  variable: '--font-geist-mono',
+  subsets: ['latin'],
+})
+const poppins = Poppins({
+  variable: '--font-poppins',
+  subsets: ['latin'],
+  weight: '400',
+})
 
 export const metadata: Metadata = {
+<<<<<<< HEAD
   title: 'TokenGrid',
+=======
+  title: 'SlabAssets',
+>>>>>>> origin/dev
   description: 'Powered by Blocklize',
 }
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   const hdr = await headers()
   const cookies = hdr.get('cookie') ?? null
 
   return (
-    <html lang="pt-BR" className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable}`} suppressHydrationWarning>
+    <html
+      lang="pt-BR"
+      className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable}`}
+      suppressHydrationWarning
+    >
       <body className="antialiased" suppressHydrationWarning>
         <ContextProvider cookies={cookies}>
           <ConfigProvider config={null}>
@@ -40,9 +59,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   {/* Slot fixo do banner, uma única vez na app */}
                   <BannerSlot />
 
-                  <ClientSWRProvider>
-                    {children}
-                  </ClientSWRProvider>
+                  <ClientSWRProvider>{children}</ClientSWRProvider>
                 </Providers>
               </WalletBoundary>
             </AuthProvider>

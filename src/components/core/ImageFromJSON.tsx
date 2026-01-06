@@ -56,7 +56,6 @@ export default function ImageFromJSON({
                 setProcessedSrc(processedSvgUrl)
               })
               .catch((error) => {
-                console.error('Erro ao processar SVG:', error)
                 setProcessedSrc(originalSrc)
               })
           } else {
@@ -64,7 +63,6 @@ export default function ImageFromJSON({
           }
         })
         .catch((error) => {
-          console.error('Erro ao carregar a imagem:', error)
         })
     }
   }, [src, fillColor])

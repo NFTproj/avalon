@@ -18,7 +18,6 @@ export function useUser() {
         const data = await res.json();
         setUser(data.user);
       } catch (err) {
-        console.error(err);
         setUser(null);
       } finally {
         setLoading(false);

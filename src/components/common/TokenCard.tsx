@@ -86,9 +86,12 @@ export default function TokenCard({
   const formattedPrice = useMemo(() => {
     if (price) return price.includes('$') ? price : `$ ${price}`
     if (unitValue && unitValue > 0) return `$ ${unitValue.toFixed(2)}`
-    // Usar a estrutura correta da API que pode ter tanto CardBlockchainData quanto cardBlockchainData
-    const blockchainData = (card as any).CardBlockchainData || (card as any).cardBlockchainData
-    if (blockchainData?.tokenPrice) return `$ ${parseFloat(blockchainData.tokenPrice).toFixed(2)}`
+    // Usar a estrutura correta da API
+    const blockchainData = card.CardBlockchainData
+    if (blockchainData?.tokenPrice) {
+      const priceValue = parseFloat(blockchainData.tokenPrice)
+      return priceValue > 1000 ? `$ ${(priceValue / 1_000_000).toFixed(2)}` : `$ ${priceValue.toFixed(2)}`
+    }
     return 'Indisponível'
   }, [price, unitValue, card])
 

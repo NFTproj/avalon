@@ -150,7 +150,6 @@ export class PriceService {
       return response
 
     } catch (error) {
-      console.error('[PriceService] Error getting token prices:', error)
       return {
         success: false,
         data: {},
@@ -177,7 +176,6 @@ export class PriceService {
         lastUpdated: new Date(),
       }
     } catch (error) {
-      console.error('[PriceService] Error getting single token price:', error)
       return null
     }
   }
@@ -233,7 +231,6 @@ export class PriceService {
       return allData
 
     } catch (error) {
-      console.error('[PriceService] Error fetching from CoinGecko:', error)
       throw error
     }
   }
@@ -281,7 +278,6 @@ export class PriceService {
       return result
 
     } catch (error) {
-      console.error('[PriceService] Error fetching from CoinMarketCap:', error)
       throw error
     }
   }
@@ -292,13 +288,11 @@ export class PriceService {
       // Tentar CoinGecko primeiro (gratuito)
       return await this.fetchPricesFromCoinGecko(contractAddresses)
     } catch (error) {
-      console.warn('[PriceService] CoinGecko failed, trying CoinMarketCap:', error)
       
       try {
         // Fallback para CoinMarketCap
         return await this.fetchPricesFromCoinMarketCap(contractAddresses)
       } catch (fallbackError) {
-        console.error('[PriceService] Both APIs failed:', fallbackError)
         
         // Retornar dados mock como último recurso
         return this.getMockPrices(contractAddresses)
@@ -431,7 +425,6 @@ export class PriceService {
       return result
 
     } catch (error) {
-      console.error('[PriceService] Error getting native token prices:', error)
       return this.getMockPrices(symbols)
     }
   }

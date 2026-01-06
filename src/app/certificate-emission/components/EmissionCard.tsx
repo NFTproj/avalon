@@ -2,7 +2,6 @@
 
 import { useState, useContext, useMemo, useEffect, useCallback, useRef } from 'react'
 import { ConfigContext } from '@/contexts/ConfigContext'
-import { useAuth } from '@/contexts/AuthContext'
 import { apiFetch } from '@/lib/api/fetcher'
 
 interface EmissionCardProps {
@@ -14,7 +13,6 @@ interface EmissionCardProps {
 
 export default function EmissionCard({ card, userBalance, balanceData, onSuccess }: EmissionCardProps) {
   const { colors, texts, locale } = useContext(ConfigContext)
-  const { user } = useAuth()
   
   const [quantity, setQuantity] = useState<number>(0)
   const [loading, setLoading] = useState(false)
@@ -23,6 +21,7 @@ export default function EmissionCard({ card, userBalance, balanceData, onSuccess
 
   const successTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const errorTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const isSubmittingRef = useRef(false)
 
   const handleSuccessDismiss = useCallback(() => {
     if (successTimeoutRef.current) {
@@ -120,7 +119,6 @@ export default function EmissionCard({ card, userBalance, balanceData, onSuccess
   const hasBalance = maxQuantity > 0
 
   // Cores dinâmicas do tema
-  const accentColor = colors?.certificateEmission?.colors?.accent || '#08CEFF'
   const cardBg = colors?.certificateEmission?.background?.card || '#FFFFFF'
   const cardBorder = colors?.certificateEmission?.border?.card || '#E5E7EB'
   const inputBorder = colors?.certificateEmission?.border?.input || '#08CEFF'
@@ -140,6 +138,11 @@ export default function EmissionCard({ card, userBalance, balanceData, onSuccess
   const t = (key: string, fallback: string) => ceTexts?.[key] ?? fallback
 
   const handleEmit = async () => {
+    // Previne múltiplas chamadas simultâneas
+    if (isSubmittingRef.current || loading || success) {
+      return
+    }
+
     if (quantity <= 0 || quantity > maxQuantity) {
       setError(
         t(
@@ -151,6 +154,7 @@ export default function EmissionCard({ card, userBalance, balanceData, onSuccess
     }
 
     try {
+      isSubmittingRef.current = true
       setLoading(true)
       setError(null)
 
@@ -158,14 +162,9 @@ export default function EmissionCard({ card, userBalance, balanceData, onSuccess
       const tokenAddress = balanceData?.CardBlockchainData?.tokenAddress || card?.tokenAddress
       const network = 'polygon' // Hardcoded to polygon as requested
 
-      console.log('[handleEmit] balanceData:', balanceData)
-      console.log('[handleEmit] tokenAddress extracted:', tokenAddress)
-      console.log('[handleEmit] card data:', card)
-
       await apiFetch('/api/transaction/burn-certificate', {
         method: 'POST',
         body: JSON.stringify({
-          clientId: user?.id,
           cardId: card.id,
           tokenAddress,
           amount: quantity.toString(),
@@ -178,7 +177,6 @@ export default function EmissionCard({ card, userBalance, balanceData, onSuccess
         onSuccess()
       }, 3000)
     } catch (err: any) {
-      console.error('Erro ao emitir certificado:', err)
       setError(
         t(
           'error-message',
@@ -187,6 +185,7 @@ export default function EmissionCard({ card, userBalance, balanceData, onSuccess
       )
     } finally {
       setLoading(false)
+      isSubmittingRef.current = false
     }
   }
 
@@ -286,14 +285,30 @@ export default function EmissionCard({ card, userBalance, balanceData, onSuccess
           {t('quantity-label', 'Quantidade de tokens compensados')}
         </label>
         <div className="relative">
-          <select
-            value={quantity}
+          <input
+            type="number"
+            value={quantity || ''}
             onChange={(e) => {
-              setQuantity(Number(e.target.value))
+              const value = e.target.value === '' ? 0 : Number(e.target.value)
+              setQuantity(value)
               setError(null)
               setSuccess(false)
             }}
-            className="w-full px-6 py-4 border-3 rounded-2xl text-lg font-medium focus:outline-none appearance-none cursor-pointer"
+            onBlur={(e) => {
+              // Validar ao sair do campo
+              const value = Number(e.target.value)
+              if (value > maxQuantity) {
+                setQuantity(maxQuantity)
+              } else if (value < 0) {
+                setQuantity(0)
+              }
+            }}
+            min={0}
+            max={maxQuantity}
+            step="any"
+            list="quantity-suggestions"
+            placeholder={hasBalance ? t('quantity-placeholder', 'Digite a quantidade') : t('quantity-unavailable', 'Sem saldo disponível')}
+            className="w-full px-6 py-4 border-3 rounded-2xl text-lg font-medium focus:outline-none"
             style={{ 
               borderColor: inputBorder,
               borderWidth: '3px',
@@ -301,24 +316,12 @@ export default function EmissionCard({ card, userBalance, balanceData, onSuccess
               color: inputTextColor
             }}
             disabled={loading || success || !hasBalance}
-          >
-            <option value={0}>
-              {hasBalance
-                ? `0 - ${formattedMaxQuantity}`
-                : t('quantity-unavailable', 'Sem saldo disponível')}
-            </option>
+          />
+          <datalist id="quantity-suggestions">
             {quantityOptions.map((value) => (
-              <option key={value} value={value}>
-                {value.toLocaleString(locale || 'pt-BR', { maximumFractionDigits: 6 })}
-              </option>
+              <option key={value} value={value} />
             ))}
-          </select>
-          {/* Ícone de seta */}
-          <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none">
-            <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
+          </datalist>
         </div>
         <p className="mt-2 text-sm" style={{ color: inputDisabledColor }}>
           {hasBalance

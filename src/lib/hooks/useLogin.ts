@@ -22,10 +22,7 @@ export default function useLogin() {
     setLoading(true)
     try {
       await loginUser(formData) // cookies HTTP-only são setados aqui
-      console.log('[useLogin] Login OK')
-      // redirecione ou faça get /api/me se precisar de dados do usuário
     } catch (err) {
-      console.error('[useLogin] Erro no login:', err)
       alert('Falha ao fazer login')
     } finally {
       setLoading(false)

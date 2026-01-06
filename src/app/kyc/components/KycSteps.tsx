@@ -41,7 +41,6 @@ export default function KycSteps({ onFinish }: Props) {
       })
       setStep(4)
     } catch (err: any) {
-      console.error('Erro ao enviar dados KYC:', err)
       alert(err.message || 'Erro ao atualizar seus dados')
     }
   }

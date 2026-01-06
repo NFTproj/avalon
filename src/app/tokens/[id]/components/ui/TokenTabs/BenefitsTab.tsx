@@ -18,6 +18,16 @@ export default function BenefitsTab({ token, tokenId, tokenDetails }: Props) {
   const routeId = (params as Record<string, string | undefined>)?.id
   const cta = tokenDetails?.tabs?.benefits?.cta ?? {}
 
+  // ============================================================================
+  // TEMPORÁRIO: Redirecionando para /under-development
+  // TODO: Remover quando a funcionalidade de queima estiver pronta
+  // ============================================================================
+  const href = '/under-development'
+
+  /* ============================================================================
+   * CÓDIGO ORIGINAL - DESCOMENTAR QUANDO A QUEIMA ESTIVER FUNCIONANDO
+   * ============================================================================
+   
   // 1) Descobre o ID do card de forma robusta
   const cardId =
     tokenId ??
@@ -58,6 +68,10 @@ export default function BenefitsTab({ token, tokenId, tokenDetails }: Props) {
     // Se for link externo, devolve completo
     return url.toString()
   }, [basePathname, cardId])
+  
+   * ============================================================================
+   * FIM DO CÓDIGO ORIGINAL
+   * ============================================================================ */
 
   if (!href) return null
 

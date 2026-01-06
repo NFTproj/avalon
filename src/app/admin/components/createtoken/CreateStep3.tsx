@@ -37,7 +37,6 @@ export default function CreateStep3() {
         const parsed = JSON.parse(savedData)
         setFormData(prev => ({ ...prev, ...parsed }))
       } catch (error) {
-        console.error('Erro ao carregar dados do step 3:', error)
       }
     }
   }, [])
@@ -61,7 +60,6 @@ export default function CreateStep3() {
   }
 
   const handleContinue = () => {
-    console.log('Dados do formulário Step 3:', formData)
     // Salvar no localStorage (sem os arquivos, apenas metadados)
     const dataToSave = {
       blockchain: formData.blockchain,
@@ -77,7 +75,7 @@ export default function CreateStep3() {
     <div className="flex flex-col min-h-screen">
       <Header />
       <main className="flex-1 bg-blue-50 py-8 px-4">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-xl mx-auto w-full">
           <div className="bg-white rounded-xl shadow-lg p-8">
             
             {/* Indicador de progresso */}

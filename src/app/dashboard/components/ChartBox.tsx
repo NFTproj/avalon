@@ -38,7 +38,6 @@ export default function ChartBox() {
         const data = await response.json()
         setEthPriceUSD(data.ethereum?.usd || 0)
       } catch (error) {
-        console.error('Erro ao buscar preço do ETH:', error)
         setEthPriceUSD(0)
       }
     }

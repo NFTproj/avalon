@@ -12,7 +12,6 @@ export async function POST(req: NextRequest) {
     const access = req.cookies.get('accessToken')?.value
 
     if (!apiUrl || !apiKey) {
-      console.error('[UPDATE DETAILS ERROR] Missing env BLOXIFY_URL_BASE or BLOXIFY_API_KEY')
       return NextResponse.json({ error: 'Configuração do servidor ausente' }, { status: 500 })
     }
     if (!access) {
@@ -74,7 +73,6 @@ export async function POST(req: NextRequest) {
 
     const ct = upstream.headers.get('content-type') || ''
     const status = upstream.status
-    console.log('[UPDATE DETAILS DEBUG]', { url, status, contentType: ct })
 
     // Tenta passar o JSON de forma transparente
     if (ct.includes('application/json')) {
@@ -84,14 +82,12 @@ export async function POST(req: NextRequest) {
 
     // Se não for JSON, devolve texto para facilitar debug
     const txt = await upstream.text()
-    console.error('[UPDATE DETAILS NON-JSON]', status, txt.slice(0, 400))
     return NextResponse.json(
       { error: 'Resposta do backend não é JSON', status },
       { status }
     )
     
   } catch (err) {
-    console.error('[UPDATE DETAILS ERROR]', err)
     return NextResponse.json({ error: 'Erro interno' }, { status: 500 })
   }
 }

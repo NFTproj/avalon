@@ -1,11 +1,12 @@
 'use client'
 
 import { FormEvent, useContext, useEffect, useState } from 'react'
-import { RegisterPayload, verifyCode } from '../../../lib/api/auth'
+import { RegisterPayload, verifyCode, loginUser } from '../../../lib/api/auth'
 import { ConfigContext } from '../../../contexts/ConfigContext'
 import LoadingOverlay from '@/components/common/LoadingOverlay'
 import CustomInput from '@/components/core/Inputs/CustomInput'
 import CustomButton from '@/components/core/Buttons/CustomButton'
+import { useRouter } from 'next/navigation'
 
 interface StepThreeProps {
   nextStep: () => void
@@ -24,6 +25,7 @@ export default function StepThree({
   resend,
 }: Readonly<StepThreeProps>) {
   const { colors, texts } = useContext(ConfigContext)
+  const router = useRouter()
   const stepZeroTexts = texts?.register?.['step-zero']
   const stepThreeTexts = texts?.register?.['step-three']
   const resendTexts =
@@ -73,12 +75,32 @@ export default function StepThree({
 
     setLoading(true)
     try {
+      // 1. Verificar o código
       await verifyCode(payload)
       updateField('otp_code', code)
-      await new Promise((resolve) => setTimeout(resolve, 800))
-      nextStep()
+
+      // 2. Fazer login automático se temos email e senha
+      if (formData.email && formData.password) {
+        try {
+          await loginUser({
+            email: formData.email,
+            password: formData.password
+          })
+
+          // Redirecionar para o dashboard
+          window.location.href = '/dashboard'
+        } catch (loginErr) {
+          // Se o login automático falhar, vai para o step de login manual
+          console.error('Erro no login automático:', loginErr)
+          await new Promise((resolve) => setTimeout(resolve, 800))
+          nextStep()
+        }
+      } else {
+      // Se não temos os dados, vai para o step de login manual
+        await new Promise((resolve) => setTimeout(resolve, 800))
+        nextStep()
+      }
     } catch (err) {
-      console.error('[StepThree] Código inválido:', err)
       setError('Código inválido ou expirado.')
     } finally {
       setLoading(false)
@@ -148,8 +170,8 @@ export default function StepThree({
           type="submit"
           text={
             loading
-              ? 'Verificando...'
-              : (stepThreeTexts?.['button-verify'] ?? 'Verificar')
+              ? 'Verificando e entrando...'
+              : (stepThreeTexts?.['button-verify'] ?? 'Verificar e entrar')
           }
           className="shrink-0 w-full sm:w-[210px] h-[52px] font-bold"
           textColor={colors?.colors['color-primary']}

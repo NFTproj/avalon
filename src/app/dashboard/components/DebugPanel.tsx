@@ -21,9 +21,7 @@ export default function DebugPanel() {
       })
       const data = await response.json()
       setDebugData(data)
-      console.log('Frontend Debug API Response:', data)
     } catch (error) {
-      console.error('Erro ao buscar debug data:', error)
       setDebugData({ error: 'Erro ao buscar dados' })
     } finally {
       setLoading(false)
@@ -54,9 +52,7 @@ export default function DebugPanel() {
       
       const data = await backendResponse.json()
       setBackendDebugData(data)
-      console.log('Backend Debug Response:', data)
     } catch (error) {
-      console.error('Erro ao buscar backend debug:', error)
       setBackendDebugData({ error: error instanceof Error ? error.message : 'Erro ao buscar dados do backend' })
     } finally {
       setBackendLoading(false)
@@ -71,9 +67,7 @@ export default function DebugPanel() {
       })
       const data = await response.json()
       setTokenDebugData(data)
-      console.log('Token Debug Response:', data)
     } catch (error) {
-      console.error('Erro ao buscar token debug:', error)
       setTokenDebugData({ error: error instanceof Error ? error.message : 'Erro ao buscar dados de tokens' })
     } finally {
       setTokenLoading(false)

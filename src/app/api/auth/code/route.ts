@@ -35,7 +35,6 @@ export async function POST(req: NextRequest) {
     const data = await res.json()
     return NextResponse.json(data, { status: res.status })
   } catch (err) {
-    console.error('[API ERROR] /auth/code:', err)
     return NextResponse.json({ error: 'Erro ao verificar código' }, { status: 500 })
   }
 }
