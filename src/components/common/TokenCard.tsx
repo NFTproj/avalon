@@ -87,7 +87,7 @@ export default function TokenCard({
     if (price) return price.includes('$') ? price : `$ ${price}`
     if (unitValue && unitValue > 0) return `$ ${unitValue.toFixed(2)}`
     // Usar a estrutura correta da API
-    const blockchainData = card.CardBlockchainData
+    const blockchainData = card.cardBlockchainData
     if (blockchainData?.tokenPrice) {
       const priceValue = parseFloat(blockchainData.tokenPrice)
       return priceValue > 1000 ? `$ ${(priceValue / 1_000_000).toFixed(2)}` : `$ ${priceValue.toFixed(2)}`

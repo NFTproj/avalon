@@ -51,8 +51,8 @@ const convertApiCardToCard = (apiCard: ApiCard): Card | null => {
     // Card de @/types/card usa CardBlockchainData (C maiúsculo)
     CardBlockchainData: {
       tokenAddress: blockchainData.tokenAddress as `0x${string}`,
-      tokenNetwork: blockchainData.tokenNetwork || 'polygon',
-      tokenChainId: blockchainData.tokenChainId || getChainIdFromNetwork(blockchainData.tokenNetwork || 'polygon'),
+      tokenNetwork: blockchainData.network || 'polygon',
+      tokenChainId: blockchainData.tokenChainId || getChainIdFromNetwork(blockchainData.network || 'polygon'),
       tokenPrice: blockchainData.tokenPrice || '1.00',
     }
   }

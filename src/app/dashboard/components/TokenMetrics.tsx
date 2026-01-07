@@ -42,10 +42,10 @@ export default function TokenMetrics({ className = "" }: TokenMetricsProps) {
     const list = (cards ?? []) as ApiCard[]
     return list
       .map((c): InternalCard | null => {
-        const bc = c?.CardBlockchainData
+        const bc = c?.cardBlockchainData
         const addr = bc?.tokenAddress
         if (!addr) return null
-        const net = bc?.tokenNetwork || 'polygon'
+        const net = bc?.network || 'polygon'
         return {
           id: c.id,
           name: c.name,
