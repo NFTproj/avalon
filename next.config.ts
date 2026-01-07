@@ -2,7 +2,24 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  eslint: { ignoreDuringBuilds: true }, // <-- pula erros de lint no build
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        fs: false,
+        net: false,
+        tls: false,
+      }
+
+      // Ignore test runners that are accidentally imported by dependencies
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        'tap': false,
+        'tape': false,
+        'why-is-node-running': false,
+      }
+    }
+    return config
+  },
   images: {
     localPatterns: [{ pathname: '/assets/**', search: '' }],
     remotePatterns: [

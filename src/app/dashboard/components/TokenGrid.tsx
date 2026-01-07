@@ -45,9 +45,9 @@ export default function TokenGrid({
   // Preparar dados para o hook de balanços (apenas cards com blockchain data válido)
   const cardsForHook = useMemo(() => {
     return cards
-      .filter(card => card.CardBlockchainData?.tokenAddress)
+      .filter(card => card.cardBlockchainData?.tokenAddress)
       .map((card): LocalCard => {
-        const blockchainData = card.CardBlockchainData!
+        const blockchainData = card.cardBlockchainData!
 
         return {
           id: card.id,
@@ -55,7 +55,7 @@ export default function TokenGrid({
           status: (card.status as "ACTIVE" | "INACTIVE") || 'ACTIVE',
           CardBlockchainData: {
             tokenAddress: blockchainData.tokenAddress as `0x${string}`,
-            tokenNetwork: blockchainData.tokenNetwork || 'polygon',
+            tokenNetwork: blockchainData.network || 'polygon',
             tokenChainId: blockchainData.tokenChainId || 137,
             tokenPrice: String(blockchainData.tokenPrice || '1000000'),
           }
@@ -70,7 +70,7 @@ export default function TokenGrid({
   const processedCards = useMemo(() => {
     return cards.map(card => {
       // Verificar se tem dados blockchain válidos
-      const blockchainData = card.CardBlockchainData
+      const blockchainData = card.cardBlockchainData
       const hasValidToken = blockchainData && blockchainData.tokenAddress
 
       // Encontrar o asset correspondente baseado no ID do card

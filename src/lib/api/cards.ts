@@ -11,6 +11,10 @@ export interface CardBlockchainData {
   tokenSymbol: string
   tokenAddress: string
   network: string
+  tokenPrice?: string
+  tokenChainId?: number
+  purchasedQuantity?: string
+  depositedSupply?: string
 }
 
 export interface Card {
@@ -25,6 +29,9 @@ export interface Card {
   createdAt?: string
   updatedAt?: string
   ticker?: string
+  tags?: string[]
+  logoUrl?: string
+  launchDate?: string
 }
 
 export interface GetCardsResponse {

@@ -19,7 +19,7 @@ export function useCards(page: number = 1) {
 
   return {
     cards: data?.data ?? [],
-    pagination: data?.pagination,
+    pagination: data?.meta,
     isLoading,
     error,
     mutate,

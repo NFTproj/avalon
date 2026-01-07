@@ -7,7 +7,7 @@
     "test": "jest",
     "test:watch": "jest --watch --config jest.config.js",
     "test:coverage": "jest --coverage --config jest.config.js",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "next lint"
   },
