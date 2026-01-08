@@ -1,13 +1,110 @@
 'use client'
 
 import { ConfigContext } from '@/contexts/ConfigContext'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
+import { CheckCircle2, XCircle, X } from 'lucide-react'
 import ImageFromJSON from '../core/ImageFromJSON'
 
 function FormsContact() {
   const { texts, colors } = useContext(ConfigContext)
   const support = texts?.['landing-page']['forms-contact'].support
   const formContact = texts?.['landing-page']['forms-contact'].form
+
+  // Estados do formulário
+  const [formValues, setFormValues] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: '',
+  })
+
+  const [selectedServices, setSelectedServices] = useState<string[]>([])
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showFieldErrors, setShowFieldErrors] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: 'success' | 'error' | null
+    message: string
+  }>({ type: null, message: '' })
+
+  // Função de envio do formulário
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    // Limpa mensagens anteriores
+    setSubmitStatus({ type: null, message: '' })
+    setShowFieldErrors(false)
+
+    // Limpa e valida campos obrigatórios
+    const name = formValues.name.trim()
+    const email = formValues.email.trim()
+    const phone = formValues.phone.trim()
+    const message = formValues.message.trim()
+
+    // Valida campos obrigatórios
+    if (!name || !email || !message) {
+      setShowFieldErrors(true)
+      setSubmitStatus({
+        type: 'error',
+        message: 'Por favor, preencha todos os campos obrigatórios.',
+      })
+      return
+    }
+
+    setIsSubmitting(true)
+
+    try {
+      // Faz requisição POST para a API
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          company: phone || undefined, // Usa phone como company (opcional)
+          message,
+          services: selectedServices.length > 0 ? selectedServices : undefined,
+        }),
+      })
+
+      // Processa resposta
+      const data = await response.json()
+
+      if (response.ok) {
+        // Sucesso: limpa formulário e mostra mensagem
+        setSubmitStatus({
+          type: 'success',
+          message:
+            'Formulário enviado com sucesso! Entraremos em contato em breve.',
+        })
+
+        // Limpa campos
+        setFormValues({
+          name: '',
+          email: '',
+          phone: '',
+          message: '',
+        })
+        setSelectedServices([])
+        setShowFieldErrors(false)
+      } else {
+        // Erro: mostra mensagem de erro
+        setSubmitStatus({
+          type: 'error',
+          message: data.error || 'Erro ao enviar mensagem. Tente novamente.',
+        })
+      }
+    } catch (error) {
+      console.error('Erro ao enviar formulário:', error)
+      setSubmitStatus({
+        type: 'error',
+        message: 'Erro ao enviar mensagem. Tente novamente.',
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
 
   return (
     <section
@@ -64,10 +161,49 @@ function FormsContact() {
             {formContact?.title}
           </h2>
           <form
-            action=""
+            onSubmit={handleSubmit}
+            noValidate
             className="flex flex-col items-center gap-12 md:gap-24 w-full md:w-3/4"
             style={{ color: colors?.colors['color-quintenary'] }}
           >
+            {/* Mensagem de feedback */}
+            {submitStatus.type && (
+              <div
+                className="w-full md:w-3/4 rounded-xl border-2 px-4 py-3 shadow-sm flex items-start gap-3"
+                style={{
+                  backgroundColor:
+                    submitStatus.type === 'success' ? '#F0FDF4' : '#FEF2F2',
+                  borderColor:
+                    submitStatus.type === 'success' ? '#22C55E' : '#EF4444',
+                  color:
+                    submitStatus.type === 'success' ? '#166534' : '#991B1B',
+                }}
+              >
+                <span className="mt-0.5 flex-shrink-0">
+                  {submitStatus.type === 'success' ? (
+                    <CheckCircle2 className="h-5 w-5" aria-hidden />
+                  ) : (
+                    <XCircle className="h-5 w-5" aria-hidden />
+                  )}
+                </span>
+                <p className="text-sm font-medium flex-1">
+                  {submitStatus.message}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setSubmitStatus({ type: null, message: '' })}
+                  className="ml-2 rounded p-1 hover:opacity-80 flex-shrink-0"
+                  aria-label="Fechar"
+                  style={{
+                    color:
+                      submitStatus.type === 'success' ? '#166534' : '#991B1B',
+                  }}
+                >
+                  <X className="h-4 w-4" aria-hidden />
+                </button>
+              </div>
+            )}
+
             <div className="flex flex-col items-center gap-4 md:gap-6 w-full md:w-3/4">
               <label
                 htmlFor="name-input"
@@ -77,9 +213,18 @@ function FormsContact() {
                 <input
                   type="text"
                   placeholder={formContact?.name?.placeholder}
-                  className="border-2 border-gray-300 rounded-md px-4 py-2 w-full focus:outline-none"
+                  value={formValues.name}
+                  onChange={(e) =>
+                    setFormValues((prev) => ({ ...prev, name: e.target.value }))
+                  }
+                  className={`border-2 rounded-md px-4 py-2 w-full focus:outline-none ${
+                    showFieldErrors && !formValues.name.trim()
+                      ? 'border-red-500'
+                      : 'border-gray-300'
+                  }`}
                   required
                   id="name-input"
+                  disabled={isSubmitting}
                   style={{
                     backgroundColor: colors?.background['background-primary'],
                     color: colors?.colors['color-primary'],
@@ -94,9 +239,21 @@ function FormsContact() {
                 <input
                   type="email"
                   placeholder={formContact?.email?.placeholder}
-                  className="border-2 border-gray-300 rounded-md px-4 py-2 w-full focus:outline-none"
+                  value={formValues.email}
+                  onChange={(e) =>
+                    setFormValues((prev) => ({
+                      ...prev,
+                      email: e.target.value,
+                    }))
+                  }
+                  className={`border-2 rounded-md px-4 py-2 w-full focus:outline-none ${
+                    showFieldErrors && !formValues.email.trim()
+                      ? 'border-red-500'
+                      : 'border-gray-300'
+                  }`}
                   required
                   id="email-input"
+                  disabled={isSubmitting}
                   style={{
                     backgroundColor: colors?.background['background-primary'],
                     color: colors?.colors['color-primary'],
@@ -111,9 +268,16 @@ function FormsContact() {
                 <input
                   type="tel"
                   placeholder={formContact?.phone?.placeholder}
+                  value={formValues.phone}
+                  onChange={(e) =>
+                    setFormValues((prev) => ({
+                      ...prev,
+                      phone: e.target.value,
+                    }))
+                  }
                   className="border-2 border-gray-300 rounded-md px-4 py-2 w-full focus:outline-none"
-                  required
                   id="phone-input"
+                  disabled={isSubmitting}
                   style={{
                     backgroundColor: colors?.background['background-primary'],
                     color: colors?.colors['color-primary'],
@@ -127,9 +291,21 @@ function FormsContact() {
                 {formContact?.message?.label}
                 <textarea
                   placeholder={formContact?.message?.placeholder}
-                  className="border-2 border-gray-300 rounded-md px-4 py-2 w-full focus:outline-none"
+                  value={formValues.message}
+                  onChange={(e) =>
+                    setFormValues((prev) => ({
+                      ...prev,
+                      message: e.target.value,
+                    }))
+                  }
+                  className={`border-2 rounded-md px-4 py-2 w-full focus:outline-none ${
+                    showFieldErrors && !formValues.message.trim()
+                      ? 'border-red-500'
+                      : 'border-gray-300'
+                  }`}
                   required
                   id="message-input"
+                  disabled={isSubmitting}
                   style={{
                     backgroundColor: colors?.background['background-primary'],
                     color: colors?.colors['color-primary'],
@@ -140,13 +316,18 @@ function FormsContact() {
             </div>
             <button
               type="submit"
-              className="w-full md:w-auto px-20 py-3 rounded-md font-bold"
+              disabled={isSubmitting}
+              className={`w-full md:w-auto px-20 py-3 rounded-md font-bold transition-opacity ${
+                isSubmitting
+                  ? 'opacity-50 cursor-not-allowed'
+                  : 'hover:opacity-90'
+              }`}
               style={{
                 backgroundColor: colors?.buttons['button-primary'],
                 color: colors?.colors['color-primary'],
               }}
             >
-              {formContact?.submit}
+              {isSubmitting ? 'Enviando...' : formContact?.submit}
             </button>
           </form>
         </div>
