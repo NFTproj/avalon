@@ -62,13 +62,24 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
           return
         }
 
+        // Filtrar apenas sessões de burn (sessionId começa com "burn-")
+        const validTransactions = response.transactions.filter((tx: any) =>
+          typeof tx.sessionId === 'string' && tx.sessionId.startsWith('burn-')
+        )
+
+        if (validTransactions.length === 0) {
+          setCertificates([])
+          setLoading(false)
+          return
+        }
+
         // Buscar dados de todos os cards únicos
-        const uniqueCardIds = [...new Set(response.transactions.map((t: any) => t.cardId))]
+        const uniqueCardIds = [...new Set(validTransactions.map((t: any) => t.cardId))]
         const cardsResponse = await apiFetch<any>('/api/cards')
         const cardsMap = new Map(cardsResponse.data?.map((c: any) => [c.id, c]) || [])
 
         // Mapear transações para certificados
-        const mappedCertificates: Certificate[] = response.transactions.map((tx: any) => {
+        const mappedCertificates: Certificate[] = validTransactions.map((tx: any) => {
           const card = cardsMap.get(tx.cardId) as any
 
           // Mapear status baseado nos códigos do backend:
