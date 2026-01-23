@@ -66,6 +66,12 @@ export default function CertificateEmission() {
   const balanceData = user?.balances?.find((b: any) => b.id === cardId)
   const userBalance = balanceData?.balance || 0
 
+  console.log('[CertificateEmission] cardId:', cardId)
+  console.log('[CertificateEmission] user.balances:', user?.balances)
+  console.log('[CertificateEmission] balanceData found:', balanceData)
+  console.log('[CertificateEmission] userBalance:', userBalance)
+  console.log('[CertificateEmission] balanceData.balance:', balanceData?.balance)
+
   const pageBg = colors?.certificateEmission?.background?.page || '#FFFFFF'
   const titleColor = colors?.certificateEmission?.colors?.title || '#1F2937'
   const subtitleColor = colors?.certificateEmission?.colors?.subtitle || '#6B7280'

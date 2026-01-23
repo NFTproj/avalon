@@ -47,7 +47,9 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
       try {
         setLoading(true)
 
-        // Buscar transações do tipo 500 (burn/certificado) com paginação
+        // Buscar transações do tipo 500 (BURN/certificado) com paginação
+        // Tipos de transação:
+        // 100 = PURCHASE, 200 = TRANSFER, 300 = WITHDRAW, 400 = DEPOSIT, 500 = BURN
         const url = cardId
           ? `/api/transactions?cardId=${cardId}&transactionType=500&page=${page}&limit=${limit}`
           : `/api/transactions?transactionType=500&page=${page}&limit=${limit}`
@@ -69,10 +71,21 @@ export default function CertificateHistory({ cardId }: CertificateHistoryProps) 
         const mappedCertificates: Certificate[] = response.transactions.map((tx: any) => {
           const card = cardsMap.get(tx.cardId) as any
 
-          // Mapear status: 200 = emitido, 100 = pendente, outros = falha
+          // Mapear status baseado nos códigos do backend:
+          // 100 = PENDING_TRANSFER (pendente)
+          // 200 = TRANSFERRED (emitido/sucesso)
+          // 300 = FAILED (falha)
+          // 400 = WAITING_PAYMENT (pendente)
+          // 500 = PENDING_TRANSFER_RETRY (pendente)
+          // 600 = PENDING_PAYMENT (pendente)
           let status: 'emitido' | 'pendente' | 'falha' = 'falha'
-          if (tx.status === 200) status = 'emitido'
-          else if (tx.status === 100) status = 'pendente'
+          if (tx.status === 200) {
+            status = 'emitido' // TRANSFERRED
+          } else if ([100, 400, 500, 600].includes(tx.status)) {
+            status = 'pendente' // PENDING_*
+          } else if (tx.status === 300) {
+            status = 'falha' // FAILED
+          }
 
           // Formatar data
           const date = new Date(tx.createdAt)

@@ -851,7 +851,7 @@
     "page-subtitle": "Registre sua compensação ambiental e receba seu certificado digital com selo de verificação.",
     "token-label": "Token a ser utilizado",
     "quantity-label": "Quantidade de tokens compensados",
-    "quantity-placeholder": "0 - {max}",
+    "quantity-placeholder": "Digite a quantidade",
     "balance-available": "Saldo disponível: {balance} tokens",
     "button-emit": "Emitindo certificado",
     "button-emitting": "Emitindo...",
