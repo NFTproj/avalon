@@ -84,6 +84,11 @@ export default function EmissionCard({ card, userBalance, balanceData, onSuccess
   const sanitizedBalance = Number.isFinite(userBalance) ? Number(userBalance) : 0
   const maxQuantity = Math.max(0, sanitizedBalance)
 
+  console.log('[EmissionCard] userBalance prop:', userBalance)
+  console.log('[EmissionCard] sanitizedBalance:', sanitizedBalance)
+  console.log('[EmissionCard] maxQuantity:', maxQuantity)
+  console.log('[EmissionCard] balanceData:', balanceData)
+
   const quantityOptions = useMemo(() => {
     if (maxQuantity <= 0) {
       return []
