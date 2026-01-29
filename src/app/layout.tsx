@@ -26,7 +26,7 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: 'TokenGrid',
+  title: 'Avalon',
   description: 'Powered by Blocklize',
 }
 
