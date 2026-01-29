@@ -1,0 +1,1113 @@
+{
+  "images": {
+    "logos": {
+      "main-logo": "logos/avalon/logo1.png"
+    }
+  },
+  "landing-page": {
+    "header": {
+      "alts": {
+        "main-logo": "Logo da Avalon"
+      },
+      "navigations": {
+        "navOne": [],
+        "navTwo": [
+          {
+            "title": "Produtos",
+            "items": [
+              {
+                "title": "Token TBIO"
+              }
+            ]
+          }
+        ],
+        "navThree": [
+          {
+            "title": "Idioma",
+            "items": [
+              {
+                "title": "Português",
+                "image": "icons/bloxify/br.png",
+                "alt": "Bandeira do Brasil"
+              },
+              {
+                "title": "Inglês",
+                "image": "icons/bloxify/us.png",
+                "alt": "Bandeira dos Estados Unidos"
+              }
+            ]
+          }
+        ]
+      },
+      "buttons": {
+        "button": "Criar conta",
+        "buttonLogin": "Entrar",
+        "buttonHome": "Home",
+        "buttonProfile": "Perfil",
+        "buttonLogout": "sair"
+      }
+    },
+    "hero": {
+      "title": "Tokenização de ativos físicos e digitais",
+      "subtitle": "Ofereça a tokenização de ativos através da tecnologia blockchain, do deploy à venda, usando sua própria marca.",
+      "image": "images/bloxify/homen-negro-tablet.png",
+      "alt": "Imagem de um homem negro segurando um tablet."
+    },
+    "tokenization-steps": {
+      "title": "Comece com apenas três passos",
+      "background": "backgrounds/bloxify/flow-image.svg",
+      "steps": [
+        {
+          "title": "Entre em contato",
+          "description": "Receba sua chave de API e escolha seu plano de tokenização.",
+          "step": "1° Passo",
+          "icon": "icons/bloxify/contact-with-border-blue.svg"
+        },
+        {
+          "title": "Escolha um template",
+          "description": "Escolha um template sob medida para seu projeto.",
+          "step": "2° Passo",
+          "icon": "icons/bloxify/template-blue.svg"
+        },
+        {
+          "title": "Tokenize ativos",
+          "description": "Comece a oferecer ativos em formato tokenizado.",
+          "step": "3° Passo",
+          "icon": "icons/bloxify/graph-bar-increase-blue.svg"
+        }
+      ]
+    },
+    "features-showcase": {
+      "title": "Todos os recursos Avalon",
+      "features": [
+        {
+          "id": 1,
+          "title": "Usuários Web3 em uma interface web2",
+          "subtitle": "Sign in",
+          "description": "Ofereça recursos blockchain com login via e-mail e senha, redes sociais ou link mágico.",
+          "attributes": {
+            "image": "images/bloxify/social-media.svg",
+            "alt": "Ícones de rede socias. Google, Aplle, Twitter, Facebook",
+            "title": "Use your social login",
+            "span": "or e-mail",
+            "email": "hello@world.com.br",
+            "continue-email": "Continue with e-mail"
+          }
+        },
+        {
+          "id": 2,
+          "title": "Deploy de tokens e contratos",
+          "subtitle": "Admin painel",
+          "description": "Crie, gerencie e comercialize tokens vinculados a ativos físicos e digitais de forma simples.",
+          "attributes": {
+            "title": "Faça deploy nas seguintes redes:",
+            "cryptos": [
+              {
+                "id": 1,
+                "name": "POLYGON",
+                "icon": "icons/bloxify/crypto-polygon.svg",
+                "alt": "Ícone da polygon"
+              },
+              {
+                "id": 2,
+                "name": "BASE",
+                "icon": "icons/bloxify/crypto-base.svg",
+                "alt": "Ícone da Base"
+              },
+              {
+                "id": 3,
+                "name": "ETHEREUM",
+                "icon": "icons/bloxify/cryptor-ethereum.svg",
+                "alt": "Ícone da Ethereum"
+              }
+            ]
+          }
+        },
+        {
+          "id": 3,
+          "title": "Comercialização simplificada de tokens",
+          "subtitle": "Checkout",
+          "description": "Venda tokens de forma fácil e segura, com pagamento via Pix no Brasil e cartão de crédito no mundo.",
+          "attributes": {
+            "title": "Escolha o método  de pagamento:",
+            "text-pix": "Pagamentos Via Pix (BR)",
+            "text-credit-card": "Pagamentos via cartão (Global)",
+            "image-pix": "icons/bloxify/pix.svg",
+            "alt-pix": "Ícone do Pix",
+            "image-credit-card": "icons/bloxify/credit-card.svg",
+            "alt-credit-card": "Ícone do cartão de crédito"
+          }
+        },
+        {
+          "id": 4,
+          "title": "Verificação de usuário (KYC)",
+          "subtitle": "KYC",
+          "description": "Escolha entre KYC obrigatório ou acesso livre, conforme sua estratégia.",
+          "attributes": {
+            "title": "Verificação de identiidentidade (KYC)",
+            "image": "icons/bloxify/kyc.svg",
+            "alt": "Ícone de KYC"
+          }
+        },
+        {
+          "id": 5,
+          "title": "Tokenização",
+          "subtitle": "Tokenização",
+          "description": "Tokenize ativos físicos e digitais em diversas redes, do deploy à venda.",
+          "attributes": {
+            "title": "Tokenização simplificada",
+            "image": "icons/bloxify/tokenization.svg",
+            "alt": "Ícone para representar tokenização. Uma estrutura de dados ligada a um hardware",
+            "cryptos": [
+              {
+                "id": 1,
+                "name": "POLYGON",
+                "icon": "icons/bloxify/crypto-polygon.svg",
+                "alt": "Ícone da polygon"
+              },
+              {
+                "id": 2,
+                "name": "BASE",
+                "icon": "icons/bloxify/crypto-base.svg",
+                "alt": "Ícone da Base"
+              },
+              {
+                "id": 3,
+                "name": "ETHEREUM",
+                "icon": "icons/bloxify/cryptor-ethereum.svg",
+                "alt": "Ícone da Ethereum"
+              }
+            ]
+          }
+        },
+        {
+          "id": 6,
+          "title": "API as a service",
+          "subtitle": "API",
+          "description": "Integre a tokenização ao seu site com nossa API. Entre em contato para acessar a documentação.",
+          "attributes": {
+            "title": "API AS A SERVICE",
+            "image": "images/bloxify/code-image.png",
+            "alt": "Icone para representar uma código em programação.",
+            "languages": [
+              {
+                "image": "icons/bloxify/typescript.svg",
+                "alt": "Ícone do TypeScript"
+              },
+              {
+                "image": "icons/bloxify/react.svg",
+                "alt": "Ícone do React"
+              },
+              {
+                "image": "icons/bloxify/node.svg",
+                "alt": "Ícone do NodeJS"
+              }
+            ]
+          }
+        },
+        {
+          "id": 7,
+          "title": "Template White-Label",
+          "subtitle": "Template",
+          "description": "Escolha um template e personalize com a sua marca.",
+          "attributes": {
+            "title": "Template White-Label",
+            "image": "icons/bloxify/template-white-label.svg",
+            "alt": "Icone para representar white label"
+          }
+        }
+      ]
+    },
+    "forms-contact": {
+      "title": "Vem conhecer!",
+      "support": {
+        "title": "Central de Suporte",
+        "description": "Estamos aqui para ajudar! Nossa equipe de suporte ao cliente é altamente capacitada e está pronta para atender às suas necessidades.",
+        "email": "contato@blocklize.io",
+        "image": "images/bloxify/banner-support-tokengrid.png",
+        "alt": "Imagem de um banner de contato."
+      },
+      "form": {
+        "title": "Vem conhecer!",
+        "name": {
+          "label": "Nome completo (obrigatório)",
+          "placeholder": "Digite seu nome"
+        },
+        "email": {
+          "label": "E-mail (obrigatório)",
+          "placeholder": "Digite seu email"
+        },
+        "phone": {
+          "label": "Telefone/WhatsApp",
+          "placeholder": "Digite seu telefone"
+        },
+        "message": {
+          "label": "Conte um pouco sobre a sua empresa e como a Avalon pode te ajudar:",
+          "placeholder": "Escreva sua mensagem"
+        },
+        "submit": "Enviar"
+      }
+    },
+    "faq": {
+      "title": "Ficou alguma dúvida?",
+      "questions": [
+        {
+          "id": 1,
+          "question": "O que é a Avalon?",
+          "answer": "A Avalon é uma plataforma pioneira na tokenização de ativos físicos e digitais, promovendo a democratização de investimentos. Nossos serviços incluem o deploy de tokens, comercialização simplificada e gestão completa de ativos tokenizados, tudo isso facilitado por uma interface intuitiva e segura."
+        },
+        {
+          "id": 2,
+          "question": "O que é tokenização?",
+          "answer": "Tokenização é o processo de conversão de ativos físicos ou digitais em tokens blockchain. Esses tokens representam digitalmente a propriedade ou direitos sobre o ativo, permitindo divisibilidade, transferibilidade e liquidez aprimoradas no ambiente digital."
+        },
+        {
+          "id": 3,
+          "question": "Como funciona a plataforma?",
+          "answer": "Nossa plataforma funciona em três etapas simples: 1) Entre em contato e receba sua chave de API, 2) Escolha um template personalizado para seu projeto, 3) Comece a tokenizar e comercializar seus ativos. Oferecemos suporte completo durante todo o processo."
+        },
+        {
+          "id": 4,
+          "question": "Qual é o processo de tokenização?",
+          "answer": "O processo envolve a análise do ativo, estruturação jurídica, criação do smart contract personalizado, deploy na blockchain escolhida, e configuração da plataforma de comercialização. Tudo é feito com acompanhamento técnico especializado."
+        },
+        {
+          "id": 5,
+          "question": "Quem pode usar a Avalon?",
+          "answer": "A Avalon atende empresas de todos os portes que desejam tokenizar seus ativos, desde startups até grandes corporações. Nossos clientes incluem empresas do agronegócio, imobiliário, arte, música e diversos outros setores que buscam inovação e democratização de investimentos."
+        }
+      ]
+    },
+    "tokens": {
+      "title": "Acompanhe os exemplos de tokens disponiveis",
+      "list": [
+        {
+          "id": 1,
+          "name": "TOKEN TBIO",
+          "subtitle": "Fazenda Eliane Mato Grosso",
+          "price": "15",
+          "launchDate": "July 31, 2024",
+          "tokensAvailable": "1019820.10",
+          "code": "TBIO",
+          "identifierCode": "TBIO",
+          "image": "icons/bloxify/man-similing.png",
+          "sold": 516820,
+          "total": 1000000,
+          "labels": [
+            {
+              "name": "CPR"
+            },
+            {
+              "name": "CARBONO"
+            },
+            {
+              "name": "VERDE"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "name": "TOKEN TBIO",
+          "subtitle": "Fazenda Eliane Mato Grosso",
+          "price": "15",
+          "launchDate": "July 31, 2024",
+          "tokensAvailable": "1019820.00",
+          "code": "TBIO",
+          "identifierCode": "TBIO",
+          "image": "icons/bloxify/man-similing.png",
+          "sold": 516820,
+          "total": 1000000,
+          "labels": [
+            {
+              "name": "CPR"
+            },
+            {
+              "name": "CARBONO"
+            },
+            {
+              "name": "VERDE"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "name": "TOKEN TBIO",
+          "subtitle": "Fazenda Eliane Mato Grosso",
+          "price": "15",
+          "launchDate": "July 31, 2024",
+          "tokensAvailable": "1019820.00",
+          "code": "TBIO",
+          "identifierCode": "TBIO",
+          "image": "icons/bloxify/man-similing.png",
+          "sold": 1000000,
+          "total": 1000000,
+          "labels": [
+            {
+              "name": "CPR"
+            },
+            {
+              "name": "CARBONO"
+            },
+            {
+              "name": "VERDE"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "reset-password": {
+    "title": "Recuperar Senha",
+    "description": "Digite seu e-mail para receber um link de recuperação de senha.",
+    "email-label": "E-mail",
+    "email-placeholder": "seu@email.com",
+    "forgot-password": "Esqueceu a senha?",
+    "buttons": {
+      "cancel": "Cancelar",
+      "send": "Enviar Link",
+      "sending": "Enviando...",
+      "close": "Fechar"
+    },
+    "success": {
+      "title": "E-mail Enviado!",
+      "message": "Enviamos um link de recuperação para {email}. Verifique sua caixa de entrada e spam."
+    },
+    "errors": {
+      "email-required": "E-mail é obrigatório",
+      "generic": "Erro ao enviar e-mail de recuperação"
+    }
+  },
+  "register": {
+    "image": "images/login/creating-account.svg",
+    "alt": "Pessoa segurando chave de acesso",
+    "step-zero": {
+      "title": "Bem-vindo(a) à TokeGrid!",
+      "description": "Crie a sua conta em 2 minutos e negocie tokens de forma rápida e confiável.",
+      "button-email": "Criar com E-mail",
+      "button-metamask": "Criar com Metamask",
+      "already-have-account": "Já possui uma conta?",
+      "login-link": "Login",
+      "fase": "Etapa"
+    },
+    "step-one": {
+      "counter": {
+        "current": "01",
+        "total": "de 04"
+      },
+      "title": "Escolha um e-mail",
+      "description": "Se é a sua primeira vez aqui, comece o processo de registro inserindo seu e-mail.",
+      "labels": {
+        "emailLabel": "Seu e-mail:"
+      },
+      "placeholders": {
+        "email": "email@email.com"
+      },
+      "button-next": "Próximo",
+      "already-have-account": "Já possui uma conta?",
+      "login-link": "Login"
+    },
+    "step-two": {
+      "counter": {
+        "current": "02",
+        "total": "de 04"
+      },
+      "title": "Agora escolha uma senha",
+      "description": "Utilize letras, números e caracteres especiais.",
+      "labels": {
+        "password": "Digite uma senha",
+        "confirmPassword": "Repita sua senha"
+      },
+      "disclaimer": "Ao continuar você aceita os Termos de uso e a Política de Privacidade da Avalon e declara não ser uma pessoa dos Estados Unidos.",
+      "button-continue": "Continuar",
+      "button-back": "Voltar"
+    },
+    "step-three": {
+      "counter": {
+        "current": "03",
+        "total": "de 04"
+      },
+      "title": "Verifique seu e-mail!",
+      "description": "Insira o código que foi enviado para o seu e-mail.",
+      "labels": {
+        "code": "Insira o código"
+      },
+      "placeholders": {
+        "code": "123456"
+      },
+      "button-verify": "Verificar e entrar",
+      "resend": {
+        "button": "Reenviar código",
+        "success": "Código reenviado com sucesso!",
+        "error": "Erro ao reenviar código.",
+        "cooldown": "Disponível novamente em {seconds}s"
+      }
+    },
+    "step-four": {
+      "counter": {
+        "current": "04",
+        "total": "de 04"
+      },
+      "title": "Acesse a sua conta",
+      "paragraphEmail": "Seu e-mail",
+      "paragraphPassword": "Digite a sua senha",
+      "labels": {
+        "email": "",
+        "password": ""
+      },
+      "placeholders": {
+        "email": "email@email.com",
+        "password": "••••••••"
+      },
+      "button-back": "Voltar",
+      "button-login": "Entrar",
+      "Login-Option": "Ou acesse com",
+      "walletButton": {
+        "signing": "Assinando...",
+        "connecting": "Conectando...",
+        "connected": "Assinar e entrar",
+        "disconnected": "Escolher carteira"
+      }
+    },
+    "metamask-register-login": {
+      "counter": {
+        "first": "01",
+        "second": "2",
+        "total": "de 2"
+      },
+      "fase": "Etapa",
+      "title": "Conecte sua carteira",
+      "paragraph-Wallet": "Selecione a carteira digital que você deseja usar.",
+      "button-Wallet-choose": "Escolher carteira",
+
+      "signature": {
+        "title": "Criar sua conta",
+        "paragraph-register": "Agora só falta um passo! Clique abaixo para assinar e confirmar a criação da sua conta com essa carteira.",
+        "button-register-wallet": "Criar conta"
+      }
+    }
+  },
+  "footer": {
+    "alt-logo": "Logo da Avalon",
+    "columns": [
+      {
+        "title": "Sobre a Avalon",
+        "items": ["Conheça a Avalon", "Nossos Projetos"]
+      },
+      {
+        "title": "Jurídico",
+        "items": ["Termos de Uso", "Política de Privacidade"]
+      },
+      {
+        "title": "Ajuda",
+        "items": ["Fale Conosco", "Aprenda Tokenização"]
+      },
+      {
+        "title": "Compliance",
+        "items": ["Ouvidoria"]
+      }
+    ],
+    "developedBy": {
+      "text": "Desenvolvido por:"
+    }
+  },
+
+  "common": {
+    "loadingOverlay": {
+      "message": "Carregando.."
+    }
+  },
+  "dashboard": {
+    "welcome-box": {
+      "name": "Antônio",
+      "title": "Bem-vindo (a) à Avalon!",
+      "description": "Conheça os projetos que foram tokenizados, \ninvista com segurança e tenha o controle total do seu patrimônio na palma da sua mão.",
+      "link": "Ver detalhes",
+      "tokens-title": "Seus Tokens:",
+      "tokens": ["#TBIO", "#TBIO2"],
+      "buttons": {
+        "copy": "Copiar",
+        "copied": "Copiado!",
+        "explore-tokens": "Explorar Tokens Disponíveis",
+        "complete-kyc": "Complete sua Verificação KYC",
+        "check-kyc": "Verificar Status do KYC"
+      }
+    },
+    "action-buttons": [
+      {
+        "id": 1,
+        "name": "Comprar",
+        "icon": ""
+      },
+      {
+        "id": 2,
+        "name": "Emitir Certificado",
+        "icon": ""
+      },
+      {
+        "id": 3,
+        "name": "Sacar",
+        "icon": ""
+      },
+      {
+        "id": 4,
+        "name": "Histórico",
+        "icon": ""
+      },
+      {
+        "id": 5,
+        "name": "Verificações KYC",
+        "icon": ""
+      }
+    ],
+    "chart-box": {
+      "title": "Saldo da Carteira ",
+      "recent-transactions": "transações recentes",
+      "buttons": {
+        "buy": "Comprar",
+        "earnings": "Rendimentos",
+        "withdraw": "Sacar",
+        "statements": "Extratos",
+        "verify-identity": "Verificar Identidade",
+        "retry": "Tentar novamente"
+      },
+      "messages": {
+        "loading": "Carregando dados da carteira...",
+        "error": "Erro ao carregar transações"
+      }
+    },
+    "balances-table": {
+      "title": "Sua carteira",
+      "highlight": "Avalon",
+      "columns": {
+        "project": "Projeto",
+        "quantity": "Quantidade",
+        "unit-value": "Valor unitário",
+        "invested-value": "Valor Investido",
+        "actions": "Ações"
+      },
+      "actions": {
+        "buy": "Comprar",
+        "benefits": "Benefícios"
+      },
+      "pagination": {
+        "previous": "Anterior",
+        "next": "Próximo",
+        "page-info": "Página {current} de {total}"
+      },
+      "messages": {
+        "login-required": "Faça login para ver seus balances.",
+        "loading": "Carregando seus tokens...",
+        "no-tokens": "Você ainda não possui tokens na sua carteira."
+      }
+    },
+    "asset-list": {
+      "title": "Sua carteira",
+      "highlight": "Avalon",
+      "columns": {
+        "project": "Projeto",
+        "unit-value": "Valor unitário",
+        "total-value": "Valor Total"
+      },
+      "buttons": {
+        "buy": "Comprar",
+        "sell": "Vender"
+      }
+    },
+    "wallet-info": {
+      "title": "Informações da Carteira",
+      "connected": "Carteira Conectada",
+      "not-connected": "Carteira Não Conectada",
+      "status-connected": "Conectado",
+      "address-label": "Endereço:",
+      "network-label": "Rede:",
+      "balance-label": "Saldo nativo:",
+      "connect-message": "Conecte sua carteira para visualizar seu saldo e transações",
+      "copy-address": "Copiar endereço",
+      "view-explorer": "Ver no Etherscan",
+      "wallet-mismatch": "Atenção: A carteira conectada é diferente da cadastrada no seu perfil.",
+      "registered-wallet": "Cadastrada:"
+    },
+    "token-metrics": {
+      "title": "Métricas de Tokens (24h)",
+      "refresh": "Atualizar métricas",
+      "loading": "Carregando métricas...",
+      "error": "Erro ao Carregar Métricas",
+      "try-again": "Tentar Novamente",
+      "no-data": "Métricas de Tokens",
+      "no-data-message": "Nenhum dado de métricas disponível ainda. As métricas começarão a ser coletadas após você adquirir tokens.",
+      "total-tokens": "Total de Tokens",
+      "total-value": "Valor Total",
+      "growth-rate": "Crescimento Médio por Hora",
+      "best-performance": "Melhor Performance:",
+      "worst-performance": "Menor Performance:",
+      "last-update": "Última atualização:",
+      "native-values": "* Valores em tokens nativos, sem conversão fiduciária"
+    }
+  },
+  "token": {
+    "token-price": "Preço do Token",
+    "launch-date": "Data de lançamento",
+    "sold": "Tokens disponíveis",
+    "buy": "Comprar",
+    "available": "Código identificador",
+    "minimum-investment": "Investimento mínimo",
+    "progress-bar": {
+      "sold": "Vendidos",
+      "available": "Disponíveis"
+    },
+    "disclaimer": "Não invista antes de saber todas as informações essenciais sobre a oferta"
+  },
+  "tokensPage": {
+    "title": "Descubra hoje as [[melhores oportunidades]] de tokens digitais",
+    "subtitle": "Os tokens que você já conhece, as melhores oportunidades, na palma da sua mão!",
+    "filters": {
+      "all": "Todos",
+      "available": "Disponíveis"
+    },
+    "viewDetails": "Ver detalhes",
+    "newTokens": "Novos tokens em breve"
+  },
+  "token-details": {
+    "highlights": {
+      "title": "Destaques",
+      "view-docs": "Ver docs da oferta",
+      "more-info": "Mais informações"
+    },
+    "tabs": {
+      "infos": {
+        "title": "Informações",
+        "identifier-code": "Código ISIN",
+        "offer-opening": "Abertura da oferta",
+        "tons-offered": "Toneladas em oferta",
+        "token-address": "Endereço do Token",
+        "unit-value": "Valor unitário",
+        "minimum-investment": "Investimento mínimo",
+        "blockchain-link": "Link Blockchain"
+      },
+      "token-info": {
+        "title": "Token Info"
+      },
+      "docs": {
+        "title": "Documentos"
+      },
+      "benefits": {
+        "title": "Benefícios",
+        "rights": "Direitos",
+        "risks": "Riscos"
+      }
+    }
+  },
+  "kyc": {
+    "kyc-step-one-title": "Realize sua Verificação KYC!",
+    "kyc-step-one-paragraph": "Sua conta ainda não foi verificada. Realize a verificação dos seus dados para garantir que as transações ocorram com segurança.",
+    "kyc-step-one-button": "Começar verificação",
+
+    "kyc-step-two-title": "Informe seus dados",
+    "label-name": "Nome completo",
+    "label-cpf": "CPF",
+    "label-cnpj": "CNPJ",
+    "label-is-legal-person": "Você representa uma pessoa jurídica?",
+    "placeholder-name": "Informe seu nome completo",
+    "placeholder-cpf": "Ex: 000.000.000-00",
+    "placeholder-cnpj": "Ex: 00.000.000/0001-00",
+    "checkbox-is-legal-person": "Sim",
+
+    "button-back": "Voltar",
+    "button-next": "Continuar",
+
+    "error-name-required": "O nome é obrigatório.",
+    "error-cpf-required": "O CPF é obrigatório.",
+
+    "kyc-step-three-title": "Informe seu endereço",
+    "label-country": "Selecione seu país",
+    "placeholder-country": "Informe seu país de origem",
+    "label-cep": "Digite seu CEP",
+    "placeholder-cep": "Ex: 12345-678",
+    "label-street": "Rua",
+    "placeholder-street": "Nome da rua",
+    "label-number": "Número",
+    "label-city": "Cidade",
+    "placeholder-city": "Informe a cidade",
+    "label-state": "Estado",
+    "placeholder-state": "UF",
+    "upload-instructions": "Faça o upload dos documentos abaixo:",
+    "label-contract-file": "Contrato Social (PDF)",
+    "label-proof-file": "Comprovante de Endereço (PDF)",
+    "upload-file": "Fazer upload PDF",
+    "upload-complete": "Upload completo",
+    "start-verification": {
+      "title": "Verificação Didit",
+      "description": "Você será redirecionado para um site externo para concluir sua verificação de identidade (KYC).",
+      "button-continue": "Continuar",
+
+      "logo": {
+        "src": "images/login/diditi-logo.svg",
+        "alt": "Logo Didit"
+      },
+      "demo": {
+        "src": "images/login/kyc-video-placeholder.png",
+        "alt": "Demonstração do fluxo Didit"
+      }
+    },
+    "didit-logo-src": "images/kyc/didit-logo.svg",
+    "didit-logo-alt": "Logo da Didit",
+    "didit-video-src": "images/kyc/verification-demo.png",
+    "didit-video-alt": "Demonstração do processo KYC",
+    "title-didit-verification": "Verificação Didit",
+    "didit-description": "Você será redirecionado para um site externo para concluir sua verificação de identidade (KYC).",
+    "button-continue": "Continuar",
+    "status-title": "Status de verificação",
+    "status-view-details": "Ver detalhes",
+    "status-success-headline": "Sua conta foi verificada com sucesso",
+    "status-success-description": "Sua conta foi verificada com sucesso",
+    "status-success-cta": "Voltar ao início",
+    "status-pending-headline": "Sua conta está com a verificação em processamento",
+    "status-pending-description": "Acompanhe como vai seu processo de verificação KYC.",
+    "status-pending-cta": "Cancelar",
+    "status-error-headline": "A verificação da sua conta falhou",
+    "status-error-description": "A verificação da sua conta falhou",
+    "status-error-cta": "Tentar novamente"
+  },
+  "buyTokens": {
+    "page-title-fallback": "Comprar Tokens",
+    "tab-buy": "Comprar",
+    "tab-benefits": "Benefícios",
+    "tab-orders": "Ordens",
+    "available-tokens": "Tokens disponíveis",
+    "load-error": "Falha ao carregar tokens.",
+    "progress-zero": "0% vendido",
+    "progress-empty": ""
+  },
+  "buyPanel": {
+    "title": "Comprar {token}",
+    "unit-price-label": "Preço unitário",
+    "invest-label": "Quanto deseja investir ({currency})",
+    "invest-placeholder": "Ex.: {min}",
+    "estimated-qty": "Quantidade estimada",
+    "total": "Total",
+    "button-continue": "Continuar",
+    "button-processing": "Processando…",
+    "limits": "Mín.: {min} · Máx.: {max}",
+    "error-min": "Valor mínimo é {min}",
+    "error-max": "Valor máximo é {max}",
+    "unit-suffix": "und",
+    "payment-method": "Método de pagamento",
+    "pay-with-pix": "Comprar com PIX",
+    "pay-with-usdc": "Comprar com USDC",
+    "quote-prefix-pix": "Você pagará (PIX):",
+    "quote-prefix-usdc": "Você pagará (USDC):",
+    "cta-pix": "Comprar com PIX",
+    "cta-usdc": "Comprar com USDC",
+    "pix-copia-cola": "PIX copia e cola",
+    "pix-copy": "Copiar código",
+    "pix-copied": "Copiado!",
+    "value-label": "Valor",
+    "pix-amount-to-pay": "Valor a pagar",
+    "pix-expires-in": "Expira em {mm}:{ss}",
+    "pix-expired": "Expirado",
+    "pix-verify": "Já paguei, verificar",
+    "pix-verifying": "Verificando…",
+    "pix-wait-to-check": "Aguarde {s}s para verificar.",
+    "error-no-session": "Sem sessionId para verificar.",
+    "error-fetch-status": "Falha ao consultar ({status})",
+    "error-generic": "Não foi possível verificar o pagamento.",
+    "qty-label": "Quantidade (tokens)"
+  },
+  "tokenList": {
+    "empty": "Nenhum token disponível no momento.",
+    "unit-suffix": "und"
+  },
+  "profile": {
+    "page-title": "Perfil",
+    "menu": {
+      "configurations": "Configurações",
+      "settings": "Cadastro",
+      "password-update": "Atualizar senha",
+      "verify-account": "Verificar conta",
+      "verify-certificate": "Validar CERT(KYC)",
+      "close-account": "Encerrar conta",
+      "security": "Segurança",
+      "enable-2fa": "Ativar 2FA",
+      "verify-two-step": "Verificar em duas etapas",
+      "connected-devices": "Dispositivos conectados",
+      "preferences": "Preferências",
+      "language": "Idioma",
+      "notifications": "Notificações"
+    },
+    "close-account": {
+      "title": "Encerrar conta",
+      "warning-title": "Atenção",
+      "warning-message": "Encerrar sua é uma ação permanente.Todos seus dados serão excluídos e não poderão ser recuperados.Certifique-se de que deseja realmente prosseguir com a exclusão.",
+      "email-label": "Motivo da exclusão(opcional)",
+      "email-placeholder": "Nos diga por que está encerrando sua conta",
+      "button-cancel": "Cancelar",
+      "button-confirm": "Encerrar conta",
+      "success-message": "Conta encerrada com sucesso",
+      "error-message": "Erro ao encerrar conta. Tente novamente."
+    }
+  },
+  "certificateEmission": {
+    "page-title": "Emissão de certificado",
+    "page-subtitle": "Registre sua compensação ambiental e receba seu certificado digital com selo de verificação.",
+    "token-label": "Token a ser utilizado",
+    "quantity-label": "Quantidade de tokens compensados",
+    "quantity-placeholder": "Digite a quantidade",
+    "balance-available": "Saldo disponível: {balance} tokens",
+    "button-emit": "Emitindo certificado",
+    "button-emitting": "Emitindo...",
+    "button-emitted": "Certificado Emitido",
+    "button-resend": "Solicitar Reenvio",
+    "success-message": "Seu certificado foi emitido. Acompanhe o andamento da análise e verifique regularmente seu e-mail para futuras atualizações.",
+    "error-message": "A emissão do seu certificado não foi concluída. Verifique se há saldo suficiente em tokens e tente novamente",
+    "error-card-not-found": "Token não encontrado",
+    "error-card-id-missing": "ID do card não fornecido",
+    "error-loading": "Erro ao carregar dados do token",
+    "history-title": "Histórico de certificados",
+    "history-loading": "Carregando histórico...",
+    "history-empty": "Nenhum certificado encontrado",
+    "filter-year": "Ano:",
+    "filter-token": "Token:",
+    "filter-status": "Status:",
+    "status-emitido": "Emitido",
+    "status-pendente": "Em validação",
+    "status-falha": "Falha na validação",
+    "button-pending": "Pendente",
+    "button-reemit": "Reemitir",
+    "emitted-at": "Emitido em:",
+    "certificate-id": "ID:",
+    "quantity-used": "Quantidade usada:"
+  },
+  "under-development": {
+    "title": "Funcionalidade em Desenvolvimento",
+    "subtitle": "Estamos trabalhando duro para trazer esta funcionalidade para você!",
+    "coming-soon": "Em Breve!",
+    "description": "Nossa equipe está desenvolvendo esta funcionalidade com muito cuidado para oferecer a melhor experiência possível. Em breve você terá acesso a recursos incríveis!",
+    "features": {
+      "intuitive-interface": "Interface Intuitiva",
+      "maximum-security": "Segurança Máxima",
+      "optimized-performance": "Performance Otimizada"
+    },
+    "buttons": {
+      "go-back": "← Voltar",
+      "go-to-dashboard": "Ir para Dashboard"
+    },
+    "tip": {
+      "title": "Dica:",
+      "message": "Fique atento às atualizações! Notificaremos você assim que esta funcionalidade estiver disponível."
+    }
+  },
+  "admin": {
+    "login": {
+      "title": "Acesse sua conta",
+      "email-label": "Seu e-mail:",
+      "password-label": "Sua senha:",
+      "email-placeholder": "Digite seu e-mail",
+      "password-placeholder": "Digite sua senha",
+      "login-button": "Entrar",
+      "error-invalid-credentials": "Credenciais inválidas. Verifique seus dados e tente novamente."
+    },
+    "dashboard": {
+      "title": "Área do Administrador",
+      "metrics": {
+        "total-tokens": "Total de Tokens",
+        "pending-kyc": "KYCs Pendentes",
+        "active-users": "Usuários Ativos"
+      },
+      "recent-kycs": {
+        "title": "KYCs Recentes",
+        "view-all": "Ver Todos"
+      },
+      "recent-tokens": {
+        "title": "Tokens Recentes",
+        "view-all": "Ver Todos"
+      },
+      "create-token-button": "+ Criar Novo Token",
+      "token-status": {
+        "active": "Ativo",
+        "pending": "Pendente",
+        "inactive": "Inativo"
+      },
+      "kyc-status": {
+        "approved": "Aprovado"
+      }
+    },
+    "create-token": {
+      "title": "Criar Token",
+      "description": "Aqui você poderá criar um novo token para representar ativos ou direitos, facilitando a tokenização e a gestão dos mesmos.",
+      "back-button": "Voltar",
+      "start-button": "Começar",
+      "step-one": {
+        "counter": {
+          "current": "01",
+          "total": "de 04"
+        },
+        "title": "Dados Principais",
+        "fields": {
+          "card-name": {
+            "label": "Nome do Card",
+            "placeholder": "Ex: Bloxify Token"
+          },
+          "short-description": {
+            "label": "Descrição Curta",
+            "placeholder": "Ex: Token utilitário da Bloxify"
+          },
+          "long-description": {
+            "label": "Descrição Longa",
+            "placeholder": "Adicione uma descrição detalhada do token"
+          }
+        },
+        "buttons": {
+          "back": "Voltar",
+          "continue": "Continuar"
+        }
+      },
+      "step-two": {
+        "counter": {
+          "current": "02",
+          "total": "de 04"
+        },
+        "title": "Configurações Avançadas",
+        "fields": {
+          "ticker": {
+            "label": "Ticker (Símbolo)",
+            "placeholder": "Ex: Bloxify Token"
+          },
+          "initial-quantity": {
+            "label": "Quantidade Inicial",
+            "placeholder": "Ex: 120.550,000"
+          },
+          "tags": {
+            "label": "Tags",
+            "placeholder": "Adicione a tag e pressione Enter"
+          },
+          "twitter": {
+            "label": "Twitter",
+            "placeholder": "Ex: https://twitter.com"
+          },
+          "discord": {
+            "label": "Discord",
+            "placeholder": "Ex: https://discord.com"
+          },
+          "official-website": {
+            "label": "Site Oficial",
+            "placeholder": "Ex: https://exemplo.com"
+          }
+        },
+        "buttons": {
+          "back": "Voltar",
+          "continue": "Continuar"
+        }
+      },
+      "step-three": {
+        "counter": {
+          "current": "03",
+          "total": "de 04"
+        },
+        "title": "Blockchain e Imagens",
+        "fields": {
+          "blockchain": {
+            "label": "Blockchain",
+            "placeholder": "Selecione a Blockchain"
+          },
+          "release-date": {
+            "label": "Data de Lançamento",
+            "placeholder": "Digite a Data de Lançamento"
+          }
+        },
+        "uploads": {
+          "logo": {
+            "label": "Logotipo",
+            "placeholder": "Upload da imagem",
+            "file-types": "png.jpg.jpeg"
+          },
+          "background": {
+            "label": "Plano de fundo",
+            "placeholder": "Upload da imagem",
+            "file-types": "png.jpg.jpeg"
+          }
+        },
+        "buttons": {
+          "back": "Voltar",
+          "continue": "Continuar"
+        }
+      },
+      "step-four": {
+        "counter": {
+          "current": "04",
+          "total": "de 04"
+        },
+        "title": "Revisão e Criação",
+        "fields": {
+          "ticker": "Ticker",
+          "short-description": "Descrição Curta",
+          "long-description": "Descrição Longa",
+          "initial-quantity": "Quantidade inicial",
+          "tags": "Tags",
+          "site": "Site",
+          "discord": "Discord",
+          "twitter": "Twitter",
+          "blockchain": "Blockchain",
+          "release-date": "Data de Lançamento"
+        },
+        "buttons": {
+          "edit": "Editar Dados",
+          "create": "Criar Token",
+          "creating": "Criando..."
+        }
+      }
+    },
+    "edit-token": {
+      "title": "Editar Token",
+      "loading": "Carregando dados...",
+      "back": "Voltar",
+      "success": "Token atualizado com sucesso!",
+      "fields": {
+        "name": {
+          "label": "Nome do Token",
+          "placeholder": "Ex: Bloxify Token"
+        },
+        "ticker": {
+          "label": "Ticker (Símbolo)",
+          "placeholder": "Ex: BLX"
+        },
+        "description": {
+          "label": "Descrição Curta",
+          "placeholder": "Ex: Token utilitário da Bloxify"
+        },
+        "long-description": {
+          "label": "Descrição Longa",
+          "placeholder": "Adicione uma descrição detalhada do token"
+        }
+      },
+      "info": {
+        "label": "Nota",
+        "message": "Alguns campos não podem ser editados após a criação do token na blockchain (quantidade, preço, rede, etc)."
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "save": "Salvar Alterações",
+        "saving": "Salvando..."
+      }
+    },
+    "all-tokens": {
+      "title": "Todos os Tokens",
+      "refresh-button": "Atualizar lista",
+      "search-placeholder": "Pesquisar por nome, ticker ou descrição...",
+      "loading-count": "Carregando...",
+      "showing": "Exibindo",
+      "of": "de",
+      "tokens": "tokens",
+      "loading": "Carregando tokens...",
+      "no-results": "Nenhum token encontrado",
+      "no-results-description": "Tente usar termos de pesquisa diferentes",
+      "no-tokens": "Nenhum token criado ainda",
+      "created-at": "Criado em",
+      "status": {
+        "active": "Ativo"
+      },
+      "edit-button": "Editar token",
+      "edit": "Editar",
+      "close-button": "Fechar"
+    }
+  }
+}

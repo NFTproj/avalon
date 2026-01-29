@@ -12,6 +12,11 @@ import slabPtBR from '../../data/slab/locales/pt-BR.json'
 import slabEnUS from '../../data/slab/locales/en-US.json'
 import slabLight from '../../data/slab/themes/light.json'
 
+// Avalon
+import avalonPtBR from '../../data/avalon/locales/pt-BR.json'
+import avalonEnUS from '../../data/avalon/locales/en-US.json'
+import avalonLight from '../../data/avalon/themes/light.json'
+
 // PowerAssetX
 import powerassetxPtBR from '../../data/powerassetx/locales/pt-BR.json'
 import powerassetxEnUS from '../../data/powerassetx/locales/en-US.json'
@@ -55,10 +60,17 @@ export async function getClientConfig({
       'pt-BR': slabPtBR,
       'en-US': slabEnUS,
     },
+
     powerassetx: {
       'pt-BR': powerassetxPtBR,
       'en-US': powerassetxEnUS,
     },
+
+    avalon: {
+      'pt-BR': avalonPtBR,
+      'en-US': avalonEnUS,
+    },
+
   }
 
   const themesMap: Record<string, Record<ThemeMode, any>> = {
@@ -70,6 +82,9 @@ export async function getClientConfig({
     },
     powerassetx: {
       light: powerassetxLight,
+    },
+    avalon: {
+      light: avalonLight,
     },
   }
 
